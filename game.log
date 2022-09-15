@@ -1,0 +1,2 @@
+Sep 15, 2022 12:03:04 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
+WARNING: Tiled version 1.9.1 of map "TestMap" is greater than the supported version 1.2.x. Some features may not work.

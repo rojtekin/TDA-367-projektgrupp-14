@@ -1,12 +1,7 @@
 package Model;
 
-import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.IUpdateable;
-import de.gurkenlabs.litiengine.input.KeyboardEntityController;
-import de.gurkenlabs.litiengine.physics.IMovementController;
-
-import java.awt.event.KeyEvent;
 
 @EntityInfo(width = 32, height = 32)
 @MovementInfo(velocity = 70)
@@ -18,12 +13,31 @@ public class PlayerCharacter extends Creature implements IUpdateable {
     public static PlayerCharacter instance() {
         if (instance == null)
             instance = new PlayerCharacter();
-
         return instance;
     }
 
     private PlayerCharacter() {
         super("soldier");
+    }
+
+    public void moveUp(){
+        instance().setY(getY() - 1);
+        instance().setAngle(180);
+    }
+
+    public void moveDown(){
+        instance().setY(getY() + 1);
+        instance().setAngle(0);
+    }
+
+    public void moveLeft(){
+        instance().setX(getX() - 1);
+        instance().setAngle(270);
+    }
+
+    public void moveRight(){
+        instance().setX(getX() + 1);
+        instance().setAngle(90);
     }
 
     @Override public void update() {

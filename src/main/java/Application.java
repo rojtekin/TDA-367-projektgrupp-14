@@ -1,19 +1,22 @@
-package Controller;
-
+import Controller.PlayerInput;
 import View.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
 
-public class Program {
+public class Application {
 
     public static void main(String[] args) {
         setWindowTitleText();
         Game.init(args);
         setWindowData();
         loadResources();
+        PlayerInput.init();
+        GameLogic.init();
         Game.world().loadEnvironment("TestMap");
         Game.screens().add(new IngameScreen());
         Game.start();
+
+
 
     }
 

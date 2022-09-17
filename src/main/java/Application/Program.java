@@ -14,6 +14,7 @@ public class Program {
         Game.world().loadEnvironment("TestMap");
         Game.screens().add(new IngameScreen());
         Game.start();
+        GameLogic.init();
 
     }
 

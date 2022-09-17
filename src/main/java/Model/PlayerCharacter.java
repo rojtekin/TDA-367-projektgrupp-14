@@ -7,6 +7,7 @@ import de.gurkenlabs.litiengine.entities.EntityInfo;
 import de.gurkenlabs.litiengine.entities.MovementInfo;
 import de.gurkenlabs.litiengine.input.PlatformingMovementController;
 import de.gurkenlabs.litiengine.physics.IMovementController;
+import de.gurkenlabs.litiengine.physics.MovementController;
 
 @EntityInfo(width = 18, height = 18)
 @MovementInfo(velocity = 70)

@@ -22,7 +22,6 @@ public class PlayerCharacter extends Creature implements IUpdateable {
         return instance;
     }
 
-    //Todo Add player character spritesheet
     private PlayerCharacter() {
         super("Soldier");
     }

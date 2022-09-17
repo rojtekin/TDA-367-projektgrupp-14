@@ -11,8 +11,8 @@ public class Program {
         Game.init(args);
         setWindowData();
         loadResources();
-        Game.world().loadEnvironment("TestMap");
         GameLogic.init();
+        Game.world().loadEnvironment("TestMap");
         Game.screens().add(new IngameScreen());
         Game.start();
 

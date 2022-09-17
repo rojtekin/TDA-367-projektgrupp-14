@@ -5,6 +5,7 @@ import de.gurkenlabs.litiengine.entities.Creature;
 import de.gurkenlabs.litiengine.IUpdateable;
 import de.gurkenlabs.litiengine.entities.EntityInfo;
 import de.gurkenlabs.litiengine.entities.MovementInfo;
+import de.gurkenlabs.litiengine.input.KeyboardEntityController;
 import de.gurkenlabs.litiengine.input.PlatformingMovementController;
 import de.gurkenlabs.litiengine.physics.IMovementController;
 import de.gurkenlabs.litiengine.physics.MovementController;
@@ -33,6 +34,6 @@ public class PlayerCharacter extends Creature implements IUpdateable {
     @Override
     protected IMovementController createMovementController() {
         // setup movement controller
-        return new PlatformingMovementController<>(this);
+        return new KeyboardEntityController<>(this);
     }
 }

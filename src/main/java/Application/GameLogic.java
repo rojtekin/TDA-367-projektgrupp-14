@@ -16,7 +16,6 @@ public final class GameLogic {
         camera.setClampToMap(true);
         Game.world().setCamera(camera);
 
-        Game.world().setGravity(0);
         Game.world().onLoaded( e -> {
             Spawnpoint init_spawn = e.getSpawnpoint("init_spawn");
             if (init_spawn != null) {

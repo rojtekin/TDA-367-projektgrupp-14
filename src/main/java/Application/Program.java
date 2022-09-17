@@ -12,9 +12,9 @@ public class Program {
         setWindowData();
         loadResources();
         Game.world().loadEnvironment("TestMap");
+        GameLogic.init();
         Game.screens().add(new IngameScreen());
         Game.start();
-        GameLogic.init();
 
     }
 

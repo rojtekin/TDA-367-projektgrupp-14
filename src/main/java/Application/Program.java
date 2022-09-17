@@ -20,7 +20,7 @@ public class Program {
 
     private static void setWindowTitleText() {
         Game.info().setName("hej");
-        Game.info().setVersion("0.01");
+        Game.info().setVersion("0.0.1");
         Game.info().setSubTitle("");
     }
 

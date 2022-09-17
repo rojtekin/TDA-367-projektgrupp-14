@@ -1,5 +1,6 @@
 package Application;
 
+import Controller.PlayerInput;
 import View.IngameScreen;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.resources.Resources;
@@ -12,6 +13,7 @@ public class Program {
         setWindowData();
         loadResources();
         GameLogic.init();
+        PlayerInput.init();
         Game.world().loadEnvironment("TestMap");
         Game.screens().add(new IngameScreen());
         Game.start();

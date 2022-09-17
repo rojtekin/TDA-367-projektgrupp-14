@@ -41,4 +41,18 @@ public class PlayerCharacter extends Creature implements IUpdateable {
         float currentDy = this.getController(MovementController.class).getDy();
         this.getController(MovementController.class).setDy(currentDy - 1);
     }
+    public void moveDown() {
+        float currentDy = this.getController(MovementController.class).getDy();
+        this.getController(MovementController.class).setDy(currentDy + 1);
+    }
+    public void moveLeft() {
+        float currentDy = this.getController(MovementController.class).getDx();
+        this.getController(MovementController.class).setDx(currentDy - 1);
+    }
+    public void moveRight() {
+        float currentDy = this.getController(MovementController.class).getDx();
+        this.getController(MovementController.class).setDx(currentDy + 1);
+    }
+
+
 }

@@ -34,6 +34,11 @@ public class PlayerCharacter extends Creature implements IUpdateable {
     @Override
     protected IMovementController createMovementController() {
         // setup movement controller
-        return new KeyboardEntityController<>(this);
+        return new MovementController<>(this);
+    }
+
+    public void moveUp() {
+        float currentDy = this.getController(MovementController.class).getDy();
+        this.getController(MovementController.class).setDy(currentDy - 1);
     }
 }

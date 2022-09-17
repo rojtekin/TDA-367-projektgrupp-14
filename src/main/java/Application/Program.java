@@ -1,4 +1,4 @@
-package Controller;
+package Application;
 
 import View.IngameScreen;
 import de.gurkenlabs.litiengine.Game;

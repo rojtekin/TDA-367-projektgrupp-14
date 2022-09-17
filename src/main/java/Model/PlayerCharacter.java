@@ -23,7 +23,7 @@ public class PlayerCharacter extends Creature implements IUpdateable {
     }
 
     private PlayerCharacter() {
-        super("Soldier");
+        super("soldier");
     }
 
     @Override

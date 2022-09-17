@@ -1,6 +1,5 @@
 package Application;
 
-import Controller.PlayerInput;
 import Model.PlayerCharacter;
 import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.Spawnpoint;

@@ -7,10 +7,12 @@ import java.awt.event.KeyEvent;
 
 public final class PlayerInput {
 
+    //There is only ever one character controlled by the player
     private static IControllable playerCharacter;
 
     private PlayerInput() {
     }
+
 
     public static void init(IControllable c) {
         setPlayerCharacter(c);
@@ -21,6 +23,7 @@ public final class PlayerInput {
         Input.keyboard().onKeyPressed(KeyEvent.VK_D, e -> playerCharacter.moveRight());
     }
 
+    //Sets the entity to be currently controlled by the user
     public static void setPlayerCharacter(IControllable c) {
         playerCharacter = c;
     }

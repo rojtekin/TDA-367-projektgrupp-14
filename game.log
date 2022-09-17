@@ -1,2 +1,16 @@
 Sep 15, 2022 12:03:04 PM de.gurkenlabs.litiengine.environment.tilemap.xml.TmxMap checkVersion
 WARNING: Tiled version 1.9.1 of map "TestMap" is greater than the supported version 1.2.x. Some features may not work.
+Sep 17, 2022 10:13:25 PM de.gurkenlabs.litiengine.DefaultUncaughtExceptionHandler uncaughtException
+SEVERE: Game crashed! :(
+java.lang.NullPointerException: Cannot invoke "Model.IControllable.moveUp()" because "Controller.PlayerInput.playerCharacter" is null
+	at Controller.PlayerInput.lambda$init$1(PlayerInput.java:19)
+	at de.gurkenlabs.litiengine.input.Keyboard.lambda$executePressedKeys$3(Keyboard.java:249)
+	at java.base/java.util.concurrent.ConcurrentHashMap$KeySetView.forEach(ConcurrentHashMap.java:4706)
+	at de.gurkenlabs.litiengine.input.Keyboard.lambda$executePressedKeys$6(Keyboard.java:249)
+	at java.base/java.util.concurrent.ConcurrentHashMap$KeySetView.forEach(ConcurrentHashMap.java:4706)
+	at de.gurkenlabs.litiengine.input.Keyboard.executePressedKeys(Keyboard.java:245)
+	at de.gurkenlabs.litiengine.input.Keyboard.update(Keyboard.java:195)
+	at de.gurkenlabs.litiengine.GameLoop.updateInvariableEngineComponents(GameLoop.java:128)
+	at de.gurkenlabs.litiengine.GameLoop.process(GameLoop.java:84)
+	at de.gurkenlabs.litiengine.UpdateLoop.run(UpdateLoop.java:57)
+

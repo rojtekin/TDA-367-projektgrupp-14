@@ -12,7 +12,7 @@ import de.gurkenlabs.litiengine.physics.MovementController;
 
 @EntityInfo(width = 32, height = 32)
 @MovementInfo(velocity = 70)
-@CollisionInfo(collisionBoxWidth = 8, collisionBoxHeight = 16, collision = true)
+@CollisionInfo(collisionBoxWidth = 12, collisionBoxHeight = 8, collision = true)
 public class PlayerCharacter extends Creature implements IUpdateable, IControllable {
     private static PlayerCharacter instance;
 

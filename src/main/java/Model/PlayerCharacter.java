@@ -27,9 +27,11 @@ public class PlayerCharacter extends Creature implements IUpdateable {
         super("PlaceHolder");
     }
 
+    @Override
     public void update() {
     }
 
+    @Override
     protected IMovementController createMovementController() {
         // setup movement controller
         return new PlatformingMovementController<>(this);

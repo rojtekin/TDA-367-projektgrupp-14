@@ -5,12 +5,14 @@ private int x;
 private int y;
 private int height;
 private int width;
+private int speed;
 
-    public Player(int x, int y, int height, int width) {
+    public Player(int x, int y, int height, int width, int speed) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
+        this.speed = speed;
     }
 
     public int getX() {
@@ -35,5 +37,13 @@ private int width;
 
     public int getWidth() {
         return width;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

@@ -1,14 +1,17 @@
 package Model;
 
+import de.gurkenlabs.litiengine.Game;
 import de.gurkenlabs.litiengine.entities.*;
 import de.gurkenlabs.litiengine.IUpdateable;
+import de.gurkenlabs.litiengine.physics.PhysicsEngine;
 
 @EntityInfo(width = 32, height = 32)
-@MovementInfo(velocity = 70)
+@MovementInfo(velocity = 8) // Higher than 8 creates bugs in the library
 @CollisionInfo(collisionBoxWidth = 8, collisionBoxHeight = 16, collision = true)
 public class PlayerCharacter extends Creature implements IUpdateable {
 
     private static PlayerCharacter instance;
+    private PhysicsEngine physicsEngine = Game.physics();
 
     public static PlayerCharacter instance() {
         if (instance == null)
@@ -21,23 +24,19 @@ public class PlayerCharacter extends Creature implements IUpdateable {
     }
 
     public void moveUp(){
-        instance().setY(getY() - 1);
-        instance().setAngle(180);
+        physicsEngine.move(instance(), 180, instance.getVelocity().get());
     }
 
     public void moveDown(){
-        instance().setY(getY() + 1);
-        instance().setAngle(0);
+        physicsEngine.move(instance(), 0, instance.getVelocity().get());
     }
 
     public void moveLeft(){
-        instance().setX(getX() - 1);
-        instance().setAngle(270);
+        physicsEngine.move(instance(), 270, instance.getVelocity().get());
     }
 
     public void moveRight(){
-        instance().setX(getX() + 1);
-        instance().setAngle(90);
+        physicsEngine.move(instance(), 90, instance.getVelocity().get());
     }
 
     @Override public void update() {

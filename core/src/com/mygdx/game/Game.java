@@ -9,12 +9,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Game extends ApplicationAdapter {
 	private Texture playerImage;
+	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	
 	@Override
 	public void create () {
 		// Load an image
 		playerImage = new Texture(Gdx.files.internal("characters/BlueSamurai-Idle.png"));
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 800, 480);
+
+		batch = new SpriteBatch();
 	}
 
 	@Override

@@ -18,9 +18,13 @@ public final class PlayerInput {
         setPlayerCharacter(c);
         Input.keyboard().onKeyPressed(KeyEvent.VK_ESCAPE, e -> System.exit(0));
         Input.keyboard().onKeyPressed(KeyEvent.VK_W, e -> playerCharacter.moveUp());
+        Input.keyboard().onKeyPressed(KeyEvent.VK_UP, e -> playerCharacter.moveUp());
         Input.keyboard().onKeyPressed(KeyEvent.VK_S, e -> playerCharacter.moveDown());
+        Input.keyboard().onKeyPressed(KeyEvent.VK_DOWN, e -> playerCharacter.moveDown());
         Input.keyboard().onKeyPressed(KeyEvent.VK_A, e -> playerCharacter.moveLeft());
+        Input.keyboard().onKeyPressed(KeyEvent.VK_LEFT, e -> playerCharacter.moveLeft());
         Input.keyboard().onKeyPressed(KeyEvent.VK_D, e -> playerCharacter.moveRight());
+        Input.keyboard().onKeyPressed(KeyEvent.VK_RIGHT, e -> playerCharacter.moveRight());
     }
 
     //Sets the entity to be currently controlled by the user

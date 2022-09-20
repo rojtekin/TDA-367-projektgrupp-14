@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class View {
-    private Model model;
+    private IModel model;
     private Texture playerImage;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private static final int SCREEN_WIDTH = 800;
     private static final int SCREEN_HEIGHT = 480;
 
-    public View(Model model) {
+    public View(IModel model) {
         this.model = model;
     }
 

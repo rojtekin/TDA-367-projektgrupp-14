@@ -1,7 +1,7 @@
 package Model;
 
 
-public class PlayerCharacter extends Entity {
+public class PlayerCharacter extends Entity implements IControllable {
     private static PlayerCharacter instance;
     private static final int SCREEN_WIDTH = 800;
     private static final int SCREEN_HEIGHT = 480;

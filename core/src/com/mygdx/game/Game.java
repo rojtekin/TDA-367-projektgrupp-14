@@ -1,7 +1,7 @@
 package com.mygdx.game;
 
 import Controller.Controller;
-import Model.Model;
+import Model.*;
 import View.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
@@ -15,7 +15,7 @@ public class Game extends ApplicationAdapter {
 		model.initialize();
 		view = new View(model);
 		view.initialize();
-		controller = new Controller(model);
+		controller = new Controller(model, PlayerCharacter.instance());
 	}
 
 	@Override

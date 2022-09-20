@@ -27,33 +27,30 @@ public class View {
     private static final int SCREEN_WIDTH = 800;
     private static final int SCREEN_HEIGHT = 480;
 
-    Texture img;
-    TiledMap tiledMap;
-    TiledMapRenderer tiledMapRenderer;
+    private TiledMap tiledMap;
+    private TiledMapRenderer tiledMapRenderer;
 
     public View(Model model) {
         this.model = model;
     }
 
     public void initialize() {
-        // Load an image
+        // Load images
         playerImage = new Texture(Gdx.files.internal("characters/BlueSamurai-Idle.png"));
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        tiledMap = new TmxMapLoader().load("tilemapthings/Test2ActualMap2.tmx");
+        tiledMap = new TmxMapLoader().load("Map/Test2ActualMap2.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
     }
 
     public void update() {
-        //ScreenUtils.clear(1, 1, 0.9f, 1);
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        //tiledMapRenderer.render();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
@@ -66,5 +63,6 @@ public class View {
     public void dispose () {
         playerImage.dispose();
         batch.dispose();
+        tiledMap.dispose();
     }
 }

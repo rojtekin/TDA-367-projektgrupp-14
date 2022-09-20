@@ -5,8 +5,8 @@ public class Model {
     private static final int SCREEN_WIDTH = 800;
     private static final int SCREEN_HEIGHT = 480;
 
-    public Model(Player player) {
-        this.player = player;
+    public void initialize() {
+        player = new Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 32, 32, 5);
     }
 
     public void movePlayerLeft() {

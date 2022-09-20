@@ -1,31 +1,28 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Game extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+	Model model;
+	View view;
+	Controller controller;
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		model = new Model();
+		model.initialize();
+		view = new View(model);
+		view.initialize();
+		controller = new Controller(model);
 	}
 
 	@Override
 	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+		controller.update();
+		view.update();
 	}
-	
+
 	@Override
 	public void dispose () {
-		batch.dispose();
-		img.dispose();
+		view.dispose();
 	}
 }

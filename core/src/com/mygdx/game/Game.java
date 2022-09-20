@@ -87,9 +87,9 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 		if(keycode == Input.Keys.RIGHT)
 			camera.translate(32,0);
 		if(keycode == Input.Keys.UP)
-			camera.translate(0,-32);
-		if(keycode == Input.Keys.DOWN)
 			camera.translate(0,32);
+		if(keycode == Input.Keys.DOWN)
+			camera.translate(0,-32);
 		if(keycode == Input.Keys.NUM_1)
 			tiledMap.getLayers().get(0).setVisible(!tiledMap.getLayers().get(0).isVisible());
 		if(keycode == Input.Keys.NUM_2)

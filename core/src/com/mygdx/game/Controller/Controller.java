@@ -1,12 +1,14 @@
-package com.mygdx.game;
+package com.mygdx.game.Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.Model.IModel;
+import com.mygdx.game.Model.Model;
 
 public class Controller {
-    private Model model;
+    private IModel model;
 
-    public Controller(Model model) {
+    public Controller(IModel model) {
         this.model = model;
     }
 

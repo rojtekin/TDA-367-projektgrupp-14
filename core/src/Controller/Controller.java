@@ -1,7 +1,8 @@
-package com.mygdx.game;
+package Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import Model.*;
 
 public class Controller {
     private Model model;
@@ -13,16 +14,16 @@ public class Controller {
     public void update() {
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            model.movePlayerLeft();
+            PlayerCharacter.instance().moveLeft();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            model.movePlayerRight();
+            PlayerCharacter.instance().moveRight();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            model.movePlayerUp();
+            PlayerCharacter.instance().moveUp();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            model.movePlayerDown();
+            PlayerCharacter.instance().moveDown();
         }
     }
 }

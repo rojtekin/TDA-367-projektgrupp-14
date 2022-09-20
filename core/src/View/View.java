@@ -1,5 +1,6 @@
-package com.mygdx.game;
+package View;
 
+import Model.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -33,7 +34,7 @@ public class View {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(playerImage, model.getPlayerX(), model.getPlayerY());
+        batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
         batch.end();
     }
     public void dispose () {

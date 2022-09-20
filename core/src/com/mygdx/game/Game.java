@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import Controller.Controller;
+import Model.Model;
+import View.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
 public class Game extends ApplicationAdapter {

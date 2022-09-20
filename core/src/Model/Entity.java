@@ -1,13 +1,13 @@
-package com.mygdx.game;
+package Model;
 
-public class Player {
+public abstract class Entity {
 private int x;
 private int y;
 private int height;
 private int width;
 private int speed;
 
-    public Player(int x, int y, int height, int width, int speed) {
+    public Entity(int x, int y, int height, int width, int speed) {
         this.x = x;
         this.y = y;
         this.height = height;

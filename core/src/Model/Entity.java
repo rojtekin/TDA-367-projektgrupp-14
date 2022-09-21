@@ -6,13 +6,15 @@ private int y;
 private int height;
 private int width;
 private int speed;
+private float health;
 
-    public Entity(int x, int y, int height, int width, int speed) {
+    public Entity(int x, int y, int height, int width, int speed,float health) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
+        this.health = health;
     }
 
     public int getX() {
@@ -45,5 +47,13 @@ private int speed;
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public void setHealth(float health) {
+        this.health = health;
     }
 }

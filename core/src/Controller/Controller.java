@@ -1,28 +1,31 @@
-package com.mygdx.game;
+package Controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import Model.*;
 
 public class Controller {
-    private Model model;
+    private IModel model;
+    private IControllable player;
 
-    public Controller(Model model) {
+    public Controller(IModel model, IControllable player) {
         this.model = model;
+        this.player = player;
     }
 
     public void update() {
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            model.movePlayerLeft();
+            player.moveLeft();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            model.movePlayerRight();
+            player.moveRight();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            model.movePlayerUp();
+            player.moveUp();
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            model.movePlayerDown();
+            player.moveDown();
         }
     }
 }

@@ -1,5 +1,6 @@
-package com.mygdx.game;
+package View;
 
+import Model.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -54,10 +55,13 @@ public class View {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
+        //makes camera follow PlayerCharacter (keeps the player in the center of the screen)
+        camera.position.set(PlayerCharacter.instance().getX() + PlayerCharacter.instance().getWidth() / 2, PlayerCharacter.instance().getY() + PlayerCharacter.instance().getHeight() / 2, 0);
+
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(playerImage, model.getPlayerX(), model.getPlayerY());
+        batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
         batch.end();
     }
     public void dispose () {

@@ -38,7 +38,6 @@ public class View {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
-        batch.draw(playerImage, 0,0);
         batch.end();
     }
     public void dispose () {

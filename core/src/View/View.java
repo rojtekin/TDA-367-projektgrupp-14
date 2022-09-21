@@ -31,10 +31,14 @@ public class View {
 
     public void update() {
         ScreenUtils.clear(1, 1, 0.9f, 1);
+        //makes camera follow PlayerCharacter (keeps the player in the center of the screen)
+        camera.position.set(PlayerCharacter.instance().getX() + PlayerCharacter.instance().getWidth() / 2, PlayerCharacter.instance().getY() + PlayerCharacter.instance().getHeight() / 2, 0);
+
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
+        batch.draw(playerImage, 0,0);
         batch.end();
     }
     public void dispose () {

@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Enemies.Mouse;
+import Model.Enemies.Enemy;
 
 import java.util.ArrayList;
 

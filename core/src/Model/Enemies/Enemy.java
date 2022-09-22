@@ -1,6 +1,8 @@
-package Model;
+package Model.Enemies;
 
-public abstract class Enemy extends Entity{
+import Model.Entity;
+
+public abstract class Enemy extends Entity {
     private float damage;
     private String imagePath = ""; // hur gör man att de måste finnas en?
 

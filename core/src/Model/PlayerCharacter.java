@@ -11,8 +11,10 @@ public class PlayerCharacter extends Entity implements IControllable {
     }
 
     public static PlayerCharacter instance() {
-        if (instance == null)
+        if (instance == null){
             instance = new PlayerCharacter();
+            instance.setEntityName("BlueSamurai");
+        }
         return instance;
     }
 

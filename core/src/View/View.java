@@ -21,6 +21,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 
 public class View {
+    private HUD hud;
     private Model model;
     private Texture playerImage;
     private OrthographicCamera camera;
@@ -46,10 +47,11 @@ public class View {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
+        hud = new HUD(batch);
     }
 
     public void update() {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
@@ -63,8 +65,13 @@ public class View {
         batch.begin();
         batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
         batch.end();
+
+        batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+        //hud.getStage().act(delta);
+        hud.getStage().draw();
     }
     public void dispose () {
+        hud.dispose();
         playerImage.dispose();
         batch.dispose();
         tiledMap.dispose();

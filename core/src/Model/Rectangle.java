@@ -1,5 +1,6 @@
 package Model;
 
+//Abstract class for rectangles, to be used with collisionboxes, hitboxes and hurtboxes
 public abstract class Rectangle {
 
     private int startX;
@@ -28,6 +29,10 @@ public abstract class Rectangle {
 
     public int getEndY() {
         return endY;
+    }
+
+    public boolean overlaps(Rectangle collidable) {
+        return (startX < collidable.getEndX() && startX > collidable.getStartX());
     }
 
 }

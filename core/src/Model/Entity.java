@@ -7,6 +7,7 @@ private int height;
 private int width;
 private int speed;
 private float health;
+private Collisionbox collisionbox;
 
     public Entity(int x, int y, int height, int width, int speed,float health) {
         this.x = x;
@@ -15,6 +16,7 @@ private float health;
         this.width = width;
         this.speed = speed;
         this.health = health;
+        this.collisionbox = new Collisionbox(x, width, y, height);
     }
 
     public int getX() {

@@ -5,15 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -22,7 +16,9 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 public class View {
     private Model model;
-    private Texture playerImage;
+    private TextureRegion playerImage;
+    private Texture playerWalkSheet;
+    private TextureRegion[][] playerWalkFrames;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private static final int SCREEN_WIDTH = 800;
@@ -36,8 +32,7 @@ public class View {
     }
 
     public void initialize() {
-        // Load images
-        playerImage = new Texture(Gdx.files.internal("characters/BlueSamurai-Idle.png"));
+        loadPlayerImages();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -61,12 +56,41 @@ public class View {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
+        updatePlayerImage();
         batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
         batch.end();
     }
     public void dispose () {
-        playerImage.dispose();
+        playerWalkSheet.dispose();
         batch.dispose();
         tiledMap.dispose();
+    }
+
+    private void loadPlayerImages() {
+        playerWalkSheet = new Texture(Gdx.files.internal("characters/BlueSamurai-Walk.png"));
+        int nColumnsPlayerWalkSheet = 4;
+        int nRowsPlayerWalkSheet = 4;
+        // Splits the player character walk sheet into multiple frames
+        playerWalkFrames = TextureRegion.split(playerWalkSheet,
+                playerWalkSheet.getWidth() / nColumnsPlayerWalkSheet,
+                playerWalkSheet.getHeight() / nRowsPlayerWalkSheet);
+    }
+
+    private void updatePlayerImage() {
+        Direction playerDirection = model.getPlayerDirection();
+        switch(playerDirection) {
+            case UP:
+                playerImage = playerWalkFrames[0][1];
+                break;
+            case DOWN:
+                playerImage = playerWalkFrames[0][0];
+                break;
+            case LEFT:
+                playerImage = playerWalkFrames[0][2];
+                break;
+            case RIGHT:
+                playerImage = playerWalkFrames[0][3];
+                break;
+        }
     }
 }

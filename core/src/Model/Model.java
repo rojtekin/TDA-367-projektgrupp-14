@@ -15,4 +15,8 @@ public class Model implements IModel {
     public ArrayList<Enemy> getEnemies(){
         return this.enemyList;
     }
+
+    public Direction getPlayerDirection() {
+        return PlayerCharacter.instance().getDirection();
+    }
 }

@@ -19,25 +19,26 @@ public class PlayerCharacter extends Entity implements IControllable {
     public void moveUp(){
         instance.setY(instance.getY() + instance.getSpeed());
         // Player cannot go off-screen
-        if(instance.getY() + instance.getHeight() > SCREEN_HEIGHT) instance.setY(SCREEN_HEIGHT - instance.getHeight());
+        if(instance.getY() + instance.getHeight() > SCREEN_HEIGHT) { instance.setY(SCREEN_HEIGHT - instance.getHeight()); }
+        instance.setDirection(Direction.UP);
 
     }
     public void moveDown(){
         instance.setY(instance.getY() - instance.getSpeed());
         // Player cannot go off-screen
-        if(instance.getY() < 0) { instance.setY(0);
-        }
+        if(instance.getY() < 0) { instance.setY(0); }
+        instance.setDirection(Direction.DOWN);
     }
     public void moveRight(){
         instance.setX(instance.getX() + instance.getSpeed());
         // Player cannot go off-screen
-        if(instance.getX() > SCREEN_WIDTH - instance.getWidth()) instance.setX(SCREEN_WIDTH - instance.getWidth());
-
+        if(instance.getX() > SCREEN_WIDTH - instance.getWidth()) { instance.setX(SCREEN_WIDTH - instance.getWidth()); }
+        instance.setDirection(Direction.RIGHT);
     }
     public void moveLeft(){
         instance.setX(instance.getX() - instance.getSpeed());
         // Player cannot go off-screen
         if(instance.getX() < 0) { instance.setX(0); }
-
+        instance.setDirection(Direction.LEFT);
     }
 }

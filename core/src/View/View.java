@@ -2,7 +2,7 @@ package View;
 
 import Model.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +12,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 public class View {
@@ -25,7 +28,7 @@ public class View {
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
     private ImageLoader imageLoader = new ImageLoader();
-    private SoundLoader soundLoader = new SoundLoader();
+    private Sound soundLoader = new Sound();
     private int i = 0;
 
     public View(Model model) {
@@ -58,15 +61,13 @@ public class View {
         batch.begin();
         drawAllEntities(model);
         batch.end();
-        Sound mousesqueek = soundLoader.loadSound(); // this part is ugly im just testing sounds smile.
-        if (i == 0)
-        mousesqueek.play(1);
-        i += 1;
-        i = i % 120;
+
+        soundLoader.playSounds(model);
+
     }
 
     private void centerCameraOnPlayer() {
-        camera.position.set(PlayerCharacter.instance().getX() + PlayerCharacter.instance().getWidth() / 2, PlayerCharacter.instance().getY() + PlayerCharacter.instance().getHeight() / 2, 0);
+        camera.position.set(model.getPlayer().getX() + model.getPlayer().getWidth() / 2, model.getPlayer().getY() + model.getPlayer().getHeight() / 2, 0);
     }
 
     private void drawAllEntities(Model model) {

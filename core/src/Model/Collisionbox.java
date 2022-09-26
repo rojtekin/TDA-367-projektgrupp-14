@@ -1,4 +1,5 @@
 package Model;
+import com.dongbat.jbump.*;
 
 public class Collisionbox extends Rectangle {
 

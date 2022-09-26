@@ -1,11 +1,10 @@
 package Model;
 
+import com.dongbat.jbump.World;
+
 public interface ICollisionEntity {
 
-    boolean setCollision();
+    void addCollision();
 
-    boolean hasCollision();
-
-    boolean checkCollision();
-
+    void setWorld(World<Entity> world);
 }

@@ -7,6 +7,7 @@ private int height;
 private int width;
 private int speed;
 private float health;
+private Direction direction;
 
     public Entity(int x, int y, int height, int width, int speed,float health) {
         this.x = x;
@@ -15,6 +16,7 @@ private float health;
         this.width = width;
         this.speed = speed;
         this.health = health;
+        this.direction = Direction.DOWN;
     }
 
     public int getX() {
@@ -55,5 +57,13 @@ private float health;
 
     public void setHealth(float health) {
         this.health = health;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 }

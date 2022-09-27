@@ -19,6 +19,8 @@ public class View {
     private TextureRegion playerImage;
     private Texture playerWalkSheet;
     private TextureRegion[][] playerWalkFrames;
+    private float timeSincePlayerWalkFrameChanged = 0f;
+    private int currentPlayerWalkFrame = 0;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private static final int SCREEN_WIDTH = 800;
@@ -56,7 +58,8 @@ public class View {
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        updatePlayerImage();
+        updatePlayerWalkFrame();
+        updatePlayerImage(currentPlayerWalkFrame);
         batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
         batch.end();
     }
@@ -76,20 +79,44 @@ public class View {
                 playerWalkSheet.getHeight() / nRowsPlayerWalkSheet);
     }
 
-    private void updatePlayerImage() {
+    /**
+     * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
+     * Otherwise, the frame is set to the first frame of the walk animation.
+     */
+    public void updatePlayerWalkFrame() {
+        if (model.playerIsMoving()) {
+            timeSincePlayerWalkFrameChanged += Gdx.graphics.getDeltaTime();
+            if (timeSincePlayerWalkFrameChanged > 0.2) {
+                currentPlayerWalkFrame++;
+                if (currentPlayerWalkFrame > 3) { currentPlayerWalkFrame = 0; }
+                timeSincePlayerWalkFrameChanged = 0f;
+            }
+        }
+        else {
+            currentPlayerWalkFrame = 0;
+            timeSincePlayerWalkFrameChanged = 0f;
+        }
+    }
+
+
+    /**
+     * Updates the player image based on the direction of the player and the current frame in the walk animation.
+     * @param currentFrame the current frame in the player walk animation
+     */
+    private void updatePlayerImage(int currentFrame) {
         Direction playerDirection = model.getPlayerDirection();
         switch(playerDirection) {
             case UP:
-                playerImage = playerWalkFrames[0][1];
+                playerImage = playerWalkFrames[currentFrame][1];
                 break;
             case DOWN:
-                playerImage = playerWalkFrames[0][0];
+                playerImage = playerWalkFrames[currentFrame][0];
                 break;
             case LEFT:
-                playerImage = playerWalkFrames[0][2];
+                playerImage = playerWalkFrames[currentFrame][2];
                 break;
             case RIGHT:
-                playerImage = playerWalkFrames[0][3];
+                playerImage = playerWalkFrames[currentFrame][3];
                 break;
         }
     }

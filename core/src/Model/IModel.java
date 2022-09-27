@@ -3,6 +3,12 @@ package Model;
 import com.dongbat.jbump.World;
 
 public interface IModel {
-    public void initialize();
+
+    int getMapPixelWidth();
+
+    int getMapPixelHeight();
+
+    void initialize();
+
     World<Entity> getWorld();
 }

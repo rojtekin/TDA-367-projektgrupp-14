@@ -11,6 +11,7 @@ private int height;
 private int width;
 private int speed;
 private float health;
+private IModel model;
 private Item<Entity> boundingbox;
 private World<Entity> world;
 private CollisionFilter collisionType = CollisionFilter.defaultFilter;
@@ -22,14 +23,19 @@ public void setCollisionType (CollisionFilter collisionType) {
     this.collisionType = collisionType;
 }
 
-    public Entity(int x, int y, int height, int width, int speed,float health, World<Entity> world) {
+public void setModel(IModel model) {
+    this.model = model;
+}
+
+    public Entity(int x, int y, int height, int width, int speed,float health, IModel model) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
         this.health = health;
-        this.world = world;
+        this.model = model;
+        this.world = model.getWorld();
     }
 
     public int getX() {
@@ -94,31 +100,27 @@ public void setCollisionType (CollisionFilter collisionType) {
     }
 
     public void moveUp(){
-        world.move(boundingbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
-        updatePosition();
-        // Player cannot go off-screen
-        if(getY() + getHeight() > 800) setY(800 - getHeight());
-
+        if (getY() + getHeight() <= model.getMapPixelHeight()){
+            world.move(boundingbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
+            updatePosition();
+        }
     }
     public void moveDown(){
-        world.move(boundingbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
-        updatePosition();
-        // Player cannot go off-screen
-        if(getY() < 0) { setY(0);
+        if (getY() >= 0) {
+            world.move(boundingbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
+            updatePosition();
         }
     }
     public void moveRight(){
-        world.move(boundingbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
-        updatePosition();
-        // Player cannot go off-screen
-        if(getX() > 480 - getWidth()) setX(480 - getWidth());
-
+        if (getX() + getWidth() <= model.getMapPixelWidth()) {
+            world.move(boundingbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+            updatePosition();
+        }
     }
     public void moveLeft(){
-        world.move(boundingbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
-        updatePosition();
-        // Player cannot go off-screen
-        if(getX() < 0) { setX(0); }
-
+        if (getX() >= 0) {
+            world.move(boundingbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+            updatePosition();
+        }
     }
 }

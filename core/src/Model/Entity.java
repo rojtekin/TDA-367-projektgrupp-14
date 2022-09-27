@@ -84,12 +84,4 @@ private ArrayList<com.badlogic.gdx.audio.Sound> sounds = new ArrayList<>();
     public ArrayList<com.badlogic.gdx.audio.Sound> getSounds() {
         return sounds;
     }
-
-    public void addSound(com.badlogic.gdx.audio.Sound sound) {
-        sounds.add(sound);
-    }
-    public void removeSound(com.badlogic.gdx.audio.Sound sound){
-        if (sounds.contains(sound));
-        sounds.remove(sound);
-    }
 }

@@ -1,6 +1,8 @@
 package Model;
 
+import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
+import com.dongbat.jbump.World;
 
 public abstract class Entity {
 private int x;
@@ -9,14 +11,25 @@ private int height;
 private int width;
 private int speed;
 private float health;
+private Item<Entity> boundingbox;
+private World<Entity> world;
+private CollisionFilter collisionType = CollisionFilter.defaultFilter;
 
-    public Entity(int x, int y, int height, int width, int speed,float health) {
+public CollisionFilter getCollisionType() {
+    return collisionType;
+}
+public void setCollisionType (CollisionFilter collisionType) {
+    this.collisionType = collisionType;
+}
+
+    public Entity(int x, int y, int height, int width, int speed,float health, World<Entity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
         this.health = health;
+        this.world = world;
     }
 
     public int getX() {
@@ -57,5 +70,55 @@ private float health;
 
     public void setHealth(float health) {
         this.health = health;
+    }
+
+    public World<Entity> getWorld() {
+        return world;
+    }
+
+    //Sets the world that the player will collide in
+    public void setWorld (World<Entity> world) {
+        this.world = world;
+        addCollision();
+    }
+
+    //Adds the bounding box to the world
+    public void addCollision() {
+        boundingbox = world.add(new Item<Entity>(this), getX(), getY(), getWidth(), getHeight());
+    }
+
+    //Updates the player coordinates to match the boundingbox
+    public void updatePosition() {
+        setX((int) world.getRect(boundingbox).x);
+        setY((int) world.getRect(boundingbox).y);
+    }
+
+    public void moveUp(){
+        world.move(boundingbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
+        updatePosition();
+        // Player cannot go off-screen
+        if(getY() + getHeight() > 800) setY(800 - getHeight());
+
+    }
+    public void moveDown(){
+        world.move(boundingbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
+        updatePosition();
+        // Player cannot go off-screen
+        if(getY() < 0) { setY(0);
+        }
+    }
+    public void moveRight(){
+        world.move(boundingbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        updatePosition();
+        // Player cannot go off-screen
+        if(getX() > 480 - getWidth()) setX(480 - getWidth());
+
+    }
+    public void moveLeft(){
+        world.move(boundingbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        updatePosition();
+        // Player cannot go off-screen
+        if(getX() < 0) { setX(0); }
+
     }
 }

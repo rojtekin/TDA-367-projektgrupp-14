@@ -10,8 +10,13 @@ import java.util.ArrayList;
 public class Model implements IModel {
     private static final int SCREEN_WIDTH = 800;
     private static final int SCREEN_HEIGHT = 480;
+    private PlayerCharacter player;
     private ArrayList<Enemy> enemyList = new ArrayList<>();
     private World<Entity> world = new World<>();
+
+    public PlayerCharacter getPlayer() {
+        return player;
+    }
 
     //World contains the collisionboxes from JBump
     public World<Entity> getWorld() {
@@ -19,8 +24,7 @@ public class Model implements IModel {
     }
 
     public void initialize() {
-        PlayerCharacter.instance();
-        PlayerCharacter.instance().setWorld(world);
+        player = new PlayerCharacter(world);
     }
 
     public ArrayList<Enemy> getEnemies(){

@@ -15,7 +15,7 @@ public class Game extends ApplicationAdapter {
 		model.initialize();
 		view = new View(model);
 		view.initialize();
-		controller = new Controller(model, PlayerCharacter.instance());
+		controller = new Controller(model, model.getPlayer());
 	}
 
 	@Override

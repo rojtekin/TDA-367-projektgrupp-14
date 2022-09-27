@@ -15,6 +15,7 @@ public class Controller {
 
 
     public void update() {
+        model.setPlayerMoving(false);
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveLeft();

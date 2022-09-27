@@ -8,19 +8,20 @@ private int y;
 private int height;
 private int width;
 private int speed;
-private double health;
 private boolean inMotion = false;
 private String entityName;
 private int angle;
+private float health;
+private Direction direction;
 
-    public Entity(int x, int y, int height, int width, int speed,double health) {
+    public Entity(int x, int y, int height, int width, int speed,float health) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
         this.health = health;
-        setAngle(270);
+        this.direction = Direction.DOWN;
     }
 
     protected void setEntityName(String name){
@@ -59,25 +60,19 @@ private int angle;
         this.speed = speed;
     }
 
-    public double getHealth() {
+    public float getHealth() {
         return health;
     }
+
     public void setHealth(float health) {
         this.health = health;
     }
 
-    public boolean getInMotion(){
-        return this.inMotion;
-    }
-    public void setInMotion (boolean statement){
-        this.inMotion = statement;
+    public Direction getDirection() {
+        return direction;
     }
 
-    public int getAngle() {
-        return angle;
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
-    protected void setAngle(int angle) {
-        this.angle = angle;
-    }
-
 }

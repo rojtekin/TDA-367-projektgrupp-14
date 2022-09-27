@@ -2,6 +2,7 @@ package Model;
 
 
 public class PlayerCharacter extends Entity implements IControllable {
+    private boolean moving;
     private static final int SCREEN_WIDTH = 800;
     private static final int SCREEN_HEIGHT = 480;
 
@@ -33,5 +34,11 @@ public class PlayerCharacter extends Entity implements IControllable {
         // Player cannot go off-screen
         if(this.getX() < 0) { this.setX(0); }
 
+    public boolean isMoving() {
+        return moving;
+    }
+
+    public void setMoving(boolean moving) {
+        this.moving = moving;
     }
 }

@@ -1,5 +1,6 @@
 package Model;
 
 public interface IModel {
-    public void initialize();
+    void initialize();
+    void setPlayerMoving(boolean moving);
 }

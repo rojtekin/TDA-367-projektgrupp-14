@@ -13,8 +13,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.*;
 
 
 public class View {
@@ -31,6 +33,8 @@ public class View {
     private Sound soundLoader = new Sound();
     private int i = 0;
 
+    private Set<Entity> isKnown = new HashSet<Entity>();
+
     public View(Model model) {
         this.model = model;
     }
@@ -45,7 +49,8 @@ public class View {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
-    }
+
+       }
 
     public void update() {
         Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -62,8 +67,17 @@ public class View {
         drawAllEntities(model);
         batch.end();
 
-        soundLoader.playSounds(model);
 
+        // do something when a entity spawns
+        ArrayList<Entity> entities = model.getEntities();
+        Set<Entity> seen = new HashSet<Entity>();
+        for (Entity entity : entities){
+            if (!isKnown.contains((entity))){
+                soundLoader.playSounds(model);
+            }
+            seen.add(entity);
+        }
+        isKnown = seen;
     }
 
     private void centerCameraOnPlayer() {

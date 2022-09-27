@@ -43,10 +43,6 @@ public class Sound{
                 Thread.currentThread().stop();
             }
         }
-          /*  ArrayList<com.badlogic.gdx.audio.Sound> currentSounds = entity.getSounds();
-            for (com.badlogic.gdx.audio.Sound sound : currentSounds) {
-                sound.play(1); // make 1 into something else so we can change it in setting later
-            }*/
     }
 
     public void stopSounds(Model model) {

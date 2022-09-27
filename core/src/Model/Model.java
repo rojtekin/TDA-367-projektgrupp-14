@@ -15,7 +15,7 @@ public class Model implements IModel {
     public void initialize() {
         player = new PlayerCharacter();
         entityList.add(player);
-        final Mouse mouse1 = new Mouse(50,50,16,16,2,1,1);
+        Mouse mouse1 = new Mouse(50,50,16,16,2,1,1); //temporary
         entityList.add(mouse1);
 
     }

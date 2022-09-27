@@ -12,7 +12,6 @@ private double health;
 private boolean inMotion = false;
 private String entityName;
 private int angle;
-private ArrayList<com.badlogic.gdx.audio.Sound> sounds = new ArrayList<>();
 
     public Entity(int x, int y, int height, int width, int speed,double health) {
         this.x = x;
@@ -81,7 +80,4 @@ private ArrayList<com.badlogic.gdx.audio.Sound> sounds = new ArrayList<>();
         this.angle = angle;
     }
 
-    public ArrayList<com.badlogic.gdx.audio.Sound> getSounds() {
-        return sounds;
-    }
 }

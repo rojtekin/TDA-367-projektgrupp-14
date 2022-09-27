@@ -1,7 +1,6 @@
 package Model.Enemies;
 
 import Model.Enemy;
-import com.badlogic.gdx.Gdx;
 
 public class Mouse extends Enemy {
 

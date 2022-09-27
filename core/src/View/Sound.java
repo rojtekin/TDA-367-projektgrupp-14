@@ -22,7 +22,7 @@ public class Sound{
     public void playSounds(final Model model) {
         // occasionally runs the function getSound() if its entity exists. timer starts when entity "spawns".
         for (final Entity entity : model.getEntities()) {
-            if (entity instanceof Mouse) {
+            if (entity instanceof Mouse) { // temporary bcs every entity plays same sound and it hurts my soul
                 ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
                 Runnable toRun = new Runnable() {
                     Entity current = entity;
@@ -42,14 +42,6 @@ public class Sound{
             if (!model.getEntities().contains(entity)) {
                 Thread.currentThread().stop();
             }
-        }
-    }
-
-    public void stopSounds(Model model) {
-        for (Entity entity : model.getEntities()) {
-            ArrayList<com.badlogic.gdx.audio.Sound> currentSounds = entity.getSounds();
-            for (com.badlogic.gdx.audio.Sound sound : currentSounds)
-                sound.stop();
         }
     }
 }

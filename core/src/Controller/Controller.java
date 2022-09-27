@@ -13,6 +13,7 @@ public class Controller {
         this.player = model.getPlayer();
     }
 
+
     public void update() {
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {

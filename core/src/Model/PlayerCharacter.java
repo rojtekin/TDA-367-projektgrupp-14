@@ -9,7 +9,7 @@ public class PlayerCharacter extends Entity implements IControllable, ICollision
     private static PlayerCharacter instance;
     private static final int SCREEN_WIDTH = 800;
     private static final int SCREEN_HEIGHT = 480;
-    private Item<Entity> collisionbox;
+    private Item<Entity> boundingbox;
     private World<Entity> world;
 
 
@@ -24,40 +24,48 @@ public class PlayerCharacter extends Entity implements IControllable, ICollision
     }
 
     public void moveUp(){
-        instance.setY(instance.getY() + instance.getSpeed());
-        world.move(collisionbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
+        updatePosition();
         // Player cannot go off-screen
         if(instance.getY() + instance.getHeight() > SCREEN_HEIGHT) instance.setY(SCREEN_HEIGHT - instance.getHeight());
 
     }
     public void moveDown(){
-        instance.setY(instance.getY() - instance.getSpeed());
-        world.move(collisionbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
+        updatePosition();
         // Player cannot go off-screen
         if(instance.getY() < 0) { instance.setY(0);
         }
     }
     public void moveRight(){
-        instance.setX(instance.getX() + instance.getSpeed());
-        world.move(collisionbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        updatePosition();
         // Player cannot go off-screen
         if(instance.getX() > SCREEN_WIDTH - instance.getWidth()) instance.setX(SCREEN_WIDTH - instance.getWidth());
 
     }
     public void moveLeft(){
-        instance.setX(instance.getX() - instance.getSpeed());
-        world.move(collisionbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        updatePosition();
         // Player cannot go off-screen
         if(instance.getX() < 0) { instance.setX(0); }
 
     }
 
+    //Sets the world that the player will collide in
     public void setWorld (World<Entity> world) {
         this.world = world;
         addCollision();
     }
 
+    //Adds the bounding box to the world
     public void addCollision() {
-        collisionbox = world.add(new Item<Entity>(instance), getX(), getY(), getWidth(), getHeight());
+        boundingbox = world.add(new Item<Entity>(instance), getX(), getY(), getWidth(), getHeight());
+    }
+
+    //Updates the player coordinates to match the boundingbox
+    public void updatePosition() {
+        setX((int) world.getRect(boundingbox).x);
+        setY((int) world.getRect(boundingbox).y);
     }
 }

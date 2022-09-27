@@ -13,8 +13,6 @@ public class Game extends ApplicationAdapter {
 	public void create () {
 		model = new Model();
 		model.initialize();
-		PlayerCharacter.instance().setWorld(model.getWorld());
-		model.spawntestMouse();
 		view = new View(model);
 		view.initialize();
 		controller = new Controller(model, PlayerCharacter.instance());

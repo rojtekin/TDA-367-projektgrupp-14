@@ -7,4 +7,6 @@ public interface ICollisionEntity {
     void addCollision();
 
     void setWorld(World<Entity> world);
+
+    void updatePosition();
 }

@@ -10,7 +10,7 @@ import com.dongbat.jbump.World;
 import java.util.ArrayList;
 
 public class Model implements IModel {
-    private TiledMap tiledMap = new TmxMapLoader().load("Map/Test2ActualMap2.tmx");
+    private TiledMap tiledMap = new TmxMapLoader().load("Map/TestMap.tmx");
     private MapProperties prop = tiledMap.getProperties();
     private int mapWidth = prop.get("width", Integer.class);
     private int mapHeight = prop.get("height", Integer.class);

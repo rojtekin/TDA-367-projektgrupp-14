@@ -11,7 +11,6 @@ public abstract class Entity {
     private int width;
     private int speed;
     private float health;
-    private IModel model;
     private Item<Entity> boundingbox;
     private World<Entity> world;
     private CollisionFilter collisionType = CollisionFilter.defaultFilter;
@@ -23,19 +22,14 @@ public abstract class Entity {
         this.collisionType = collisionType;
     }
 
-    public void setModel(IModel model) {
-        this.model = model;
-    }
-
-    public Entity(int x, int y, int height, int width, int speed,float health, IModel model) {
+    public Entity(int x, int y, int height, int width, int speed,float health, World<Entity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
         this.health = health;
-        this.model = model;
-        this.world = model.getWorld();
+        setWorld(world);
     }
 
     public int getX() {
@@ -90,7 +84,7 @@ public abstract class Entity {
 
     //Adds the bounding box to the world
     public void addCollision() {
-        boundingbox = world.add(new Item<Entity>(this), getX(), getY(), getWidth(), getHeight());
+        boundingbox = world.add(new Item<>(this), getX(), getY(), getWidth(), getHeight());
     }
 
     //Updates the player coordinates to match the boundingbox
@@ -100,27 +94,19 @@ public abstract class Entity {
     }
 
     public void moveUp(){
-        if (getY() + getHeight() <= model.getMapPixelHeight()){
-            world.move(boundingbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
-            updatePosition();
-        }
+        world.move(boundingbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
+        updatePosition();
     }
     public void moveDown(){
-        if (getY() >= 0) {
-            world.move(boundingbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
-            updatePosition();
-        }
+        world.move(boundingbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
+        updatePosition();
     }
     public void moveRight(){
-        if (getX() + getWidth() <= model.getMapPixelWidth()) {
-            world.move(boundingbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
-            updatePosition();
-        }
+        world.move(boundingbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        updatePosition();
     }
     public void moveLeft(){
-        if (getX() >= 0) {
-            world.move(boundingbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
-            updatePosition();
-        }
+        world.move(boundingbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        updatePosition();
     }
 }

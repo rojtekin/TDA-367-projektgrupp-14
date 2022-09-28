@@ -12,7 +12,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		model = new Model();
-		model.initialize();
+		model.initialize("TestMap");
 		view = new View(model);
 		view.initialize();
 		controller = new Controller(model, model.getPlayer());

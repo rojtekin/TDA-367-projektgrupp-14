@@ -8,7 +8,7 @@ public interface IModel {
 
     int getMapPixelHeight();
 
-    void initialize();
+    void initialize(String mapName);
 
     World<Entity> getWorld();
 }

@@ -1,12 +1,18 @@
 package Model;
 
 import Model.Enemies.Enemy;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.Rectangle;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Model implements IModel {
@@ -16,6 +22,8 @@ public class Model implements IModel {
     private int mapHeight = prop.get("height", Integer.class);
     private int tilePixelWidth = prop.get("tilewidth", Integer.class);
     private int tilePixelHeight = prop.get("tileheight", Integer.class);
+
+    private MapObjects objects = tiledMap.getLayers().get(3).getObjects();
 
     private int mapPixelWidth = mapWidth * tilePixelWidth;
     private int mapPixelHeight = mapHeight * tilePixelHeight;
@@ -47,11 +55,20 @@ public class Model implements IModel {
 
     public void initialize() {
         player = new PlayerCharacter(mapPixelWidth / 2, mapPixelHeight / 2, this);
+        updateMapCollisions();
     }
 
     public void updateEnemyList() {
         for (Entity e : enemyList) {
             world.add(new Item<Entity>(e), e.getX(), e.getY(), e.getWidth(), e.getHeight());
+        }
+    }
+
+    public void updateMapCollisions() {
+        for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
+            Rectangle r = o.getRectangle();
+            StaticObjectEntity st = new StaticObjectEntity((int)r.x, (int)r.y, (int)r.height, (int)r.width, this);
+            Item<Entity> worldObject = world.add(new Item<Entity> (st), r.x, r.y, r.width, r.height);
         }
     }
 }

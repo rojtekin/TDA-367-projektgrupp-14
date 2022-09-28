@@ -74,7 +74,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="5" name="Objektlager 1" visible="0">
+ <objectgroup id="5" name="collision" visible="0">
   <object id="2" x="544" y="128" width="96" height="128"/>
   <object id="3" x="320" y="128" width="96" height="128"/>
   <object id="4" x="320" y="352" width="96" height="128"/>

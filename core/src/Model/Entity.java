@@ -5,27 +5,27 @@ import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
 public abstract class Entity {
-private int x;
-private int y;
-private int height;
-private int width;
-private int speed;
-private float health;
-private IModel model;
-private Item<Entity> boundingbox;
-private World<Entity> world;
-private CollisionFilter collisionType = CollisionFilter.defaultFilter;
+    private int x;
+    private int y;
+    private int height;
+    private int width;
+    private int speed;
+    private float health;
+    private IModel model;
+    private Item<Entity> boundingbox;
+    private World<Entity> world;
+    private CollisionFilter collisionType = CollisionFilter.defaultFilter;
 
-public CollisionFilter getCollisionType() {
-    return collisionType;
-}
-public void setCollisionType (CollisionFilter collisionType) {
-    this.collisionType = collisionType;
-}
+    public CollisionFilter getCollisionType() {
+        return collisionType;
+    }
+    public void setCollisionType (CollisionFilter collisionType) {
+        this.collisionType = collisionType;
+    }
 
-public void setModel(IModel model) {
-    this.model = model;
-}
+    public void setModel(IModel model) {
+        this.model = model;
+    }
 
     public Entity(int x, int y, int height, int width, int speed,float health, IModel model) {
         this.x = x;

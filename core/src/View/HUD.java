@@ -77,8 +77,13 @@ public class HUD {
         table2.setFillParent(true);
 
         //den här ska switcha från grön till gull till röd och även minska i size beroende på hp, funktion att göra
-        table2.add(fullhp).size(200,20).left().top().pad(10).expandX().expandY();
+        //table2.add(fullhp).size(200,20).left().top().pad(10).expandX().expandY();
 
+        table2.add(midhp).size(140,20).left().top().pad(10).expandX().expandY();
+
+        //how i should do it
+        //table2.add(choosehpcolor).size(hpsize*200,20).left().top().pad(10).expandX().expandY();
+        //hp size is between 0 and 1
         table2.row();
 
         table2.add(xpbar).size(400,10).pad(10);

@@ -24,34 +24,34 @@ public class HUD {
         int score = 10;
 
         //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values needed
-        //for a square
+        //for a square (and also make it an actor so I can send it back and not draw directly).
 
-        Texture black= new Texture(Gdx.files.internal("CSSforExpBar/Black.png"));
+        Texture black= new Texture(Gdx.files.internal("HudColors/Black.png"));
         NinePatch blackHp = new NinePatch(black, 0, 0, 0, 0);
         Image blackHpBar = new Image(blackHp);
         Image blackXpBar = new Image(blackHp);
 
-        Texture aqua = new Texture(Gdx.files.internal("CSSforExpBar/Aqua00ffff.png"));
+        Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
         NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
         Image xpbar = new Image(emptyxp);
         /*
-        Texture aquamarine = new Texture(Gdx.files.internal("CSSforExpBar/Aquamarine7fffd4.png"));
+        Texture aquamarine = new Texture(Gdx.files.internal("HudColors/Aquamarine7fffd4.png"));
         NinePatch fullexperience = new NinePatch(aquamarine, 0, 0, 0, 0);
         Image fullxpbar = new Image(fullexperience);
         */
-        Texture green = new Texture(Gdx.files.internal("CSSforExpBar/Green00933b.png"));
+        Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
         NinePatch fullHp= new NinePatch(green, 0, 0, 0, 0);
         Image fullhp = new Image(fullHp);
 
-        Texture yellow = new Texture(Gdx.files.internal("CSSforExpBar/Yellowf1c50c.png"));
+        Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
         NinePatch midHp = new NinePatch(yellow, 0, 0, 0, 0);
         Image midhp = new Image(midHp);
 
-        Texture red = new Texture(Gdx.files.internal("CSSforExpBar/Red00923f.png"));
+        Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
         NinePatch lowHp = new NinePatch(red, 0, 0, 0, 0);
         Image lowhp = new Image(lowHp);
 
-        Texture xpyellow = new Texture(Gdx.files.internal("CSSforExpBar/Xpyellowc8a72b.png"));
+        Texture xpyellow = new Texture(Gdx.files.internal("HudColors/Xpyellowc8a72b.png"));
         NinePatch xpyellow2 = new NinePatch(xpyellow, 0, 0, 0, 0);
         Image fullxpbar = new Image(xpyellow2);
 
@@ -86,13 +86,13 @@ public class HUD {
         stage.addActor(table2);
 
         /*
-        Texture aqua = new Texture(Gdx.files.internal("CSSforExpBar/Aqua00ffff.png"));
+        Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
         NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
         Image xpbar = new Image(emptyxp);
 
         xpbar.setSize(200,20);
 
-        Texture aquamarine = new Texture(Gdx.files.internal("CSSforExpBar/Aquamarine7fffd4.png"));
+        Texture aquamarine = new Texture(Gdx.files.internal("HudColors/Aquamarine7fffd4.png"));
         NinePatch fullexperience = new NinePatch(aquamarine, 0, 0, 0, 0);
         Image fullxpbar = new Image(fullexperience);
 

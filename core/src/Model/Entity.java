@@ -22,6 +22,7 @@ public abstract class Entity {
         this.collisionType = collisionType;
     }
 
+    //TODO rework movement, remove has-dependency on world
     public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
         this.x = x;
         this.y = y;
@@ -76,35 +77,51 @@ public abstract class Entity {
         return world;
     }
 
-    //Sets the world that the player will collide in
+    /**
+     * Adds a reference to the world that the player is in and
+     * registers itself as a collisionbox
+     */
     public void setWorld (World<Entity> world) {
         this.world = world;
         addCollision();
     }
 
-    //Adds the bounding box to the world
-    public void addCollision() {
+    private void addCollision() {
         boundingbox = world.add(new Item<>(this), getX(), getY(), getWidth(), getHeight());
     }
 
-    //Updates the player coordinates to match the boundingbox
+    /**
+     * Sets the entity coordinates to match its collisionbox
+     */
     public void updatePosition() {
         setX(world.getRect(boundingbox).x);
         setY(world.getRect(boundingbox).y);
     }
 
+    /**
+     * Moves the collisionbox up, then moves the entity to match it
+     */
     public void moveUp(){
         world.move(boundingbox, getX(), getY() + getSpeed(), CollisionFilter.defaultFilter);
         updatePosition();
     }
+    /**
+     * Moves the collisionbox down, then moves the entity to match it
+     */
     public void moveDown(){
         world.move(boundingbox, getX(), getY() - getSpeed(), CollisionFilter.defaultFilter);
         updatePosition();
     }
+    /**
+     * Moves the collisionbox to the right, then moves the entity to match it
+     */
     public void moveRight(){
         world.move(boundingbox, getX() + getSpeed(), getY(), CollisionFilter.defaultFilter);
         updatePosition();
     }
+    /**
+     * Moves the collisionbox to the left, then moves the entity to match it
+     */
     public void moveLeft(){
         world.move(boundingbox, getX() - getSpeed(), getY(), CollisionFilter.defaultFilter);
         updatePosition();

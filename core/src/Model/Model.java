@@ -43,6 +43,10 @@ public class Model implements IModel {
         return this.enemyList;
     }
 
+    /**
+     * Loads a specified map and creates a playercharacter
+     * @param mapName the filename of the map
+     */
     public void initialize(String mapName) {
         tiledMap = new TmxMapLoader().load("Map/" + mapName + ".tmx");
         importMapProperties();
@@ -50,6 +54,9 @@ public class Model implements IModel {
         player = new PlayerCharacter(mapPixelWidth / 2, mapPixelHeight / 2, world);
     }
 
+    /**
+     * Imports the height and width of the current map
+     */
     public void importMapProperties() {
         prop = tiledMap.getProperties();
         mapWidth = prop.get("width", Integer.class);
@@ -58,20 +65,18 @@ public class Model implements IModel {
         tilePixelHeight = prop.get("tileheight", Integer.class);
         mapPixelWidth = mapWidth * tilePixelWidth;
         mapPixelHeight = mapHeight * tilePixelHeight;
-        objects = tiledMap.getLayers().get(3).getObjects();
     }
 
+    /**
+     * Loads all objects in the collision layer of the map
+     * to the world. Does not support polygons.
+     */
     public void importMapCollision() {
+        objects = tiledMap.getLayers().get("collision").getObjects();
         for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
             Rectangle r = o.getRectangle();
             StaticObjectEntity st = new StaticObjectEntity(r.x, r.y, r.height, r.width, world);
             world.add(new Item<Entity>(st), r.x, r.y, r.width, r.height);
-        }
-    }
-
-    public void updateEnemyList() {
-        for (Entity e : enemyList) {
-            world.add(new Item<>(e), e.getX(), e.getY(), e.getWidth(), e.getHeight());
         }
     }
 }

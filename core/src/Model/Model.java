@@ -27,21 +27,37 @@ public class Model implements IModel {
     private ArrayList<Enemy> enemyList = new ArrayList<>();
     private World<Entity> world = new World<>();
 
-    public PlayerCharacter getPlayer() {
+    public PlayerCharacter getPlayerCharacter() {
         return player;
     }
+
     public TiledMap getTiledMap() {
         return tiledMap;
     }
+
+    /**
+     * Loads a new map
+     * @param mapName name of map to be loaded
+     */
+    public void setMap(String mapName) {
+        tiledMap = new TmxMapLoader().load("Map/" + mapName + ".tmx");
+        this.world = new World<>();
+        importMapProperties();
+        importMapCollision();
+    }
+
     public int getMapPixelHeight() {
         return mapPixelHeight;
     }
+
     public int getMapPixelWidth() {
         return mapPixelWidth;
     }
+
     public World<Entity> getWorld() {
         return world;
     }
+
     public ArrayList<Enemy> getEnemies(){
         return this.enemyList;
     }
@@ -60,7 +76,7 @@ public class Model implements IModel {
     /**
      * Imports the height and width of the current map
      */
-    public void importMapProperties() {
+    private void importMapProperties() {
         prop = tiledMap.getProperties();
         mapWidth = prop.get("width", Integer.class);
         mapHeight = prop.get("height", Integer.class);
@@ -74,7 +90,7 @@ public class Model implements IModel {
      * Loads all objects in the collision layer of the map
      * to the world. Does not support polygons.
      */
-    public void importMapCollision() {
+    private void importMapCollision() {
         objects = tiledMap.getLayers().get("collision").getObjects();
         for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
             Rectangle r = o.getRectangle();

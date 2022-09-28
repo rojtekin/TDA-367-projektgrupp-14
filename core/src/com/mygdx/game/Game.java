@@ -15,7 +15,7 @@ public class Game extends ApplicationAdapter {
 		model.initialize("TestMap");
 		view = new View(model);
 		view.initialize();
-		controller = new Controller(model, model.getPlayer());
+		controller = new Controller(model, model.getPlayerCharacter());
 	}
 
 	@Override

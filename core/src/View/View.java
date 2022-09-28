@@ -49,12 +49,13 @@ public class View {
         tiledMapRenderer.render();
 
         //makes camera follow PlayerCharacter (keeps the player in the center of the screen)
-        camera.position.set(model.getPlayer().getX() + model.getPlayer().getWidth() / 2, model.getPlayer().getY() + model.getPlayer().getHeight() / 2, 0);
+        camera.position.set(model.getPlayerCharacter().getX() + model.getPlayerCharacter().getWidth() / 2,
+                model.getPlayerCharacter().getY() + model.getPlayerCharacter().getHeight() / 2, 0);
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(playerImage, model.getPlayer().getX(), model.getPlayer().getY());
+        batch.draw(playerImage, model.getPlayerCharacter().getX(), model.getPlayerCharacter().getY());
         batch.end();
     }
     public void dispose () {

@@ -1,11 +1,16 @@
 package Model;
 
+import java.util.ArrayList;
+
 public abstract class Entity {
 private int x;
 private int y;
 private int height;
 private int width;
 private int speed;
+private boolean inMotion = false;
+private String entityName;
+private int angle;
 private float health;
 private Direction direction;
 
@@ -19,10 +24,16 @@ private Direction direction;
         this.direction = Direction.DOWN;
     }
 
+    protected void setEntityName(String name){
+        this.entityName = name;
+    }
+    public String getEntityName(){
+        return this.entityName;
+    }
+
     public int getX() {
         return x;
     }
-
     public void setX(int x) {
         this.x = x;
     }
@@ -30,7 +41,6 @@ private Direction direction;
     public int getY() {
         return y;
     }
-
     public void setY(int y) {
         this.y = y;
     }
@@ -46,8 +56,7 @@ private Direction direction;
     public int getSpeed() {
         return speed;
     }
-
-    public void setSpeed(int speed) {
+    protected void setSpeed(int speed) {
         this.speed = speed;
     }
 
@@ -65,5 +74,12 @@ private Direction direction;
 
     public void setDirection(Direction direction) {
         this.direction = direction;
+    }
+
+    public boolean getInMotion() {
+        if (speed != 0)
+            return false;
+        else
+            return true;
     }
 }

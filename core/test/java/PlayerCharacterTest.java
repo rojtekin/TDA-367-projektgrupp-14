@@ -12,7 +12,7 @@ public class PlayerCharacterTest {
 
     @BeforeEach
     public void setUp() {
-        player = PlayerCharacter.instance();
+        player = new PlayerCharacter();
         // Reset the position of the player character
         player.setX(SCREEN_WIDTH / 2);
         player.setY(SCREEN_HEIGHT / 2);

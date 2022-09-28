@@ -2,6 +2,7 @@ package View;
 
 import Model.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +13,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.*;
 
 
 public class View {
@@ -28,6 +34,11 @@ public class View {
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
+    private ImageLoader imageLoader = new ImageLoader();
+    private Sound soundLoader = new Sound();
+    private int i = 0;
+
+    private Set<Entity> isKnown = new HashSet<Entity>();
 
     public View(Model model) {
         this.model = model;
@@ -52,17 +63,41 @@ public class View {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        //makes camera follow PlayerCharacter (keeps the player in the center of the screen)
-        camera.position.set(PlayerCharacter.instance().getX() + PlayerCharacter.instance().getWidth() / 2, PlayerCharacter.instance().getY() + PlayerCharacter.instance().getHeight() / 2, 0);
+        centerCameraOnPlayer(); //makes the camera follow PlayerCharacter (keeps the player in the center of the screen)
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         updatePlayerWalkFrame();
         updatePlayerImage(currentPlayerWalkFrame);
-        batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
+        batch.draw(playerImage, model.getPlayer().getX(), model.getPlayer().getY());
+        drawAllEntities(model);
         batch.end();
+
+
+        // do something when a entity spawns
+        ArrayList<Entity> entities = model.getEntities();
+        Set<Entity> seen = new HashSet<Entity>();
+        for (Entity entity : entities){
+            if (!isKnown.contains((entity))){
+                soundLoader.playSounds(model);
+            }
+            seen.add(entity);
+        }
+        isKnown = seen;
     }
+
+    private void centerCameraOnPlayer() {
+        camera.position.set(model.getPlayer().getX() + model.getPlayer().getWidth() / 2, model.getPlayer().getY() + model.getPlayer().getHeight() / 2, 0);
+    }
+
+    private void drawAllEntities(Model model) {
+        for (Entity entity : model.getEntities()){
+            if (!(entity instanceof PlayerCharacter))
+            batch.draw(imageLoader.loadImage(entity), entity.getX(), entity.getY());
+        }
+    }
+
     public void dispose () {
         playerWalkSheet.dispose();
         batch.dispose();

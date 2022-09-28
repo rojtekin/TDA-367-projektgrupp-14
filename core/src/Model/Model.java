@@ -30,14 +30,14 @@ public class Model implements IModel {
     }
 
     public Direction getPlayerDirection() {
-        return PlayerCharacter.instance().getDirection();
+        return player.getDirection();
     }
 
     public boolean playerIsMoving() {
-        return PlayerCharacter.instance().isMoving();
+        return player.isMoving();
     }
 
     public void setPlayerMoving(boolean moving) {
-        PlayerCharacter.instance().setMoving(moving);
+        player.setMoving(moving);
     }
 }

@@ -70,7 +70,7 @@ public class View {
         batch.begin();
         updatePlayerWalkFrame();
         updatePlayerImage(currentPlayerWalkFrame);
-        batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
+        batch.draw(playerImage, model.getPlayer().getX(), model.getPlayer().getY());
         drawAllEntities(model);
         batch.end();
 
@@ -93,6 +93,7 @@ public class View {
 
     private void drawAllEntities(Model model) {
         for (Entity entity : model.getEntities()){
+            if (!(entity instanceof PlayerCharacter))
             batch.draw(imageLoader.loadImage(entity), entity.getX(), entity.getY());
         }
     }

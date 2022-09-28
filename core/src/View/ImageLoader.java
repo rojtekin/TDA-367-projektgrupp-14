@@ -1,5 +1,6 @@
 package View;
 
+import Model.Direction;
 import Model.Enemy;
 import Model.Entity;
 import Model.PlayerCharacter;
@@ -10,24 +11,23 @@ public class ImageLoader {
     private String folder;
     private String direction;
     private String motionState;
-    private int angleOfEntity;
+    private Direction angleOfEntity;
     public Texture loadImage(Entity entity){
-        angleOfEntity = entity.getAngle();
+        angleOfEntity = entity.getDirection();
         if (entity.getInMotion()){
             motionState = "active";}
         else{
             motionState = "idle";}
 
-        if (angleOfEntity == 0){
+        if (angleOfEntity == Direction.RIGHT){
             direction = "right";}
-        else if (angleOfEntity == 90){
+        else if (angleOfEntity == Direction.UP){
             direction = "up";}
-        else if (angleOfEntity == 180){
+        else if (angleOfEntity == Direction.LEFT){
             direction = "left";}
-        else if (angleOfEntity == 270){
+        else if (angleOfEntity == Direction.DOWN){
             direction = "down";
         }
-
         if (entity instanceof PlayerCharacter){
             folder = "Characters/";
         }

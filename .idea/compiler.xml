@@ -5,7 +5,6 @@
       <module name="org.example.TDA-367-projektgrupp-14.core.test" target="15" />
       <module name="org.example.TDA-367-projektgrupp-14.core.test.main" target="15" />
       <module name="org.example.TDA-367-projektgrupp-14.core.test.test" target="15" />
-      <module name="TDA-367-projektgrupp-14.desktop" target="1.8" />
       <module name="tda367" target="17" />
     </bytecodeTargetLevel>
   </component>

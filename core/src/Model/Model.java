@@ -52,16 +52,16 @@ public class Model implements IModel {
 
     public void initialize() {
         player = new PlayerCharacter(mapPixelWidth / 2, mapPixelHeight / 2, world);
-        updateMapCollisions();
+        importMapCollision();
     }
 
     public void updateEnemyList() {
         for (Entity e : enemyList) {
-            world.add(new Item<Entity>(e), e.getX(), e.getY(), e.getWidth(), e.getHeight());
+            world.add(new Item<>(e), e.getX(), e.getY(), e.getWidth(), e.getHeight());
         }
     }
 
-    public void updateMapCollisions() {
+    public void importMapCollision() {
         for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
             Rectangle r = o.getRectangle();
             StaticObjectEntity st = new StaticObjectEntity((int)r.x, (int)r.y, (int)r.height, (int)r.width, world);

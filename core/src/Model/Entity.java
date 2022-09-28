@@ -5,11 +5,11 @@ import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
 public abstract class Entity {
-    private int x;
-    private int y;
-    private int height;
-    private int width;
-    private int speed;
+    private float x;
+    private float y;
+    private float height;
+    private float width;
+    private float speed;
     private float health;
     private Item<Entity> boundingbox;
     private World<Entity> world;
@@ -22,7 +22,7 @@ public abstract class Entity {
         this.collisionType = collisionType;
     }
 
-    public Entity(int x, int y, int height, int width, int speed,float health, World<Entity> world) {
+    public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -32,31 +32,31 @@ public abstract class Entity {
         setWorld(world);
     }
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
-    public int getWidth() {
+    public float getWidth() {
         return width;
     }
 
-    public int getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
@@ -89,24 +89,24 @@ public abstract class Entity {
 
     //Updates the player coordinates to match the boundingbox
     public void updatePosition() {
-        setX((int) world.getRect(boundingbox).x);
-        setY((int) world.getRect(boundingbox).y);
+        setX(world.getRect(boundingbox).x);
+        setY(world.getRect(boundingbox).y);
     }
 
     public void moveUp(){
-        world.move(boundingbox, (float) getX(), (float) getY() + getSpeed(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, getX(), getY() + getSpeed(), CollisionFilter.defaultFilter);
         updatePosition();
     }
     public void moveDown(){
-        world.move(boundingbox, (float) getX(), (float) getY() - getSpeed(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, getX(), getY() - getSpeed(), CollisionFilter.defaultFilter);
         updatePosition();
     }
     public void moveRight(){
-        world.move(boundingbox, (float) getX() + getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, getX() + getSpeed(), getY(), CollisionFilter.defaultFilter);
         updatePosition();
     }
     public void moveLeft(){
-        world.move(boundingbox, (float) getX() - getSpeed(), (float) getY(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, getX() - getSpeed(), getY(), CollisionFilter.defaultFilter);
         updatePosition();
     }
 }

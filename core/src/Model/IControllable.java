@@ -2,9 +2,9 @@ package Model;
 
 public interface IControllable {
 
-    int getX();
+    float getX();
 
-    int getY();
+    float getY();
 
     void moveLeft();
 

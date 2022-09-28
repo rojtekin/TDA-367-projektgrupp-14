@@ -30,6 +30,9 @@ public class Model implements IModel {
     public PlayerCharacter getPlayer() {
         return player;
     }
+    public TiledMap getTiledMap() {
+        return tiledMap;
+    }
     public int getMapPixelHeight() {
         return mapPixelHeight;
     }

@@ -35,7 +35,7 @@ public class View {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        tiledMap = new TmxMapLoader().load("Map/TestMap.tmx");
+        tiledMap = model.getTiledMap();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();

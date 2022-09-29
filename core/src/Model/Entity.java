@@ -14,7 +14,7 @@ private int angle;
 private float health;
 private Direction direction;
 
-    public Entity(int x, int y, int height, int width, int speed,float health) {
+    public Entity(int x, int y, int height, int width, int speed, float health, String entityName) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -22,11 +22,9 @@ private Direction direction;
         this.speed = speed;
         this.health = health;
         this.direction = Direction.DOWN;
+        this.entityName = entityName;
     }
 
-    protected void setEntityName(String name){
-        this.entityName = name;
-    }
     public String getEntityName(){
         return this.entityName;
     }

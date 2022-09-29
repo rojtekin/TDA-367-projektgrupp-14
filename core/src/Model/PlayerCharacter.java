@@ -7,8 +7,7 @@ public class PlayerCharacter extends Entity implements IControllable {
     private static final int SCREEN_HEIGHT = 480;
 
     public PlayerCharacter() {
-        super(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 32, 32, 5, 10);
-        setEntityName("BlueSamurai");
+        super(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 32, 32, 5, 10, "Player");
     }
 
     public void moveUp(){

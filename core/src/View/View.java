@@ -166,4 +166,27 @@ public class View {
                 throw new AssertionError();
         }
     }
+
+    /**
+     * Gets the entity image based on the direction of the entity and the current frame in the walk animation.
+     * @param entityName the name of the entity
+     * @param currentFrame the current frame in the entity walk animation
+     * @param direction the direction that the entity is facing
+     * @return the texture region which matches the state of the entity
+     */
+    private TextureRegion getEntityImage(String entityName, Direction direction, int currentFrame) {
+        TextureRegion[][] entityImages = allEntityImages.get(entityName);
+        switch(direction) {
+            case UP:
+                return entityImages[currentFrame][1];
+            case DOWN:
+                return entityImages[currentFrame][0];
+            case LEFT:
+                return entityImages[currentFrame][2];
+            case RIGHT:
+                return entityImages[currentFrame][3];
+            default:
+                throw new AssertionError();
+        }
+    }
 }

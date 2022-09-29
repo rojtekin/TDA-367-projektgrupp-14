@@ -23,9 +23,6 @@ import java.util.concurrent.*;
 
 public class View {
     private Model model;
-    private TextureRegion playerImage;
-    private Texture playerWalkSheet;
-    private TextureRegion[][] playerWalkFrames;
     private float timeSincePlayerWalkFrameChanged = 0f;
     private int currentPlayerWalkFrame = 0;
     private HashMap<String, TextureRegion[][]> allEntityImages = new HashMap<String, TextureRegion[][]>();
@@ -47,7 +44,6 @@ public class View {
     }
 
     public void initialize() {
-        //loadPlayerImages();
         loadEntityImages();
 
         camera = new OrthographicCamera();
@@ -101,19 +97,8 @@ public class View {
     }
 
     public void dispose () {
-        playerWalkSheet.dispose();
         batch.dispose();
         tiledMap.dispose();
-    }
-
-    private void loadPlayerImages() {
-        playerWalkSheet = new Texture(Gdx.files.internal("characters/BlueSamurai-Walk.png"));
-        int nColumnsPlayerWalkSheet = 4;
-        int nRowsPlayerWalkSheet = 4;
-        // Splits the player character walk sheet into multiple frames
-        playerWalkFrames = TextureRegion.split(playerWalkSheet,
-                playerWalkSheet.getWidth() / nColumnsPlayerWalkSheet,
-                playerWalkSheet.getHeight() / nRowsPlayerWalkSheet);
     }
 
     /**

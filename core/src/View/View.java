@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.*;
@@ -27,6 +28,7 @@ public class View {
     private TextureRegion[][] playerWalkFrames;
     private float timeSincePlayerWalkFrameChanged = 0f;
     private int currentPlayerWalkFrame = 0;
+    private HashMap<String, TextureRegion[][]> allEntityImages = new HashMap<String, TextureRegion[][]>();
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private static final int SCREEN_WIDTH = 800;
@@ -128,6 +130,15 @@ public class View {
         return TextureRegion.split(spriteSheet,
                 spriteSheet.getWidth() / nColumnsPlayerWalkSheet,
                 spriteSheet.getHeight() / nRowsPlayerWalkSheet);
+    }
+
+    /**
+     * Loads the entity images and puts them in the HashMap allEntityImages.
+     */
+    private void loadEntityImages() {
+        allEntityImages.put("Player", getEntityImages("Player"));
+        allEntityImages.put("Mouse", getEntityImages("Mouse"));
+        allEntityImages.put("Cyclops", getEntityImages("Cyclops"));
     }
 
     /**

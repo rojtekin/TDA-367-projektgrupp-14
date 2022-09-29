@@ -1,6 +1,23 @@
 package Model;
 
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.dongbat.jbump.World;
+
 public interface IModel {
-    void initialize();
+
+    PlayerCharacter getPlayerCharacter();
+
+    TiledMap getTiledMap();
+
+    void setMap(String mapName);
+
+    int getMapPixelWidth();
+
+    int getMapPixelHeight();
+
+    void initialize(String mapName);
+
+    World<Entity> getWorld();
+
     void setPlayerMoving(boolean moving);
 }

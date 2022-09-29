@@ -11,17 +11,17 @@ public class Game extends ApplicationAdapter {
 	Controller controller;
 	@Override
 	public void create () {
-		model = new Model();
-		model.initialize();
+		model = ModelFactory.makeModel();
 		view = new View(model);
 		view.initialize();
-		controller = new Controller(model, PlayerCharacter.instance());
+		controller = new Controller(model);
 	}
 
 	@Override
 	public void render () {
 		controller.update();
 		view.update();
+		model.update();
 	}
 
 	@Override

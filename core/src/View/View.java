@@ -2,28 +2,32 @@ package View;
 
 import Model.*;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.*;
+
 
 public class View {
     private HUD hud;
     private Model model;
-    private Texture playerImage;
+    private TextureRegion playerImage;
+    private Texture playerWalkSheet;
+    private TextureRegion[][] playerWalkFrames;
+    private float timeSincePlayerWalkFrameChanged = 0f;
+    private int currentPlayerWalkFrame = 0;
     private OrthographicCamera camera;
     private SpriteBatch batch;
     private static final int SCREEN_WIDTH = 800;
@@ -31,14 +35,18 @@ public class View {
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
+    private ImageLoader imageLoader = new ImageLoader();
+    private Sound soundLoader = new Sound();
+    private int i = 0;
+
+    private Set<Entity> isKnown = new HashSet<Entity>();
 
     public View(Model model) {
         this.model = model;
     }
 
     public void initialize() {
-        // Load images
-        playerImage = new Texture(Gdx.files.internal("characters/BlueSamurai-Idle.png"));
+        loadPlayerImages();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -57,23 +65,100 @@ public class View {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        //makes camera follow PlayerCharacter (keeps the player in the center of the screen)
-        camera.position.set(PlayerCharacter.instance().getX() + PlayerCharacter.instance().getWidth() / 2, PlayerCharacter.instance().getY() + PlayerCharacter.instance().getHeight() / 2, 0);
+        centerCameraOnPlayer(); //makes the camera follow PlayerCharacter (keeps the player in the center of the screen)
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(playerImage, PlayerCharacter.instance().getX(), PlayerCharacter.instance().getY());
+        updatePlayerWalkFrame();
+        updatePlayerImage(currentPlayerWalkFrame);
+        batch.draw(playerImage, model.getPlayer().getX(), model.getPlayer().getY());
+        drawAllEntities(model);
         batch.end();
 
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         //hud.getStage().act(delta);
         hud.getStage().draw();
+
+        // do something when a entity spawns
+        ArrayList<Entity> entities = model.getEntities();
+        Set<Entity> seen = new HashSet<Entity>();
+        for (Entity entity : entities){
+            if (!isKnown.contains((entity))){
+                soundLoader.playSounds(model);
+            }
+            seen.add(entity);
+        }
+        isKnown = seen;
     }
+
+    private void centerCameraOnPlayer() {
+        camera.position.set(model.getPlayer().getX() + model.getPlayer().getWidth() / 2, model.getPlayer().getY() + model.getPlayer().getHeight() / 2, 0);
+    }
+
+    private void drawAllEntities(Model model) {
+        for (Entity entity : model.getEntities()){
+            if (!(entity instanceof PlayerCharacter))
+            batch.draw(imageLoader.loadImage(entity), entity.getX(), entity.getY());
+        }
+    }
+
     public void dispose () {
         hud.dispose();
-        playerImage.dispose();
+        playerWalkSheet.dispose();
         batch.dispose();
         tiledMap.dispose();
+    }
+
+    private void loadPlayerImages() {
+        playerWalkSheet = new Texture(Gdx.files.internal("characters/BlueSamurai-Walk.png"));
+        int nColumnsPlayerWalkSheet = 4;
+        int nRowsPlayerWalkSheet = 4;
+        // Splits the player character walk sheet into multiple frames
+        playerWalkFrames = TextureRegion.split(playerWalkSheet,
+                playerWalkSheet.getWidth() / nColumnsPlayerWalkSheet,
+                playerWalkSheet.getHeight() / nRowsPlayerWalkSheet);
+    }
+
+    /**
+     * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
+     * Otherwise, the frame is set to the first frame of the walk animation.
+     */
+    public void updatePlayerWalkFrame() {
+        if (model.playerIsMoving()) {
+            timeSincePlayerWalkFrameChanged += Gdx.graphics.getDeltaTime();
+            if (timeSincePlayerWalkFrameChanged > 0.2) {
+                currentPlayerWalkFrame++;
+                if (currentPlayerWalkFrame > 3) { currentPlayerWalkFrame = 0; }
+                timeSincePlayerWalkFrameChanged = 0f;
+            }
+        }
+        else {
+            currentPlayerWalkFrame = 0;
+            timeSincePlayerWalkFrameChanged = 0f;
+        }
+    }
+
+
+    /**
+     * Updates the player image based on the direction of the player and the current frame in the walk animation.
+     * @param currentFrame the current frame in the player walk animation
+     */
+    private void updatePlayerImage(int currentFrame) {
+        Direction playerDirection = model.getPlayerDirection();
+        switch(playerDirection) {
+            case UP:
+                playerImage = playerWalkFrames[currentFrame][1];
+                break;
+            case DOWN:
+                playerImage = playerWalkFrames[currentFrame][0];
+                break;
+            case LEFT:
+                playerImage = playerWalkFrames[currentFrame][2];
+                break;
+            case RIGHT:
+                playerImage = playerWalkFrames[currentFrame][3];
+                break;
+        }
     }
 }

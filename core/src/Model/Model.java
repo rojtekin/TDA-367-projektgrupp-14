@@ -1,18 +1,43 @@
 package Model;
 
-import Model.Enemies.Mouse;
+import Model.Enemies.*;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class Model implements IModel {
-    private static final int SCREEN_WIDTH = 800;
-    private static final int SCREEN_HEIGHT = 480;
-    private ArrayList<Enemy> enemyList;
+    private PlayerCharacter player;
+    private ArrayList<Entity> entityList = new ArrayList<>();
 
     public void initialize() {
-        PlayerCharacter.instance();
+        player = new PlayerCharacter();
+        entityList.add(player);
+        Mouse mouse1 = new Mouse(50,50,16,16,2,1,1); //temporary
+        entityList.add(mouse1);
+
     }
-    public ArrayList<Enemy> getEnemies(){
-        return this.enemyList;
+    public ArrayList<Entity> getEntities(){
+        return new ArrayList<Entity>(entityList);
+    }
+    public PlayerCharacter getPlayer(){
+        return player ;
+    }
+    public void update(){
+
+    }
+
+    public Direction getPlayerDirection() {
+        return player.getDirection();
+    }
+
+    public boolean playerIsMoving() {
+        return player.isMoving();
+    }
+
+    public void setPlayerMoving(boolean moving) {
+        player.setMoving(moving);
     }
 }

@@ -34,15 +34,9 @@ public class HUD {
         Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
         NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
         Image xpbar = new Image(emptyxp);
-        /*
-        Texture aquamarine = new Texture(Gdx.files.internal("HudColors/Aquamarine7fffd4.png"));
-        NinePatch fullexperience = new NinePatch(aquamarine, 0, 0, 0, 0);
-        Image fullxpbar = new Image(fullexperience);
-        */
+
         Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
         NinePatch fullHp= new NinePatch(green, 0, 0, 0, 0);
-        Image fullhp = new Image(fullHp);
-
         Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
         NinePatch midHp = new NinePatch(yellow, 0, 0, 0, 0);
         Image midhp = new Image(midHp);

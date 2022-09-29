@@ -47,7 +47,8 @@ public class View {
     }
 
     public void initialize() {
-        loadPlayerImages();
+        //loadPlayerImages();
+        loadEntityImages();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -71,8 +72,7 @@ public class View {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         updatePlayerWalkFrame();
-        updatePlayerImage(currentPlayerWalkFrame);
-        batch.draw(playerImage, model.getPlayer().getX(), model.getPlayer().getY());
+        batch.draw(getPlayerImage(currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
         drawAllEntities(model);
         batch.end();
 
@@ -162,24 +162,23 @@ public class View {
 
 
     /**
-     * Updates the player image based on the direction of the player and the current frame in the walk animation.
+     * Gets the player image based on the direction of the player and the current frame in the walk animation.
      * @param currentFrame the current frame in the player walk animation
      */
-    private void updatePlayerImage(int currentFrame) {
+    private TextureRegion getPlayerImage(int currentFrame) {
         Direction playerDirection = model.getPlayerDirection();
+        TextureRegion[][] playerWalkFrames = allEntityImages.get("Player");
         switch(playerDirection) {
             case UP:
-                playerImage = playerWalkFrames[currentFrame][1];
-                break;
+                return playerWalkFrames[currentFrame][1];
             case DOWN:
-                playerImage = playerWalkFrames[currentFrame][0];
-                break;
+                return playerWalkFrames[currentFrame][0];
             case LEFT:
-                playerImage = playerWalkFrames[currentFrame][2];
-                break;
+                return playerWalkFrames[currentFrame][2];
             case RIGHT:
-                playerImage = playerWalkFrames[currentFrame][3];
-                break;
+                return playerWalkFrames[currentFrame][3];
+            default:
+                throw new AssertionError();
         }
     }
 }

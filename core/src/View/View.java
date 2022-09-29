@@ -68,7 +68,7 @@ public class View {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         updatePlayerWalkFrame();
-        batch.draw(getPlayerImage(currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
+        batch.draw(getEntityImage("Player", model.getPlayerDirection(), currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
         drawAllEntities(model);
         batch.end();
 
@@ -142,28 +142,6 @@ public class View {
         else {
             currentPlayerWalkFrame = 0;
             timeSincePlayerWalkFrameChanged = 0f;
-        }
-    }
-
-
-    /**
-     * Gets the player image based on the direction of the player and the current frame in the walk animation.
-     * @param currentFrame the current frame in the player walk animation
-     */
-    private TextureRegion getPlayerImage(int currentFrame) {
-        Direction playerDirection = model.getPlayerDirection();
-        TextureRegion[][] playerWalkFrames = allEntityImages.get("Player");
-        switch(playerDirection) {
-            case UP:
-                return playerWalkFrames[currentFrame][1];
-            case DOWN:
-                return playerWalkFrames[currentFrame][0];
-            case LEFT:
-                return playerWalkFrames[currentFrame][2];
-            case RIGHT:
-                return playerWalkFrames[currentFrame][3];
-            default:
-                throw new AssertionError();
         }
     }
 

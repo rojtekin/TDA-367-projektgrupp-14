@@ -115,6 +115,22 @@ public class View {
     }
 
     /**
+     * Loads a sprite sheet for the specified entity, splits it into multiple images
+     * and returns a 2D array which contains them.
+     * @param entityName the name of the entity
+     * @return a 2D array with texture regions of the sprite sheet of the specified entity
+     */
+    private TextureRegion[][] getEntityImages(String entityName) {
+        Texture spriteSheet = new Texture(Gdx.files.internal("entities/" + entityName + "SpriteSheet.png"));
+        int nColumnsPlayerWalkSheet = 4;
+        int nRowsPlayerWalkSheet = 4;
+        // Splits the sprite sheet into multiple images
+        return TextureRegion.split(spriteSheet,
+                spriteSheet.getWidth() / nColumnsPlayerWalkSheet,
+                spriteSheet.getHeight() / nRowsPlayerWalkSheet);
+    }
+
+    /**
      * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
      * Otherwise, the frame is set to the first frame of the walk animation.
      */

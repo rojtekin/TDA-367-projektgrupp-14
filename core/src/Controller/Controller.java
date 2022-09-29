@@ -8,12 +8,14 @@ public class Controller {
     private IModel model;
     private IControllable player;
 
-    public Controller(IModel model, IControllable player) {
+    public Controller(Model model) {
         this.model = model;
-        this.player = player;
+        this.player = model.getPlayer();
     }
 
+
     public void update() {
+        model.setPlayerMoving(false);
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveLeft();

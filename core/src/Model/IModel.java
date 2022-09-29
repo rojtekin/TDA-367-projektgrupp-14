@@ -18,4 +18,6 @@ public interface IModel {
     void initialize(String mapName);
 
     World<Entity> getWorld();
+
+    void setPlayerMoving(boolean moving);
 }

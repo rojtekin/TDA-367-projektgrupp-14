@@ -1,6 +1,6 @@
 package Model;
 
-import Model.Enemies.Enemy;
+import Model.Enemies.*;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -24,7 +24,7 @@ public class Model implements IModel {
     private int mapPixelHeight;
     private MapObjects objects;
     private PlayerCharacter player;
-    private ArrayList<Enemy> enemyList = new ArrayList<>();
+    private ArrayList<Entity> entityList = new ArrayList<>();
     private World<Entity> world = new World<>();
 
     public PlayerCharacter getPlayerCharacter() {
@@ -45,6 +45,24 @@ public class Model implements IModel {
         importMapProperties();
         importMapCollision();
     }
+    public PlayerCharacter getPlayer(){
+        return player ;
+    }
+    public void update(){
+
+    }
+
+    public Direction getPlayerDirection() {
+        return player.getDirection();
+    }
+
+    public boolean playerIsMoving() {
+        return player.isMoving();
+    }
+
+    public void setPlayerMoving(boolean moving) {
+        player.setMoving(moving);
+    }
 
     public int getMapPixelHeight() {
         return mapPixelHeight;
@@ -58,10 +76,9 @@ public class Model implements IModel {
         return world;
     }
 
-    public ArrayList<Enemy> getEnemies(){
-        return this.enemyList;
+    public ArrayList<Entity> getEntities(){
+        return new ArrayList<Entity>(entityList);
     }
-
     /**
      * Loads a specified map and creates a playercharacter
      * @param mapName the filename of the map
@@ -71,6 +88,9 @@ public class Model implements IModel {
         importMapProperties();
         importMapCollision();
         player = new PlayerCharacter(mapPixelWidth / 2, mapPixelHeight / 2, world);
+        entityList.add(player);
+        Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, world); //temporary
+        entityList.add(mouse1);
     }
 
     /**

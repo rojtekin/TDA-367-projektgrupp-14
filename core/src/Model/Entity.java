@@ -4,6 +4,8 @@ import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
+import java.util.ArrayList;
+
 public abstract class Entity {
     private float x;
     private float y;
@@ -11,9 +13,13 @@ public abstract class Entity {
     private float width;
     private float speed;
     private float health;
+    private boolean inMotion = false;
+    private String entityName;
+    private int angle;
     private Item<Entity> boundingbox;
     private World<Entity> world;
     private CollisionFilter collisionType = CollisionFilter.defaultFilter;
+    private Direction direction;
 
     public CollisionFilter getCollisionType() {
         return collisionType;
@@ -30,7 +36,23 @@ public abstract class Entity {
         this.width = width;
         this.speed = speed;
         this.health = health;
+        this.direction = Direction.DOWN;
         setWorld(world);
+    }
+
+    public boolean isMoving() {
+        return inMotion;
+    }
+
+    public void setMoving(boolean moving) {
+        this.inMotion = moving;
+    }
+
+    protected void setEntityName(String name){
+        this.entityName = name;
+    }
+    public String getEntityName(){
+        return this.entityName;
     }
 
     public float getX() {
@@ -60,8 +82,7 @@ public abstract class Entity {
     public float getSpeed() {
         return speed;
     }
-
-    public void setSpeed(int speed) {
+    protected void setSpeed(float speed) {
         this.speed = speed;
     }
 
@@ -71,6 +92,21 @@ public abstract class Entity {
 
     public void setHealth(float health) {
         this.health = health;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public boolean getInMotion() {
+        if (speed != 0)
+            return false;
+        else
+            return true;
     }
 
     public World<Entity> getWorld() {
@@ -104,6 +140,8 @@ public abstract class Entity {
     public void moveUp(){
         world.move(boundingbox, getX(), getY() + getSpeed(), CollisionFilter.defaultFilter);
         updatePosition();
+        setMoving(true);
+        setDirection(Direction.UP);
     }
     /**
      * Moves the collisionbox down, then moves the entity to match it
@@ -111,6 +149,8 @@ public abstract class Entity {
     public void moveDown(){
         world.move(boundingbox, getX(), getY() - getSpeed(), CollisionFilter.defaultFilter);
         updatePosition();
+        setMoving(true);
+        setDirection(Direction.DOWN);
     }
     /**
      * Moves the collisionbox to the right, then moves the entity to match it
@@ -118,6 +158,8 @@ public abstract class Entity {
     public void moveRight(){
         world.move(boundingbox, getX() + getSpeed(), getY(), CollisionFilter.defaultFilter);
         updatePosition();
+        setMoving(true);
+        setDirection(Direction.RIGHT);
     }
     /**
      * Moves the collisionbox to the left, then moves the entity to match it
@@ -125,5 +167,7 @@ public abstract class Entity {
     public void moveLeft(){
         world.move(boundingbox, getX() - getSpeed(), getY(), CollisionFilter.defaultFilter);
         updatePosition();
+        setMoving(true);
+        setDirection(Direction.LEFT);
     }
 }

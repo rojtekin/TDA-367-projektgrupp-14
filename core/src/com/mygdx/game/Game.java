@@ -11,17 +11,17 @@ public class Game extends ApplicationAdapter {
 	Controller controller;
 	@Override
 	public void create () {
-		model = new Model();
-		model.initialize("TestMap");
+		model = ModelFactory.makeModel("TestMap");
 		view = new View(model);
 		view.initialize();
-		controller = new Controller(model, model.getPlayerCharacter());
+		controller = new Controller(model);
 	}
 
 	@Override
 	public void render () {
 		controller.update();
 		view.update();
+		model.update();
 	}
 
 	@Override

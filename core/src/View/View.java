@@ -66,9 +66,7 @@ public class View {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         updatePlayerWalkFrame();
-        batch.draw(imageHandler.getEntityImage("Player", model.getPlayerDirection(), currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
-        //drawAllEntities(model);
-        drawEnemies();
+        drawEntities();
         batch.end();
 
         hud.update();
@@ -99,11 +97,20 @@ public class View {
         }
     }
 
+    private void drawPlayer() {
+        batch.draw(imageHandler.getEntityImage("Player", model.getPlayerDirection(), currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
+    }
+
     private void drawEnemies() {
         for (Enemy enemy : model.getEnemyList()) {
             batch.draw(imageHandler.getEntityImage(enemy.getEntityName(), enemy.getDirection(), 0),
                     enemy.getX(), enemy.getY());
         }
+    }
+
+    private void drawEntities() {
+        drawPlayer();
+        drawEnemies();
     }
 
     public void dispose () {

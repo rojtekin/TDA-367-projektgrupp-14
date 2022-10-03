@@ -1,6 +1,7 @@
 package View;
 
 import Model.*;
+import Model.Enemies.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -66,7 +67,8 @@ public class View {
         batch.begin();
         updatePlayerWalkFrame();
         batch.draw(imageHandler.getEntityImage("Player", model.getPlayerDirection(), currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
-        drawAllEntities(model);
+        //drawAllEntities(model);
+        drawEnemies();
         batch.end();
 
         hud.update();
@@ -94,6 +96,13 @@ public class View {
         for (Entity entity : model.getEntities()){
             if (!(entity instanceof PlayerCharacter))
             batch.draw(imageLoader.loadImage(entity), entity.getX(), entity.getY());
+        }
+    }
+
+    private void drawEnemies() {
+        for (Enemy enemy : model.getEnemyList()) {
+            batch.draw(imageHandler.getEntityImage(enemy.getEntityName(), enemy.getDirection(), 0),
+                    enemy.getX(), enemy.getY());
         }
     }
 

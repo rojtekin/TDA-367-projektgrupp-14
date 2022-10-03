@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import java.util.ArrayList;
@@ -29,10 +28,8 @@ public class View {
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
-    private ImageLoader imageLoader = new ImageLoader();
     private ImageHandler imageHandler = new ImageHandler();
     private Sound soundLoader = new Sound();
-    private int i = 0;
 
     private Set<Entity> isKnown = new HashSet<Entity>();
 
@@ -88,13 +85,6 @@ public class View {
 
     private void centerCameraOnPlayer() {
         camera.position.set(model.getPlayer().getX() + model.getPlayer().getWidth() / 2, model.getPlayer().getY() + model.getPlayer().getHeight() / 2, 0);
-    }
-
-    private void drawAllEntities(Model model) {
-        for (Entity entity : model.getEntities()){
-            if (!(entity instanceof PlayerCharacter))
-            batch.draw(imageLoader.loadImage(entity), entity.getX(), entity.getY());
-        }
     }
 
     private void drawPlayer() {

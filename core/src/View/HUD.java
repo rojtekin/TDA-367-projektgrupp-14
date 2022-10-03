@@ -123,7 +123,6 @@ public class HUD {
         maxhp = player.getMaxHealth();
         int hpsize = (int)(currenthp/maxhp);
         setHpSize(200*hpsize);
-
     }
 
     private void setHpColor(Image hpColor) {
@@ -133,11 +132,7 @@ public class HUD {
         return HpColor;
     }
 
-    public double getHpsize() {
-        return hpsize;
-    }
-
-    public void setHpSize(int hpsize) {
+    private void setHpSize(int hpsize) {
         this.hpsize = hpsize;
     }
 

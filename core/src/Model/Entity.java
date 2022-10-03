@@ -15,7 +15,8 @@ public abstract class Entity {
     private float health;
     private boolean inMotion = false;
     private String entityName;
-    private int angle;
+    private float maxHealth;
+    private float currentHealth;
     private Item<Entity> boundingbox;
     private World<Entity> world;
     private CollisionFilter collisionType = CollisionFilter.defaultFilter;
@@ -35,7 +36,8 @@ public abstract class Entity {
         this.height = height;
         this.width = width;
         this.speed = speed;
-        this.health = health;
+        this.maxHealth = health;
+        this.currentHealth = health;
         this.direction = Direction.DOWN;
         setWorld(world);
     }
@@ -86,13 +88,17 @@ public abstract class Entity {
         this.speed = speed;
     }
 
-    public float getHealth() {
-        return health;
+    public float getMaxHealth() {
+        return maxHealth;
     }
 
-    public void setHealth(float health) {
-        this.health = health;
+    private void setMaxHealth(float maxHealth) {
+        this.maxHealth = maxHealth;
     }
+
+    public float getCurrentHealth() {return currentHealth;}
+
+    public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
 
     public Direction getDirection() {
         return direction;

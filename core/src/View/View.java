@@ -2,7 +2,6 @@ package View;
 
 import Model.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,10 +16,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.*;
 
 
 public class View {
+    private HUD hud;
     private Model model;
     private TextureRegion playerImage;
     private Texture playerWalkSheet;
@@ -54,10 +53,11 @@ public class View {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
+        hud = new HUD(batch, model.getPlayer());
     }
 
     public void update() {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
@@ -74,6 +74,10 @@ public class View {
         drawAllEntities(model);
         batch.end();
 
+        hud.update();
+        batch.setProjectionMatrix(hud.getStage().getCamera().combined);
+        //hud.getStage().act(delta);
+        hud.getStage().draw();
 
         // do something when a entity spawns
         ArrayList<Entity> entities = model.getEntities();
@@ -99,6 +103,7 @@ public class View {
     }
 
     public void dispose () {
+        hud.dispose();
         playerWalkSheet.dispose();
         batch.dispose();
         tiledMap.dispose();

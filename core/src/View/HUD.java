@@ -1,5 +1,6 @@
 package View;
 
+import Model.PlayerCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,49 +10,52 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class HUD {
     private Stage stage;
     private FitViewport stageViewport;
+    int score = 10; //temporary, it should take it from model
+    private PlayerCharacter player;
+    private double currenthp;
+    private double maxhp;
 
-    public HUD(SpriteBatch spriteBatch) {
-        stageViewport = new FitViewport(800,480);
+    private int hpsize;
+
+    private Image HpColor;
+
+    //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values needed
+    //for a square (and also make it an actor so I can send it back and not draw directly).
+
+    private Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
+    private Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
+    private Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
+
+    private Texture black = new Texture(Gdx.files.internal("HudColors/Black.png"));
+    private NinePatch blackHp = new NinePatch(black, 0, 0, 0, 0);
+    private Image blackHpBar = new Image(blackHp);
+    private Image blackXpBar = new Image(blackHp);
+
+    private Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
+    private NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
+    private Image xpbar = new Image(emptyxp);
+
+    private Texture xpyellow = new Texture(Gdx.files.internal("HudColors/Xpyellowc8a72b.png"));
+    private NinePatch xpyellow2 = new NinePatch(xpyellow, 0, 0, 0, 0);
+    private Image fullxpbar = new Image(xpyellow2);
+
+    private Label hpLabel = new Label("HP", new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private Label scoreLabel = new Label("Score: " + Integer.toString(score), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+
+
+    public HUD(SpriteBatch spriteBatch,PlayerCharacter player) {
+        stageViewport = new FitViewport(800, 480);
         stage = new Stage(stageViewport, spriteBatch);
+        this.player = player;
+    }
 
-        int score = 10;
-
-        //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values needed
-        //for a square (and also make it an actor so I can send it back and not draw directly).
-
-        Texture black= new Texture(Gdx.files.internal("HudColors/Black.png"));
-        NinePatch blackHp = new NinePatch(black, 0, 0, 0, 0);
-        Image blackHpBar = new Image(blackHp);
-        Image blackXpBar = new Image(blackHp);
-
-        Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
-        NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
-        Image xpbar = new Image(emptyxp);
-
-        Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
-        NinePatch fullHp= new NinePatch(green, 0, 0, 0, 0);
-        Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
-        NinePatch midHp = new NinePatch(yellow, 0, 0, 0, 0);
-        Image midhp = new Image(midHp);
-
-        Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
-        NinePatch lowHp = new NinePatch(red, 0, 0, 0, 0);
-        Image lowhp = new Image(lowHp);
-
-        Texture xpyellow = new Texture(Gdx.files.internal("HudColors/Xpyellowc8a72b.png"));
-        NinePatch xpyellow2 = new NinePatch(xpyellow, 0, 0, 0, 0);
-        Image fullxpbar = new Image(xpyellow2);
-
-        Label hpLabel = new Label("HP", new Label.LabelStyle((new BitmapFont()), Color.WHITE));
-        Label scoreLabel = new Label("Score: " + Integer.toString(score), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
-
+    public void update() {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
         // ugly coded maybe
@@ -59,11 +63,11 @@ public class HUD {
         Table table1 = new Table();
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
 
-        table1.add(blackHpBar).size(204,24).left().top().expandX().expandY().pad(8); //black underline hp bar
+        table1.add(blackHpBar).size(204, 24).left().top().expandX().expandY().pad(8); //black underline hp bar
 
         table1.row(); //new row
 
-        table1.add(blackXpBar).size(404,14).bottom().pad(8); //Black border experience
+        table1.add(blackXpBar).size(404, 14).bottom().pad(8); //Black border experience
 
         stage.addActor(table1); //add the bottom layer to stage
 
@@ -72,38 +76,15 @@ public class HUD {
 
         //den här ska switcha från grön till gull till röd och även minska i size beroende på hp, funktion att göra
         //table2.add(fullhp).size(200,20).left().top().pad(10).expandX().expandY();
-
-        table2.add(midhp).size(140,20).left().top().pad(10).expandX().expandY();
-
-        //how i should do it
-        //table2.add(choosehpcolor).size(hpsize*200,20).left().top().pad(10).expandX().expandY();
+        pickhpcolor();
+        pickhpsize();
+        table2.add(getHpColor()).size(hpsize, 20).left().top().pad(10).expandX().expandY();
         //hp size is between 0 and 1
         table2.row();
 
-        table2.add(xpbar).size(400,10).pad(10);
+        table2.add(xpbar).size(400, 10).pad(10);
 
         stage.addActor(table2);
-
-        /*
-        Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
-        NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
-        Image xpbar = new Image(emptyxp);
-
-        xpbar.setSize(200,20);
-
-        Texture aquamarine = new Texture(Gdx.files.internal("HudColors/Aquamarine7fffd4.png"));
-        NinePatch fullexperience = new NinePatch(aquamarine, 0, 0, 0, 0);
-        Image fullxpbar = new Image(fullexperience);
-
-        fullxpbar.setSize(100,20);
-
-        Stack stack = new Stack();
-        stack.add(xpbar);
-        stack.add(fullxpbar);
-
-        table.add(stack).colspan(2).pad(10);
-
-         */
 
         Table table3 = new Table();
         table3.setFillParent(true);
@@ -113,10 +94,52 @@ public class HUD {
 
         table3.row();
 
-        table3.add(fullxpbar).size(300,10).bottom().pad(10).expandY().colspan(2);
+        table3.add(fullxpbar).size(300, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
+    }
 
-}
+    private void pickhpcolor(){
+        currenthp = player.getCurrentHealth();
+        maxhp = player.getMaxHealth();
+        if(currenthp <= maxhp * 0.33) {
+            NinePatch lowHp = new NinePatch(red, 0, 0, 0, 0);
+            Image lowhp = new Image(lowHp);
+            setHpColor(lowhp);
+        }
+        if(currenthp <= maxhp * 0.66) {
+            NinePatch midHp = new NinePatch(yellow, 0, 0, 0, 0);
+            Image midhp = new Image(midHp);
+            setHpColor(midhp);
+        }
+        if(currenthp <= maxhp * 1) {
+            NinePatch fullHp = new NinePatch(green, 0, 0, 0, 0);
+            Image fullhp = new Image(fullHp);
+            setHpColor(fullhp);
+        }
+    }
+
+    private void pickhpsize(){
+        currenthp = player.getCurrentHealth();
+        maxhp = player.getMaxHealth();
+        int hpsize = (int)(currenthp/maxhp);
+        setHpSize(200*hpsize);
+
+    }
+
+    private void setHpColor(Image hpColor) {
+        HpColor = hpColor;
+    }
+    private Image getHpColor() {
+        return HpColor;
+    }
+
+    public double getHpsize() {
+        return hpsize;
+    }
+
+    public void setHpSize(int hpsize) {
+        this.hpsize = hpsize;
+    }
 
     public Stage getStage() { return stage; }
 

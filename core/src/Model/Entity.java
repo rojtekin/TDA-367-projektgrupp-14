@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
-
 public abstract class Entity {
 private int x;
 private int y;
@@ -11,16 +9,18 @@ private int speed;
 private boolean inMotion = false;
 private String entityName;
 private int angle;
-private float health;
+private float maxHealth;
+private float currentHealth;
 private Direction direction;
 
-    public Entity(int x, int y, int height, int width, int speed,float health) {
+    public Entity(int x, int y, int height, int width, int speed, float health) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
-        this.health = health;
+        this.maxHealth = health;
+        this.currentHealth = health;
         this.direction = Direction.DOWN;
     }
 
@@ -60,13 +60,17 @@ private Direction direction;
         this.speed = speed;
     }
 
-    public float getHealth() {
-        return health;
+    public float getMaxHealth() {
+        return maxHealth;
     }
 
-    public void setHealth(float health) {
-        this.health = health;
+    public void setMaxHealth(float maxHealth) {
+        this.maxHealth = maxHealth;
     }
+
+    public float getCurrentHealth() {return currentHealth;}
+
+    public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
 
     public Direction getDirection() {
         return direction;

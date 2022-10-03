@@ -2,7 +2,6 @@ package View;
 
 import Model.*;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.*;
 
 
 public class View {
@@ -55,7 +53,7 @@ public class View {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
-        hud = new HUD(batch);
+        hud = new HUD(batch, model.getPlayer());
     }
 
     public void update() {
@@ -76,6 +74,7 @@ public class View {
         drawAllEntities(model);
         batch.end();
 
+        hud.update();
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         //hud.getStage().act(delta);
         hud.getStage().draw();

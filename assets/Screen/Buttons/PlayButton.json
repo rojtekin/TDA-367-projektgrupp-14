@@ -1,0 +1,24 @@
+{
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	Untitled-1-color: {
+		name: Untitled-1
+		color: {
+			r: 1
+			g: 0.6784314
+			b: 0.3647059
+			a: 1
+		}
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: Untitled-1
+		down: Untitled-1
+		over: Untitled-1-color
+		focused: Untitled-1-color
+		pressedOffsetX: 2
+		pressedOffsetY: 2
+		checkedOffsetX: 1
+	}
+}
+}

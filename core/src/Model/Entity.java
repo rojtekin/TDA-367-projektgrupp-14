@@ -30,7 +30,7 @@ public abstract class Entity {
     }
 
     //TODO rework movement, remove has-dependency on world
-    public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
+    public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world, String entityName) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -39,6 +39,7 @@ public abstract class Entity {
         this.maxHealth = health;
         this.currentHealth = health;
         this.direction = Direction.DOWN;
+        this.entityName = entityName;
         setWorld(world);
     }
 
@@ -50,9 +51,6 @@ public abstract class Entity {
         this.inMotion = moving;
     }
 
-    protected void setEntityName(String name){
-        this.entityName = name;
-    }
     public String getEntityName(){
         return this.entityName;
     }

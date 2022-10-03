@@ -114,7 +114,7 @@ public class Model implements IModel {
         objects = tiledMap.getLayers().get("collision").getObjects();
         for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
             Rectangle r = o.getRectangle();
-            PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
+            PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world, "");
             world.add(new Item<Entity>(st), r.x, r.y, r.width, r.height);
         }
     }

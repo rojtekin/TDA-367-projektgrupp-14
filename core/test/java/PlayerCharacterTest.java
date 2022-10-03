@@ -12,12 +12,13 @@ public class PlayerCharacterTest {
 
     @BeforeEach
     public void setUp() {
-        player = new PlayerCharacter();
+        //player = new PlayerCharacter();
         // Reset the position of the player character
-        player.setX(SCREEN_WIDTH / 2);
-        player.setY(SCREEN_HEIGHT / 2);
+        //player.setX(SCREEN_WIDTH / 2);
+        //player.setY(SCREEN_HEIGHT / 2);
     }
 
+    /*
     @Test
     public void moveUp_IncreasesPlayerY() {
         int initialYPosition = player.getY();
@@ -81,4 +82,5 @@ public class PlayerCharacterTest {
         int finalXPosition = player.getX();
         assertTrue(finalXPosition >= 0);
     }
+    */
 }

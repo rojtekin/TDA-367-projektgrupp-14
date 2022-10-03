@@ -99,7 +99,6 @@ public class View {
 
     public void dispose () {
         hud.dispose();
-        playerWalkSheet.dispose();
         batch.dispose();
         tiledMap.dispose();
     }

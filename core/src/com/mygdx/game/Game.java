@@ -6,12 +6,12 @@ import View.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
 public class Game extends ApplicationAdapter {
-	Model model;
-	View view;
-	Controller controller;
+	private Model model;
+	private View view;
+	private Controller controller;
 	@Override
 	public void create () {
-		model = ModelFactory.makeModel();
+		model = ModelFactory.makeModel("TestMap");
 		view = new View(model);
 		view.initialize();
 		controller = new Controller(model);

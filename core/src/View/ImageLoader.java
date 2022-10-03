@@ -1,7 +1,6 @@
 package View;
 
 import Model.Direction;
-import Model.Enemy;
 import Model.Entity;
 import Model.PlayerCharacter;
 import com.badlogic.gdx.Gdx;
@@ -31,7 +30,7 @@ public class ImageLoader {
         if (entity instanceof PlayerCharacter){
             folder = "Characters/";
         }
-        else if(entity instanceof Enemy){
+        else if(entity instanceof Model.Enemies.Enemy){
             folder = "Enemies/" + entity.getClass().getSimpleName() + "/";
         }
 

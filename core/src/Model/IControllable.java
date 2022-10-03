@@ -2,15 +2,15 @@ package Model;
 
 public interface IControllable {
 
-    public int getX();
+    float getX();
 
-    public int getY();
+    float getY();
 
-    public void moveLeft();
+    void moveLeft();
 
-    public void moveRight();
+    void moveRight();
 
-    public void moveUp();
+    void moveUp();
 
-    public void moveDown();
+    void moveDown();
 }

@@ -1,9 +1,9 @@
 package Model;
 
 public class ModelFactory {
-    public static Model makeModel() {
+    public static Model makeModel(String mapName) {
         Model model = new Model();
-        model.initialize();
+        model.initialize(mapName);
         return model;
     }
 }

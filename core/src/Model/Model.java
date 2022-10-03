@@ -12,6 +12,7 @@ import com.dongbat.jbump.World;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Model implements IModel {
     private TiledMap tiledMap;
@@ -26,6 +27,7 @@ public class Model implements IModel {
     private PlayerCharacter player;
     private ArrayList<Entity> entityList = new ArrayList<>();
     private World<Entity> world = new World<>();
+    private List<Enemy> enemyList = new ArrayList<>();
 
     public PlayerCharacter getPlayerCharacter() {
         return player;
@@ -89,8 +91,8 @@ public class Model implements IModel {
         importMapCollision();
         player = new PlayerCharacter(mapPixelWidth / 2, mapPixelHeight / 2, world);
         entityList.add(player);
-        Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, world); //temporary
-        entityList.add(mouse1);
+        //Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, world); //temporary
+        //entityList.add(mouse1);
     }
 
     /**
@@ -117,5 +119,13 @@ public class Model implements IModel {
             PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world, "");
             world.add(new Item<Entity>(st), r.x, r.y, r.width, r.height);
         }
+    }
+
+    public void addEnemy(Enemy enemy) {
+        enemyList.add(enemy);
+    }
+
+    public List<Enemy> getEnemyList() {
+        return new ArrayList<>(enemyList);
     }
 }

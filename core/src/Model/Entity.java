@@ -139,39 +139,41 @@ public abstract class Entity {
     }
 
     /**
-     * Moves the collisionbox up, then moves the entity to match it
+     * Moves the entity up.
      */
     public void moveUp(){
-        world.move(boundingbox, getX(), getY() + getSpeed(), CollisionFilter.defaultFilter);
-        updatePosition();
-        setMoving(true);
         setDirection(Direction.UP);
+        move();
     }
     /**
-     * Moves the collisionbox down, then moves the entity to match it
+     * Moves the entity down.
      */
     public void moveDown(){
-        world.move(boundingbox, getX(), getY() - getSpeed(), CollisionFilter.defaultFilter);
-        updatePosition();
-        setMoving(true);
         setDirection(Direction.DOWN);
+        move();
     }
     /**
-     * Moves the collisionbox to the right, then moves the entity to match it
+     * Moves the entity to the right.
      */
     public void moveRight(){
-        world.move(boundingbox, getX() + getSpeed(), getY(), CollisionFilter.defaultFilter);
-        updatePosition();
-        setMoving(true);
         setDirection(Direction.RIGHT);
+        move();
     }
     /**
-     * Moves the collisionbox to the left, then moves the entity to match it
+     * Moves the entity to the left.
      */
     public void moveLeft(){
-        world.move(boundingbox, getX() - getSpeed(), getY(), CollisionFilter.defaultFilter);
+        setDirection(Direction.LEFT);
+        move();
+    }
+
+    /**
+     * Moves the entity in the direction it is facing. Moves the collision box, then moves the entity to match it.
+     */
+    public void move() {
+        world.move(boundingbox, getX() + (direction.x * getSpeed()),
+                getY() + (direction.y * getSpeed()), CollisionFilter.defaultFilter);
         updatePosition();
         setMoving(true);
-        setDirection(Direction.LEFT);
     }
 }

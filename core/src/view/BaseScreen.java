@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;

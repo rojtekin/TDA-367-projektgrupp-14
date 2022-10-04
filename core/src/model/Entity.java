@@ -1,10 +1,8 @@
-package Model;
+package model;
 
 import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
-
-import java.util.ArrayList;
 
 public abstract class Entity {
     private float x;
@@ -84,6 +82,7 @@ public abstract class Entity {
     public float getSpeed() {
         return speed;
     }
+
     protected void setSpeed(float speed) {
         this.speed = speed;
     }
@@ -129,7 +128,7 @@ public abstract class Entity {
     }
 
     private void addCollision() {
-        boundingbox = world.add(new Item<>(this), getX(), getY(), getWidth(), getHeight());
+        boundingbox = world.add(new Item<>(this), x, y, width, height);
     }
 
     /**
@@ -144,36 +143,36 @@ public abstract class Entity {
      * Moves the collisionbox up, then moves the entity to match it
      */
     public void moveUp(){
-        world.move(boundingbox, getX(), getY() + getSpeed(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, x, y + speed, CollisionFilter.defaultFilter);
         updatePosition();
         setMoving(true);
-        setDirection(Direction.UP);
+        direction = Direction.UP;
     }
     /**
      * Moves the collisionbox down, then moves the entity to match it
      */
     public void moveDown(){
-        world.move(boundingbox, getX(), getY() - getSpeed(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, x, y - speed, CollisionFilter.defaultFilter);
         updatePosition();
-        setMoving(true);
-        setDirection(Direction.DOWN);
+        inMotion = true;
+        direction = Direction.DOWN;
     }
     /**
      * Moves the collisionbox to the right, then moves the entity to match it
      */
     public void moveRight(){
-        world.move(boundingbox, getX() + getSpeed(), getY(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, x + speed, y, CollisionFilter.defaultFilter);
         updatePosition();
-        setMoving(true);
-        setDirection(Direction.RIGHT);
+        inMotion = true;
+        direction = Direction.RIGHT;
     }
     /**
      * Moves the collisionbox to the left, then moves the entity to match it
      */
     public void moveLeft(){
-        world.move(boundingbox, getX() - getSpeed(), getY(), CollisionFilter.defaultFilter);
+        world.move(boundingbox, x - speed, y, CollisionFilter.defaultFilter);
         updatePosition();
-        setMoving(true);
-        setDirection(Direction.LEFT);
+        inMotion = true;
+        direction = Direction.LEFT;
     }
 }

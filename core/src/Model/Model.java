@@ -50,8 +50,10 @@ public class Model implements IModel {
     public PlayerCharacter getPlayer(){
         return player ;
     }
-    public void update(){
-
+    public void update() {
+        for (Enemy enemy : enemyList) {
+            enemy.moveTowardPlayer(player.getX(), player.getY());
+        }
     }
 
     public Direction getPlayerDirection() {

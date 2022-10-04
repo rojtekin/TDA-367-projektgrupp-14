@@ -51,9 +51,7 @@ public class Model implements IModel {
         return player ;
     }
     public void update() {
-        for (Enemy enemy : enemyList) {
-            enemy.moveTowardPlayer(player.getX(), player.getY());
-        }
+        moveEnemies();
     }
 
     public Direction getPlayerDirection() {
@@ -129,5 +127,11 @@ public class Model implements IModel {
 
     public List<Enemy> getEnemyList() {
         return new ArrayList<>(enemyList);
+    }
+
+    void moveEnemies() {
+        for (Enemy enemy : enemyList) {
+            enemy.moveTowardPlayer(player.getX(), player.getY());
+        }
     }
 }

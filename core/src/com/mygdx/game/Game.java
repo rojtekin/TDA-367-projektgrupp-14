@@ -1,8 +1,8 @@
 package com.mygdx.game;
 
-import Controller.Controller;
-import Model.*;
-import View.View;
+import controller.Controller;
+import model.*;
+import view.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
 public class Game extends ApplicationAdapter {

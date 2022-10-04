@@ -1,4 +1,6 @@
-import Model.PlayerCharacter;
+import com.dongbat.jbump.World;
+import model.Entity;
+import model.PlayerCharacter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +14,7 @@ public class PlayerCharacterTest {
 
     @BeforeEach
     public void setUp() {
-        player = new PlayerCharacter();
+        player = new PlayerCharacter(0, 0, new World<>());
         // Reset the position of the player character
         player.setX(SCREEN_WIDTH / 2);
         player.setY(SCREEN_HEIGHT / 2);
@@ -20,9 +22,9 @@ public class PlayerCharacterTest {
 
     @Test
     public void moveUp_IncreasesPlayerY() {
-        int initialYPosition = player.getY();
+        float initialYPosition = player.getY();
         player.moveUp();
-        int finalYPosition = player.getY();
+        float finalYPosition = player.getY();
         assertTrue(finalYPosition > initialYPosition);
     }
 
@@ -30,15 +32,15 @@ public class PlayerCharacterTest {
     public void moveUp_DoesNotMovePlayerOffScreen() {
         player.setY(SCREEN_HEIGHT - player.getHeight());
         player.moveUp();
-        int finalYPosition = player.getY();
+        float finalYPosition = player.getY();
         assertTrue(finalYPosition + player.getHeight() <= SCREEN_HEIGHT);
     }
 
     @Test
     public void moveDown_DecreasesPlayerY() {
-        int initialYPosition = player.getY();
+        float initialYPosition = player.getY();
         player.moveDown();
-        int finalYPosition = player.getY();
+        float finalYPosition = player.getY();
         assertTrue(finalYPosition < initialYPosition);
     }
 
@@ -46,15 +48,15 @@ public class PlayerCharacterTest {
     public void moveDown_DoesNotMovePlayerOffScreen() {
         player.setY(0);
         player.moveDown();
-        int finalYPosition = player.getY();
+        float finalYPosition = player.getY();
         assertTrue(finalYPosition >= 0);
     }
 
     @Test
     public void moveRight_IncreasesPlayerX() {
-        int initialXPosition = player.getX();
+        float initialXPosition = player.getX();
         player.moveRight();
-        int finalXPosition = player.getX();
+        float finalXPosition = player.getX();
         assertTrue(finalXPosition > initialXPosition);
     }
 
@@ -62,15 +64,15 @@ public class PlayerCharacterTest {
     public void moveRight_DoesNotMovePlayerOffScreen() {
         player.setX(SCREEN_WIDTH - player.getWidth());
         player.moveRight();
-        int finalXPosition = player.getX();
+        float finalXPosition = player.getX();
         assertTrue(finalXPosition + player.getWidth() <= SCREEN_WIDTH);
     }
 
     @Test
     public void moveLeft_DecreasesPlayerX() {
-        int initialXPosition = player.getX();
+        float initialXPosition = player.getX();
         player.moveLeft();
-        int finalXPosition = player.getX();
+        float finalXPosition = player.getX();
         assertTrue(finalXPosition < initialXPosition);
     }
 
@@ -78,7 +80,7 @@ public class PlayerCharacterTest {
     public void moveLeft_DoesNotMovePlayerOffScreen() {
         player.setX(0);
         player.moveLeft();
-        int finalXPosition = player.getX();
+        float finalXPosition = player.getX();
         assertTrue(finalXPosition >= 0);
     }
 }

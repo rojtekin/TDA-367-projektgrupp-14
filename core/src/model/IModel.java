@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.dongbat.jbump.World;
@@ -7,13 +7,13 @@ public interface IModel {
 
     PlayerCharacter getPlayerCharacter();
 
-    TiledMap getTiledMap();
+    TiledMap getMap();
 
     void setMap(String mapName);
 
-    int getMapPixelWidth();
+    int getMapUnitWidth();
 
-    int getMapPixelHeight();
+    int getMapUnitHeight();
 
     void initialize(String mapName);
 

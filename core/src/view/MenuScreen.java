@@ -1,6 +1,6 @@
-package View;
+package view;
 
-import Controller.MenuScreenController;
+import controller.MenuScreenController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;

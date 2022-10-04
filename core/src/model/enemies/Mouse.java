@@ -1,6 +1,6 @@
-package Model.Enemies;
+package model.enemies;
 
-import Model.Entity;
+import model.Entity;
 import com.dongbat.jbump.World;
 
 public class Mouse extends Enemy {

@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class ModelFactory {
     public static Model makeModel(String mapName) {

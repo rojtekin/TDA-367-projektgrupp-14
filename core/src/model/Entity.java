@@ -118,8 +118,18 @@ public abstract class Entity {
         addCollision();
     }
 
-    private void addCollision() {
+    /**
+     * Adds its own collisionbox to the world
+     */
+    public void addCollision() {
         boundingbox = world.add(new Item<>(this), x, y, width, height);
+    }
+
+    /**
+     * Removes its own collisionbox from the world
+     */
+    public void removeCollision() {
+        world.remove(boundingbox);
     }
 
     /**

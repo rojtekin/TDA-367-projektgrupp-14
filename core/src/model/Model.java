@@ -1,10 +1,9 @@
 package model;
 
 import com.badlogic.gdx.maps.Map;
+import com.dongbat.jbump.Item;
 import model.enemies.*;
 import com.dongbat.jbump.World;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,10 +22,6 @@ public class Model {
 
     public Map getMap() {
         return mapLoader.getMap();
-    }
-
-    public void update(){
-
     }
 
     public Direction getPlayerDirection() {
@@ -48,6 +43,11 @@ public class Model {
     public ArrayList<Entity> getEntities(){
         return new ArrayList<>(entityList);
     }
+
+    public void update(){
+
+    }
+
     /**
      * Loads a specified map and creates a playercharacter
      * @param mapLoader object that loads a map of a specific type
@@ -58,5 +58,15 @@ public class Model {
         entityList.add(player);
         Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
         entityList.add(mouse1);
+    }
+
+    /**
+     * Removes an entity from the game and removes
+     * its collisionbox from the world
+     * @param entity Entity to be removed
+     */
+    public void despawn(Entity entity) {
+        entityList.remove(entity);
+        entity.removeCollision();
     }
 }

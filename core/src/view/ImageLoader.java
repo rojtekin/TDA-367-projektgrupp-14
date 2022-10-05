@@ -1,8 +1,8 @@
-package View;
+package view;
 
-import Model.Direction;
-import Model.Entity;
-import Model.PlayerCharacter;
+import model.Direction;
+import model.Entity;
+import model.PlayerCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 
@@ -30,7 +30,7 @@ public class ImageLoader {
         if (entity instanceof PlayerCharacter){
             folder = "Characters/";
         }
-        else if(entity instanceof Model.Enemies.Enemy){
+        else if(entity instanceof model.enemies.Enemy){
             folder = "Enemies/" + entity.getClass().getSimpleName() + "/";
         }
 

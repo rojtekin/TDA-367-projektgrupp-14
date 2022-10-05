@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;

@@ -1,11 +1,10 @@
-package View;
+package view;
 
-import Model.Enemies.Mouse;
-import Model.Entity;
-import Model.Model;
+import model.enemies.Mouse;
+import model.Entity;
+import model.Model;
 import com.badlogic.gdx.Gdx;
 
-import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;

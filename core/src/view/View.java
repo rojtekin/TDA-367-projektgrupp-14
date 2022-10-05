@@ -48,7 +48,7 @@ public class View {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        tiledMap = model.getMap();
+        tiledMap = (TiledMap) model.getMap();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();

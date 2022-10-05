@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
@@ -12,5 +13,7 @@ public class DesktopLauncher {
 		config.useVsync(true);
 		config.setForegroundFPS(60);
 		new Lwjgl3Application(new Game(), config);
+		Gdx.app.exit();//should close the program when screen is closed
+		System.exit(0);//actually closes the program and removes remnants remaining in task manager
 	}
 }

@@ -14,6 +14,7 @@ final class MenuScreen extends BaseScreen {
     MenuScreen(MenuScreenController menuScreenController){
         super();
         this.menuScreenController = menuScreenController;
+        addToMultiplexer(menuScreenController);
         createPlayButton();
         createSettingsButton();
 

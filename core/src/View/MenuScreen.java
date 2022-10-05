@@ -33,7 +33,7 @@ final class MenuScreen extends BaseScreen {
         Skin playButtonSkin = new Skin(Gdx.files.internal(ScreenAssetsRoot + "playButton/PlayButton.json"), playButtonAtlas);
         Button playButton = new Button(playButtonSkin);
         playButton.setPosition(832, 500);
-        menuScreenController.addSettingsButtonClickListener(playButton);
+        menuScreenController.addPlayButtonClickListener(playButton);
         addActor(playButton);
 
     }

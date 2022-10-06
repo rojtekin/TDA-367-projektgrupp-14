@@ -186,4 +186,10 @@ public abstract class Entity {
     public void addMovementListener(MovementListener movementListener) {
         movementListeners.add(movementListener);
     }
+
+    public void pushBack(int normalX, int normalY) {
+        int distancePushed = 16;
+        world.move(boundingbox, getX() + (-normalX * distancePushed),getY() + (-normalY * distancePushed), CollisionFilter.defaultFilter);
+        updatePosition();
+    }
 }

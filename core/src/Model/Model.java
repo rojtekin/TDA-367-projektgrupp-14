@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
+import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
@@ -139,5 +140,13 @@ public class Model implements IModel, MovementListener {
 
     @Override
     public void onMovement(Collisions collisions) {
+        for (int i = 0; i < collisions.size(); i++) {
+            Collision collision = collisions.get(i);
+            if (collisionWithPlayer(collision)) {
+                player.pushBack(collision.normal.x, collision.normal.y);
+            }
+        }
     }
+
+    private boolean collisionWithPlayer(Collision collision) { return collision.other.userData.equals(player); }
 }

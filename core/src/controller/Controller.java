@@ -5,7 +5,7 @@ import com.badlogic.gdx.Input;
 import model.*;
 
 public class Controller {
-    private IModel model;
+    private final Model model;
     private IControllable player;
 
     public Controller(Model model) {

@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class View {
+public class View extends BaseScreen {
     private HUD hud;
     private Model model;
     private TextureRegion playerImage;
@@ -99,6 +99,11 @@ public class View {
             if (!(entity instanceof PlayerCharacter))
             batch.draw(imageLoader.loadImage(entity), entity.getX(), entity.getY());
         }
+    }
+
+    @Override
+    void setBackgroundImage() {
+
     }
 
     public void dispose () {

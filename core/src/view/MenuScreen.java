@@ -20,8 +20,8 @@ final class MenuScreen extends BaseScreen {
     }
 
     private void createSettingsButton() {
-        TextureAtlas settingsButtonAtlas = new TextureAtlas(Gdx.files.internal(ScreenAssetsRoot + "settingsButtonSkin/SettingsButton.atlas")); // Load atlas file from skin
-        Skin settingsButtonSkin = new Skin(Gdx.files.internal(ScreenAssetsRoot + "settingsButtonSkin/SettingsButton.json"), settingsButtonAtlas); // Create skin object
+        TextureAtlas settingsButtonAtlas = new TextureAtlas(Gdx.files.internal(ScreenAssetsRoot + "/SettingButton.atlas")); // Load atlas file from skin
+        Skin settingsButtonSkin = new Skin(Gdx.files.internal(ScreenAssetsRoot + "/SettingButton.json"), settingsButtonAtlas); // Create skin object
         Button settingsButton = new Button(settingsButtonSkin);
         settingsButton.setPosition(832, 400);
         menuScreenController.addSettingsButtonClickListener(settingsButton);
@@ -29,8 +29,8 @@ final class MenuScreen extends BaseScreen {
     }
 
     private void createPlayButton() {
-        TextureAtlas playButtonAtlas = new TextureAtlas(Gdx.files.internal(ScreenAssetsRoot + "PlayButton/PlayButton.atlas"));
-        Skin playButtonSkin = new Skin(Gdx.files.internal(ScreenAssetsRoot + "playButton/PlayButton.json"), playButtonAtlas);
+        TextureAtlas playButtonAtlas = new TextureAtlas(Gdx.files.internal(ScreenAssetsRoot + "PlayButton.atlas"));
+        Skin playButtonSkin = new Skin(Gdx.files.internal(ScreenAssetsRoot + "/PlayButton.json"), playButtonAtlas);
         Button playButton = new Button(playButtonSkin);
         playButton.setPosition(832, 500);
         menuScreenController.addSettingsButtonClickListener(playButton);

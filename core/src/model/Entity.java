@@ -86,6 +86,7 @@ public abstract class Entity {
     public float getSpeed() {
         return speed;
     }
+
     protected void setSpeed(float speed) {
         this.speed = speed;
     }
@@ -131,7 +132,7 @@ public abstract class Entity {
     }
 
     private void addCollision() {
-        boundingbox = world.add(new Item<>(this), getX(), getY(), getWidth(), getHeight());
+        boundingbox = world.add(new Item<>(this), x, y, width, height);
     }
 
     /**

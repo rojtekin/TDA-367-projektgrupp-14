@@ -16,7 +16,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class HUD {
     private Stage stage;
     private FitViewport stageViewport;
-    int score = 10; //temporary, it should take it from model
+    private int score = 10; //temporary, it should take it from model
     private PlayerCharacter player;
     private double currenthp;
     private double maxhp;
@@ -37,6 +37,7 @@ public class HUD {
     private Image blackHpBar = new Image(blackHp);
     private Image blackXpBar = new Image(blackHp);
 
+    // lyfta ut konfigurationsdatan till en enum. Singleton. Turtorial java enum turtorial. Enums kan ha konstant state
     private Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
     private NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
     private Image xpbar = new Image(emptyxp);
@@ -140,5 +141,12 @@ public class HUD {
 
     public void dispose(){
         stage.dispose();
+        red.dispose(); //alla textures måste disposas
+        xpyellow.dispose();
+        yellow.dispose();
+        green.dispose();
+        red.dispose();
+        aqua.dispose();
+        black.dispose();
     }
     }

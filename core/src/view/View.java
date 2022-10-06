@@ -43,7 +43,7 @@ public class View {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
 
-        tiledMap = model.getTiledMap();
+        tiledMap = (TiledMap) model.getMap();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
@@ -102,6 +102,9 @@ public class View {
         drawPlayer();
         drawEnemies();
     }
+
+    public void dispose () {
+        hud.dispose();
 
     public void dispose () {
         hud.dispose();

@@ -10,8 +10,8 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
+import com.badlogic.gdx.maps.Map;
 import model.enemies.*;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +27,10 @@ public class Model implements IModel, MovementListener {
     private int mapPixelHeight;
     private MapObjects objects;
     private PlayerCharacter player;
-    private ArrayList<Entity> entityList = new ArrayList<>();
     private World<Entity> world = new World<>();
     private List<Enemy> enemyList = new ArrayList<>();
+    private IMapLoader mapLoader;
+    private List<Entity> entityList = new ArrayList<>();
 
     public PlayerCharacter getPlayerCharacter() {
         return player;
@@ -54,6 +55,9 @@ public class Model implements IModel, MovementListener {
     }
     public void update() {
         moveEnemies();
+
+    public Map getMap() {
+        return mapLoader.getMap();
     }
 
     public Direction getPlayerDirection() {
@@ -74,10 +78,6 @@ public class Model implements IModel, MovementListener {
 
     public int getMapPixelWidth() {
         return mapPixelWidth;
-    }
-
-    public World<Entity> getWorld() {
-        return world;
     }
 
     public ArrayList<Entity> getEntities(){
@@ -149,4 +149,24 @@ public class Model implements IModel, MovementListener {
     }
 
     private boolean collisionWithPlayer(Collision collision) { return collision.other.userData.equals(player); }
+
+    public World<Entity> getWorld() {
+        return mapLoader.getWorld();
+    }
+
+    public ArrayList<Entity> getEntities(){
+        return new ArrayList<>(entityList);
+    }
+    
+    /**
+     * Loads a specified map and creates a playercharacter
+     * @param mapLoader object that loads a map of a specific type
+     */
+    public void initialize(IMapLoader mapLoader) {
+        this.mapLoader = mapLoader;
+        player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
+        entityList.add(player);
+        Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
+        entityList.add(mouse1);
+    }
 }

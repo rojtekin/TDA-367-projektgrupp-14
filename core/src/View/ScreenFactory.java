@@ -4,7 +4,7 @@ import Controller.MenuScreenController;
 
 public abstract class ScreenFactory {
 
-    public static BaseScreen createMainScreen(MenuScreenController menuScreenController){
+    public static BaseScreen createMenuScreen(MenuScreenController menuScreenController){
 
         return new MenuScreen(menuScreenController);
     }

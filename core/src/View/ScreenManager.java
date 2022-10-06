@@ -10,22 +10,19 @@ public class ScreenManager implements IEventListener<ViewControllerEvent> {
     private final BaseScreen menuScreen;
     private final BaseScreen gameScreen;
 
-    private final BaseScreen settingScreen;
-
-    private final BaseScreen gameOverScreen;
 
 
     private final Game game;
 
-    public ScreenManager(Game game, BaseScreen menuScreen, BaseScreen gameScreen, BaseScreen settingScreen, BaseScreen gameOverScreen, Eventbus eventbus) {
+    public ScreenManager(Game game, BaseScreen menuScreen, BaseScreen gameScreen, Eventbus eventbus) {
         this.game = game;
         this.menuScreen = menuScreen;
         this.gameScreen = gameScreen;
-        this.settingScreen = settingScreen;
-        this.gameOverScreen = gameOverScreen;
         eventbus.listenFor(ViewControllerEvent.class, this);
         viewScreen(ScreenEnum.MAIN_MENU);
     }
+
+
 
     private void viewScreen(ScreenEnum screenEnum) {
         BaseScreen currentScreen = getScreen(screenEnum);
@@ -39,8 +36,6 @@ public class ScreenManager implements IEventListener<ViewControllerEvent> {
         return switch (screenEnum) {
             case MAIN_MENU -> menuScreen;
             case GAME -> gameScreen;
-            case SETTINGS -> settingScreen;
-            case GAME_OVER -> gameOverScreen;
         };
     }
 

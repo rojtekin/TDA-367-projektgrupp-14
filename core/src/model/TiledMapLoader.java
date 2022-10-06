@@ -105,7 +105,7 @@ public class TiledMapLoader implements IMapLoader {
         objects = map.getLayers().get(COLLISIONLAYER).getObjects();
         for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
             Rectangle r = o.getRectangle();
-            PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
+            PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world, "");
             world.add(new Item<>(st), r.x, r.y, r.width, r.height);
         }
     }

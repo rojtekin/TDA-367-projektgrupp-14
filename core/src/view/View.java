@@ -105,9 +105,6 @@ public class View {
 
     public void dispose () {
         hud.dispose();
-
-    public void dispose () {
-        hud.dispose();
         batch.dispose();
         tiledMap.dispose();
     }

@@ -143,7 +143,7 @@ public class Model implements IModel, MovementListener {
         for (int i = 0; i < collisions.size(); i++) {
             Collision collision = collisions.get(i);
             if (collisionWithPlayer(collision)) {
-                player.pushBack(collision.normal.x, collision.normal.y);
+                player.pushBack(collision.normal);
             }
         }
     }

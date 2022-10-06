@@ -1,6 +1,7 @@
 package Model;
 
 import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
@@ -144,42 +145,40 @@ public abstract class Entity {
     /**
      * Moves the entity up.
      */
-    public void moveUp(){
+    public void moveUp() {
         setDirection(Direction.UP);
-        move();
+        moveForward();
     }
     /**
      * Moves the entity down.
      */
-    public void moveDown(){
+    public void moveDown() {
         setDirection(Direction.DOWN);
-        move();
+        moveForward();
     }
     /**
      * Moves the entity to the right.
      */
-    public void moveRight(){
+    public void moveRight() {
         setDirection(Direction.RIGHT);
-        move();
+        moveForward();
     }
     /**
      * Moves the entity to the left.
      */
-    public void moveLeft(){
+    public void moveLeft() {
         setDirection(Direction.LEFT);
-        move();
+        moveForward();
     }
 
     /**
-     * Moves the entity in the direction it is facing. Moves the collision box, then moves the entity to match it.
+     * Moves the entity in the direction it is facing.
      */
-    public void move() {
-        Result result = world.move(boundingbox, getX() + (direction.x * getSpeed()),
-                getY() + (direction.y * getSpeed()), CollisionFilter.defaultFilter);
+    public void moveForward() {
+        Result result = move((direction.x * getSpeed()), (direction.y * getSpeed()));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
         }
-        updatePosition();
         setMoving(true);
     }
 
@@ -187,9 +186,24 @@ public abstract class Entity {
         movementListeners.add(movementListener);
     }
 
-    public void pushBack(int normalX, int normalY) {
+    /**
+     * Pushes the entity back in a certain direction depending on the collision normal.
+     * @param collisionNormal the collision normal
+     */
+    public void pushBack(IntPoint collisionNormal) {
         int distancePushed = 16;
-        world.move(boundingbox, getX() + (-normalX * distancePushed),getY() + (-normalY * distancePushed), CollisionFilter.defaultFilter);
+        move((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));
+    }
+
+    /**
+     * Moves the collision box, then moves the entity to match it.
+     * @param deltaX the distance in the x-direction that the entity should move
+     * @param deltaY the distance in the y-direction that the entity should move
+     * @return result
+     */
+    public Result move(float deltaX, float deltaY) {
+        Result result = world.move(boundingbox, getX() + deltaX,getY() + deltaY, CollisionFilter.defaultFilter);
         updatePosition();
+        return result;
     }
 }

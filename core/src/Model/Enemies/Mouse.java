@@ -43,7 +43,7 @@ public class Mouse extends Enemy {
             timeSinceDirectionChanged = 0;
         }
         else {
-            this.move();
+            this.moveForward();
         }
     }
 }

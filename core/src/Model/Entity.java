@@ -2,9 +2,11 @@ package Model;
 
 import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
+import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Entity {
     private float x;
@@ -21,6 +23,7 @@ public abstract class Entity {
     private World<Entity> world;
     private CollisionFilter collisionType = CollisionFilter.defaultFilter;
     private Direction direction;
+    private List<MovementListener> movementListeners = new ArrayList<>();
 
     public CollisionFilter getCollisionType() {
         return collisionType;
@@ -171,9 +174,16 @@ public abstract class Entity {
      * Moves the entity in the direction it is facing. Moves the collision box, then moves the entity to match it.
      */
     public void move() {
-        world.move(boundingbox, getX() + (direction.x * getSpeed()),
+        Result result = world.move(boundingbox, getX() + (direction.x * getSpeed()),
                 getY() + (direction.y * getSpeed()), CollisionFilter.defaultFilter);
+        for (MovementListener movementListener : movementListeners) {
+            movementListener.onMovement(result.projectedCollisions);
+        }
         updatePosition();
         setMoving(true);
+    }
+
+    public void addMovementListener(MovementListener movementListener) {
+        movementListeners.add(movementListener);
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Rectangle;
+import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
@@ -14,7 +15,7 @@ import com.dongbat.jbump.World;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model implements IModel {
+public class Model implements IModel, MovementListener {
     private TiledMap tiledMap;
     private MapProperties prop;
     private int mapWidth;
@@ -123,6 +124,7 @@ public class Model implements IModel {
 
     public void addEnemy(Enemy enemy) {
         enemyList.add(enemy);
+        enemy.addMovementListener(this);
     }
 
     public List<Enemy> getEnemyList() {
@@ -133,5 +135,9 @@ public class Model implements IModel {
         for (Enemy enemy : enemyList) {
             enemy.moveTowardPlayer(player.getX(), player.getY());
         }
+    }
+
+    @Override
+    public void onMovement(Collisions collisions) {
     }
 }

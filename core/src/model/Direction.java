@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public enum Direction {
     UP(0, 1),

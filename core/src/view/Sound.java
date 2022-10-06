@@ -1,8 +1,8 @@
-package View;
+package view;
 
-import Model.Enemies.Mouse;
-import Model.Entity;
-import Model.Model;
+import model.enemies.Mouse;
+import model.Entity;
+import model.Model;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;

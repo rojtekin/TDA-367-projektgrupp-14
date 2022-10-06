@@ -1,6 +1,6 @@
-package Model.Enemies;
+package model.enemies;
 
-import Model.Entity;
+import model.Entity;
 import com.dongbat.jbump.World;
 
 public abstract class Enemy extends Entity {

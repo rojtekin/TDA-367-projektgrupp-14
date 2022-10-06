@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.dongbat.jbump.World;

@@ -1,7 +1,7 @@
-package Model;
+package model;
 
-import Model.Enemies.Cyclops;
-import Model.Enemies.Mouse;
+import model.enemies.Cyclops;
+import model.enemies.Mouse;
 
 public class ModelFactory {
     public static Model makeModel(String mapName) {

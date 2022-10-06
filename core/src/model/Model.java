@@ -1,6 +1,5 @@
-package Model;
+package model;
 
-import Model.Enemies.*;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -11,6 +10,7 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
+import model.enemies.*;
 
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package View;
+package view;
 
-import Model.Direction;
+import model.Direction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

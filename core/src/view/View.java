@@ -1,7 +1,7 @@
-package View;
+package view;
 
-import Model.*;
-import Model.Enemies.Enemy;
+import model.*;
+import model.enemies.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

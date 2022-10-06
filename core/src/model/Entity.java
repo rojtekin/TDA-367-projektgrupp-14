@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.IntPoint;

@@ -1,8 +1,8 @@
-package Controller;
+package controller;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import Model.*;
+import model.*;
 
 public class Controller {
     private IModel model;

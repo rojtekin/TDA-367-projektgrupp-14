@@ -10,14 +10,16 @@ import java.util.List;
 
 public class Model {
     private IMapLoader mapLoader;
-    private PlayerCharacter player;
+    private IPlayerCharacter player;
     private List<Entity> entityList = new ArrayList<>();
+    private RewardSystem rewardSystem = new RewardSystem();
+    private World<IEntity> world = new World<>();
 
-    public PlayerCharacter getPlayerCharacter() {
+    public IPlayerCharacter getPlayerCharacter() {
         return player;
     }
 
-    public PlayerCharacter getPlayer(){
+    public IPlayerCharacter getPlayer(){
         return player ;
     }
 
@@ -26,7 +28,9 @@ public class Model {
     }
 
     public void update(){
-
+        if (rewardSystem.levelUpChecker(player)){
+            player = rewardSystem.applyReward(player); // casting question again
+        }
     }
 
     public Direction getPlayerDirection() {
@@ -39,7 +43,7 @@ public class Model {
 
     public void setPlayerMoving(boolean moving) {
         player.setMoving(moving);
-    }
+    } //TODO player should set its moving status to moving in PlayerCharacter not in Model, make setMoving private after fixing this
 
     public World<Entity> getWorld() {
         return mapLoader.getWorld();
@@ -53,9 +57,9 @@ public class Model {
      * @param mapLoader object that loads a map of a specific type
      */
     public void initialize(IMapLoader mapLoader) {
+        rewardSystem.initialize();
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
-        entityList.add(player);
         Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
         entityList.add(mouse1);
     }

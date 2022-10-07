@@ -4,13 +4,14 @@ import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
-public abstract class Entity {
+public abstract class Entity implements IEntity{
     private float x;
     private float y;
     private float height;
     private float width;
     private float speed;
     private float health;
+    private float damage;
     private boolean inMotion = false;
     private String entityName;
     private float maxHealth;
@@ -28,14 +29,15 @@ public abstract class Entity {
     }
 
     //TODO rework movement, remove has-dependency on world
-    public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
+    public Entity(float x, float y, float height, float width, float speed,float maxHealth ,float damage, World<Entity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
-        this.maxHealth = health;
-        this.currentHealth = health;
+        this.damage = damage;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
         this.direction = Direction.DOWN;
         setWorld(world);
     }
@@ -44,7 +46,7 @@ public abstract class Entity {
         return inMotion;
     }
 
-    public void setMoving(boolean moving) {
+    public void setMoving(boolean moving) { //TODO fix the same way as in Model TODO
         this.inMotion = moving;
     }
 
@@ -59,7 +61,7 @@ public abstract class Entity {
         return x;
     }
 
-    public void setX(float x) {
+    protected void setX(float x) {
         this.x = x;
     }
 
@@ -67,7 +69,7 @@ public abstract class Entity {
         return y;
     }
 
-    public void setY(float y) {
+    protected void setY(float y) {
         this.y = y;
     }
 
@@ -82,7 +84,6 @@ public abstract class Entity {
     public float getSpeed() {
         return speed;
     }
-
     protected void setSpeed(float speed) {
         this.speed = speed;
     }
@@ -91,7 +92,7 @@ public abstract class Entity {
         return maxHealth;
     }
 
-    private void setMaxHealth(float maxHealth) {
+    protected void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
     }
 
@@ -99,11 +100,18 @@ public abstract class Entity {
 
     public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
 
+    public float getDamage() {
+        return damage;
+    }
+    protected void setDamage(float damage) {
+        this.damage = damage;
+    }
+
     public Direction getDirection() {
         return direction;
     }
 
-    public void setDirection(Direction direction) {
+    protected void setDirection(Direction direction) {
         this.direction = direction;
     }
 

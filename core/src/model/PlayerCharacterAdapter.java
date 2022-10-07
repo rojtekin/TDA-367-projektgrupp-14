@@ -2,18 +2,23 @@ package model;
 
 import com.dongbat.jbump.World;
 
-public class PlayerCharacter extends PlayerCharacterAdapter implements IControllable, IPlayerCharacter {
+public abstract class PlayerCharacterAdapter extends Entity implements IPlayerCharacter {
+
+    private float height;
+    private float width;
     private int experience;
     private int level;
     private float AbilityCoolDownMultiplier; // for abilities later 1 -> full cool down, 0--> everything has 0sec cool down
     private float AbilityPower;
+    private boolean inMotion = false;
 
-    public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
-        super(spawnX, spawnY , world);
+    public PlayerCharacterAdapter(float spawnX, float spawnY, World<Entity> world) {
+        super(spawnX, spawnY, 32, 32, 5, 10,1, world);
         setEntityName("BlueSamurai");
+        this.experience = 0;
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;
-    } //TODO fix later
+    }
 
     public int getExperience() {
         return experience;
@@ -43,7 +48,7 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
     @Override
     public void decreaseMaxHealth() {
         if (getMaxHealth() > 1)
-        setMaxHealth(getMaxHealth() - 1);
+            setMaxHealth(getMaxHealth() - 1);
     }
 
     @Override
@@ -54,7 +59,7 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
     @Override
     public void decreaseSpeed() {
         if (getSpeed() > 1)
-        setSpeed(getSpeed()-1);
+            setSpeed(getSpeed()-1);
     }
 
     @Override
@@ -65,7 +70,7 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
     @Override
     public void decreaseDamage() {
         if (getDamage() > 1)
-        setDamage(getDamage()-1);
+            setDamage(getDamage()-1);
     }
 
     @Override
@@ -98,7 +103,24 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
         return AbilityCoolDownMultiplier;
     }
 
+   /* @Override
+    public void setMoving(boolean moving) {
+        this.inMotion = moving;
+    }
+*/ // why does commenting this out fix the constalty inMotion problem? TODO ask question
+
     protected void setAbilityCoolDownMultiplier(float abilityCoolDownMultiplier) {
         AbilityCoolDownMultiplier = abilityCoolDownMultiplier;
+    }
+
+    @Override
+    public float getHeight(){
+        return this.height;
+    }
+
+
+    @Override
+    public float getWidth(){
+        return this.height;
     }
 }

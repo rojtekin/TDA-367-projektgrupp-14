@@ -6,7 +6,7 @@ import model.*;
 
 public class Controller {
     private Model model;
-    private IControllable player;
+    private IPlayerCharacter player;
 
     public Controller(Model model) {
         this.model = model;
@@ -15,7 +15,7 @@ public class Controller {
 
 
     public void update() {
-        model.setPlayerMoving(false);
+        model.getPlayer().setMoving(false);
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.moveLeft();

@@ -22,24 +22,19 @@ public class Sound{
         // occasionally runs the function getSound() if its entity exists. timer starts when entity "spawns".
         for (final Entity entity : model.getEntities()) {
             if (entity instanceof Mouse) { // temporary bcs every entity plays same sound and it hurts my soul
-                ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
                 Runnable toRun = new Runnable() {
-                    Entity current = entity;
-                    public void run() {
-                        if (model.getEntities().contains(current)){
+                    public void run() { //TODO: gör while loop implementation
+                        while (model.getEntities().contains(entity)){
                             getSound().play();
-                        }
-                        try {
-                            Thread.sleep(2000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                            try {
+                                Thread.sleep(2000);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 };
-                ScheduledFuture<?> handle = scheduler.scheduleAtFixedRate(toRun, 1, 1, TimeUnit.SECONDS);
-            }
-            if (!model.getEntities().contains(entity)) {
-                Thread.currentThread().stop();
+                new Thread(toRun).start();
             }
         }
     }

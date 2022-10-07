@@ -105,13 +105,6 @@ public abstract class Entity {
         this.direction = direction;
     }
 
-    public boolean getInMotion() {
-        if (speed != 0)
-            return false;
-        else
-            return true;
-    }
-
     public World<Entity> getWorld() {
         return world;
     }

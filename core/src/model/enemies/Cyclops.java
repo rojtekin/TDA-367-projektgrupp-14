@@ -8,7 +8,7 @@ public class Cyclops extends Enemy {
     private boolean stuckInYDirection = false;
 
     public Cyclops(int x, int y, int speed, float health, float damage, World<Entity> world) {
-        super(x, y, 32, 32, speed, health, damage, world,"Cyclops");
+        super(x, y, 32, 32, speed, health, damage, world);
     }
 
     /**

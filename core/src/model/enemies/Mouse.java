@@ -8,7 +8,7 @@ public class Mouse extends Enemy {
     private float timeSinceDirectionChanged = 0;
 
     public Mouse(float x, float y, float speed, float health, float damage, World<Entity> world) {
-        super(x, y, 16, 16, speed, health, damage, world, "Mouse");
+        super(x, y, 16, 16, speed, health, damage, world);
     }
 
 

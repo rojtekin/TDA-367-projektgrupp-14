@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class View extends BaseScreen {
+public class GameScreen extends BaseScreen {
     private HUD hud;
     private Model model;
     private TextureRegion playerImage;
@@ -38,7 +38,7 @@ public class View extends BaseScreen {
 
     private Set<Entity> isKnown = new HashSet<Entity>();
 
-    public View(Model model) {
+    public GameScreen(Model model) {
         this.model = model;
     }
 

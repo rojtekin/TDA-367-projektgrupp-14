@@ -8,12 +8,11 @@ import utility.Eventbus;
 import view.BaseScreen;
 import view.ScreenFactory;
 import view.ScreenManager;
-import view.View;
-import com.badlogic.gdx.ApplicationAdapter;
+import view.GameScreen;
 
 public class Application extends Game {
 	private Model model;
-	private View view;
+	private GameScreen gameScreen;
 
 	private Controller controller;
 	@Override
@@ -21,24 +20,27 @@ public class Application extends Game {
 		Eventbus viewEventBus = new Eventbus();
 		MenuScreenController menuScreenController = new MenuScreenController(viewEventBus);
 		BaseScreen menuScreen = ScreenFactory.createMenuScreen(menuScreenController);
-		new ScreenManager(this, menuScreen, view, viewEventBus);
+		BaseScreen GameScreen = ScreenFactory.createGameScreen(model);
+		new ScreenManager(this, menuScreen, GameScreen, viewEventBus);
 		model = ModelFactory.makeModel("TestMap");
-		view = new View(model);
-		view.initialize();
+		gameScreen = new GameScreen(model);
+		gameScreen.initialize();
 		controller = new Controller(model);
 
 	}
 
+
 	@Override
 	public void render () {
+		super.render();
 		controller.update();
-		view.update();
+		gameScreen.update();
 		model.update();
 
 	}
 
 	@Override
 	public void dispose () {
-		view.dispose();
+		gameScreen.dispose();
 	}
 }

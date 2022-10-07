@@ -1,6 +1,7 @@
 package view;
 
 import controller.MenuScreenController;
+import model.Model;
 
 public abstract class ScreenFactory {
 
@@ -10,10 +11,10 @@ public abstract class ScreenFactory {
     }
 
 
-  //  public static BaseScreen createGameScreen(){
+   public static BaseScreen createGameScreen(Model model){
 
-        //return new GameScreen();
- //   }
+        return new GameScreen(model);
+    }
 
 
 

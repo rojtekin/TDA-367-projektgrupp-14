@@ -88,12 +88,12 @@ public class View {
     }
 
     private void drawPlayer() {
-        batch.draw(imageHandler.getEntityImage("Player", model.getPlayerDirection(), currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
+        batch.draw(imageHandler.getEntityImage(PlayerCharacter.class, model.getPlayerDirection(), currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
     }
 
     private void drawEnemies() {
         for (Enemy enemy : model.getEnemyList()) {
-            batch.draw(imageHandler.getEntityImage(enemy.getEntityName(), enemy.getDirection(), 0),
+            batch.draw(imageHandler.getEntityImage(enemy.getClass(), enemy.getDirection(), 0),
                     enemy.getX(), enemy.getY());
         }
     }

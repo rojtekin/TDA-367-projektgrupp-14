@@ -17,7 +17,6 @@ public abstract class Entity {
     private float speed;
     private float health;
     private boolean inMotion = false;
-    private String entityName;
     private float maxHealth;
     private float currentHealth;
     private Item<Entity> boundingbox;
@@ -34,7 +33,7 @@ public abstract class Entity {
     }
 
     //TODO rework movement, remove has-dependency on world
-    public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world, String entityName) {
+    public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -43,7 +42,6 @@ public abstract class Entity {
         this.maxHealth = health;
         this.currentHealth = health;
         this.direction = Direction.DOWN;
-        this.entityName = entityName;
         setWorld(world);
     }
 
@@ -53,10 +51,6 @@ public abstract class Entity {
 
     public void setMoving(boolean moving) {
         this.inMotion = moving;
-    }
-
-    public String getEntityName(){
-        return this.entityName;
     }
 
     public float getX() {

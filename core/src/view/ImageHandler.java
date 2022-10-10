@@ -48,17 +48,12 @@ public class ImageHandler {
      */
     protected TextureRegion getEntityImage(Class<? extends Entity> c, Direction direction, int currentFrame) {
         TextureRegion[][] entityImages = allEntityImages.get(c);
-        switch(direction) {
-            case UP:
-                return entityImages[currentFrame][1];
-            case DOWN:
-                return entityImages[currentFrame][0];
-            case LEFT:
-                return entityImages[currentFrame][2];
-            case RIGHT:
-                return entityImages[currentFrame][3];
-            default:
-                throw new AssertionError();
-        }
+        return switch (direction) {
+            case UP -> entityImages[currentFrame][1];
+            case DOWN -> entityImages[currentFrame][0];
+            case LEFT -> entityImages[currentFrame][2];
+            case RIGHT -> entityImages[currentFrame][3];
+            default -> throw new AssertionError();
+        };
     }
 }

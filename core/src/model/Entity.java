@@ -190,7 +190,7 @@ public abstract class Entity {
      * @return result
      */
     public Result move(float deltaX, float deltaY) {
-        Result result = world.move(boundingbox, getX() + deltaX,getY() + deltaY, CollisionFilter.defaultFilter);
+        Result result = world.move(boundingbox, this.x + deltaX,this.y + deltaY, CollisionFilter.defaultFilter);
         updatePosition();
         return result;
     }

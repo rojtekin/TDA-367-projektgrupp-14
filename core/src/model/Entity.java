@@ -8,6 +8,7 @@ import com.dongbat.jbump.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Entity {
     private float x;
@@ -41,7 +42,7 @@ public abstract class Entity {
         this.maxHealth = health;
         this.currentHealth = health;
         this.direction = Direction.DOWN;
-        setWorld(world);
+        setWorld(Objects.requireNonNull(world));
     }
 
     public boolean isMoving() {
@@ -128,7 +129,6 @@ public abstract class Entity {
         setX(world.getRect(boundingbox).x);
         setY(world.getRect(boundingbox).y);
     }
-
 
     /**
      * Moves the entity in the specified direction.

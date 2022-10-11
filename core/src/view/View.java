@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -34,7 +35,7 @@ public class View {
     private Set<Entity> isKnown = new HashSet<Entity>();
 
     public View(Model model) {
-        this.model = model;
+        this.model = Objects.requireNonNull(model);
     }
 
     public void initialize() {

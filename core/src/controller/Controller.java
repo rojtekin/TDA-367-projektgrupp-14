@@ -4,13 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import model.*;
 
+import java.util.Objects;
+
 public class Controller {
     private Model model;
     private IControllable player;
 
     public Controller(Model model) {
-        this.model = model;
-        this.player = model.getPlayer();
+        this.model = Objects.requireNonNull(model);
+        this.player = Objects.requireNonNull(model.getPlayer());
     }
 
     public void update() {

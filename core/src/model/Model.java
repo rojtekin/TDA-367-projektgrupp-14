@@ -31,10 +31,11 @@ public class Model implements MovementListener {
      * Goes through the list of enemies checks if they need to be removed
      * O(n)
      */
-    private void checkEnemyHealth() {
-        for (Enemy e : enemyList) {
-            if (e.getCurrentHealth() <= 0)
-                despawn(e);
+    public void checkEnemyHealth() {
+        for (int i = 0; i < getEnemyList().size(); i++) {
+            if (getEnemyList().get(i).getCurrentHealth() <= 0) {
+                despawn(getEnemyList().get(i));
+            }
         }
     }
 
@@ -55,7 +56,7 @@ public class Model implements MovementListener {
     }
 
     public ArrayList<Entity> getEntities(){
-        return new ArrayList<Entity>(entityList);
+        return new ArrayList<>(entityList);
     }
 
     public void addEnemy(Enemy enemy) {
@@ -102,12 +103,12 @@ public class Model implements MovementListener {
     }
 
     /**
-     * Removes an entity from the game and removes
+     * Removes an Enemy from the game and removes
      * its collisionbox from the world
-     * @param entity Entity to be removed
+     * @param enemy Enemy to be removed
      */
-    public void despawn(Entity entity) {
-        entityList.remove(entity);
-        entity.removeCollision();
+    public void despawn(Enemy enemy) {
+        enemyList.remove(enemy);
+        enemy.removeCollision();
     }
 }

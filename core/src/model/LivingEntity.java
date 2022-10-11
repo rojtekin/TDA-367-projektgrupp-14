@@ -102,7 +102,7 @@ public abstract class LivingEntity extends Entity {
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {
-        currentHealth =- damage;
+        currentHealth = currentHealth - damage;
     }
 
     /**

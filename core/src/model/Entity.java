@@ -101,4 +101,8 @@ public abstract class Entity {
         setX(world.getRect(boundingbox).x);
         setY(world.getRect(boundingbox).y);
     }
+
+    public void acceptDamage(Visitor v, float damage) {
+        v.doDamage(this, damage);
+    }
 }

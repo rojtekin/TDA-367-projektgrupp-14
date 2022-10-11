@@ -1,6 +1,5 @@
 package model;
 
-import com.badlogic.gdx.utils.Array;
 import com.dongbat.jbump.*;
 
 import java.util.ArrayList;
@@ -129,17 +128,23 @@ public abstract class LivingEntity extends Entity {
 
     //Bugged: Enemies kill each other and colliding with walls will crash the game
     //TODO Potentially replace with visitorpattern, alternatively find fix
-    private List<Item<LivingEntity>> getTouched(Collisions projectedCollisions) {
-        List<Item<LivingEntity>> touched = new ArrayList<>();
+    private List<Item<Entity>> getTouched(Collisions projectedCollisions) {
+        List<Item<Entity>> touched = new ArrayList<>();
         for (int i = 0; i < projectedCollisions.size(); i++) {
             touched.add(projectedCollisions.get(i).other);
         }
         return touched;
     }
 
-    private void damageTouched(List<Item<LivingEntity>> collidedEntities) {
-        for (Item<LivingEntity> e : collidedEntities) {
-            e.userData.takeDamage(collisionDamage);
+    private void damageTouched(List<Item<Entity>> collidedEntities) {
+        Visitor visitor = new DamageVisitor();
+        for (Item<Entity> e : collidedEntities) {
+            e.userData.acceptDamage(visitor, collisionDamage);
         }
+    }
+
+    @Override
+    public void acceptDamage(Visitor v, float damage) {
+        v.doDamage(this, damage);
     }
 }

@@ -57,7 +57,7 @@ public abstract class Entity {
         return x;
     }
 
-    public void setX(float x) {
+    private void setX(float x) {
         this.x = x;
     }
 
@@ -65,7 +65,7 @@ public abstract class Entity {
         return y;
     }
 
-    public void setY(float y) {
+    private void setY(float y) {
         this.y = y;
     }
 
@@ -101,11 +101,11 @@ public abstract class Entity {
         return direction;
     }
 
-    public void setDirection(Direction direction) {
+    private void setDirection(Direction direction) {
         this.direction = direction;
     }
 
-    public World<Entity> getWorld() {
+    private World<Entity> getWorld() {
         return world;
     }
 
@@ -113,7 +113,7 @@ public abstract class Entity {
      * Adds a reference to the world that the player is in and
      * registers itself as a collisionbox
      */
-    public void setWorld (World<Entity> world) {
+    private void setWorld (World<Entity> world) {
         this.world = world;
         addCollision();
     }
@@ -125,7 +125,7 @@ public abstract class Entity {
     /**
      * Sets the entity coordinates to match its collisionbox
      */
-    public void updatePosition() {
+    private void updatePosition() {
         setX(world.getRect(boundingbox).x);
         setY(world.getRect(boundingbox).y);
     }

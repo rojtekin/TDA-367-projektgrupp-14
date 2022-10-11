@@ -14,6 +14,7 @@ public abstract class LivingEntity extends Entity {
     private float maxHealth;
     private float currentHealth;
     private float collisionDamage;
+    private Visitor damageType;
     private List<MovementListener> movementListeners = new ArrayList<>();
 
     public boolean isMoving() {
@@ -43,6 +44,10 @@ public abstract class LivingEntity extends Entity {
     public float getCurrentHealth() {return currentHealth;}
 
     public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
+
+    public float getCollisionDamage() {
+        return collisionDamage;
+    }
 
     public LivingEntity(float x, float y, float height, float width, float speed, float health, float collisionDamage, World<Entity> world) {
         super(x, y, height, width, world);
@@ -137,7 +142,7 @@ public abstract class LivingEntity extends Entity {
     }
 
     private void damageTouched(List<Item<Entity>> collidedEntities) {
-        Visitor visitor = new DamageVisitor();
+        Visitor visitor = new playerDamageVisitor();
         for (Item<Entity> e : collidedEntities) {
             e.userData.acceptDamage(visitor, collisionDamage);
         }

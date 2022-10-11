@@ -102,7 +102,5 @@ public abstract class Entity {
         setY(world.getRect(boundingbox).y);
     }
 
-    public void acceptDamage(Visitor v, float damage) {
-        v.doDamage(this, damage);
-    }
+    public abstract void acceptDamage(Visitor v, float damage);
 }

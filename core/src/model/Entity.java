@@ -1,12 +1,8 @@
 package model;
 
 import com.dongbat.jbump.CollisionFilter;
-import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
-import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Entity {
     private float x;

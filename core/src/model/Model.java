@@ -24,6 +24,18 @@ public class Model implements MovementListener {
 
     public void update() {
         moveEnemies();
+        checkEnemyHealth();
+    }
+
+    /**
+     * Goes through the list of enemies checks if they need to be removed
+     * O(n)
+     */
+    private void checkEnemyHealth() {
+        for (Enemy e : enemyList) {
+            if (e.getCurrentHealth() <= 0)
+                despawn(e);
+        }
     }
 
     public Map getMap() {

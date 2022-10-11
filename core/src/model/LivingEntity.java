@@ -8,9 +8,11 @@ import com.dongbat.jbump.World;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Parent class for all entities that have movement and health
+ */
 public abstract class LivingEntity extends Entity {
     private float speed;
-    private float health;
     private boolean inMotion = false;
     private float maxHealth;
     private float currentHealth;
@@ -93,6 +95,14 @@ public abstract class LivingEntity extends Entity {
 
     public void addMovementListener(MovementListener movementListener) {
         movementListeners.add(movementListener);
+    }
+
+    /**
+     * Decreases currenthealth with a specified amount
+     * @param damage amount to decrease health with
+     */
+    public void takeDamage(float damage) {
+        currentHealth =- damage;
     }
 
     /**

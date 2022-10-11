@@ -13,8 +13,8 @@ import java.util.Objects;
 public abstract class Entity {
     private float x;
     private float y;
-    private float height;
-    private float width;
+    private final float height;
+    private final float width;
     private float speed;
     private float health;
     private boolean inMotion = false;

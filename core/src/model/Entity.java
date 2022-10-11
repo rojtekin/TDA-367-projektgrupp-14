@@ -11,14 +11,14 @@ public abstract class Entity {
     private float width;
     private Item<Entity> boundingbox;
     private World<Entity> world;
-    private CollisionFilter collisionType = CollisionFilter.defaultFilter;
+    private CollisionFilter movementCollision = CollisionFilter.defaultFilter;
     private Direction direction;
 
-    public CollisionFilter getCollisionType() {
-        return collisionType;
+    public CollisionFilter getMovementCollision() {
+        return movementCollision;
     }
-    public void setCollisionType (CollisionFilter collisionType) {
-        this.collisionType = collisionType;
+    public void setMovementCollision(CollisionFilter movementCollision) {
+        this.movementCollision = movementCollision;
     }
 
     //TODO rework movement, remove has-dependency on world

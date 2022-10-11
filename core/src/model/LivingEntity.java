@@ -1,9 +1,7 @@
 package model;
 
-import com.dongbat.jbump.CollisionFilter;
-import com.dongbat.jbump.IntPoint;
-import com.dongbat.jbump.Response;
-import com.dongbat.jbump.World;
+import com.badlogic.gdx.utils.Array;
+import com.dongbat.jbump.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +14,7 @@ public abstract class LivingEntity extends Entity {
     private boolean inMotion = false;
     private float maxHealth;
     private float currentHealth;
+    private float collisionDamage;
     private List<MovementListener> movementListeners = new ArrayList<>();
 
     public boolean isMoving() {
@@ -46,11 +45,12 @@ public abstract class LivingEntity extends Entity {
 
     public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
 
-    public LivingEntity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
+    public LivingEntity(float x, float y, float height, float width, float speed, float health, float collisionDamage, World<Entity> world) {
         super(x, y, height, width, world);
         this.speed = speed;
         this.maxHealth = health;
         this.currentHealth = health;
+        this.collisionDamage = collisionDamage;
     }
 
     /**
@@ -121,8 +121,25 @@ public abstract class LivingEntity extends Entity {
      * @return result
      */
     public Response.Result move(float deltaX, float deltaY) {
-        Response.Result result = getWorld().move(getBoundingbox(), getX() + deltaX,getY() + deltaY, CollisionFilter.defaultFilter);
+        Response.Result result = getWorld().move(getBoundingbox(), getX() + deltaX,getY() + deltaY, getMovementCollision());
+        damageTouched(getTouched(result.projectedCollisions));
         updatePosition();
         return result;
+    }
+
+    //Bugged: Enemies kill each other and colliding with walls will crash the game
+    //TODO Potentially replace with visitorpattern, alternatively find fix
+    private List<Item<LivingEntity>> getTouched(Collisions projectedCollisions) {
+        List<Item<LivingEntity>> touched = new ArrayList<>();
+        for (int i = 0; i < projectedCollisions.size(); i++) {
+            touched.add(projectedCollisions.get(i).other);
+        }
+        return touched;
+    }
+
+    private void damageTouched(List<Item<LivingEntity>> collidedEntities) {
+        for (Item<LivingEntity> e : collidedEntities) {
+            e.userData.takeDamage(collisionDamage);
+        }
     }
 }

@@ -8,7 +8,7 @@ public abstract class Enemy extends LivingEntity {
     private double damage;
 
     public Enemy(float x, float y, float height, float width, float speed, float health, float damage, World<Entity> world) {
-        super(x, y, height, width, speed, health, world);
+        super(x, y, height, width, speed, health, damage, world);
         this.damage = damage;
     }
 

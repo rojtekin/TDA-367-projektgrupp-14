@@ -12,14 +12,14 @@ import com.dongbat.jbump.World;
 
 /**
  * Responsible for loading tile based maps and holding information relevant for logic
- * such as proportions for spawn locations and for importing map objects for collision
+ * such as map proportions for spawn locations and for importing map objects for collision
  * Also holds the "world" object which handles collisionboxes
  */
 public class TiledMapLoader implements IMapLoader {
     //Constants for layer names in map. We can't control how the layers are named
     //since Tiled allows you to name and number layers however you want. Therefore
     //the mapmaker must comply with these constants or else the program won't be able
-    // to find the appropriate layers.
+    //to find the appropriate layers.
     private final String MAPWIDTH = "width";
     private final String MAPHEIGHT = "height";
     private final String TILEUNITWIDTH = "tilewidth";

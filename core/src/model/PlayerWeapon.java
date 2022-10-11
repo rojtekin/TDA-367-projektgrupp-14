@@ -1,20 +1,19 @@
 package model;
 
-public class PlayerWeapon {
+public abstract class PlayerWeapon {
 
+    private float weaponSpeed;
     private float weaponDamage;
     private float weaponRange;
-
     private float weaponWidth;
-    private float weaponSpeed;
-
     private float weaponAngle;
 
-    public PlayerWeapon(float weaponDamage,float weaponSpeed, float weaponRange, float weaponWidth){
+    public PlayerWeapon(){
         this.weaponDamage = weaponDamage;
         this.weaponRange = weaponRange;
         this.weaponWidth = weaponWidth;
         this.weaponSpeed = weaponSpeed;
+        this.weaponAngle = weaponAngle;
     }
 
     public void weaponSwing(int rotationStart,int rotationFinish, int animationpart){
@@ -31,7 +30,7 @@ public class PlayerWeapon {
         return weaponAngle;
     }
 
-    public void setWeaponAngle(float weaponAngle) {
+    private void setWeaponAngle(float weaponAngle) {
         this.weaponAngle = weaponAngle;
     }
 

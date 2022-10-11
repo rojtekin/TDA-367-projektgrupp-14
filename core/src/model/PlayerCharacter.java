@@ -4,12 +4,12 @@ import com.dongbat.jbump.World;
 
 public class PlayerCharacter extends Entity implements IControllable {
 
-    private PlayerWeapon weapon;
+    private Sword weapon;
     //TODO add a weapon in constructor
     public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, world);
         setEntityName("BlueSamurai");
-        weapon = new PlayerWeapon(10,1,10, 5);
+        weapon = new Sword();
     }
 
     //weaponswing unsure if i should split since i might combine animation and movement

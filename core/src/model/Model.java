@@ -4,16 +4,14 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
-import com.dongbat.jbump.Item;
 import model.enemies.*;
-import com.dongbat.jbump.World;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model implements MovementListener {
     private PlayerCharacter player;
     private List<Enemy> enemyList = new ArrayList<>();
-    private IMapLoader mapLoader;
+    private IArenaLoader mapLoader;
     private List<Entity> entityList = new ArrayList<>();
 
     public PlayerCharacter getPlayerCharacter() {
@@ -83,7 +81,7 @@ public class Model implements MovementListener {
      * Loads a specified map and creates a playercharacter
      * @param mapLoader object that loads a map of a specific type
      */
-    public void initialize(IMapLoader mapLoader) {
+    public void initialize(IArenaLoader mapLoader) {
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
         entityList.add(player);

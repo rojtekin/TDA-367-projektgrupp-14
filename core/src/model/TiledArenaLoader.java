@@ -15,7 +15,7 @@ import com.dongbat.jbump.World;
  * such as map proportions for spawn locations and for importing map objects for collision
  * Also holds the "world" object which handles collisionboxes
  */
-public class TiledMapLoader implements IMapLoader {
+public class TiledArenaLoader implements IArenaLoader {
     //Constants for layer names in map. We can't control how the layers are named
     //since Tiled allows you to name and number layers however you want. Therefore
     //the mapmaker must comply with these constants or else the program won't be able
@@ -66,15 +66,15 @@ public class TiledMapLoader implements IMapLoader {
      * Initialises the maploader with a map
      * @param mapName a map must be provided for the maploader to be initialised
      */
-    public TiledMapLoader(String mapName) {
-        setMap(mapName);
+    public TiledArenaLoader(String mapName) {
+        loadEnvironment(mapName);
     }
 
     /**
      * Loads a new map and populates a new world with data from the map
      * @param mapName name of map to be loaded
      */
-    public void setMap(String mapName) {
+    public void loadEnvironment(String mapName) {
         map = new TmxMapLoader().load("Map/" + mapName + ".tmx");
         this.world = new World<>();
         importMapProperties();

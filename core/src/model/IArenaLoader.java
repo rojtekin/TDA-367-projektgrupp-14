@@ -8,13 +8,13 @@ import com.dongbat.jbump.World;
  * but also potentially things like spreadsheets or just image files. For 2D games, tiles are
  * at this time ubiquitous and considered the standard but this might change in the future
  */
-public interface IMapLoader {
+public interface IArenaLoader {
 
     World<Entity> getWorld();
 
     Map getMap();
 
-    void setMap(String mapName);
+    void loadEnvironment(String mapName);
 
     int getMapUnitWidth();
 

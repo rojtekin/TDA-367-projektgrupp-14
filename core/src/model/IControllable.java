@@ -13,4 +13,6 @@ public interface IControllable {
     void moveUp();
 
     void moveDown();
+
+    void weaponAttack(int rotationStart, int rotationFinish, int animationpart);
 }

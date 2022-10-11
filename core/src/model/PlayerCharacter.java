@@ -8,7 +8,6 @@ public class PlayerCharacter extends Entity implements IControllable {
     //TODO add a weapon in constructor
     public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, world);
-        setEntityName("BlueSamurai");
         weapon = new Sword();
     }
 

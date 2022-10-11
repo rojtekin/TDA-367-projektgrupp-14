@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.Direction;
 import model.Entity;
 import com.dongbat.jbump.World;
 
@@ -26,28 +27,28 @@ public class Cyclops extends Enemy {
 
         if ((Math.abs(xDistance) > 16) && !stuckInYDirection) {
             if (xDistance > 0) {
-                this.moveRight();
+                this.move(Direction.RIGHT);
             }
             else {
-                this.moveLeft();
+                this.move(Direction.LEFT);
             }
             stuckInXDirection = false;
             if (this.getX() == initialX) {
                 stuckInXDirection = true;
-                this.moveUp();
+                this.move(Direction.UP);
             }
         }
         else if(!stuckInXDirection){
             if (yDistance > 0) {
-                this.moveUp();
+                this.move(Direction.UP);
             }
             else {
-                this.moveDown();
+                this.move(Direction.DOWN);
             }
             stuckInYDirection = false;
             if (this.getY() == initialY) {
                 stuckInYDirection = true;
-                this.moveRight();
+                this.move(Direction.RIGHT);
             }
         }
     }

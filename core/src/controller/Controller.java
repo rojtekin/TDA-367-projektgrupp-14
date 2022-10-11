@@ -13,21 +13,20 @@ public class Controller {
         this.player = model.getPlayer();
     }
 
-
     public void update() {
         model.setPlayerMoving(false);
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.moveLeft();
+            player.move(Direction.LEFT);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.moveRight();
+            player.move(Direction.RIGHT);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.moveUp();
+            player.move(Direction.UP);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.moveDown();
+            player.move(Direction.DOWN);
         }
     }
 }

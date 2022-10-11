@@ -1,5 +1,6 @@
 package model.enemies;
 
+import model.Direction;
 import model.Entity;
 import com.badlogic.gdx.Gdx;
 import com.dongbat.jbump.World;
@@ -10,7 +11,6 @@ public class Mouse extends Enemy {
     public Mouse(float x, float y, float speed, float health, float damage, World<Entity> world) {
         super(x, y, 16, 16, speed, health, damage, world);
     }
-
 
     /**
      * Moves the mouse in the direction it is facing. After a certain amount of time since changing the direction has
@@ -28,16 +28,16 @@ public class Mouse extends Enemy {
         if (timeSinceDirectionChanged > 0.6) {
             if (Math.random() < 0.5) {
                 if ((xDistance > 0)) {
-                    this.moveRight();
+                    this.move(Direction.RIGHT);
                 } else {
-                    this.moveLeft();
+                    this.move(Direction.LEFT);
                 }
             }
             else {
                 if ((yDistance > 0)) {
-                    this.moveUp();
+                    this.move(Direction.UP);
                 } else {
-                    this.moveDown();
+                    this.move(Direction.DOWN);
                 }
             }
             timeSinceDirectionChanged = 0;

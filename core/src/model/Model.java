@@ -4,13 +4,13 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
-import model.enemies.*;
+import model.monsters.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model implements MovementListener {
     private PlayerCharacter player;
-    private List<Enemy> enemyList = new ArrayList<>();
+    private List<Monster> monsterList = new ArrayList<>();
     private IArenaLoader mapLoader;
     private List<Entity> entityList = new ArrayList<>();
 
@@ -59,18 +59,18 @@ public class Model implements MovementListener {
         return new ArrayList<>(entityList);
     }
 
-    public void addEnemy(Enemy enemy) {
-        enemyList.add(enemy);
-        enemy.addMovementListener(this);
+    public void addEnemy(Monster monster) {
+        monsterList.add(monster);
+        monster.addMovementListener(this);
     }
 
-    public List<Enemy> getEnemyList() {
-        return new ArrayList<>(enemyList);
+    public List<Monster> getEnemyList() {
+        return new ArrayList<>(monsterList);
     }
 
     void moveEnemies() {
-        for (Enemy enemy : enemyList) {
-            enemy.moveTowardPlayer(player.getX(), player.getY());
+        for (Monster monster : monsterList) {
+            monster.moveTowardPlayer(player.getX(), player.getY());
         }
     }
 
@@ -105,10 +105,10 @@ public class Model implements MovementListener {
     /**
      * Removes an Enemy from the game and removes
      * its collisionbox from the world
-     * @param enemy Enemy to be removed
+     * @param monster Enemy to be removed
      */
-    public void despawn(Enemy enemy) {
-        enemyList.remove(enemy);
-        enemy.removeCollision();
+    public void despawn(Monster monster) {
+        monsterList.remove(monster);
+        monster.removeCollision();
     }
 }

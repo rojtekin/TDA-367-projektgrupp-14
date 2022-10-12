@@ -1,12 +1,6 @@
 import com.dongbat.jbump.World;
-import model.Entity;
-import model.Model;
 import model.PlayerCharacter;
-import model.TiledArenaLoader;
-import model.enemies.Cyclops;
-import model.enemies.Enemy;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 

@@ -1,6 +1,6 @@
 package view;
 
-import model.enemies.Mouse;
+import model.monsters.Mouse;
 import model.Entity;
 import model.Model;
 import com.badlogic.gdx.Gdx;

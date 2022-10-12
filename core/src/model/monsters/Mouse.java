@@ -1,10 +1,10 @@
-package model.enemies;
+package model.monsters;
 
 import model.Entity;
 import com.badlogic.gdx.Gdx;
 import com.dongbat.jbump.World;
 
-public class Mouse extends Enemy {
+public class Mouse extends Monster {
     private float timeSinceDirectionChanged = 0;
 
     public Mouse(float x, float y, float speed, float health, float damage, World<Entity> world) {

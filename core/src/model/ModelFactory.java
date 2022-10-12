@@ -1,6 +1,6 @@
 package model;
 
-import model.enemies.*;
+import model.monsters.*;
 
 public class ModelFactory {
     public static Model makeModel(IArenaLoader mapLoader) {

@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import model.Entity;
 import model.PlayerCharacter;
-import model.enemies.Cyclops;
-import model.enemies.Mouse;
+import model.monsters.Cyclops;
+import model.monsters.Mouse;
 
 import java.util.HashMap;
 

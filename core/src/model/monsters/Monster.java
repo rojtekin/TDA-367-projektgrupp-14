@@ -1,14 +1,14 @@
-package model.enemies;
+package model.monsters;
 
 import model.LivingEntity;
 import model.Entity;
 import com.dongbat.jbump.World;
 import model.IDamageVisitor;
 
-public abstract class Enemy extends LivingEntity {
+public abstract class Monster extends LivingEntity {
     private double damage;
 
-    public Enemy(float x, float y, float height, float width, float speed, float health, float damage, World<Entity> world) {
+    public Monster(float x, float y, float height, float width, float speed, float health, float damage, World<Entity> world) {
         super(x, y, height, width, speed, health, 1, "Hostile", world);
         this.damage = damage;
     }

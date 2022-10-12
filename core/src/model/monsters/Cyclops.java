@@ -1,9 +1,9 @@
-package model.enemies;
+package model.monsters;
 
 import model.Entity;
 import com.dongbat.jbump.World;
 
-public class Cyclops extends Enemy {
+public class Cyclops extends Monster {
     private boolean stuckInXDirection = false;
     private boolean stuckInYDirection = false;
 

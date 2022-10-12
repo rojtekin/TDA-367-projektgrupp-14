@@ -8,12 +8,13 @@ import com.dongbat.jbump.World;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Entity {
     private float x;
     private float y;
-    private float height;
-    private float width;
+    private final float height;
+    private final float width;
     private float speed;
     private float health;
     private boolean inMotion = false;
@@ -32,7 +33,6 @@ public abstract class Entity {
         this.collisionType = collisionType;
     }
 
-    //TODO rework movement, remove has-dependency on world
     public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
         this.x = x;
         this.y = y;
@@ -42,7 +42,7 @@ public abstract class Entity {
         this.maxHealth = health;
         this.currentHealth = health;
         this.direction = Direction.DOWN;
-        setWorld(world);
+        setWorld(Objects.requireNonNull(world));
     }
 
     public boolean isMoving() {
@@ -57,7 +57,7 @@ public abstract class Entity {
         return x;
     }
 
-    public void setX(float x) {
+    private void setX(float x) {
         this.x = x;
     }
 
@@ -65,7 +65,7 @@ public abstract class Entity {
         return y;
     }
 
-    public void setY(float y) {
+    private void setY(float y) {
         this.y = y;
     }
 
@@ -101,11 +101,11 @@ public abstract class Entity {
         return direction;
     }
 
-    public void setDirection(Direction direction) {
+    private void setDirection(Direction direction) {
         this.direction = direction;
     }
 
-    public World<Entity> getWorld() {
+    private World<Entity> getWorld() {
         return world;
     }
 
@@ -113,7 +113,7 @@ public abstract class Entity {
      * Adds a reference to the world that the player is in and
      * registers itself as a collisionbox
      */
-    public void setWorld (World<Entity> world) {
+    private void setWorld (World<Entity> world) {
         this.world = world;
         addCollision();
     }
@@ -125,37 +125,17 @@ public abstract class Entity {
     /**
      * Sets the entity coordinates to match its collisionbox
      */
-    public void updatePosition() {
+    private void updatePosition() {
         setX(world.getRect(boundingbox).x);
         setY(world.getRect(boundingbox).y);
     }
 
     /**
-     * Moves the entity up.
+     * Moves the entity in the specified direction.
+     * @param direction the direction that the entity should move in
      */
-    public void moveUp() {
-        setDirection(Direction.UP);
-        moveForward();
-    }
-    /**
-     * Moves the entity down.
-     */
-    public void moveDown() {
-        setDirection(Direction.DOWN);
-        moveForward();
-    }
-    /**
-     * Moves the entity to the right.
-     */
-    public void moveRight() {
-        setDirection(Direction.RIGHT);
-        moveForward();
-    }
-    /**
-     * Moves the entity to the left.
-     */
-    public void moveLeft() {
-        setDirection(Direction.LEFT);
+    public void move(Direction direction) {
+        setDirection(direction);
         moveForward();
     }
 
@@ -163,7 +143,7 @@ public abstract class Entity {
      * Moves the entity in the direction it is facing.
      */
     public void moveForward() {
-        Result result = move((direction.x * getSpeed()), (direction.y * getSpeed()));
+        Result result = changePosition((direction.x * getSpeed()), (direction.y * getSpeed()));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
         }
@@ -180,7 +160,7 @@ public abstract class Entity {
      */
     public void pushBack(IntPoint collisionNormal) {
         int distancePushed = 16;
-        move((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));
+        changePosition((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));
     }
 
     /**
@@ -189,7 +169,7 @@ public abstract class Entity {
      * @param deltaY the distance in the y-direction that the entity should move
      * @return result
      */
-    public Result move(float deltaX, float deltaY) {
+    private Result changePosition(float deltaX, float deltaY) {
         Result result = world.move(boundingbox, this.x + deltaX,this.y + deltaY, CollisionFilter.defaultFilter);
         updatePosition();
         return result;

@@ -100,6 +100,7 @@ public abstract class LivingEntity extends Entity {
      */
     public void moveForward() {
         Response.Result result = move((getDirection().x * getSpeed()), (getDirection().y * getSpeed()));
+        damageTouched(getTouched(result.projectedCollisions));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
         };
@@ -137,12 +138,14 @@ public abstract class LivingEntity extends Entity {
      */
     public Response.Result move(float deltaX, float deltaY) {
         Response.Result result = getWorld().move(getBoundingbox(), getX() + deltaX,getY() + deltaY, getMovementCollision());
-        damageTouched(getTouched(result.projectedCollisions));
         updatePosition();
         return result;
     }
 
-
+    /**
+     * Takes a list of projectedcollisions and returns a list of the
+     * JBump "items" of those collisions
+     */
     private List<Item<Entity>> getTouched(Collisions projectedCollisions) {
         List<Item<Entity>> touched = new ArrayList<>();
         for (int i = 0; i < projectedCollisions.size(); i++) {
@@ -151,10 +154,11 @@ public abstract class LivingEntity extends Entity {
         return touched;
     }
 
-    private void damageTouched(List<Item<Entity>> collidedEntities) {
+
+    private void damageTouched(List<Item<Entity>> touchedItems) {
         IDamageVisitor v = new DamageVisitor();
-        for (Item<Entity> e : collidedEntities) {
-            e.userData.receiveDamage(v, collisionDamage, faction);
+        for (Item<Entity> i : touchedItems) {
+            i.userData.beAttacked(v, collisionDamage, faction);
         }
     }
 }

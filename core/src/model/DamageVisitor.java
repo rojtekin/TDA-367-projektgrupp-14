@@ -9,6 +9,7 @@ import model.monsters.Monster;
  */
 public class DamageVisitor implements IDamageVisitor {
 
+    //TODO Add calls for sound either in here or in the methods themselves (Probably not here)
 
     /**
      * Uses double dispatch to determine the class of the target.
@@ -25,6 +26,14 @@ public class DamageVisitor implements IDamageVisitor {
         }
     }
 
+    /**
+     * Uses double dispatch to determine the class of the target.
+     * @param target The target of the damage
+     * @param damage The amount of damage to be inflicted
+     * @param faction The attacker's faction.
+     *                If the attacker is of the
+     *                same faction no damage will be done.
+     */
     @Override
     public void doDamage(Monster target, float damage, String faction) {
         if (target.getFaction() != faction) {

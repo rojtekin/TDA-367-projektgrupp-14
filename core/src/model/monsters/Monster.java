@@ -21,7 +21,7 @@ public abstract class Monster extends LivingEntity {
     abstract public void moveTowardPlayer(float playerX, float playerY);
 
     @Override
-    public void receiveDamage(IDamageVisitor v, float damage, String faction) {
+    public void beAttacked(IDamageVisitor v, float damage, String faction) {
         v.doDamage(this, damage, faction);
     }
 }

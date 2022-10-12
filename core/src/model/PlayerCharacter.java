@@ -9,7 +9,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
     }
 
     @Override
-    public void receiveDamage(IDamageVisitor v, float damage, String faction) {
+    public void beAttacked(IDamageVisitor v, float damage, String faction) {
         v.doDamage(this, damage, faction);
     }
 }

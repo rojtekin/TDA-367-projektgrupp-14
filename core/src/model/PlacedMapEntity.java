@@ -10,4 +10,9 @@ public class PlacedMapEntity extends Entity {
     public PlacedMapEntity(float x, float y, float height, float width, World<Entity> world) {
         super(x, y, height, width, world);
     }
+
+    @Override
+    public void receiveDamage(IDamageVisitor v, float damage, String faction) {
+        v.doDamage(this, damage, faction);
+    }
 }

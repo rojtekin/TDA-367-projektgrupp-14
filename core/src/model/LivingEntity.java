@@ -14,8 +14,8 @@ public abstract class LivingEntity extends Entity {
     private float maxHealth;
     private float currentHealth;
     private float collisionDamage;
-    private Visitor damageType;
     private List<MovementListener> movementListeners = new ArrayList<>();
+    private String faction;
 
     public boolean isMoving() {
         return inMotion;
@@ -49,12 +49,21 @@ public abstract class LivingEntity extends Entity {
         return collisionDamage;
     }
 
-    public LivingEntity(float x, float y, float height, float width, float speed, float health, float collisionDamage, World<Entity> world) {
+    public void setFaction (String faction) {
+        this.faction = faction;
+    }
+
+    public String getFaction() {
+        return faction;
+    }
+
+    public LivingEntity(float x, float y, float height, float width, float speed, float health, float collisionDamage, String faction, World<Entity> world) {
         super(x, y, height, width, world);
         this.speed = speed;
         this.maxHealth = health;
         this.currentHealth = health;
         this.collisionDamage = collisionDamage;
+        this.faction = faction;
     }
 
     /**
@@ -93,7 +102,7 @@ public abstract class LivingEntity extends Entity {
         Response.Result result = move((getDirection().x * getSpeed()), (getDirection().y * getSpeed()));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
-        }
+        };
         setMoving(true);
     }
 
@@ -106,7 +115,9 @@ public abstract class LivingEntity extends Entity {
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {
-        currentHealth = currentHealth - damage;
+        if (currentHealth > 0) {
+            currentHealth = currentHealth - damage;
+        }
     }
 
     /**
@@ -131,8 +142,7 @@ public abstract class LivingEntity extends Entity {
         return result;
     }
 
-    //Bugged: Enemies kill each other and colliding with walls will crash the game
-    //TODO Potentially replace with visitorpattern, alternatively find fix
+
     private List<Item<Entity>> getTouched(Collisions projectedCollisions) {
         List<Item<Entity>> touched = new ArrayList<>();
         for (int i = 0; i < projectedCollisions.size(); i++) {
@@ -142,14 +152,9 @@ public abstract class LivingEntity extends Entity {
     }
 
     private void damageTouched(List<Item<Entity>> collidedEntities) {
-        Visitor visitor = new playerDamageVisitor();
+        IDamageVisitor v = new DamageVisitor();
         for (Item<Entity> e : collidedEntities) {
-            e.userData.acceptDamage(visitor, collisionDamage);
+            e.userData.receiveDamage(v, collisionDamage, faction);
         }
-    }
-
-    @Override
-    public void acceptDamage(Visitor v, float damage) {
-        v.doDamage(this, damage);
     }
 }

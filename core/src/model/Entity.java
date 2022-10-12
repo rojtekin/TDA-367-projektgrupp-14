@@ -17,6 +17,7 @@ public abstract class Entity {
     public CollisionFilter getMovementCollision() {
         return movementCollision;
     }
+
     public void setMovementCollision(CollisionFilter movementCollision) {
         this.movementCollision = movementCollision;
     }
@@ -102,5 +103,5 @@ public abstract class Entity {
         setY(world.getRect(boundingbox).y);
     }
 
-    public abstract void acceptDamage(Visitor v, float damage);
+    public abstract void receiveDamage(IDamageVisitor v, float damage, String faction);
 }

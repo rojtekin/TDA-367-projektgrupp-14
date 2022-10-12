@@ -1,7 +1,5 @@
 package model;
 
-import com.dongbat.jbump.CollisionFilter;
-import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
 public interface IEntity {

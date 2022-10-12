@@ -9,7 +9,7 @@ public abstract class Entity implements IEntity{
     private float y;
     private float height;
     private float width;
-    private float speed;
+    protected float speed;
     private float health;
     private float damage;
     private boolean inMotion = false;

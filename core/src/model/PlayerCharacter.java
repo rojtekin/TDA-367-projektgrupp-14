@@ -10,7 +10,6 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
 
     public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
         super(spawnX, spawnY , world);
-        setEntityName("BlueSamurai");
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;
     } //TODO fix later

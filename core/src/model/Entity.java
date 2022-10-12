@@ -1,10 +1,17 @@
 package model;
 
 import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
+import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
 
 public abstract class Entity implements IEntity{
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+public abstract class Entity {
     private float x;
     private float y;
     private float height;
@@ -13,13 +20,13 @@ public abstract class Entity implements IEntity{
     private float health;
     private float damage;
     private boolean inMotion = false;
-    private String entityName;
     private float maxHealth;
     private float currentHealth;
     private Item<Entity> boundingbox;
     private World<Entity> world;
     private CollisionFilter collisionType = CollisionFilter.defaultFilter;
     private Direction direction;
+    private List<MovementListener> movementListeners = new ArrayList<>();
 
     public CollisionFilter getCollisionType() {
         return collisionType;
@@ -28,8 +35,7 @@ public abstract class Entity implements IEntity{
         this.collisionType = collisionType;
     }
 
-    //TODO rework movement, remove has-dependency on world
-    public Entity(float x, float y, float height, float width, float speed,float maxHealth ,float damage, World<Entity> world) {
+     public Entity(float x, float y, float height, float width, float speed, float maxHealth ,float damage, World<Entity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -39,29 +45,22 @@ public abstract class Entity implements IEntity{
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.direction = Direction.DOWN;
-        setWorld(world);
+        setWorld(Objects.requireNonNull(world));
     }
 
     public boolean isMoving() {
         return inMotion;
     }
 
-    public void setMoving(boolean moving) { //TODO fix the same way as in Model TODO
+    public void setMoving(boolean moving) {
         this.inMotion = moving;
-    }
-
-    protected void setEntityName(String name){
-        this.entityName = name;
-    }
-    public String getEntityName(){
-        return this.entityName;
     }
 
     public float getX() {
         return x;
     }
 
-    protected void setX(float x) {
+    private void setX(float x) {
         this.x = x;
     }
 
@@ -69,7 +68,7 @@ public abstract class Entity implements IEntity{
         return y;
     }
 
-    protected void setY(float y) {
+    private void setY(float y) {
         this.y = y;
     }
 
@@ -84,6 +83,7 @@ public abstract class Entity implements IEntity{
     public float getSpeed() {
         return speed;
     }
+
     protected void setSpeed(float speed) {
         this.speed = speed;
     }
@@ -130,7 +130,7 @@ public abstract class Entity implements IEntity{
      * Adds a reference to the world that the player is in and
      * registers itself as a collisionbox
      */
-    public void setWorld (World<Entity> world) {
+    private void setWorld (World<Entity> world) {
         this.world = world;
         addCollision();
     }
@@ -142,45 +142,53 @@ public abstract class Entity implements IEntity{
     /**
      * Sets the entity coordinates to match its collisionbox
      */
-    public void updatePosition() {
+    private void updatePosition() {
         setX(world.getRect(boundingbox).x);
         setY(world.getRect(boundingbox).y);
     }
 
     /**
-     * Moves the collisionbox up, then moves the entity to match it
+     * Moves the entity in the specified direction.
+     * @param direction the direction that the entity should move in
      */
-    public void moveUp(){
-        world.move(boundingbox, x, y + speed, CollisionFilter.defaultFilter);
-        updatePosition();
+    public void move(Direction direction) {
+        setDirection(direction);
+        moveForward();
+    }
+
+    /**
+     * Moves the entity in the direction it is facing.
+     */
+    public void moveForward() {
+        Result result = changePosition((direction.x * getSpeed()), (direction.y * getSpeed()));
+        for (MovementListener movementListener : movementListeners) {
+            movementListener.onMovement(result.projectedCollisions);
+        }
         setMoving(true);
-        direction = Direction.UP;
     }
-    /**
-     * Moves the collisionbox down, then moves the entity to match it
-     */
-    public void moveDown(){
-        world.move(boundingbox, x, y - speed, CollisionFilter.defaultFilter);
-        updatePosition();
-        inMotion = true;
-        direction = Direction.DOWN;
+
+    public void addMovementListener(MovementListener movementListener) {
+        movementListeners.add(movementListener);
     }
+
     /**
-     * Moves the collisionbox to the right, then moves the entity to match it
+     * Pushes the entity back in a certain direction depending on the collision normal.
+     * @param collisionNormal the collision normal
      */
-    public void moveRight(){
-        world.move(boundingbox, x + speed, y, CollisionFilter.defaultFilter);
-        updatePosition();
-        inMotion = true;
-        direction = Direction.RIGHT;
+    public void pushBack(IntPoint collisionNormal) {
+        int distancePushed = 16;
+        changePosition((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));
     }
+
     /**
-     * Moves the collisionbox to the left, then moves the entity to match it
+     * Moves the collision box, then moves the entity to match it.
+     * @param deltaX the distance in the x-direction that the entity should move
+     * @param deltaY the distance in the y-direction that the entity should move
+     * @return result
      */
-    public void moveLeft(){
-        world.move(boundingbox, x - speed, y, CollisionFilter.defaultFilter);
+    private Result changePosition(float deltaX, float deltaY) {
+        Result result = world.move(boundingbox, this.x + deltaX,this.y + deltaY, CollisionFilter.defaultFilter);
         updatePosition();
-        inMotion = true;
-        direction = Direction.LEFT;
+        return result;
     }
 }

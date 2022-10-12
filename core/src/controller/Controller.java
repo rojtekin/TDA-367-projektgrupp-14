@@ -4,30 +4,31 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import model.*;
 
+import java.util.Objects;
+
 public class Controller {
     private Model model;
     private IPlayerCharacter player;
 
     public Controller(Model model) {
-        this.model = model;
-        this.player = model.getPlayer();
+        this.model = Objects.requireNonNull(model);
+        this.player = Objects.requireNonNull(model.getPlayer());
     }
-
 
     public void update() {
         model.getPlayer().setMoving(false);
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.moveLeft();
+            player.move(Direction.LEFT);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.moveRight();
+            player.move(Direction.RIGHT);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.moveUp();
+            player.move(Direction.UP);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.moveDown();
+            player.move(Direction.DOWN);
         }
     }
 }

@@ -1,11 +1,10 @@
 package view;
 
 import model.*;
+import model.enemies.Enemy;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,15 +13,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
 public class View {
     private HUD hud;
     private Model model;
-    private TextureRegion playerImage;
-    private Texture playerWalkSheet;
-    private TextureRegion[][] playerWalkFrames;
     private float timeSincePlayerWalkFrameChanged = 0f;
     private int currentPlayerWalkFrame = 0;
     private OrthographicCamera camera;
@@ -32,18 +29,17 @@ public class View {
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
-    private ImageLoader imageLoader = new ImageLoader();
+    private ImageHandler imageHandler = new ImageHandler();
     private Sound soundLoader = new Sound();
-    private int i = 0;
 
     private Set<Entity> isKnown = new HashSet<Entity>();
 
     public View(Model model) {
-        this.model = model;
+        this.model = Objects.requireNonNull(model);
     }
 
     public void initialize() {
-        loadPlayerImages();
+        imageHandler.loadEntityImages();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -68,9 +64,7 @@ public class View {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         updatePlayerWalkFrame();
-        updatePlayerImage(currentPlayerWalkFrame);
-        batch.draw(playerImage, model.getPlayer().getX(), model.getPlayer().getY());
-        drawAllEntities(model);
+        drawEntities();
         batch.end();
 
         hud.update();
@@ -94,28 +88,26 @@ public class View {
         camera.position.set(model.getPlayer().getX() + model.getPlayer().getWidth() / 2, model.getPlayer().getY() + model.getPlayer().getHeight() / 2, 0);
     }
 
-    private void drawAllEntities(Model model) {
-        for (Entity entity : model.getEntities()){
-            if (!(entity instanceof PlayerCharacter))
-            batch.draw(imageLoader.loadImage(entity), entity.getX(), entity.getY());
+    private void drawPlayer() {
+        batch.draw(imageHandler.getEntityImage(PlayerCharacter.class, model.getPlayerDirection(), currentPlayerWalkFrame), model.getPlayer().getX(), model.getPlayer().getY());
+    }
+
+    private void drawEnemies() {
+        for (Enemy enemy : model.getEnemyList()) {
+            batch.draw(imageHandler.getEntityImage(enemy.getClass(), enemy.getDirection(), 0),
+                    enemy.getX(), enemy.getY());
         }
+    }
+
+    private void drawEntities() {
+        drawPlayer();
+        drawEnemies();
     }
 
     public void dispose () {
         hud.dispose();
-        playerWalkSheet.dispose();
         batch.dispose();
         tiledMap.dispose();
-    }
-
-    private void loadPlayerImages() {
-        playerWalkSheet = new Texture(Gdx.files.internal("characters/BlueSamurai-Walk.png"));
-        int nColumnsPlayerWalkSheet = 4;
-        int nRowsPlayerWalkSheet = 4;
-        // Splits the player character walk sheet into multiple frames
-        playerWalkFrames = TextureRegion.split(playerWalkSheet,
-                playerWalkSheet.getWidth() / nColumnsPlayerWalkSheet,
-                playerWalkSheet.getHeight() / nRowsPlayerWalkSheet);
     }
 
     /**
@@ -134,29 +126,6 @@ public class View {
         else {
             currentPlayerWalkFrame = 0;
             timeSincePlayerWalkFrameChanged = 0f;
-        }
-    }
-
-
-    /**
-     * Updates the player image based on the direction of the player and the current frame in the walk animation.
-     * @param currentFrame the current frame in the player walk animation
-     */
-    private void updatePlayerImage(int currentFrame) {
-        Direction playerDirection = model.getPlayerDirection();
-        switch(playerDirection) {
-            case UP:
-                playerImage = playerWalkFrames[currentFrame][1];
-                break;
-            case DOWN:
-                playerImage = playerWalkFrames[currentFrame][0];
-                break;
-            case LEFT:
-                playerImage = playerWalkFrames[currentFrame][2];
-                break;
-            case RIGHT:
-                playerImage = playerWalkFrames[currentFrame][3];
-                break;
         }
     }
 }

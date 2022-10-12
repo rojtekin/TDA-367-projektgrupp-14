@@ -100,7 +100,7 @@ public abstract class LivingEntity extends Entity {
      */
     public void moveForward() {
         Response.Result result = move((getDirection().x * getSpeed()), (getDirection().y * getSpeed()));
-        damageTouched(getTouched(result.projectedCollisions));
+        damageTouched(result.projectedCollisions);
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
         };
@@ -143,22 +143,13 @@ public abstract class LivingEntity extends Entity {
     }
 
     /**
-     * Takes a list of projectedcollisions and returns a list of the
-     * JBump "items" of those collisions
+     * Damages every touched hostile entity
      */
-    private List<Item<Entity>> getTouched(Collisions projectedCollisions) {
-        List<Item<Entity>> touched = new ArrayList<>();
-        for (int i = 0; i < projectedCollisions.size(); i++) {
-            touched.add(projectedCollisions.get(i).other);
-        }
-        return touched;
-    }
-
-
-    private void damageTouched(List<Item<Entity>> touchedItems) {
+    private void damageTouched(Collisions projectedCollisions) {
         IDamageVisitor v = new DamageVisitor();
-        for (Item<Entity> i : touchedItems) {
-            i.userData.beAttacked(v, collisionDamage, faction);
+        for (int i = 0; i < projectedCollisions.size(); i++) {
+            Item<Entity> touched = projectedCollisions.get(i).other;
+            touched.userData.beAttacked(v, collisionDamage, faction);
         }
     }
 }

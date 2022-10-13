@@ -18,7 +18,7 @@ public class GlassCannon implements IPlayerCharacter {
 
     @Override
     public boolean isMoving() {
-        return false;
+        return playerCharacter.isMoving();
     }
 
     @Override

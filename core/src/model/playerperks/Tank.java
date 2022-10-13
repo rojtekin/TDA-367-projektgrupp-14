@@ -16,7 +16,7 @@ public class Tank implements IPlayerCharacter {
 
     @Override
     public boolean isMoving() {
-        return false;
+        return playerCharacter.isMoving();
     }
 
     @Override

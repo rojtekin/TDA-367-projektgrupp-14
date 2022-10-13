@@ -27,7 +27,7 @@ public class SpeedDevil extends PlayerCharacter implements IPlayerCharacter{
 
     @Override
     public boolean isMoving() {
-        return false;
+        return playerCharacter.isMoving();
     }
 
     @Override

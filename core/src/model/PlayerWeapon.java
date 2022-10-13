@@ -7,6 +7,7 @@ public abstract class PlayerWeapon {
     private float weaponRange;
     private float weaponWidth;
     private float weaponAngle;
+    private int weaponRotations;
 
     public PlayerWeapon(){
         this.weaponDamage = weaponDamage;
@@ -14,17 +15,26 @@ public abstract class PlayerWeapon {
         this.weaponWidth = weaponWidth;
         this.weaponSpeed = weaponSpeed;
         this.weaponAngle = weaponAngle;
+        this.weaponRotations = weaponRotations;
+        //weaponpositionx =
+        //weaponpositiony =
     }
 
+    //TODO
+    //in playercharachter the swords position shall update with the move command like player does
     public void weaponSwing(int rotationStart,int rotationFinish, int animationpart){
-        if(animationpart > 0) {
+        int degreedistance = Math.abs(rotationStart - rotationFinish);
+        int degreerotation = degreedistance/weaponRotations;
+        //lista entities
+        if(animationpart <= weaponRotations) {
+            //p1 = getplayerposition and degreerotation*animationpart*trigonometrisaker
+            //p2 = x1 + weaponwidth, y1 + weaponheight and things from over
+            //lista entities? add if not already there world.querySegment(x1, y1, x2, y2, filter, items);
+            //lista skada alla i listan
+            //lista knuffa alla i listan
+
 
         }
-        //rotationstart, kolla kollision på svärdet som går från spelarens centrum
-        //x0 är alltid spelarens utgångspunktx
-        //x1 är x0 + weaponwidth vid starten, kommer sedan ändras.
-        //y0 är utgångspunnkty
-        //y1 är y0 + weaponRange vid starten, kommer att ändras.
     }
     public float getWeaponAngle() {
         return weaponAngle;

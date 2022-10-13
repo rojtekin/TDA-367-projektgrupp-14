@@ -33,19 +33,19 @@ public class Controller {
         // sword attack
         //Left
         if(Gdx.input.isKeyPressed(Input.Keys.J)){
-            player.weaponAttack(180,0,5);
+            player.weaponAttack(180,0,0);
         }
         //Up
         if(Gdx.input.isKeyPressed(Input.Keys.I)){
-            player.weaponAttack(-90,90,5);
+            player.weaponAttack(-90,90,0);
         }
         //right
         if(Gdx.input.isKeyPressed(Input.Keys.L)){
-            player.weaponAttack(0,180,5);
+            player.weaponAttack(0,180,0);
         }
         //Down
         if(Gdx.input.isKeyPressed(Input.Keys.K)){
-            player.weaponAttack(180,0,5);
+            player.weaponAttack(180,0,0);
         }
     }
 }

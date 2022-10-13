@@ -8,9 +8,13 @@ public class Sword extends PlayerWeapon{
     private float weaponAngle;
 
     public Sword(){
+        super();
+        /*
         this.weaponSpeed = 1;
         this.weaponDamage = 10;
         this.weaponRange = 30;
         this.weaponWidth = 12;
+
+         */
     }
 }

@@ -1,12 +1,13 @@
 package model.playerperks;
 
+import com.dongbat.jbump.IntPoint;
 import model.Direction;
 import model.IPlayerCharacter;
 import model.PlayerCharacter;
 
 public class GlassCannon implements IPlayerCharacter {
-    PlayerCharacter playerCharacter;
-    public GlassCannon(PlayerCharacter playerCharacter) {
+    IPlayerCharacter playerCharacter;
+    public GlassCannon(IPlayerCharacter playerCharacter) {
         this.playerCharacter = playerCharacter;
     }
 
@@ -116,6 +117,11 @@ public class GlassCannon implements IPlayerCharacter {
     }
 
     @Override
+    public void pushBack(IntPoint normal) {
+        playerCharacter.pushBack(normal);
+    }
+
+    @Override
     public float getX() {
         return playerCharacter.getX();
     }
@@ -126,23 +132,8 @@ public class GlassCannon implements IPlayerCharacter {
     }
 
     @Override
-    public void moveLeft() {
-        playerCharacter.moveLeft();
-    }
-
-    @Override
-    public void moveRight() {
-        playerCharacter.moveRight();
-    }
-
-    @Override
-    public void moveUp() {
-        playerCharacter.moveUp();
-    }
-
-    @Override
-    public void moveDown() {
-        playerCharacter.moveDown();
+    public void move(Direction direction, Float speed) {
+        playerCharacter.move(direction, speed);
     }
 
     @Override

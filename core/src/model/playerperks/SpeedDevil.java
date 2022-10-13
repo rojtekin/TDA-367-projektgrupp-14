@@ -1,5 +1,6 @@
 package model.playerperks;
 
+import com.dongbat.jbump.IntPoint;
 import model.Direction;
 import model.IPlayerCharacter;
 import model.PlayerCharacter;
@@ -13,7 +14,7 @@ public class SpeedDevil implements IPlayerCharacter{
 
     @Override
     public float getSpeed(){
-        return playerCharacter.getSpeed()* (float)1.5;
+        return playerCharacter.getSpeed()* (float)3.5;
     }
 
     @Override
@@ -117,6 +118,11 @@ public class SpeedDevil implements IPlayerCharacter{
     }
 
     @Override
+    public void pushBack(IntPoint normal) {
+        playerCharacter.pushBack(normal);
+    }
+
+    @Override
     public float getX() {
         return playerCharacter.getX();
     }
@@ -127,23 +133,8 @@ public class SpeedDevil implements IPlayerCharacter{
     }
 
     @Override
-    public void moveLeft() {
-        playerCharacter.moveLeft();
-    }
-
-    @Override
-    public void moveRight() {
-        playerCharacter.moveRight();
-    }
-
-    @Override
-    public void moveUp() {
-        playerCharacter.moveUp();
-    }
-
-    @Override
-    public void moveDown() {
-        playerCharacter.moveDown();
+    public void move(Direction direction, Float speed) {
+        playerCharacter.move(direction, speed);
     }
 
     @Override

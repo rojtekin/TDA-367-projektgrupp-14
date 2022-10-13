@@ -1,7 +1,7 @@
 package model;
 
 import com.dongbat.jbump.World;
-
+//TODO fråga: Vad ska jag göra med denna?
 public abstract class PlayerCharacterAdapter extends Entity implements IPlayerCharacter {
 
     private float height;
@@ -14,7 +14,6 @@ public abstract class PlayerCharacterAdapter extends Entity implements IPlayerCh
 
     public PlayerCharacterAdapter(float spawnX, float spawnY, World<Entity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10,1, world);
-        setEntityName("BlueSamurai");
         this.experience = 0;
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;

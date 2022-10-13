@@ -5,12 +5,15 @@ import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.enemies.*;
+import model.rewards.RewardSystem;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Model {
+public class Model implements MovementListener {
     private IMapLoader mapLoader;
     private IPlayerCharacter player;
+    private List<Enemy> enemyList = new ArrayList<>();
     private List<Entity> entityList = new ArrayList<>();
     private RewardSystem rewardSystem = new RewardSystem();
     private World<IEntity> world = new World<>();
@@ -20,11 +23,14 @@ public class Model {
     }
 
     public IPlayerCharacter getPlayer(){
-        return player ;
+        return player;
     }
 
     public void update() {
         moveEnemies();
+        if (rewardSystem.levelUpChecker(player)){
+            rewardSystem.applyReward(player, rewardSystem.getRandomReward());
+        }
     }
 
     public Map getMap() {
@@ -86,7 +92,6 @@ public class Model {
         rewardSystem.initialize();
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
-        entityList.add(player);
         //Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
         //entityList.add(mouse1);
     }

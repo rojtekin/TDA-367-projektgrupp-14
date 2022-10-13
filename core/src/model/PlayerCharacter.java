@@ -2,14 +2,15 @@ package model;
 
 import com.dongbat.jbump.World;
 
-public class PlayerCharacter extends PlayerCharacterAdapter implements IControllable, IPlayerCharacter {
+public class PlayerCharacter extends Entity implements IControllable, IPlayerCharacter {
     private int experience;
     private int level;
     private float AbilityCoolDownMultiplier; // for abilities later 1 -> full cool down, 0--> everything has 0sec cool down
     private float AbilityPower;
 
     public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
-        super(spawnX, spawnY , world);
+        super(spawnX, spawnY, 32, 32, 5, 10,1, world);
+        this.experience = 0;
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;
     } //TODO fix later
@@ -99,5 +100,10 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
 
     protected void setAbilityCoolDownMultiplier(float abilityCoolDownMultiplier) {
         AbilityCoolDownMultiplier = abilityCoolDownMultiplier;
+    }
+
+    @Override
+    public void move(Direction direction, Float speed) {
+        super.move(direction, speed);
     }
 }

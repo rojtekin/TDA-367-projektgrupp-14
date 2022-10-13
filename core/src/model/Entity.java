@@ -5,13 +5,12 @@ import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
-
-public abstract class Entity implements IEntity{
+import java.util.List;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Entity {
+public abstract class Entity implements IEntity{
     private float x;
     private float y;
     private float height;
@@ -151,16 +150,16 @@ public abstract class Entity {
      * Moves the entity in the specified direction.
      * @param direction the direction that the entity should move in
      */
-    public void move(Direction direction) {
+    public void move(Direction direction, Float speed) {
         setDirection(direction);
-        moveForward();
+        moveForward(speed);
     }
 
     /**
      * Moves the entity in the direction it is facing.
      */
-    public void moveForward() {
-        Result result = changePosition((direction.x * getSpeed()), (direction.y * getSpeed()));
+    public void moveForward(Float speed) {
+        Result result = changePosition((direction.x * speed), (direction.y * speed));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
         }
@@ -192,3 +191,4 @@ public abstract class Entity {
         return result;
     }
 }
+

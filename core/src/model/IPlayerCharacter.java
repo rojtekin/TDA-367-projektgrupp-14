@@ -1,5 +1,7 @@
 package model;
 
+import com.dongbat.jbump.IntPoint;
+
 public interface IPlayerCharacter {
 
     boolean isMoving();
@@ -30,17 +32,13 @@ public interface IPlayerCharacter {
 
     float getY();
 
-    void moveLeft();
-
-    void moveRight();
-
-    void moveUp();
-
-    void moveDown();
+    void move(Direction direction, Float speed);
 
     float getHeight();
 
     float getWidth();
 
     void setMoving(boolean moving);
+
+    void pushBack(IntPoint normal);
 }

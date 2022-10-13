@@ -1,11 +1,10 @@
 package model;
 
+import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.World;
 
 public interface IEntity {
     boolean isMoving();
-
-    String getEntityName();
 
     float getX();
 
@@ -31,15 +30,9 @@ public interface IEntity {
 
     World<Entity> getWorld();
 
-    void updatePosition();
-
-    void moveUp();
-
-    void moveDown();
-
-    void moveRight();
-
-    void moveLeft();
+    void move(Direction direction, Float speed);
 
     void setMoving(boolean moving);
+
+    void pushBack(IntPoint collisionNormal);
 }

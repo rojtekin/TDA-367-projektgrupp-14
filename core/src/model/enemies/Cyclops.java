@@ -27,29 +27,34 @@ public class Cyclops extends Enemy {
 
         if ((Math.abs(xDistance) > 16) && !stuckInYDirection) {
             if (xDistance > 0) {
-                this.move(Direction.RIGHT);
+                this.move(Direction.RIGHT, speed);
             }
             else {
-                this.move(Direction.LEFT);
+                this.move(Direction.LEFT, speed);
             }
             stuckInXDirection = false;
             if (this.getX() == initialX) {
                 stuckInXDirection = true;
-                this.move(Direction.UP);
+                this.move(Direction.UP, speed);
             }
         }
         else if(!stuckInXDirection){
             if (yDistance > 0) {
-                this.move(Direction.UP);
+                this.move(Direction.UP, speed);
             }
             else {
-                this.move(Direction.DOWN);
+                this.move(Direction.DOWN, speed);
             }
             stuckInYDirection = false;
             if (this.getY() == initialY) {
                 stuckInYDirection = true;
-                this.move(Direction.RIGHT);
+                this.move(Direction.RIGHT, speed);
             }
         }
+    }
+
+    @Override
+    public void move(Direction direction, Float speed) {
+        super.move(direction, speed);
     }
 }

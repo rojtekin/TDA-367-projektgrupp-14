@@ -1,19 +1,27 @@
 package model.rewards;
 
-import model.Entity;
-import model.PlayerCharacter;
-import com.dongbat.jbump.World;
-// Currently unused
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
-// Decorator-pattern
-public abstract class Reward extends PlayerCharacter implements IReward {
+public enum Reward {
+    COOL_DOWN_DECREASE,
+    ABILITY_POWER_INCREASE,
+    DAMAGE_INCREASE,
+    HEALTH_INCREASE,
+    SPEED_INCREASE,
+    GLASS_CANNON,
+    SPEED_DEVIL,
+    TANK;
 
-    public Reward(float spawnX, float spawnY, World<Entity> world) {
-        super(spawnX, spawnY, world);
-    }
+    private static final List<Reward> VALUES =
+            Collections.unmodifiableList(Arrays.asList(values()));
+    private static final int SIZE = VALUES.size();
+    private static final Random RANDOM = new Random();
 
-    @Override
-    public void apply() {
-
+    public static Reward randomReward()  {
+        return VALUES.get(RANDOM.nextInt(SIZE));
     }
 }
+

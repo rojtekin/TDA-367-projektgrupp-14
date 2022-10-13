@@ -12,7 +12,7 @@ public abstract class PlayerCharacterAdapter extends Entity implements IPlayerCh
     private float AbilityPower;
     private boolean inMotion = false;
 
-    public PlayerCharacterAdapter(float spawnX, float spawnY, World<Entity> world) {
+    public PlayerCharacterAdapter(float spawnX, float spawnY, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10,1, world);
         this.experience = 0;
         this.level = 0;

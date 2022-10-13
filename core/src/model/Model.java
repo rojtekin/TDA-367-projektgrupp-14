@@ -5,6 +5,7 @@ import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.enemies.*;
+import model.rewards.Reward;
 import model.rewards.RewardSystem;
 
 import java.util.ArrayList;
@@ -18,10 +19,6 @@ public class Model implements MovementListener {
     private RewardSystem rewardSystem = new RewardSystem();
     private World<IEntity> world = new World<>();
 
-    public IPlayerCharacter getPlayerCharacter() {
-        return player;
-    }
-
     public IPlayerCharacter getPlayer(){
         return player;
     }
@@ -29,7 +26,8 @@ public class Model implements MovementListener {
     public void update() {
         moveEnemies();
         if (rewardSystem.levelUpChecker(player)){
-            rewardSystem.applyReward(player, rewardSystem.getRandomReward());
+        player = rewardSystem.applyReward(player, Reward.SPEED_DEVIL);
+        System.out.println(player.getSpeed());
         }
     }
 
@@ -80,7 +78,7 @@ public class Model implements MovementListener {
 
     private boolean collisionWithPlayer(Collision collision) { return collision.other.userData.equals(player); }
 
-    public World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return mapLoader.getWorld();
     }
 
@@ -89,10 +87,9 @@ public class Model implements MovementListener {
      * @param mapLoader object that loads a map of a specific type
      */
     public void initialize(IMapLoader mapLoader) {
-        rewardSystem.initialize();
+        rewardSystem.initialize(world);
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
-        //Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
-        //entityList.add(mouse1);
+        player.gainExperience(100);
     }
 }

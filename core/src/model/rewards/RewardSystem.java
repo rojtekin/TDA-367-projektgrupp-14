@@ -1,5 +1,7 @@
 package model.rewards;
 
+import com.dongbat.jbump.World;
+import model.IEntity;
 import model.IPlayerCharacter;
 import model.playerperks.GlassCannon;
 import model.playerperks.SpeedDevil;
@@ -7,14 +9,16 @@ import model.playerperks.Tank;
 
 public class RewardSystem {
 private boolean perkApplied;
+private World<IEntity> world;
     //TODO fråga:  ska jag göra om till lista istället för ENUM? för att få bort getRandomRewards stora if-sats
 
     public RewardSystem() {
-        initialize();
+        initialize(world);
     }
 
-    public void initialize() {
+    public void initialize(World<IEntity> world) {
         perkApplied = false;
+        this.world = world;
     }
     public boolean levelUpChecker(IPlayerCharacter playerCharacter){
         return playerCharacter.getExperience() >= 100;
@@ -29,30 +33,31 @@ private boolean perkApplied;
     }
 
     public IPlayerCharacter applyReward(IPlayerCharacter playerCharacter, Reward reward){
+        playerCharacter.reduceExperience();
         if (reward == Reward.DAMAGE_INCREASE){
             playerCharacter.increaseDamage();
         }
-        if (reward == Reward.HEALTH_INCREASE){
+        else if (reward == Reward.HEALTH_INCREASE){
             playerCharacter.increaseMaxHealth();
         }
-        if (reward == Reward.SPEED_INCREASE){
+        else if (reward == Reward.SPEED_INCREASE){
             playerCharacter.increaseSpeed();
         }
-        if (reward == Reward.ABILITY_POWER_INCREASE){
+        else if (reward == Reward.ABILITY_POWER_INCREASE){
             playerCharacter.increaseAbilityPower();
         }
-        if (reward == Reward.COOL_DOWN_DECREASE && playerCharacter.getAbilityCoolDownMultiplier() != 0){
+        else if (reward == Reward.COOL_DOWN_DECREASE && playerCharacter.getAbilityCoolDownMultiplier() != 0){
             playerCharacter.decreasedAbilityCoolDownMultiplier();
         }
-        if (reward == Reward.SPEED_DEVIL){
-            playerCharacter = new SpeedDevil(playerCharacter);
+        else if (reward == Reward.SPEED_DEVIL){
+            playerCharacter = new SpeedDevil(playerCharacter, world);
             perkApplied = true;
         }
-        if (reward == Reward.GLASS_CANNON){
+        else if (reward == Reward.GLASS_CANNON){
             playerCharacter = new GlassCannon(playerCharacter);
             perkApplied = true;
         }
-        if (reward == Reward.TANK){
+        else if (reward == Reward.TANK){
             playerCharacter = new Tank(playerCharacter);
         }
         return playerCharacter;

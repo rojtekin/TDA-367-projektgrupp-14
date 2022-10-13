@@ -23,17 +23,17 @@ public class GlassCannon implements IPlayerCharacter {
 
     @Override
     public Direction getDirection() {
-        return null;
+        return playerCharacter.getDirection();
     }
 
     @Override
     public int getExperience() {
-        return 0;
+        return playerCharacter.getExperience();
     }
 
     @Override
     public int getLevel() {
-        return 0;
+        return playerCharacter.getLevel();
     }
 
     @Override
@@ -99,6 +99,16 @@ public class GlassCannon implements IPlayerCharacter {
     @Override
     public void decreaseAbilityPower() {
         playerCharacter.decreaseAbilityPower();
+    }
+
+    @Override
+    public void gainExperience(int experience) {
+        playerCharacter.gainExperience(experience);
+    }
+
+    @Override
+    public void reduceExperience() {
+        playerCharacter.reduceExperience();
     }
 
     @Override

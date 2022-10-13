@@ -12,10 +12,10 @@ public class Controller {
 
     public Controller(Model model) {
         this.model = Objects.requireNonNull(model);
-        this.player = Objects.requireNonNull(model.getPlayer());
+       // this.player = Objects.requireNonNull(model.getPlayer());
     }
 
-    public void update() {
+    public void update(IPlayerCharacter player) {
         model.getPlayer().setMoving(false);
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {

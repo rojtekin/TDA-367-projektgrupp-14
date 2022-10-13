@@ -7,7 +7,6 @@ import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public abstract class Entity implements IEntity{
@@ -21,8 +20,8 @@ public abstract class Entity implements IEntity{
     private boolean inMotion = false;
     private float maxHealth;
     private float currentHealth;
-    private Item<Entity> boundingbox;
-    private World<Entity> world;
+    private Item<IEntity> boundingbox;
+    private World<IEntity> world;
     private CollisionFilter collisionType = CollisionFilter.defaultFilter;
     private Direction direction;
     private List<MovementListener> movementListeners = new ArrayList<>();
@@ -34,7 +33,7 @@ public abstract class Entity implements IEntity{
         this.collisionType = collisionType;
     }
 
-     public Entity(float x, float y, float height, float width, float speed, float maxHealth ,float damage, World<Entity> world) {
+     public Entity(float x, float y, float height, float width, float speed, float maxHealth , float damage, World<IEntity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
@@ -121,7 +120,7 @@ public abstract class Entity implements IEntity{
             return true;
     }
 
-    public World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return world;
     }
 
@@ -129,7 +128,7 @@ public abstract class Entity implements IEntity{
      * Adds a reference to the world that the player is in and
      * registers itself as a collisionbox
      */
-    private void setWorld (World<Entity> world) {
+    private void setWorld (World<IEntity> world) {
         this.world = world;
         addCollision();
     }

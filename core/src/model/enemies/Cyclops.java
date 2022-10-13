@@ -1,14 +1,14 @@
 package model.enemies;
 
 import model.Direction;
-import model.Entity;
 import com.dongbat.jbump.World;
+import model.IEntity;
 
 public class Cyclops extends Enemy {
     private boolean stuckInXDirection = false;
     private boolean stuckInYDirection = false;
 
-    public Cyclops(int x, int y, int speed, float health, float damage, World<Entity> world) {
+    public Cyclops(int x, int y, int speed, float health, float damage, World<IEntity> world) {
         super(x, y, 32, 32, speed, health, damage, world);
     }
 

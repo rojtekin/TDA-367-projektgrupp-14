@@ -7,12 +7,14 @@ public class PlayerCharacter extends Entity implements IControllable, IPlayerCha
     private int level;
     private float AbilityCoolDownMultiplier; // for abilities later 1 -> full cool down, 0--> everything has 0sec cool down
     private float AbilityPower;
+    private Direction direction;
 
-    public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
+    public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10,1, world);
         this.experience = 0;
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;
+        this.direction = Direction.DOWN;
     } //TODO fix later
 
     public int getExperience() {
@@ -21,6 +23,11 @@ public class PlayerCharacter extends Entity implements IControllable, IPlayerCha
 
     protected void setExperience(int experience) {
         this.experience = experience;
+    }
+
+    @Override
+    public Direction getDirection() {
+        return direction;
     }
 
     public int getLevel() {
@@ -88,6 +95,16 @@ public class PlayerCharacter extends Entity implements IControllable, IPlayerCha
     public void decreaseAbilityPower() {
         if (getAbilityPower() > 1)
             setAbilityPower(getAbilityPower()-1);
+    }
+
+    @Override
+    public void gainExperience(int experience) {
+        setExperience(getExperience() + experience);
+    }
+
+    @Override
+    public void reduceExperience() {
+        setExperience(getExperience()-100);
     }
 
     protected void setAbilityPower(float abilityPower) {

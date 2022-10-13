@@ -28,7 +28,7 @@ public interface IEntity {
 
     boolean getInMotion();
 
-    World<Entity> getWorld();
+    World<IEntity> getWorld();
 
     void move(Direction direction, Float speed);
 

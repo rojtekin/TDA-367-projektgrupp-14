@@ -1,20 +1,23 @@
 package model.playerperks;
 
 import com.dongbat.jbump.IntPoint;
+import com.dongbat.jbump.World;
 import model.Direction;
+import model.IEntity;
 import model.IPlayerCharacter;
 import model.PlayerCharacter;
 
 
-public class SpeedDevil implements IPlayerCharacter{
+public class SpeedDevil extends PlayerCharacter implements IPlayerCharacter{
     private IPlayerCharacter playerCharacter;
-    public SpeedDevil(IPlayerCharacter playerCharacter) {
+    public SpeedDevil(IPlayerCharacter playerCharacter, World<IEntity> world) {
+        super(playerCharacter.getX(),playerCharacter.getY(), world);
         this.playerCharacter = playerCharacter;
     }
 
     @Override
     public float getSpeed(){
-        return playerCharacter.getSpeed()* (float)3.5;
+        return playerCharacter.getSpeed()* (float)1.5;
     }
 
     @Override
@@ -29,17 +32,17 @@ public class SpeedDevil implements IPlayerCharacter{
 
     @Override
     public Direction getDirection() {
-        return null;
+        return playerCharacter.getDirection();
     }
 
     @Override
     public int getExperience() {
-        return 0;
+        return playerCharacter.getExperience();
     }
 
     @Override
     public int getLevel() {
-        return 0;
+        return playerCharacter.getLevel();
     }
 
     @Override

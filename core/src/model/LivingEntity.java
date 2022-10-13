@@ -117,7 +117,7 @@ public abstract class LivingEntity extends Entity {
      */
     public void takeDamage(float damage) {
         if (currentHealth > 0) {
-            currentHealth = currentHealth - damage;
+            currentHealth -= damage;
         }
     }
 

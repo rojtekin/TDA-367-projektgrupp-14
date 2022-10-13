@@ -46,7 +46,7 @@ public class HUD {
     private NinePatch xpyellow2 = new NinePatch(xpyellow, 0, 0, 0, 0);
     private Image fullxpbar = new Image(xpyellow2);
 
-    private Label hpLabel = new Label("HP", new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private Label hpLabel;
     private Label scoreLabel = new Label("Score: " + Integer.toString(score), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
 
 
@@ -97,6 +97,7 @@ public class HUD {
 
         table3.add(fullxpbar).size(300, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
+        hpLabel = new Label("HP " + Integer.toString((int)player.getCurrentHealth()) + "/" + Integer.toString((int)player.getMaxHealth()), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
     }
 
     private void pickhpcolor(){
@@ -122,8 +123,8 @@ public class HUD {
     private void pickhpsize(){
         currenthp = player.getCurrentHealth();
         maxhp = player.getMaxHealth();
-        int hpsize = (int)(currenthp/maxhp);
-        setHpSize(200*hpsize);
+        float hpsize = (float)(currenthp/maxhp);
+        setHpSize((int)(200*hpsize));
     }
 
     private void setHpColor(Image hpColor) {

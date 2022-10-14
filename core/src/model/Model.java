@@ -19,10 +19,6 @@ public class Model implements MovementListener {
     private static final int MAX_ENEMIES = 8;
     private int spawnPointsIndex = 0;
 
-    public PlayerCharacter getPlayerCharacter() {
-        return player;
-    }
-
     public PlayerCharacter getPlayer(){
         return player;
     }
@@ -129,7 +125,5 @@ public class Model implements MovementListener {
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
         entityList.add(player);
         setSpawnPoints();
-        //Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
-        //entityList.add(mouse1);
     }
 }

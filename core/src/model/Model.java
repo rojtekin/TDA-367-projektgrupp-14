@@ -15,17 +15,14 @@ public class Model implements MovementListener {
     private List<Enemy> enemyList = new ArrayList<>();
     private IMapLoader mapLoader;
     private List<Entity> entityList = new ArrayList<>();
-    private final List<Point> spawnPoints = new ArrayList<>();
+    private List<Point> spawnPoints;
     private static final int MAX_ENEMIES = 8;
     private int spawnPointsIndex = 0;
 
-    public Model(IMapLoader mapLoader, PlayerCharacter player) {
+    public Model(IMapLoader mapLoader, PlayerCharacter player, List<Point> spawnPoints) {
         this.mapLoader = mapLoader;
         this.player = player;
-    }
-
-    public void initialize() {
-        setSpawnPoints();
+        this.spawnPoints = spawnPoints;
     }
 
     public PlayerCharacter getPlayer(){
@@ -78,26 +75,6 @@ public class Model implements MovementListener {
             if (spawnPointsIndex < spawnPoints.size() - 1) { spawnPointsIndex++; }
             else { spawnPointsIndex = 0; }
         }
-    }
-
-    private void setSpawnPoints() {
-        int xLeft = 100;
-        int xCenter = mapLoader.getMapUnitWidth() / 2;
-        int xRight = mapLoader.getMapUnitWidth() - 100;
-        int yBottom = 100;
-        int yCenter = mapLoader.getMapUnitHeight() / 2;
-        int yTop = mapLoader.getMapUnitHeight() - 100;
-
-        spawnPoints.add(new Point(xLeft, yTop));
-        spawnPoints.add(new Point(xCenter, yTop));
-        spawnPoints.add(new Point(xRight, yTop));
-
-        spawnPoints.add(new Point(xLeft, yCenter));
-        spawnPoints.add(new Point(xRight, yCenter));
-
-        spawnPoints.add(new Point(xLeft, yBottom));
-        spawnPoints.add(new Point(xCenter, yBottom));
-        spawnPoints.add(new Point(xRight, yBottom));
     }
 
     private void spawnRandomEnemy(Point spawnPoint) {

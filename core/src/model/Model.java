@@ -19,6 +19,15 @@ public class Model implements MovementListener {
     private static final int MAX_ENEMIES = 8;
     private int spawnPointsIndex = 0;
 
+    public Model(IMapLoader mapLoader, PlayerCharacter player) {
+        this.mapLoader = mapLoader;
+        this.player = player;
+    }
+
+    public void initialize() {
+        setSpawnPoints();
+    }
+
     public PlayerCharacter getPlayer(){
         return player;
     }
@@ -114,16 +123,5 @@ public class Model implements MovementListener {
 
     public World<Entity> getWorld() {
         return mapLoader.getWorld();
-    }
-    
-    /**
-     * Loads a specified map and creates a playercharacter
-     * @param mapLoader object that loads a map of a specific type
-     */
-    public void initialize(IMapLoader mapLoader) {
-        this.mapLoader = mapLoader;
-        player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
-        entityList.add(player);
-        setSpawnPoints();
     }
 }

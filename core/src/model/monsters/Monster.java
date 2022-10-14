@@ -3,7 +3,6 @@ package model.monsters;
 import model.LivingEntity;
 import model.Entity;
 import com.dongbat.jbump.World;
-import model.IDamageVisitor;
 
 public abstract class Monster extends LivingEntity {
     //Bad practice? only works if static
@@ -30,9 +29,4 @@ public abstract class Monster extends LivingEntity {
      * @param playerY the y-coordinate of the player character.
      */
     abstract public void moveTowardPlayer(float playerX, float playerY);
-
-    @Override
-    public void beAttacked(IDamageVisitor v, float damage, String faction) {
-        v.doDamage(this, damage, faction);
-    }
 }

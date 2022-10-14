@@ -77,8 +77,8 @@ public class TiledArenaLoader implements IArenaLoader {
     public void loadEnvironment(String mapName) {
         map = new TmxMapLoader().load("Map/" + mapName + ".tmx");
         this.world = new World<>();
-        importMapProperties();
-        importMapCollision();
+        readMapSize();
+        importCollisionLayer();
     }
 
     /**
@@ -87,7 +87,7 @@ public class TiledArenaLoader implements IArenaLoader {
      * as a length of pixels that can vary between different maps.
      * Therefore the total length is number of tiles * number of pixels in a tile.
      */
-    private void importMapProperties() {
+    private void readMapSize() {
         prop = map.getProperties();
         mapWidth = prop.get(MAPWIDTH, Integer.class);
         mapHeight = prop.get(MAPHEIGHT, Integer.class);
@@ -101,7 +101,7 @@ public class TiledArenaLoader implements IArenaLoader {
      * Loads all objects in the collision layer of the map
      * to the world. Does not support polygons.
      */
-    private void importMapCollision() {
+    private void importCollisionLayer() {
         objects = map.getLayers().get(COLLISIONLAYER).getObjects();
         for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
             Rectangle r = o.getRectangle();

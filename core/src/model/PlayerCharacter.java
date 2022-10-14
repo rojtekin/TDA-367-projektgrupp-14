@@ -18,9 +18,4 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
     public PlayerCharacter(float spawnX, float spawnY, String faction, World<Entity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
     }
-
-    @Override
-    public void beAttacked(IDamageVisitor v, float damage, String faction) {
-        v.doDamage(this, damage, faction);
-    }
 }

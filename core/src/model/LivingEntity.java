@@ -103,7 +103,7 @@ public abstract class LivingEntity extends Entity {
         damageTouched(result.projectedCollisions);
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
-        };
+        }
         setMoving(true);
     }
 
@@ -112,7 +112,7 @@ public abstract class LivingEntity extends Entity {
     }
 
     /**
-     * Decreases currenthealth with a specified amount
+     * Decreases current health with a specified amount
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {
@@ -146,10 +146,16 @@ public abstract class LivingEntity extends Entity {
      * Damages every touched hostile entity
      */
     private void damageTouched(Collisions projectedCollisions) {
-        IDamageVisitor v = new DamageVisitor();
         for (int i = 0; i < projectedCollisions.size(); i++) {
             Item<Entity> touched = projectedCollisions.get(i).other;
-            touched.userData.beAttacked(v, collisionDamage, faction);
+            touched.userData.beAttacked(collisionDamage, faction);
+        }
+    }
+
+    @Override
+    public void beAttacked(float damage, String faction) {
+        if (this.faction != faction) {
+            takeDamage(damage);
         }
     }
 }

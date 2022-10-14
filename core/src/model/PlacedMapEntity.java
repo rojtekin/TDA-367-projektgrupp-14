@@ -12,7 +12,6 @@ public class PlacedMapEntity extends Entity {
     }
 
     @Override
-    public void beAttacked(IDamageVisitor v, float damage, String faction) {
-        v.doDamage(this, damage, faction);
+    public void beAttacked(float damage, String faction) {
     }
 }

@@ -5,6 +5,8 @@ import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.enemies.*;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +15,9 @@ public class Model implements MovementListener {
     private List<Enemy> enemyList = new ArrayList<>();
     private IMapLoader mapLoader;
     private List<Entity> entityList = new ArrayList<>();
+    private final List<Point> spawnPoints = new ArrayList<>();
+    private static final int MAX_ENEMIES = 8;
+    private int spawnPointsIndex = 0;
 
     public PlayerCharacter getPlayerCharacter() {
         return player;
@@ -23,6 +28,7 @@ public class Model implements MovementListener {
     }
 
     public void update() {
+        spawnEnemies();
         moveEnemies();
     }
 
@@ -55,9 +61,46 @@ public class Model implements MovementListener {
         return new ArrayList<>(enemyList);
     }
 
-    void moveEnemies() {
+    private void moveEnemies() {
         for (Enemy enemy : enemyList) {
             enemy.moveTowardPlayer(player.getX(), player.getY());
+        }
+    }
+
+    private void spawnEnemies() {
+        while (enemyList.size() < MAX_ENEMIES) {
+            spawnRandomEnemy(spawnPoints.get(spawnPointsIndex));
+            if (spawnPointsIndex < spawnPoints.size() - 1) { spawnPointsIndex++; }
+            else { spawnPointsIndex = 0; }
+        }
+    }
+
+    private void setSpawnPoints() {
+        int xLeft = 100;
+        int xCenter = mapLoader.getMapUnitWidth() / 2;
+        int xRight = mapLoader.getMapUnitWidth() - 100;
+        int yBottom = 100;
+        int yCenter = mapLoader.getMapUnitHeight() / 2;
+        int yTop = mapLoader.getMapUnitHeight() - 100;
+
+        spawnPoints.add(new Point(xLeft, yTop));
+        spawnPoints.add(new Point(xCenter, yTop));
+        spawnPoints.add(new Point(xRight, yTop));
+
+        spawnPoints.add(new Point(xLeft, yCenter));
+        spawnPoints.add(new Point(xRight, yCenter));
+
+        spawnPoints.add(new Point(xLeft, yBottom));
+        spawnPoints.add(new Point(xCenter, yBottom));
+        spawnPoints.add(new Point(xRight, yBottom));
+    }
+
+    private void spawnRandomEnemy(Point spawnPoint) {
+        if (Math.random() < 0.75) {
+            addEnemy(new Cyclops(spawnPoint.x, spawnPoint.y,1,1,1, getWorld()));
+        }
+        else {
+            addEnemy(new Mouse(spawnPoint.x, spawnPoint.y,2,1,1, getWorld()));
         }
     }
 
@@ -85,6 +128,7 @@ public class Model implements MovementListener {
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
         entityList.add(player);
+        setSpawnPoints();
         //Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
         //entityList.add(mouse1);
     }

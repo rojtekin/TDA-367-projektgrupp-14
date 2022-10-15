@@ -29,27 +29,27 @@ public class Mouse extends Enemy {
         if (timeSinceDirectionChanged > 0.6) {
             if (Math.random() < 0.5) {
                 if ((xDistance > 0)) {
-                    this.move(Direction.RIGHT, speed);
+                    this.move(Direction.RIGHT, getSpeed());
                 } else {
-                    this.move(Direction.LEFT, speed);
+                    this.move(Direction.LEFT, getSpeed());
                 }
             }
             else {
                 if ((yDistance > 0)) {
-                    this.move(Direction.UP, speed);
+                    this.move(Direction.UP, getSpeed());
                 } else {
-                    this.move(Direction.DOWN, speed);
+                    this.move(Direction.DOWN, getSpeed());
                 }
             }
             timeSinceDirectionChanged = 0;
         }
         else {
-            this.moveForward(speed);
+            this.moveForward(getSpeed());
         }
     }
 
     @Override
-    public void move(Direction direction, Float speed) {
+    public void move(Direction direction, float speed) {
         super.move(direction, speed);
     }
 }

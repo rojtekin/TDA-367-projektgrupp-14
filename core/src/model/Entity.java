@@ -14,8 +14,7 @@ public abstract class Entity implements IEntity{
     private float y;
     private float height;
     private float width;
-    protected float speed;
-    private float health;
+    private float speed;
     private float damage;
     private boolean inMotion = false;
     private float maxHealth;
@@ -57,7 +56,6 @@ public abstract class Entity implements IEntity{
     public float getX() {
         return x;
     }
-
     private void setX(float x) {
         this.x = x;
     }
@@ -65,7 +63,6 @@ public abstract class Entity implements IEntity{
     public float getY() {
         return y;
     }
-
     private void setY(float y) {
         this.y = y;
     }
@@ -81,7 +78,6 @@ public abstract class Entity implements IEntity{
     public float getSpeed() {
         return speed;
     }
-
     protected void setSpeed(float speed) {
         this.speed = speed;
     }
@@ -89,13 +85,11 @@ public abstract class Entity implements IEntity{
     public float getMaxHealth() {
         return maxHealth;
     }
-
     protected void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
     }
 
     public float getCurrentHealth() {return currentHealth;}
-
     public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
 
     public float getDamage() {
@@ -108,16 +102,8 @@ public abstract class Entity implements IEntity{
     public Direction getDirection() {
         return direction;
     }
-
-    protected void setDirection(Direction direction) {
+    private void setDirection(Direction direction) {
         this.direction = direction;
-    }
-
-    public boolean getInMotion() {
-        if (speed != 0)
-            return false;
-        else
-            return true;
     }
 
     public World<IEntity> getWorld() {
@@ -149,7 +135,7 @@ public abstract class Entity implements IEntity{
      * Moves the entity in the specified direction.
      * @param direction the direction that the entity should move in
      */
-    public void move(Direction direction, Float speed) {
+    public void move(Direction direction, float speed) {
         setDirection(direction);
         moveForward(speed);
     }
@@ -157,7 +143,7 @@ public abstract class Entity implements IEntity{
     /**
      * Moves the entity in the direction it is facing.
      */
-    public void moveForward(Float speed) {
+    public void moveForward(float speed) {
         Result result = changePosition((direction.x * speed), (direction.y * speed));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);

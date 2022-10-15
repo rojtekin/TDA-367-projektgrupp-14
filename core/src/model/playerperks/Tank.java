@@ -140,7 +140,7 @@ public class Tank implements IPlayerCharacter {
     }
 
     @Override
-    public void move(Direction direction, Float speed) {
+    public void move(Direction direction, float speed) {
         playerCharacter.move(direction, getSpeed());
     }
 

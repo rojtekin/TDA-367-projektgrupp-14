@@ -136,7 +136,7 @@ public class SpeedDevil extends PlayerCharacter implements IPlayerCharacter{
     }
 
     @Override
-    public void move(Direction direction, Float speed) {
+    public void move(Direction direction, float speed) {
         playerCharacter.move(direction, speed);
     }
 

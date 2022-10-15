@@ -15,7 +15,7 @@ public class PlayerCharacter extends Entity implements IControllable, IPlayerCha
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;
         this.direction = Direction.DOWN;
-    } //TODO fix later
+    }
 
     public int getExperience() {
         return experience;
@@ -23,11 +23,6 @@ public class PlayerCharacter extends Entity implements IControllable, IPlayerCha
 
     protected void setExperience(int experience) {
         this.experience = experience;
-    }
-
-    @Override
-    public Direction getDirection() {
-        return direction;
     }
 
     public int getLevel() {
@@ -120,7 +115,7 @@ public class PlayerCharacter extends Entity implements IControllable, IPlayerCha
     }
 
     @Override
-    public void move(Direction direction, Float speed) {
+    public void move(Direction direction, float speed) {
         super.move(direction, speed);
     }
 }

@@ -12,6 +12,6 @@ public class PlacedMapEntity extends Entity {
     }
 
     @Override
-    public void move(Direction direction, Float speed) {
+    public void move(Direction direction, float speed) {
     }
 }

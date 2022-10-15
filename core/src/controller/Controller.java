@@ -12,7 +12,7 @@ public class Controller {
 
     public Controller(Model model) {
         this.model = Objects.requireNonNull(model);
-       // this.player = Objects.requireNonNull(model.getPlayer());
+        this.player = Objects.requireNonNull(model.getPlayer());
     }
 
     public void update(IPlayerCharacter player) {

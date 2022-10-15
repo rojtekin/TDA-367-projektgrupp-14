@@ -34,7 +34,7 @@ public interface IPlayerCharacter {
 
     float getY();
 
-    void move(Direction direction, Float speed);
+    void move(Direction direction, float speed);
 
     float getHeight();
 

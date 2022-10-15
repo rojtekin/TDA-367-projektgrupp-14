@@ -26,11 +26,9 @@ public interface IEntity {
 
     Direction getDirection();
 
-    boolean getInMotion();
-
     World<IEntity> getWorld();
 
-    void move(Direction direction, Float speed);
+    void move(Direction direction, float speed);
 
     void setMoving(boolean moving);
 

@@ -2,7 +2,6 @@ package model;
 
 import com.dongbat.jbump.World;
 
-
 /**
  * A class for static objects placed on the map. Used to assign collision to map objects.
  */

@@ -28,8 +28,6 @@ public interface IEntity {
 
     World<IEntity> getWorld();
 
-    void move(Direction direction, float speed);
-
     void setMoving(boolean moving);
 
     void pushBack(IntPoint collisionNormal);

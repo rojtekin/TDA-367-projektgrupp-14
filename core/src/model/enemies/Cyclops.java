@@ -52,9 +52,4 @@ public class Cyclops extends Enemy {
             }
         }
     }
-
-    @Override
-    public void move(Direction direction, float speed) {
-        super.move(direction, speed);
-    }
 }

@@ -47,9 +47,4 @@ public class Mouse extends Enemy {
             this.moveForward(getSpeed());
         }
     }
-
-    @Override
-    public void move(Direction direction, float speed) {
-        super.move(direction, speed);
-    }
 }

@@ -10,8 +10,4 @@ public class PlacedMapEntity extends Entity {
     public PlacedMapEntity(float x, float y, float height, float width, World<IEntity> world) {
         super(x, y, height, width, 0, 1000000,0, world);
     }
-
-    @Override
-    public void move(Direction direction, float speed) {
-    }
 }

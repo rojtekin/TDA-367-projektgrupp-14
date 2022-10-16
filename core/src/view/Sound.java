@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 public class Sound{
     public com.badlogic.gdx.audio.Sound getSound() { //TODO generalise for everything
 
-        com.badlogic.gdx.audio.Sound sound = Gdx.audio.newSound(Gdx.files.internal("Enemies/Mouse/mouse-squeek.mp3"));
+        com.badlogic.gdx.audio.Sound sound = Gdx.audio.newSound(Gdx.files.internal("enemies/Mouse/mouse-squeek.mp3"));
         return sound;
     }
 

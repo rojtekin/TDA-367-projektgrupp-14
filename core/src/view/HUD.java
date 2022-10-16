@@ -107,12 +107,12 @@ public class HUD {
             Image lowhp = new Image(lowHp);
             setHpColor(lowhp);
         }
-        if(currenthp <= maxhp * 0.66) {
+        else if(currenthp <= maxhp * 0.66) {
             NinePatch midHp = new NinePatch(yellow, 0, 0, 0, 0);
             Image midhp = new Image(midHp);
             setHpColor(midhp);
         }
-        if(currenthp <= maxhp * 1) {
+        else if(currenthp <= maxhp * 1) {
             NinePatch fullHp = new NinePatch(green, 0, 0, 0, 0);
             Image fullhp = new Image(fullHp);
             setHpColor(fullhp);

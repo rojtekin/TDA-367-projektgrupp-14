@@ -5,23 +5,22 @@ import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
-
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
 
-public abstract class Entity {
+public abstract class Entity implements IEntity{
     private float x;
     private float y;
-    private final float height;
-    private final float width;
+    private float height;
+    private float width;
     private float speed;
-    private float health;
+    private float damage;
     private boolean inMotion = false;
     private float maxHealth;
     private float currentHealth;
-    private Item<Entity> boundingbox;
-    private World<Entity> world;
+    private Item<IEntity> boundingbox;
+    private World<IEntity> world;
     private CollisionFilter collisionType = CollisionFilter.defaultFilter;
     private Direction direction;
     private List<MovementListener> movementListeners = new ArrayList<>();
@@ -33,14 +32,15 @@ public abstract class Entity {
         this.collisionType = collisionType;
     }
 
-    public Entity(float x, float y, float height, float width, float speed,float health, World<Entity> world) {
+     public Entity(float x, float y, float height, float width, float speed, float maxHealth , float damage, World<IEntity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
         this.speed = speed;
-        this.maxHealth = health;
-        this.currentHealth = health;
+        this.damage = damage;
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
         this.direction = Direction.DOWN;
         setWorld(Objects.requireNonNull(world));
     }
@@ -56,7 +56,6 @@ public abstract class Entity {
     public float getX() {
         return x;
     }
-
     private void setX(float x) {
         this.x = x;
     }
@@ -64,7 +63,6 @@ public abstract class Entity {
     public float getY() {
         return y;
     }
-
     private void setY(float y) {
         this.y = y;
     }
@@ -80,7 +78,6 @@ public abstract class Entity {
     public float getSpeed() {
         return speed;
     }
-
     protected void setSpeed(float speed) {
         this.speed = speed;
     }
@@ -88,24 +85,28 @@ public abstract class Entity {
     public float getMaxHealth() {
         return maxHealth;
     }
-
-    private void setMaxHealth(float maxHealth) {
+    protected void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
     }
 
     public float getCurrentHealth() {return currentHealth;}
-
     public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
+
+    public float getDamage() {
+        return damage;
+    }
+    protected void setDamage(float damage) {
+        this.damage = damage;
+    }
 
     public Direction getDirection() {
         return direction;
     }
-
     private void setDirection(Direction direction) {
         this.direction = direction;
     }
 
-    private World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return world;
     }
 
@@ -113,7 +114,7 @@ public abstract class Entity {
      * Adds a reference to the world that the player is in and
      * registers itself as a collisionbox
      */
-    private void setWorld (World<Entity> world) {
+    private void setWorld (World<IEntity> world) {
         this.world = world;
         addCollision();
     }
@@ -134,16 +135,16 @@ public abstract class Entity {
      * Moves the entity in the specified direction.
      * @param direction the direction that the entity should move in
      */
-    public void move(Direction direction) {
+    public void move(Direction direction, float speed) {
         setDirection(direction);
-        moveForward();
+        moveForward(speed);
     }
 
     /**
      * Moves the entity in the direction it is facing.
      */
-    public void moveForward() {
-        Result result = changePosition((direction.x * getSpeed()), (direction.y * getSpeed()));
+    public void moveForward(float speed) {
+        Result result = changePosition((direction.x * speed), (direction.y * speed));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
         }
@@ -175,3 +176,4 @@ public abstract class Entity {
         return result;
     }
 }
+

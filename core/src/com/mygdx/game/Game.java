@@ -19,7 +19,7 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		controller.update();
+		controller.update(model.getPlayer());
 		view.update();
 		model.update();
 	}

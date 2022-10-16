@@ -36,7 +36,7 @@ public class TiledMapLoader implements IMapLoader {
     private int mapUnitHeight;
     private MapObjects objects;
 
-    private World<Entity> world;
+    private World<IEntity> world;
 
     /**
      * World is a JBump object that keeps track of all collisionboxes
@@ -46,7 +46,7 @@ public class TiledMapLoader implements IMapLoader {
      * to detect collisions.
      * @return reference to JBump world object
      */
-    public World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return world;
     }
 

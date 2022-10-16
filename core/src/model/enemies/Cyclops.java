@@ -1,14 +1,14 @@
 package model.enemies;
 
 import model.Direction;
-import model.Entity;
 import com.dongbat.jbump.World;
+import model.IEntity;
 
 public class Cyclops extends Enemy {
     private boolean stuckInXDirection = false;
     private boolean stuckInYDirection = false;
 
-    public Cyclops(int x, int y, int speed, float health, float damage, World<Entity> world) {
+    public Cyclops(int x, int y, int speed, float health, float damage, World<IEntity> world) {
         super(x, y, 32, 32, speed, health, damage, world);
     }
 
@@ -27,28 +27,28 @@ public class Cyclops extends Enemy {
 
         if ((Math.abs(xDistance) > 16) && !stuckInYDirection) {
             if (xDistance > 0) {
-                this.move(Direction.RIGHT);
+                this.move(Direction.RIGHT, getSpeed());
             }
             else {
-                this.move(Direction.LEFT);
+                this.move(Direction.LEFT, getSpeed());
             }
             stuckInXDirection = false;
             if (this.getX() == initialX) {
                 stuckInXDirection = true;
-                this.move(Direction.UP);
+                this.move(Direction.UP, getSpeed());
             }
         }
         else if(!stuckInXDirection){
             if (yDistance > 0) {
-                this.move(Direction.UP);
+                this.move(Direction.UP, getSpeed());
             }
             else {
-                this.move(Direction.DOWN);
+                this.move(Direction.DOWN, getSpeed());
             }
             stuckInYDirection = false;
             if (this.getY() == initialY) {
                 stuckInYDirection = true;
-                this.move(Direction.RIGHT);
+                this.move(Direction.RIGHT, getSpeed());
             }
         }
     }

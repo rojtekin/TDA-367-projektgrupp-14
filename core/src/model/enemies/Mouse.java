@@ -4,11 +4,12 @@ import model.Direction;
 import model.Entity;
 import com.badlogic.gdx.Gdx;
 import com.dongbat.jbump.World;
+import model.IEntity;
 
 public class Mouse extends Enemy {
     private float timeSinceDirectionChanged = 0;
 
-    public Mouse(float x, float y, float speed, float health, float damage, World<Entity> world) {
+    public Mouse(float x, float y, float speed, float health, float damage, World<IEntity> world) {
         super(x, y, 16, 16, speed, health, damage, world);
     }
 
@@ -28,22 +29,22 @@ public class Mouse extends Enemy {
         if (timeSinceDirectionChanged > 0.6) {
             if (Math.random() < 0.5) {
                 if ((xDistance > 0)) {
-                    this.move(Direction.RIGHT);
+                    this.move(Direction.RIGHT, getSpeed());
                 } else {
-                    this.move(Direction.LEFT);
+                    this.move(Direction.LEFT, getSpeed());
                 }
             }
             else {
                 if ((yDistance > 0)) {
-                    this.move(Direction.UP);
+                    this.move(Direction.UP, getSpeed());
                 } else {
-                    this.move(Direction.DOWN);
+                    this.move(Direction.DOWN, getSpeed());
                 }
             }
             timeSinceDirectionChanged = 0;
         }
         else {
-            this.moveForward();
+            this.moveForward(getSpeed());
         }
     }
 }

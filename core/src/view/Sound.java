@@ -8,7 +8,7 @@ public class Sound{
     private final com.badlogic.gdx.audio.Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Audio/Background music.ogg"));
     private final com.badlogic.gdx.audio.Sound enemyHit = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private final com.badlogic.gdx.audio.Sound swordSwoosh = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
-
+    private final com.badlogic.gdx.audio.Sound playerDeath = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
     public void playGameMusic(){
         backgroundMusic.setLooping(true);
         backgroundMusic.play();
@@ -25,6 +25,10 @@ public class Sound{
 
     public  void playSwordHit(){
         swordSwoosh.play(); // TODO: check if the sounds isnt too loud later
+    }
+
+    public void playPlayerDeathSound(){
+
     }
 
     public com.badlogic.gdx.audio.Sound getIdleSound(Entity entity) {

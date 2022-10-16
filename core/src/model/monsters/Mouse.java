@@ -1,14 +1,25 @@
-package model.enemies;
+package model.monsters;
 
 import model.Entity;
 import com.badlogic.gdx.Gdx;
 import com.dongbat.jbump.World;
 
-public class Mouse extends Enemy {
+public class Mouse extends Monster {
     private float timeSinceDirectionChanged = 0;
 
+    /**
+     * Uses the default constructor of its superclass with default values
+     */
     public Mouse(float x, float y, float speed, float health, float damage, World<Entity> world) {
-        super(x, y, 16, 16, speed, health, damage, world);
+        super(x, y, 16, 16, speed, health, damage, DEFAULTFACTION, world);
+    }
+
+    /**
+     * Constructor with custom faction tag
+     * @param faction custom faction tag
+     */
+    public Mouse(float x, float y, float speed, float health, float damage, String faction, World<Entity> world) {
+        super(x, y, 16, 16, speed, health, damage, faction, world);
     }
 
 

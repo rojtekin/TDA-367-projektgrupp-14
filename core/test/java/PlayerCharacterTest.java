@@ -1,5 +1,4 @@
 import com.dongbat.jbump.World;
-import model.Entity;
 import model.PlayerCharacter;
 import org.junit.jupiter.api.BeforeEach;
 

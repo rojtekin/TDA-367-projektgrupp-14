@@ -4,14 +4,14 @@ import com.dongbat.jbump.Collision;
 import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
-import model.enemies.*;
+import model.monsters.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model implements MovementListener {
     private PlayerCharacter player;
-    private List<Enemy> enemyList = new ArrayList<>();
-    private IMapLoader mapLoader;
+    private List<Monster> monsterList = new ArrayList<>();
+    private IEnvironmentCache mapLoader;
     private List<Entity> entityList = new ArrayList<>();
 
     public PlayerCharacter getPlayerCharacter() {
@@ -24,6 +24,19 @@ public class Model implements MovementListener {
 
     public void update() {
         moveEnemies();
+        checkEnemyHealth();
+    }
+
+    /**
+     * Goes through the list of enemies checks if they need to be removed
+     * O(n)
+     */
+    public void checkEnemyHealth() {
+        for (int i = 0; i < getEnemyList().size(); i++) {
+            if (getEnemyList().get(i).getCurrentHealth() <= 0) {
+                despawn(getEnemyList().get(i));
+            }
+        }
     }
 
     public Map getMap() {
@@ -43,21 +56,22 @@ public class Model implements MovementListener {
     }
 
     public ArrayList<Entity> getEntities(){
-        return new ArrayList<Entity>(entityList);
+        return new ArrayList<>(entityList);
     }
 
-    public void addEnemy(Enemy enemy) {
-        enemyList.add(enemy);
-        enemy.addMovementListener(this);
+    public void addEnemy(Monster monster) {
+        monster.setWorld(getWorld());
+        monsterList.add(monster);
+        monster.addMovementListener(this);
     }
 
-    public List<Enemy> getEnemyList() {
-        return new ArrayList<>(enemyList);
+    public List<Monster> getEnemyList() {
+        return new ArrayList<>(monsterList);
     }
 
     void moveEnemies() {
-        for (Enemy enemy : enemyList) {
-            enemy.moveTowardPlayer(player.getX(), player.getY());
+        for (Monster monster : monsterList) {
+            monster.moveTowardPlayer(player.getX(), player.getY());
         }
     }
 
@@ -76,16 +90,26 @@ public class Model implements MovementListener {
     public World<Entity> getWorld() {
         return mapLoader.getWorld();
     }
-    
+
     /**
      * Loads a specified map and creates a playercharacter
      * @param mapLoader object that loads a map of a specific type
      */
-    public void initialize(IMapLoader mapLoader) {
+    public void initialize(IEnvironmentCache mapLoader) {
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
         entityList.add(player);
         //Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
         //entityList.add(mouse1);
+    }
+
+    /**
+     * Removes an Enemy from the game and removes
+     * its collisionbox from the world
+     * @param monster Enemy to be removed
+     */
+    public void despawn(Monster monster) {
+        monsterList.remove(monster);
+        monster.removeCollision();
     }
 }

@@ -8,6 +8,10 @@ import com.dongbat.jbump.World;
  */
 public class PlacedMapEntity extends Entity {
     public PlacedMapEntity(float x, float y, float height, float width, World<Entity> world) {
-        super(x, y, height, width, 0, 1000000, world);
+        super(x, y, height, width, world);
+    }
+
+    @Override
+    public void beAttacked(float damage, String faction) {
     }
 }

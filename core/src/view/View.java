@@ -1,7 +1,7 @@
 package view;
 
 import model.*;
-import model.enemies.Enemy;
+import model.monsters.Monster;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -92,9 +92,9 @@ public class View {
     }
 
     private void drawEnemies() {
-        for (Enemy enemy : model.getEnemyList()) {
-            batch.draw(imageHandler.getEntityImage(enemy.getClass(), enemy.getDirection(), 0),
-                    enemy.getX(), enemy.getY());
+        for (Monster monster : model.getEnemyList()) {
+            batch.draw(imageHandler.getEntityImage(monster.getClass(), monster.getDirection(), 0),
+                    monster.getX(), monster.getY());
         }
     }
 

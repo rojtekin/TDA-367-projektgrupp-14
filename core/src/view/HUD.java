@@ -46,8 +46,8 @@ public class HUD {
     private NinePatch xpyellow2 = new NinePatch(xpyellow, 0, 0, 0, 0);
     private Image fullxpbar = new Image(xpyellow2);
 
-    private Label hpLabel = new Label("HP", new Label.LabelStyle((new BitmapFont()), Color.WHITE));
-    private Label scoreLabel = new Label("Score: " + Integer.toString(score), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private Label hpLabel;
+    private Label scoreLabel = new Label("Score: " + score, new Label.LabelStyle((new BitmapFont()), Color.WHITE));
 
 
     public HUD(SpriteBatch spriteBatch,PlayerCharacter player) {
@@ -61,6 +61,7 @@ public class HUD {
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
         // ugly coded maybe
 
+        stage.clear(); //Prevents memory leak where new tables are continuously added to stage
         Table table1 = new Table();
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
 
@@ -97,6 +98,7 @@ public class HUD {
 
         table3.add(fullxpbar).size(300, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
+        hpLabel = new Label("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth(), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
     }
 
     private void pickhpcolor(){
@@ -122,8 +124,8 @@ public class HUD {
     private void pickhpsize(){
         currenthp = player.getCurrentHealth();
         maxhp = player.getMaxHealth();
-        int hpsize = (int)(currenthp/maxhp);
-        setHpSize(200*hpsize);
+        float hpsize = (float)(currenthp/maxhp);
+        setHpSize((int)(200*hpsize));
     }
 
     private void setHpColor(Image hpColor) {

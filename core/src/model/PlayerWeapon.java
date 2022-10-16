@@ -15,7 +15,7 @@ public abstract class PlayerWeapon {
     private int weaponRotations;
     private World<Entity> world;
 
-    public PlayerWeapon(World<Entity> world){
+    public PlayerWeapon(World<Entity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
         this.weaponRange = weaponRange;
         this.weaponWidth = weaponWidth;
@@ -43,6 +43,7 @@ public abstract class PlayerWeapon {
             //lista entities? add if not already there world.querySegment(x1, y1, x2, y2, filter, items);
             //lista skada alla i listan
             //lista knuffa alla i listan
+            animationpart += 1;
             weaponSwing(rotationStart, rotationFinish,animationpart,player);
         }
     }

@@ -11,7 +11,7 @@ import java.util.List;
 public class Model implements MovementListener {
     private PlayerCharacter player;
     private List<Monster> monsterList = new ArrayList<>();
-    private IArenaLoader mapLoader;
+    private IEnvironmentCache mapLoader;
     private List<Entity> entityList = new ArrayList<>();
 
     public PlayerCharacter getPlayerCharacter() {
@@ -60,6 +60,7 @@ public class Model implements MovementListener {
     }
 
     public void addEnemy(Monster monster) {
+        monster.setWorld(getWorld());
         monsterList.add(monster);
         monster.addMovementListener(this);
     }
@@ -94,7 +95,7 @@ public class Model implements MovementListener {
      * Loads a specified map and creates a playercharacter
      * @param mapLoader object that loads a map of a specific type
      */
-    public void initialize(IArenaLoader mapLoader) {
+    public void initialize(IEnvironmentCache mapLoader) {
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
         entityList.add(player);

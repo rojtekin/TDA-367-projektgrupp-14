@@ -15,7 +15,7 @@ import com.dongbat.jbump.World;
  * such as map proportions for spawn locations and for importing map objects for collision
  * Also holds the "world" object which handles collisionboxes
  */
-public class TiledArenaLoader implements IArenaLoader {
+public class TiledEnvironmentCache implements IEnvironmentCache {
     //Constants for layer names in map. We can't control how the layers are named
     //since Tiled allows you to name and number layers however you want. Therefore
     //the mapmaker must comply with these constants or else the program won't be able
@@ -63,11 +63,13 @@ public class TiledArenaLoader implements IArenaLoader {
     }
 
     /**
-     * Initialises the maploader with a map
-     * @param mapName a map must be provided for the maploader to be initialised
+     * Creates an empty environment that can be loaded in the model
+     * Useful for testing without a map
      */
-    public TiledArenaLoader(String mapName) {
-        loadEnvironment(mapName);
+    public TiledEnvironmentCache() {
+        mapUnitHeight = 0;
+        mapUnitWidth = 0;
+        world = new World<>();
     }
 
     /**
@@ -85,7 +87,7 @@ public class TiledArenaLoader implements IArenaLoader {
      * Imports the height and width of the current map for placement purposes.
      * Tmx map sizes are defined in length of tiles, and tiles are defined
      * as a length of pixels that can vary between different maps.
-     * Therefore the total length is number of tiles * number of pixels in a tile.
+     * Therefore, the total length is number of tiles * number of pixels in a tile.
      */
     private void readMapSize() {
         prop = map.getProperties();
@@ -99,7 +101,8 @@ public class TiledArenaLoader implements IArenaLoader {
 
     /**
      * Loads all objects in the collision layer of the map
-     * to the world. Does not support polygons.
+     * to the world. Does not support polygons due to the game
+     * using Axis-Aligned Bounding Boxes for its collision.
      */
     private void importCollisionLayer() {
         objects = map.getLayers().get(COLLISIONLAYER).getObjects();

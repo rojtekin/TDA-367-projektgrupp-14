@@ -11,7 +11,9 @@ public class Game extends ApplicationAdapter {
 	private Controller controller;
 	@Override
 	public void create () {
-		model = ModelFactory.makeModel(new TiledArenaLoader("TestMap"));
+		IEnvironmentCache arena = new TiledEnvironmentCache();
+		arena.loadEnvironment("TestMap");
+		model = ModelFactory.makeModel(arena);
 		view = new View(model);
 		view.initialize();
 		controller = new Controller(model);

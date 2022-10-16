@@ -22,7 +22,6 @@ public abstract class Entity {
         this.movementCollision = movementCollision;
     }
 
-    //TODO rework movement, remove has-dependency on world
     public Entity(float x, float y, float height, float width, World<Entity> world) {
         this.x = x;
         this.y = y;

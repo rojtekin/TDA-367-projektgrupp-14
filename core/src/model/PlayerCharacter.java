@@ -6,6 +6,12 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
 
     private static final String DEFAULTFACTION = "player";
 
+    /**
+     * Default constructor for a default sized player of the player faction
+     * @param spawnX spawn location along x axis
+     * @param spawnY spawn location along y axis
+     * @param world world that the character moves in
+     */
     public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, DEFAULTFACTION, world);
     }

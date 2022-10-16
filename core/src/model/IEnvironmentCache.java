@@ -11,8 +11,8 @@ import com.dongbat.jbump.World;
 public interface IEnvironmentCache {
 
     /**
-     * Holds the JBump "world" which is used for moving entities and registering collisions
-     * @return
+     * Gets the JBump "world" which is used for moving entities and registering collisions
+     * @return the JBump world
      */
     World<Entity> getWorld();
 

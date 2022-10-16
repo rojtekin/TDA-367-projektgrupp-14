@@ -1,5 +1,8 @@
 package model;
 
+import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.Item;
+import com.dongbat.jbump.Response;
 import com.dongbat.jbump.World;
 
 import static java.lang.Math.cos;
@@ -14,6 +17,7 @@ public abstract class PlayerWeapon {
     private float weaponAngle;
     private int weaponRotations;
     private World<Entity> world;
+    private CollisionFilter filter;
 
     public PlayerWeapon(World<Entity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
@@ -23,6 +27,7 @@ public abstract class PlayerWeapon {
         this.weaponAngle = weaponAngle;
         this.weaponRotations = weaponRotations;
         this.world = world;
+        filter = getFilter();
     }
 
     //TODO
@@ -61,5 +66,16 @@ public abstract class PlayerWeapon {
 
     public float getWeaponWidth() {
         return weaponWidth;
+    }
+
+    public CollisionFilter getFilter() {
+        CollisionFilter filter = new CollisionFilter() {
+            @Override
+            public Response filter(Item item, Item item2) {
+                return Response.cross;
+
+            }
+        };
+        return filter;
     }
 }

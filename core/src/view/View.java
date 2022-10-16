@@ -30,7 +30,7 @@ public class View {
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
     private ImageHandler imageHandler = new ImageHandler();
-    private Sound soundLoader = new Sound();
+    private Sound soundHandler = new Sound();
 
     private Set<Entity> isKnown = new HashSet<Entity>();
 
@@ -40,6 +40,7 @@ public class View {
 
     public void initialize() {
         imageHandler.loadEntityImages();
+        soundHandler.initialize();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -77,7 +78,7 @@ public class View {
         Set<Entity> seen = new HashSet<Entity>();
         for (Entity entity : entities){
             if (!isKnown.contains((entity))){
-                soundLoader.playSounds(model);
+                soundHandler.playSounds(model);
             }
             seen.add(entity);
         }

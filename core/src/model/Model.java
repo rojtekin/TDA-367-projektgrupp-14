@@ -52,6 +52,7 @@ public class Model implements MovementListener {
 
     public void addEnemy(Enemy enemy) {
         enemyList.add(enemy);
+        entityList.add(enemy);
         enemy.addMovementListener(this);
     }
 

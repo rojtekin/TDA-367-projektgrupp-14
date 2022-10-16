@@ -1,0 +1,8 @@
+Run these commands in ur terminal of choice while located in the same folder as this text-file.
+
+1. gradlew build
+
+2. gradlew run
+
+if these do not work make sure you have the latest JDK installed as well as installed a
+JAVA_HOME environment and try again

@@ -28,7 +28,7 @@ public class Sound{
     }
 
     public void playPlayerDeathSound(){
-
+        playerDeath.play();
     }
 
     public com.badlogic.gdx.audio.Sound getIdleSound(Entity entity) {

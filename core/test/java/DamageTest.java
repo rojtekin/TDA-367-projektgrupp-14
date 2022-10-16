@@ -1,6 +1,7 @@
 import com.dongbat.jbump.World;
 import model.Model;
 import model.PlayerCharacter;
+import model.TiledEnvironmentCache;
 import model.monsters.Cyclops;
 import model.monsters.Monster;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,22 +12,22 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DamageTest {
 
-    PlayerCharacter player;
     Monster monster;
     Model model;
 
     @BeforeEach
     public void setUp() {
-        player = new PlayerCharacter(0, 0, new World<>());
-        monster = new Cyclops(0, 0, 10, 10, 10, new World<>());
         model = new Model();
+        model.initialize(new TiledEnvironmentCache());
+        monster = new Cyclops(5, 0, 1, 10, 10, model.getWorld());
+        model.addEnemy(monster);
     }
 
     @Test
     public void playerTakesDamage() {
-        float playerInitialHealth = player.getCurrentHealth();
-        player.takeDamage(1);
-        float playerFinalHealth = player.getCurrentHealth();
+        float playerInitialHealth = model.getPlayer().getCurrentHealth();
+        model.getPlayer().takeDamage(1);
+        float playerFinalHealth = model.getPlayer().getCurrentHealth();
         assertTrue(playerFinalHealth < playerInitialHealth);
     }
 
@@ -40,21 +41,18 @@ public class DamageTest {
 
     @Test
     public void enemyDespawns() {
-        model.addEnemy(monster);
         model.despawn(monster);
-        assertTrue(!(model.getEnemyList().contains(monster)));
+        assertFalse(model.getEnemyList().contains(monster));
     }
 
     @Test
     public void healthyEnemyDoesNotDespawn() {
-        model.addEnemy(monster);
         model.checkEnemyHealth();
         assertTrue(model.getEnemyList().contains(monster));
     }
 
     @Test
     public void partiallyDamagedEnemyDoesNotDespawn() {
-        model.addEnemy(monster);
         monster.takeDamage(1);
         model.checkEnemyHealth();
         assertTrue(model.getEnemyList().contains(monster));
@@ -62,9 +60,18 @@ public class DamageTest {
 
     @Test
     public void enemyDespawnsAtZeroHealth() {
-        model.addEnemy(monster);
         monster.takeDamage(10);
         model.checkEnemyHealth();
         assertFalse(model.getEnemyList().contains(monster));
+    }
+
+    @Test
+    public void playerTakesCollisionDamage() {
+        float initHP = model.getPlayer().getCurrentHealth();
+        monster.setY(model.getPlayer().getY());
+        monster.setX(model.getPlayer().getWidth()+1);
+        monster.moveLeft();
+        float finalHP = model.getPlayer().getCurrentHealth();
+        assertTrue(initHP > finalHP);
     }
 }

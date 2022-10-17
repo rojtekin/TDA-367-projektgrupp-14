@@ -19,6 +19,8 @@ public class ModelFactory {
                                                 new Point(xLeft, yCenter), new Point(xRight, yCenter),
                                                 new Point(xLeft, yBottom), new Point(xCenter, yBottom), new Point(xRight, yBottom));
 
-        return new Model(mapLoader, player, spawnPoints);
+        Model model = new Model(mapLoader, player, spawnPoints);
+        model.initialize();
+        return model;
     }
 }

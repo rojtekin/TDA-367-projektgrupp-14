@@ -31,7 +31,6 @@ public class Model implements MovementListener {
         this.spawnPoints = Objects.requireNonNull(spawnPoints);
     }
 
-    public PlayerCharacter getPlayer(){
     public IPlayerCharacter getPlayer(){
         return player;
     }
@@ -120,14 +119,8 @@ public class Model implements MovementListener {
         return mapLoader.getWorld();
     }
 
-    /**
-     * Loads a specified map and creates a playercharacter
-     * @param mapLoader object that loads a map of a specific type
-     */
-    public void initialize(IMapLoader mapLoader) {
+    public void initialize() {
         rewardSystem.initialize(world);
-        this.mapLoader = mapLoader;
-        player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
         player.gainExperience(100);
     }
 }

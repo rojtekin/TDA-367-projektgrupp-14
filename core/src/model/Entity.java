@@ -1,49 +1,52 @@
 package model;
 
 import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
+import com.dongbat.jbump.Response.Result;
 import com.dongbat.jbump.World;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Objects;
 
-public abstract class Entity {
+public abstract class Entity implements IEntity{
     private float x;
     private float y;
     private float height;
     private float width;
-    private Item<Entity> boundingbox;
-    private World<Entity> world;
-    private CollisionFilter movementCollision = CollisionFilter.defaultFilter;
-    private Direction direction;
+    private float damage;
+    private Item<IEntity> boundingbox;
+    private World<IEntity> world;
+    private CollisionFilter collisionResponse = CollisionFilter.defaultFilter;
 
-    public CollisionFilter getMovementCollision() {
-        return movementCollision;
+    public CollisionFilter getCollisionResponse() {
+        return collisionResponse;
     }
 
-    public void setMovementCollision(CollisionFilter movementCollision) {
-        this.movementCollision = movementCollision;
+    public void setCollisionResponse(CollisionFilter collisionResponse) {
+        this.collisionResponse = collisionResponse;
     }
 
-    public Entity(float x, float y, float height, float width, World<Entity> world) {
+     public Entity(float x, float y, float height, float width, float damage, World<IEntity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
-        this.direction = Direction.DOWN;
-        setWorld(world);
+        this.damage = damage;
+        setWorld(Objects.requireNonNull(world));
     }
 
     public float getX() {
         return x;
     }
-
-    public void setX(float x) {
+    private void setX(float x) {
         this.x = x;
     }
 
     public float getY() {
         return y;
     }
-
-    public void setY(float y) {
+    private void setY(float y) {
         this.y = y;
     }
 
@@ -55,29 +58,29 @@ public abstract class Entity {
         return width;
     }
 
-    public Direction getDirection() {
-        return direction;
+    public float getDamage() {
+        return damage;
+    }
+    protected void setDamage(float damage) {
+        this.damage = damage;
     }
 
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    public World<Entity> getWorld() {
-        return world;
-    }
-
-    public Item<Entity> getBoundingbox() {
+    public Item<IEntity> getBoundingbox() {
         return boundingbox;
     }
 
     /**
      * Adds a reference to the world that the player is in and
-     * registers itself as a collisionbox
+     * registers itself as a collisionbox within in. Useful for
+     * moving entities between different levels
      */
-    public void setWorld (World<Entity> world) {
+    public void setWorld (World<IEntity> world) {
         this.world = world;
         addCollision();
+    }
+
+    public World<IEntity> getWorld() {
+        return world;
     }
 
     /**
@@ -102,5 +105,5 @@ public abstract class Entity {
         setY(world.getRect(boundingbox).y);
     }
 
-    public abstract void beAttacked(float damage, String faction);
+    public abstract void beAttacked(float damage, Faction faction);
 }

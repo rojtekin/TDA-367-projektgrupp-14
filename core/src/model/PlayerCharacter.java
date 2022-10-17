@@ -2,9 +2,7 @@ package model;
 
 import com.dongbat.jbump.World;
 
-public class PlayerCharacter extends LivingEntity implements IControllable {
-
-    private static final String DEFAULTFACTION = "player";
+public class PlayerCharacter extends PlayerCharacterAdapter implements IControllable, IPlayerCharacter {
 
     /**
      * Default constructor for a default sized player of the player faction
@@ -12,8 +10,8 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
      * @param spawnY spawn location along y axis
      * @param world world that the character moves in
      */
-    public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, DEFAULTFACTION, world);
+    public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
+        super(spawnX, spawnY, 32, 32, 5, 10, 0, Faction.PLAYER, world);
     }
 
     /**
@@ -21,7 +19,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
      * Potential use in multiplayer
      * @param faction that the player belongs to
      */
-    public PlayerCharacter(float spawnX, float spawnY, String faction, World<Entity> world) {
+    public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
     }
 }

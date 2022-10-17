@@ -36,7 +36,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
     private int mapUnitHeight;
     private MapObjects objects;
 
-    private World<Entity> world;
+    private World<IEntity> world;
 
     /**
      * World is a JBump object that keeps track of all collisionboxes
@@ -46,7 +46,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
      * to detect collisions.
      * @return reference to JBump world object
      */
-    public World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return world;
     }
 
@@ -108,7 +108,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
         objects = map.getLayers().get(COLLISIONLAYER).getObjects();
         for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
             Rectangle r = o.getRectangle();
-            PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
+            PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, 0, world);
             world.add(new Item<>(st), r.x, r.y, r.width, r.height);
         }
     }

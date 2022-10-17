@@ -14,7 +14,7 @@ public interface IEnvironmentCache {
      * Gets the JBump "world" which is used for moving entities and registering collisions
      * @return the JBump world
      */
-    World<Entity> getWorld();
+    World<IEntity> getWorld();
 
     /**
      * Used to make sure the map used by the view is the same as the model

@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -29,16 +30,17 @@ public class View {
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
     private ImageHandler imageHandler = new ImageHandler();
-    private Sound soundLoader = new Sound();
+    private Sound soundHandler = new Sound();
 
-    private Set<Entity> isKnown = new HashSet<Entity>();
+    private Set<Entity> isKnown = new HashSet<>();
 
     public View(Model model) {
-        this.model = model;
+        this.model = Objects.requireNonNull(model);
     }
 
     public void initialize() {
         imageHandler.loadEntityImages();
+        soundHandler.initialize();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -73,10 +75,10 @@ public class View {
 
         // do something when a entity spawns
         ArrayList<Entity> entities = model.getEntities();
-        Set<Entity> seen = new HashSet<Entity>();
+        Set<Entity> seen = new HashSet<>();
         for (Entity entity : entities){
             if (!isKnown.contains((entity))){
-                soundLoader.playSounds(model);
+                soundHandler.playSounds(model);
             }
             seen.add(entity);
         }

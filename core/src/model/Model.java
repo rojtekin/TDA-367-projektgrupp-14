@@ -5,25 +5,28 @@ import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
+import model.rewards.Reward;
+import model.rewards.RewardSystem;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model implements MovementListener {
-    private PlayerCharacter player;
+    private IPlayerCharacter player;
     private List<Monster> monsterList = new ArrayList<>();
-    private IEnvironmentCache mapLoader;
     private List<Entity> entityList = new ArrayList<>();
+    private IEnvironmentCache mapLoader;
+    private RewardSystem rewardSystem = new RewardSystem();
+    private World<IEntity> world = new World<>();
 
-    public PlayerCharacter getPlayerCharacter() {
-        return player;
-    }
-
-    public PlayerCharacter getPlayer(){
+    public IPlayerCharacter getPlayer(){
         return player;
     }
 
     public void update() {
         moveEnemies();
+        if (rewardSystem.levelUpChecker(player)){
+        player = rewardSystem.applyReward(player, Reward.SPEED_DEVIL);
+        }
         checkEnemyHealth();
     }
 
@@ -60,7 +63,6 @@ public class Model implements MovementListener {
     }
 
     public void addEnemy(Monster monster) {
-        monster.setWorld(getWorld());
         monsterList.add(monster);
         monster.addMovementListener(this);
     }
@@ -87,7 +89,7 @@ public class Model implements MovementListener {
 
     private boolean collisionWithPlayer(Collision collision) { return collision.other.userData.equals(player); }
 
-    public World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return mapLoader.getWorld();
     }
 
@@ -96,11 +98,10 @@ public class Model implements MovementListener {
      * @param mapLoader object that loads a map of a specific type
      */
     public void initialize(IEnvironmentCache mapLoader) {
+        rewardSystem.initialize(world);
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
-        entityList.add(player);
-        //Mouse mouse1 = new Mouse(50,50,16,16,2,1,1, mapLoader.getWorld()); //temporary
-        //entityList.add(mouse1);
+        player.gainExperience(100);
     }
 
     /**

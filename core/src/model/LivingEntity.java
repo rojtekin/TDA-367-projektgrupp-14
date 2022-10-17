@@ -8,14 +8,14 @@ import java.util.List;
 /**
  * Parent class for all entities that have movement and health
  */
-public abstract class LivingEntity extends Entity {
+public abstract class LivingEntity extends Entity implements ILivingEntity {
     private float speed;
     private boolean inMotion = false;
     private float maxHealth;
     private float currentHealth;
-    private float collisionDamage;
     private List<MovementListener> movementListeners = new ArrayList<>();
-    private String faction;
+    private Faction faction;
+    private Direction direction;
 
     public boolean isMoving() {
         return inMotion;
@@ -37,7 +37,7 @@ public abstract class LivingEntity extends Entity {
         return maxHealth;
     }
 
-    private void setMaxHealth(float maxHealth) {
+    public void setMaxHealth(float maxHealth) {
         this.maxHealth = maxHealth;
     }
 
@@ -45,62 +45,48 @@ public abstract class LivingEntity extends Entity {
 
     public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
 
-    public float getCollisionDamage() {
-        return collisionDamage;
-    }
-
-    public void setFaction (String faction) {
+    public void setFaction (Faction faction) {
         this.faction = faction;
     }
 
-    public String getFaction() {
+    public Faction getFaction() {
         return faction;
     }
 
-    public LivingEntity(float x, float y, float height, float width, float speed, float health, float collisionDamage, String faction, World<Entity> world) {
-        super(x, y, height, width, world);
+    public Direction getDirection() {
+        return direction;
+    }
+    private void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public LivingEntity(float x, float y, float height, float width, float speed, float health, float damage, Faction faction, World<IEntity> world) {
+        super(x, y, height, width, damage, world);
         this.speed = speed;
         this.maxHealth = health;
         this.currentHealth = health;
-        this.collisionDamage = collisionDamage;
         this.faction = faction;
+        this.direction = Direction.DOWN;
     }
 
     /**
-     * Moves the entity up.
+     * Moves the collision box, then moves the entity to match it.
+     * @param deltaX the distance in the x-direction that the entity should move
+     * @param deltaY the distance in the y-direction that the entity should move
+     * @return result
      */
-    public void moveUp() {
-        setDirection(Direction.UP);
-        moveForward();
-    }
-    /**
-     * Moves the entity down.
-     */
-    public void moveDown() {
-        setDirection(Direction.DOWN);
-        moveForward();
-    }
-    /**
-     * Moves the entity to the right.
-     */
-    public void moveRight() {
-        setDirection(Direction.RIGHT);
-        moveForward();
-    }
-    /**
-     * Moves the entity to the left.
-     */
-    public void moveLeft() {
-        setDirection(Direction.LEFT);
-        moveForward();
+    private Response.Result changePosition(float deltaX, float deltaY) {
+        Response.Result result = getWorld().move(getBoundingbox(), getX() + deltaX,getY() + deltaY, CollisionFilter.defaultFilter);
+        damageTouched(result.projectedCollisions);
+        updatePosition();
+        return result;
     }
 
     /**
      * Moves the entity in the direction it is facing.
      */
-    public void moveForward() {
-        Response.Result result = move((getDirection().x * getSpeed()), (getDirection().y * getSpeed()));
-        damageTouched(result.projectedCollisions);
+    public void moveForward(float speed) {
+        Response.Result result = changePosition((getDirection().x * speed), (getDirection().y * speed));
         for (MovementListener movementListener : movementListeners) {
             movementListener.onMovement(result.projectedCollisions);
         }
@@ -127,19 +113,16 @@ public abstract class LivingEntity extends Entity {
      */
     public void pushBack(IntPoint collisionNormal) {
         int distancePushed = 16;
-        move((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));
+        changePosition((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));
     }
 
     /**
-     * Moves the collision box, then moves the entity to match it.
-     * @param deltaX the distance in the x-direction that the entity should move
-     * @param deltaY the distance in the y-direction that the entity should move
-     * @return result
+     * Moves the entity in the specified direction.
+     * @param direction the direction that the entity should move in
      */
-    public Response.Result move(float deltaX, float deltaY) {
-        Response.Result result = getWorld().move(getBoundingbox(), getX() + deltaX,getY() + deltaY, getMovementCollision());
-        updatePosition();
-        return result;
+    public void move(Direction direction, float speed) {
+        setDirection(direction);
+        moveForward(speed);
     }
 
     /**
@@ -148,12 +131,12 @@ public abstract class LivingEntity extends Entity {
     private void damageTouched(Collisions projectedCollisions) {
         for (int i = 0; i < projectedCollisions.size(); i++) {
             Item<Entity> touched = projectedCollisions.get(i).other;
-            touched.userData.beAttacked(collisionDamage, faction);
+            touched.userData.beAttacked(getDamage()/10, faction);
         }
     }
 
     @Override
-    public void beAttacked(float damage, String faction) {
+    public void beAttacked(float damage, Faction faction) {
         if (this.faction != faction) {
             takeDamage(damage);
         }

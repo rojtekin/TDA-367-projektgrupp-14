@@ -1,13 +1,12 @@
 package model.monsters;
 
+import model.Faction;
+import model.IEntity;
 import model.LivingEntity;
 import model.Entity;
 import com.dongbat.jbump.World;
 
 public abstract class Monster extends LivingEntity {
-    //Bad practice? only works if static
-    public static final String DEFAULTFACTION = "monsters";
-    private double damage;
 
     /**
      * Default constructor for all monsters
@@ -23,9 +22,8 @@ public abstract class Monster extends LivingEntity {
      *                towards
      * @param world The world that the monster will move and collide in
      */
-    public Monster(float x, float y, float height, float width, float speed, float health, float damage, String faction, World<Entity> world) {
-        super(x, y, height, width, speed, health, damage/10, faction, world);
-        this.damage = damage;
+    public Monster(float x, float y, float height, float width, float speed, float health, float damage, Faction faction, World<IEntity> world) {
+        super(x, y, height, width, speed, health, damage, faction, world);
     }
 
     /**

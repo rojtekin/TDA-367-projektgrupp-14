@@ -1,8 +1,11 @@
 package model.monsters;
 
+import model.Direction;
 import model.Entity;
 import com.badlogic.gdx.Gdx;
 import com.dongbat.jbump.World;
+import model.Faction;
+import model.IEntity;
 
 public class Mouse extends Monster {
     private float timeSinceDirectionChanged = 0;
@@ -10,18 +13,17 @@ public class Mouse extends Monster {
     /**
      * Uses the default constructor of its superclass with default values
      */
-    public Mouse(float x, float y, float speed, float health, float damage, World<Entity> world) {
-        super(x, y, 16, 16, speed, health, damage, DEFAULTFACTION, world);
+    public Mouse(float x, float y, float speed, float health, float damage, World<IEntity> world) {
+        super(x, y, 16, 16, speed, health, damage, Faction.MONSTER, world);
     }
 
     /**
      * Constructor with custom faction tag
      * @param faction custom faction tag
      */
-    public Mouse(float x, float y, float speed, float health, float damage, String faction, World<Entity> world) {
+    public Mouse(float x, float y, float speed, float health, float damage, Faction faction, World<IEntity> world) {
         super(x, y, 16, 16, speed, health, damage, faction, world);
     }
-
 
     /**
      * Moves the mouse in the direction it is facing. After a certain amount of time since changing the direction has
@@ -39,22 +41,22 @@ public class Mouse extends Monster {
         if (timeSinceDirectionChanged > 0.6) {
             if (Math.random() < 0.5) {
                 if ((xDistance > 0)) {
-                    this.moveRight();
+                    this.move(Direction.RIGHT, getSpeed());
                 } else {
-                    this.moveLeft();
+                    this.move(Direction.LEFT, getSpeed());
                 }
             }
             else {
                 if ((yDistance > 0)) {
-                    this.moveUp();
+                    this.move(Direction.UP, getSpeed());
                 } else {
-                    this.moveDown();
+                    this.move(Direction.DOWN, getSpeed());
                 }
             }
             timeSinceDirectionChanged = 0;
         }
         else {
-            this.moveForward();
+            this.moveForward(getSpeed());
         }
     }
 }

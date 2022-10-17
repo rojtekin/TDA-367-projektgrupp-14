@@ -1,7 +1,5 @@
 import com.dongbat.jbump.World;
-import model.Model;
-import model.PlayerCharacter;
-import model.TiledEnvironmentCache;
+import model.*;
 import model.monsters.Cyclops;
 import model.monsters.Monster;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +24,8 @@ public class DamageTest {
     @Test
     public void playerTakesDamage() {
         float playerInitialHealth = model.getPlayer().getCurrentHealth();
-        model.getPlayer().takeDamage(1);
+        PlayerCharacter player = (PlayerCharacter) model.getPlayer();
+        player.takeDamage(1);
         float playerFinalHealth = model.getPlayer().getCurrentHealth();
         assertTrue(playerFinalHealth < playerInitialHealth);
     }
@@ -68,9 +67,9 @@ public class DamageTest {
     @Test
     public void playerTakesCollisionDamage() {
         float initHP = model.getPlayer().getCurrentHealth();
-        monster.setY(model.getPlayer().getY());
-        monster.setX(model.getPlayer().getWidth()+1);
-        monster.moveLeft();
+        Cyclops cyclops = new Cyclops(model.getPlayer().getWidth()+1, model.getPlayer().getY(), 10, 1, 10, model.getWorld());
+        model.addEnemy(cyclops);
+        cyclops.move(Direction.LEFT, cyclops.getSpeed());
         float finalHP = model.getPlayer().getCurrentHealth();
         assertTrue(initHP > finalHP);
     }

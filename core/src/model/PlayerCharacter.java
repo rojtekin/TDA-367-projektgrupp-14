@@ -26,7 +26,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
     //the function animationpart is reduced by one, use this to determine the swords current rotation
     //and next time it will rotate a bit more
     public void weaponAttack(int rotationStart, int rotationFinish, int animationpart){
-        List<Item> hitlist = weapon.weaponSwing(rotationStart,rotationFinish,animationpart, this);
+        weapon.weaponSwing(rotationStart,rotationFinish,animationpart, this);
     }
 
     public void locateHit(){

@@ -60,7 +60,6 @@ public class Model implements MovementListener {
     }
 
     public void addEnemy(Monster monster) {
-        monster.setWorld(getWorld());
         monsterList.add(monster);
         monster.addMovementListener(this);
     }

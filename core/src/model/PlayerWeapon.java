@@ -2,9 +2,7 @@ package model;
 
 import com.dongbat.jbump.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -34,7 +32,7 @@ public abstract class PlayerWeapon {
 
     //TODO
     //in playercharachter the swords position shall update with the move command like player does
-    public void weaponSwing(int rotationStart,int rotationFinish, int animationpart, PlayerCharacter player){
+    public void weaponSwing(int rotationStart, int rotationFinish, int animationpart, PlayerCharacter player){
         int degreedistance = Math.abs(rotationStart - rotationFinish);
         int degreerotation = degreedistance/weaponRotations;
         while (animationpart <= weaponRotations) {
@@ -42,19 +40,31 @@ public abstract class PlayerWeapon {
             float point1 = getWeaponRange();
             float rotatedpoint1x = (float) (point1 * cos(getWeaponAngle()));
             float rotatedpoint1y = (float) (point1 * sin(getWeaponAngle()));
-            rotatedpoint1x = rotatedpoint1x + player.getX();
-            rotatedpoint1y = rotatedpoint1y + player.getY();
+            rotatedpoint1x = rotatedpoint1x + player.getWidth()/2 + player.getX();
+            rotatedpoint1y = rotatedpoint1y + player.getHeight()/2 + player.getY();
 
             //world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null); //filter är cross, fixa i jbump.
-            ArrayList<Entity> entities = world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null);
-            Set<Entity> seen = new HashSet<Entity>();
-            for (Entity entity : entities){
-                if (!isKnown.contains((entity))){
-                    //gör skada;
-                }
-                seen.add(entity);
+            //todo borde inte vara arraylist utan list eller collection
+            ArrayList<ItemInfo> items = new ArrayList<>();
+            world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, items);
+            List<Entity> entities = new LinkedList<>();
+            for (ItemInfo i : items) {
+                entities.add((Entity) i.item.userData);
             }
-            isKnown = seen;
+            items.clear();
+            if (entities.size() > 0) {
+                Set<Entity> seen = new HashSet<Entity>();
+                for (Entity entity : entities) {
+                    if (!isKnown.contains((entity))) {
+                        //gör skada;
+                        entity.beAttacked((weaponDamage),"player");
+                    }
+                    seen.add(entity);
+                }
+                isKnown = seen;
+                entities.clear();
+            }
+
             //lista entities? add if not already there world.querySegment(x1, y1, x2, y2, filter, items);
             //lista skada alla i listan
             //lista knuffa alla i listan

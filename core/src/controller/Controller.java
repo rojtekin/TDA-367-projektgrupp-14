@@ -37,7 +37,7 @@ public class Controller {
         }
         //Up
         if(Gdx.input.isKeyPressed(Input.Keys.I)){
-            player.weaponAttack(-90,90,0);
+            player.weaponAttack(270,90,0);
         }
         //right
         if(Gdx.input.isKeyPressed(Input.Keys.L)){

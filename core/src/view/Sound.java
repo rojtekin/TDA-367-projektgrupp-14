@@ -5,30 +5,31 @@ import model.Model;
 import com.badlogic.gdx.Gdx;
 
 public class Sound{
-    private final com.badlogic.gdx.audio.Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Audio/Background music.ogg"));
-    private final com.badlogic.gdx.audio.Sound enemyHit = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
-    private final com.badlogic.gdx.audio.Sound swordSwoosh = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
-    private final com.badlogic.gdx.audio.Sound playerDeath = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
+    private static final com.badlogic.gdx.audio.Music background_music = Gdx.audio.newMusic(Gdx.files.internal("Audio/Background music.ogg"));
+    private static final com.badlogic.gdx.audio.Sound enemy_hit = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
+    private static final com.badlogic.gdx.audio.Sound sword_swoosh = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
+    private static final com.badlogic.gdx.audio.Sound player_death = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
+
     public void playGameMusic(){
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play();
-        backgroundMusic.setVolume(0.1f);
+        background_music.setLooping(true);
+        background_music.play();
+        background_music.setVolume(0.1f);
     }
 
     public void stopGameMusic(){
-        backgroundMusic.dispose();
+        background_music.dispose();
     }
 
     public void playEnemyHit(){
-        enemyHit.play(); // TODO: check if the sounds isnt too loud later
+        enemy_hit.play(); // TODO: check if the sounds isnt too loud later
     }
 
     public  void playSwordHit(){
-        swordSwoosh.play(); // TODO: check if the sounds isnt too loud later
+        sword_swoosh.play(); // TODO: check if the sounds isnt too loud later
     }
 
     public void playPlayerDeathSound(){
-        playerDeath.play();
+        player_death.play();
     }
 
     public com.badlogic.gdx.audio.Sound getIdleSound(Entity entity) {

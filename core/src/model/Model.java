@@ -16,7 +16,7 @@ public class Model implements MovementListener {
     private List<Enemy> enemyList = new ArrayList<>();
     private IMapLoader mapLoader;
     private List<Entity> entityList = new ArrayList<>();
-    private List<Point> spawnPoints;
+    private final List<Point> spawnPoints;
     private static final int MAX_ENEMIES = 8;
     private int spawnPointsIndex = 0;
 

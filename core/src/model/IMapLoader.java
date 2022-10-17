@@ -10,7 +10,7 @@ import com.dongbat.jbump.World;
  */
 public interface IMapLoader {
 
-    World<Entity> getWorld();
+    World<IEntity> getWorld();
 
     Map getMap();
 

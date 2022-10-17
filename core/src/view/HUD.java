@@ -1,5 +1,6 @@
 package view;
 
+import model.IPlayerCharacter;
 import model.PlayerCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -17,7 +18,7 @@ public class HUD {
     private Stage stage;
     private FitViewport stageViewport;
     private int score = 10; //temporary, it should take it from model
-    private PlayerCharacter player;
+    private IPlayerCharacter player;
     private double currenthp;
     private double maxhp;
 
@@ -50,7 +51,7 @@ public class HUD {
     private Label scoreLabel = new Label("Score: " + Integer.toString(score), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
 
 
-    public HUD(SpriteBatch spriteBatch,PlayerCharacter player) {
+    public HUD(SpriteBatch spriteBatch, IPlayerCharacter player) {
         stageViewport = new FitViewport(800, 480);
         stage = new Stage(stageViewport, spriteBatch);
         this.player = player;

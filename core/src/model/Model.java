@@ -7,18 +7,23 @@ import com.badlogic.gdx.maps.Map;
 import model.enemies.*;
 
 import java.awt.*;
+import model.rewards.Reward;
+import model.rewards.RewardSystem;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Model implements MovementListener {
-    private PlayerCharacter player;
-    private List<Enemy> enemyList = new ArrayList<>();
     private IMapLoader mapLoader;
+    private IPlayerCharacter player;
+    private List<Enemy> enemyList = new ArrayList<>();
     private List<Entity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
     private static final int MAX_ENEMIES = 8;
     private int spawnPointsIndex = 0;
+    private RewardSystem rewardSystem = new RewardSystem();
+    private World<IEntity> world = new World<>();
 
     public Model(IMapLoader mapLoader, PlayerCharacter player, List<Point> spawnPoints) {
         this.mapLoader = Objects.requireNonNull(mapLoader);
@@ -27,12 +32,16 @@ public class Model implements MovementListener {
     }
 
     public PlayerCharacter getPlayer(){
+    public IPlayerCharacter getPlayer(){
         return player;
     }
 
     public void update() {
         spawnEnemies();
         moveEnemies();
+        if (rewardSystem.levelUpChecker(player)){
+        player = rewardSystem.applyReward(player, Reward.SPEED_DEVIL);
+        }
     }
 
     public Map getMap() {
@@ -57,6 +66,7 @@ public class Model implements MovementListener {
 
     private void addEnemy(Enemy enemy) {
         enemyList.add(enemy);
+        entityList.add(enemy);
         enemy.addMovementListener(this);
     }
 
@@ -106,7 +116,18 @@ public class Model implements MovementListener {
 
     private boolean collisionWithPlayer(Collision collision) { return collision.other.userData.equals(player); }
 
-    public World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return mapLoader.getWorld();
+    }
+
+    /**
+     * Loads a specified map and creates a playercharacter
+     * @param mapLoader object that loads a map of a specific type
+     */
+    public void initialize(IMapLoader mapLoader) {
+        rewardSystem.initialize(world);
+        this.mapLoader = mapLoader;
+        player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
+        player.gainExperience(100);
     }
 }

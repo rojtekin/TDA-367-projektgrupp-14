@@ -2,13 +2,12 @@ package model.enemies;
 
 import model.Entity;
 import com.dongbat.jbump.World;
+import model.IEntity;
 
 public abstract class Enemy extends Entity {
-    private double damage;
 
-    public Enemy(float x, float y, float height, float width, float speed, float health, float damage, World<Entity> world) {
-        super(x, y, height, width, speed, health, world);
-        this.damage = damage;
+    public Enemy(float x, float y, float height, float width, float speed, float health, float damage, World<IEntity> world) {
+        super(x, y, height, width, speed, health,damage, world);
     }
 
     /**

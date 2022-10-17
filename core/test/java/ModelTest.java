@@ -1,6 +1,6 @@
 import com.dongbat.jbump.World;
 import model.Model;
-import model.enemies.Cyclops;
+import model.monsters.Cyclops;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

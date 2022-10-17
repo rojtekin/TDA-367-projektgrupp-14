@@ -55,7 +55,7 @@ public class Model implements MovementListener {
         return new ArrayList<Entity>(entityList);
     }
 
-    public void addEnemy(Enemy enemy) {
+    private void addEnemy(Enemy enemy) {
         enemyList.add(enemy);
         enemy.addMovementListener(this);
     }

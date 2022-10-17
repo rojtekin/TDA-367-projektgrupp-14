@@ -11,10 +11,6 @@ public class RewardSystem {
     private boolean perkApplied;
     private World<IEntity> world;
 
-    public RewardSystem() {
-        initialize(world);
-    }
-
     public void initialize(World<IEntity> world) {
         perkApplied = false;
         this.world = world;

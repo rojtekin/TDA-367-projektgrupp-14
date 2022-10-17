@@ -71,7 +71,7 @@ public abstract class Entity implements IEntity{
 
     /**
      * Adds a reference to the world that the player is in and
-     * registers itself as a collisionbox within in. Useful for
+     * registers itself as a collisionbox within it. Useful for
      * moving entities between different levels
      */
     public void setWorld (World<IEntity> world) {

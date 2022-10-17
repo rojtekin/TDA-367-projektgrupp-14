@@ -1,4 +1,3 @@
-import com.dongbat.jbump.World;
 import model.*;
 import model.monsters.Cyclops;
 import model.monsters.Monster;
@@ -46,21 +45,21 @@ public class DamageTest {
 
     @Test
     public void healthyEnemyDoesNotDespawn() {
-        model.checkEnemyHealth();
+        model.despawnDeadNPCs();
         assertTrue(model.getEnemyList().contains(monster));
     }
 
     @Test
     public void partiallyDamagedEnemyDoesNotDespawn() {
         monster.takeDamage(1);
-        model.checkEnemyHealth();
+        model.despawnDeadNPCs();
         assertTrue(model.getEnemyList().contains(monster));
     }
 
     @Test
     public void enemyDespawnsAtZeroHealth() {
         monster.takeDamage(10);
-        model.checkEnemyHealth();
+        model.despawnDeadNPCs();
         assertFalse(model.getEnemyList().contains(monster));
     }
 

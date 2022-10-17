@@ -12,7 +12,7 @@ import java.util.List;
 
 public class Model implements MovementListener {
     private IPlayerCharacter player;
-    private List<Monster> monsterList = new ArrayList<>();
+    private List<Monster> monsters = new ArrayList<>();
     private List<Entity> entityList = new ArrayList<>();
     private IEnvironmentCache mapLoader;
     private RewardSystem rewardSystem = new RewardSystem();
@@ -27,14 +27,14 @@ public class Model implements MovementListener {
         if (rewardSystem.levelUpChecker(player)){
         player = rewardSystem.applyReward(player, Reward.SPEED_DEVIL);
         }
-        checkEnemyHealth();
+        despawnDeadNPCs();
     }
 
     /**
      * Goes through the list of enemies checks if they need to be removed
      * O(n)
      */
-    public void checkEnemyHealth() {
+    public void despawnDeadNPCs() {
         for (int i = 0; i < getEnemyList().size(); i++) {
             if (getEnemyList().get(i).getCurrentHealth() <= 0) {
                 despawn(getEnemyList().get(i));
@@ -63,16 +63,16 @@ public class Model implements MovementListener {
     }
 
     public void addEnemy(Monster monster) {
-        monsterList.add(monster);
+        monsters.add(monster);
         monster.addMovementListener(this);
     }
 
     public List<Monster> getEnemyList() {
-        return new ArrayList<>(monsterList);
+        return new ArrayList<>(monsters);
     }
 
     void moveEnemies() {
-        for (Monster monster : monsterList) {
+        for (Monster monster : monsters) {
             monster.moveTowardPlayer(player.getX(), player.getY());
         }
     }
@@ -105,12 +105,12 @@ public class Model implements MovementListener {
     }
 
     /**
-     * Removes an Enemy from the game and removes
+     * Removes a monster from the game and removes
      * its collisionbox from the world
      * @param monster Enemy to be removed
      */
     public void despawn(Monster monster) {
-        monsterList.remove(monster);
+        monsters.remove(monster);
         monster.removeCollision();
     }
 }

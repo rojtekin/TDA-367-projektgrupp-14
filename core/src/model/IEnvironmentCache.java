@@ -17,7 +17,6 @@ public interface IEnvironmentCache {
     World<IEntity> getWorld();
 
     /**
-     * Used to make sure the map used by the view is the same as the model
      * @return the map used in the model
      */
     Map getMap();

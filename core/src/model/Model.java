@@ -9,6 +9,7 @@ import model.enemies.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Model implements MovementListener {
     private PlayerCharacter player;
@@ -20,9 +21,9 @@ public class Model implements MovementListener {
     private int spawnPointsIndex = 0;
 
     public Model(IMapLoader mapLoader, PlayerCharacter player, List<Point> spawnPoints) {
-        this.mapLoader = mapLoader;
-        this.player = player;
-        this.spawnPoints = spawnPoints;
+        this.mapLoader = Objects.requireNonNull(mapLoader);
+        this.player = Objects.requireNonNull(player);
+        this.spawnPoints = Objects.requireNonNull(spawnPoints);
     }
 
     public PlayerCharacter getPlayer(){

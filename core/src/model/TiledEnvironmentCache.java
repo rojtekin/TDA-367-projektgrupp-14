@@ -105,11 +105,13 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
      * using Axis-Aligned Bounding Boxes for its collision.
      */
     private void importCollisionLayer() {
-        objects = map.getLayers().get(COLLISIONLAYER).getObjects();
-        for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
-            Rectangle r = o.getRectangle();
-            PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
-            world.add(new Item<>(st), r.x, r.y, r.width, r.height);
+        if (map.getLayers().get(COLLISIONLAYER) != null) {
+            objects = map.getLayers().get(COLLISIONLAYER).getObjects();
+            for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
+                Rectangle r = o.getRectangle();
+                PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
+                world.add(new Item<>(st), r.x, r.y, r.width, r.height);
+            }
         }
     }
 }

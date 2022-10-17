@@ -70,6 +70,9 @@ public class Model implements MovementListener {
         }
     }
 
+    /**
+     * Adds enemies at different spawn points until the maximum number of enemies is reached.
+     */
     private void spawnEnemies() {
         while (enemyList.size() < MAX_ENEMIES) {
             spawnRandomEnemy(spawnPoints.get(spawnPointsIndex));
@@ -78,6 +81,10 @@ public class Model implements MovementListener {
         }
     }
 
+    /**
+     * Adds a random enemy at the specified spawn point.
+     * @param spawnPoint the spawn point where a random enemy should spawn
+     */
     private void spawnRandomEnemy(Point spawnPoint) {
         if (Math.random() < 0.75) {
             addEnemy(new Cyclops(spawnPoint.x, spawnPoint.y,1,1,1, getWorld()));

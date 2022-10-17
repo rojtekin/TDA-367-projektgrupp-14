@@ -26,7 +26,7 @@ public class Model implements MovementListener {
     public void update() {
         moveEnemies();
         if (rewardSystem.levelUpChecker(player)){
-        player = rewardSystem.applyReward(player, Reward.SPEED_DEVIL);
+        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
         }
     }
 

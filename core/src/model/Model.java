@@ -15,15 +15,15 @@ import java.util.List;
 import java.util.Objects;
 
 public class Model implements MovementListener {
-    private IMapLoader mapLoader;
+    private final IMapLoader mapLoader;
     private IPlayerCharacter player;
-    private List<Enemy> enemyList = new ArrayList<>();
-    private List<Entity> entityList = new ArrayList<>();
+    private final List<Enemy> enemyList = new ArrayList<>();
+    private final List<Entity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
     private static final int MAX_ENEMIES = 8;
     private int spawnPointsIndex = 0;
-    private RewardSystem rewardSystem = new RewardSystem();
-    private World<IEntity> world = new World<>();
+    private final RewardSystem rewardSystem = new RewardSystem();
+    private final World<IEntity> world = new World<>();
 
     public Model(IMapLoader mapLoader, PlayerCharacter player, List<Point> spawnPoints) {
         this.mapLoader = Objects.requireNonNull(mapLoader);

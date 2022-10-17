@@ -8,10 +8,8 @@ import model.playerperks.SpeedDevil;
 import model.playerperks.Tank;
 
 public class RewardSystem {
-private boolean perkApplied;
-private World<IEntity> world;
-
-    //TODO fråga:  ska jag göra om till lista istället för ENUM? för att få bort getRandomRewards stora if-sats
+    private boolean perkApplied;
+    private World<IEntity> world;
 
     public RewardSystem() {
         initialize(world);
@@ -28,7 +26,7 @@ private World<IEntity> world;
     public Reward getRandomReward(){
         Reward reward = Reward.randomReward();
         if ((reward == Reward.TANK && perkApplied )||(reward == Reward.GLASS_CANNON && perkApplied) || (reward == Reward.SPEED_DEVIL && perkApplied)){
-                reward = getRandomReward();
+            reward = getRandomReward();
         }
         return reward;
     }

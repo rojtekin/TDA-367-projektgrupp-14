@@ -20,15 +20,9 @@ public interface IEntity {
 
     float getCurrentHealth();
 
-    void setCurrentHealth(float currentHealth);
-
     float getDamage();
 
     Direction getDirection();
-
-    World<IEntity> getWorld();
-
-    void setMoving(boolean moving);
 
     void pushBack(IntPoint collisionNormal);
 }

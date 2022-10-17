@@ -42,10 +42,6 @@ public class Model implements MovementListener {
         return player.isMoving();
     }
 
-    public void setPlayerMoving(boolean moving) {
-        player.setMoving(moving);
-    }
-
     public ArrayList<Entity> getEntities(){
         return new ArrayList<Entity>(entityList);
     }
@@ -90,6 +86,5 @@ public class Model implements MovementListener {
         rewardSystem.initialize(world);
         this.mapLoader = mapLoader;
         player = new PlayerCharacter(mapLoader.getMapUnitWidth() / 2, mapLoader.getMapUnitHeight() / 2, mapLoader.getWorld());
-        player.gainExperience(100);
     }
 }

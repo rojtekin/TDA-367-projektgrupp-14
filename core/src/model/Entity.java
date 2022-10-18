@@ -79,6 +79,11 @@ public abstract class Entity implements IEntity{
         addCollision();
     }
 
+    /**
+     * Necessary for behaviour in child classes and tests
+     * @return the reference to the entities world object,
+     *         which is responsible for collision and movement
+     */
     public World<IEntity> getWorld() {
         return world;
     }

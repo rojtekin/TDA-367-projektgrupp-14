@@ -1,7 +1,7 @@
 package view;
 
 import model.*;
-import model.enemies.Enemy;
+import model.monsters.Monster;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,7 +32,7 @@ public class View {
     private ImageHandler imageHandler = new ImageHandler();
     private Sound soundHandler = new Sound();
 
-    private Set<Entity> isKnown = new HashSet<Entity>();
+    private Set<Entity> isKnown = new HashSet<>();
 
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
@@ -79,7 +79,7 @@ public class View {
 
     private void playIdleSounds() {
         ArrayList<Entity> entities = model.getEntities();
-        Set<Entity> seen = new HashSet<Entity>();
+        Set<Entity> seen = new HashSet<>();
         for (Entity entity : entities){
             if (!isKnown.contains((entity))){
                 soundHandler.playIdleSoundsWithInterval(model, 2000);
@@ -98,9 +98,9 @@ public class View {
     }
 
     private void drawEnemies() {
-        for (Enemy enemy : model.getEnemyList()) {
-            batch.draw(imageHandler.getEntityImage(enemy.getClass(), enemy.getDirection(), 0),
-                    enemy.getX(), enemy.getY());
+        for (Monster monster : model.getMonsters()) {
+            batch.draw(imageHandler.getEntityImage(monster.getClass(), monster.getDirection(), 0),
+                    monster.getX(), monster.getY());
         }
     }
 

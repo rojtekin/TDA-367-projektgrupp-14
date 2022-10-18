@@ -14,43 +14,26 @@ public abstract class Entity implements IEntity{
     private float y;
     private float height;
     private float width;
-    private float speed;
     private float damage;
-    private boolean inMotion = false;
-    private float maxHealth;
-    private float currentHealth;
     private Item<IEntity> boundingbox;
     private World<IEntity> world;
-    private CollisionFilter collisionType = CollisionFilter.defaultFilter;
-    private Direction direction;
-    private List<MovementListener> movementListeners = new ArrayList<>();
+    private CollisionFilter collisionResponse = CollisionFilter.defaultFilter;
 
-    public CollisionFilter getCollisionType() {
-        return collisionType;
-    }
-    public void setCollisionType (CollisionFilter collisionType) {
-        this.collisionType = collisionType;
+    public CollisionFilter getCollisionResponse() {
+        return collisionResponse;
     }
 
-     public Entity(float x, float y, float height, float width, float speed, float maxHealth , float damage, World<IEntity> world) {
+    public void setCollisionResponse(CollisionFilter collisionResponse) {
+        this.collisionResponse = collisionResponse;
+    }
+
+     public Entity(float x, float y, float height, float width, float damage, World<IEntity> world) {
         this.x = x;
         this.y = y;
         this.height = height;
         this.width = width;
-        this.speed = speed;
         this.damage = damage;
-        this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
-        this.direction = Direction.DOWN;
         setWorld(Objects.requireNonNull(world));
-    }
-
-    public boolean isMoving() {
-        return inMotion;
-    }
-
-    public void setMoving(boolean moving) {
-        this.inMotion = moving;
     }
 
     public float getX() {
@@ -75,23 +58,6 @@ public abstract class Entity implements IEntity{
         return width;
     }
 
-    public float getSpeed() {
-        return speed;
-    }
-    protected void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    public float getMaxHealth() {
-        return maxHealth;
-    }
-    protected void setMaxHealth(float maxHealth) {
-        this.maxHealth = maxHealth;
-    }
-
-    public float getCurrentHealth() {return currentHealth;}
-    public void setCurrentHealth(float currentHealth) {this.currentHealth = currentHealth;}
-
     public float getDamage() {
         return damage;
     }
@@ -99,77 +65,50 @@ public abstract class Entity implements IEntity{
         this.damage = damage;
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
-    private void setDirection(Direction direction) {
-        this.direction = direction;
+    public Item<IEntity> getBoundingbox() {
+        return boundingbox;
     }
 
     /**
      * Adds a reference to the world that the player is in and
-     * registers itself as a collisionbox
+     * registers itself as a collisionbox within it. Useful for
+     * moving entities between different levels
      */
-    private void setWorld (World<IEntity> world) {
+    public void setWorld (World<IEntity> world) {
         this.world = world;
         addCollision();
     }
 
-    private void addCollision() {
+    /**
+     * Necessary for behaviour in child classes and tests
+     * @return the reference to the entities world object,
+     *         which is responsible for collision and movement
+     */
+    public World<IEntity> getWorld() {
+        return world;
+    }
+
+    /**
+     * Adds its own collisionbox to the world
+     */
+    public void addCollision() {
         boundingbox = world.add(new Item<>(this), x, y, width, height);
+    }
+
+    /**
+     * Removes its own collisionbox from the world
+     */
+    public void removeCollision() {
+        world.remove(boundingbox);
     }
 
     /**
      * Sets the entity coordinates to match its collisionbox
      */
-    private void updatePosition() {
+    public void updatePosition() {
         setX(world.getRect(boundingbox).x);
         setY(world.getRect(boundingbox).y);
     }
 
-    /**
-     * Moves the entity in the specified direction.
-     * @param direction the direction that the entity should move in
-     */
-    public void move(Direction direction, float speed) {
-        setDirection(direction);
-        moveForward(speed);
-    }
-
-    /**
-     * Moves the entity in the direction it is facing.
-     */
-    public void moveForward(float speed) {
-        Result result = changePosition((direction.x * speed), (direction.y * speed));
-        for (MovementListener movementListener : movementListeners) {
-            movementListener.onMovement(result.projectedCollisions);
-        }
-        setMoving(true);
-    }
-
-    public void addMovementListener(MovementListener movementListener) {
-        movementListeners.add(movementListener);
-    }
-
-    /**
-     * Pushes the entity back in a certain direction depending on the collision normal.
-     * @param collisionNormal the collision normal
-     */
-    public void pushBack(IntPoint collisionNormal) {
-        int distancePushed = 16;
-        changePosition((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));
-    }
-
-    /**
-     * Moves the collision box, then moves the entity to match it.
-     * @param deltaX the distance in the x-direction that the entity should move
-     * @param deltaY the distance in the y-direction that the entity should move
-     * @return result
-     */
-    private Result changePosition(float deltaX, float deltaY) {
-        Result result = world.move(boundingbox, this.x + deltaX,this.y + deltaY, CollisionFilter.defaultFilter);
-        updatePosition();
-        return result;
-    }
+    public abstract void beAttacked(float damage, Faction faction);
 }
-

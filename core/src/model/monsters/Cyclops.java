@@ -1,15 +1,27 @@
-package model.enemies;
+package model.monsters;
 
 import model.Direction;
 import com.dongbat.jbump.World;
+import model.Faction;
 import model.IEntity;
 
-public class Cyclops extends Enemy {
+public class Cyclops extends Monster {
     private boolean stuckInXDirection = false;
     private boolean stuckInYDirection = false;
 
-    public Cyclops(int x, int y, int speed, float health, float damage, World<IEntity> world) {
-        super(x, y, 32, 32, speed, health, damage, world);
+    /**
+     * Uses the default constructor of its superclass with default values
+     */
+    public Cyclops(float x, float y, float speed, float health, float damage, World<IEntity> world) {
+        super(x, y, 32, 32, speed, health, damage, Faction.MONSTER, world);
+    }
+
+    /**
+     * Constructor with custom faction tag
+     * @param faction custom faction tag
+     */
+    public Cyclops(int x, int y, int speed, float health, float damage, Faction faction, World<IEntity> world) {
+        super(x, y, 32, 32, speed, health, damage, faction, world);
     }
 
     /**

@@ -2,7 +2,7 @@ package model;
 
 import com.dongbat.jbump.World;
 
-public abstract class PlayerCharacterAdapter extends Entity implements IPlayerCharacter {
+public abstract class PlayerCharacterAdapter extends LivingEntity implements IPlayerCharacter {
 
     private int experience;
     private int level;
@@ -10,8 +10,8 @@ public abstract class PlayerCharacterAdapter extends Entity implements IPlayerCh
     private float AbilityPower;
     private Direction direction;
 
-    public PlayerCharacterAdapter(float x, float y, float height, float width, float speed, float maxHealth , float damage, World<IEntity> world) {
-        super(x, y, height, width, speed, maxHealth,damage, world);
+    public PlayerCharacterAdapter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
+        super(x, y, height, width, speed, maxHealth, damage, faction, world);
         this.experience = 0;
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;

@@ -11,7 +11,7 @@ public class Game extends ApplicationAdapter {
 	private Controller controller;
 	@Override
 	public void create () {
-		model = ModelFactory.makeModel("TestMap");
+		model = ModelFactory.makeModel("Flowerfield");
 		view = new View(model);
 		view.initialize();
 		controller = new Controller(model);

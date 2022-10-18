@@ -4,7 +4,6 @@ import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.World;
 
 public interface IEntity {
-    boolean isMoving();
 
     float getX();
 
@@ -14,15 +13,7 @@ public interface IEntity {
 
     float getWidth();
 
-    float getSpeed();
-
-    float getMaxHealth();
-
-    float getCurrentHealth();
-
     float getDamage();
 
-    Direction getDirection();
-
-    void pushBack(IntPoint collisionNormal);
+    World<IEntity> getWorld();
 }

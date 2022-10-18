@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Model implements MovementListener {
-    private final IEnvironmentCache mapCache;
+    private IEnvironmentCache mapCache;
     private IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<Entity> entityList = new ArrayList<>();
@@ -21,10 +21,11 @@ public class Model implements MovementListener {
     private static final int MAX_MONSTERS = 8;
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
-    private final World<IEntity> world = new World<>();
+    private World<IEntity> world;
 
     public Model(IEnvironmentCache mapCache, PlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
+        this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);
         this.spawnPoints = Objects.requireNonNull(spawnPoints);
     }
@@ -131,7 +132,9 @@ public class Model implements MovementListener {
         }
     }
 
-    private boolean collisionWithPlayer(Collision collision) { return collision.other.userData.equals(player); }
+    private boolean collisionWithPlayer(Collision collision) {
+        return collision.other.userData.equals(player);
+    }
 
     public World<IEntity> getWorld() {
         return mapCache.getWorld();

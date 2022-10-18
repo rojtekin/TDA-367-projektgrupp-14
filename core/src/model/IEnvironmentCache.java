@@ -3,6 +3,9 @@ package model;
 import com.badlogic.gdx.maps.Map;
 import com.dongbat.jbump.World;
 
+import java.awt.*;
+import java.util.List;
+
 /**
  * An interface that should allow for different implementations of maps, not just TiledMaps
  * but also potentially things like spreadsheets or just image files. For 2D games, tiles are
@@ -38,5 +41,7 @@ public interface IEnvironmentCache {
      * @return the height of the map
      */
     int getMapUnitHeight();
+
+    List<Point> getSpawnPoints();
 
 }

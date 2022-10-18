@@ -42,6 +42,11 @@ public interface IEnvironmentCache {
      */
     int getMapUnitHeight();
 
+    /**
+     * Allows the game to fetch spawn locations directly from the map
+     * @return a List<Point> each Point consists of an x value and
+     *         y value for a spawn point
+     */
     List<Point> getSpawnPoints();
 
 }

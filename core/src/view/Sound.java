@@ -1,45 +1,81 @@
 package view;
 
-import model.enemies.Mouse;
 import model.Entity;
 import model.Model;
 import com.badlogic.gdx.Gdx;
 
 public class Sound{
-    private final String backgroundMusicPath = "Audio/Background music.ogg";
+    private static final com.badlogic.gdx.audio.Music BACKGROUND_MUSIC = Gdx.audio.newMusic(Gdx.files.internal("Audio/Background music.ogg"));
+    private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
+    private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
+    private static final com.badlogic.gdx.audio.Sound PLAYER_DEATH = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
 
-    public void initialize(){
-        com.badlogic.gdx.audio.Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal(backgroundMusicPath));
-        backgroundMusic.setLooping(true);
-       // backgroundMusic.play();
-        backgroundMusic.setVolume(0.1f);
+    /**
+     * Plays the background music of the game, constantly looping.
+     */
+    public void playGameMusic(){
+        BACKGROUND_MUSIC.setLooping(true);
+        BACKGROUND_MUSIC.play();
+        BACKGROUND_MUSIC.setVolume(0.1f);
     }
 
-    public com.badlogic.gdx.audio.Sound getSound() { //TODO generalise for everything
+    /**
+     * Stops playing the background music.
+     */
+    public void stopGameMusic(){
+        BACKGROUND_MUSIC.dispose();
+    }
 
-        com.badlogic.gdx.audio.Sound sound = Gdx.audio.newSound(Gdx.files.internal("Audio/Mouse-squeek.mp3"));
+    /**
+     * Plays the sound associated with the enemy hitting something/someone.
+     */
+    public void playEnemyHit(){
+        ENEMY_HIT.play(); // TODO: check if the sounds isnt too loud later
+    }
+
+    /**
+     * Plays the sound of the sword swing.
+     */
+    public  void playSwordHit(){
+        SWORD_SWOOSH.play(); // TODO: check if the sounds isnt too loud later
+    }
+
+    /**
+     * Plays the player death sound.
+     */
+    public void playPlayerDeathSound(){
+        PLAYER_DEATH.play();
+    }
+
+    public com.badlogic.gdx.audio.Sound getIdleSound(Entity entity) {
+        com.badlogic.gdx.audio.Sound sound = Gdx.audio.newSound(Gdx.files.internal("Audio/"+ entity.getClass().getSimpleName() +"-idle-noise.mp3"));
         return sound;
     }
 
-    public void playSounds(final Model model) {
-        // occasionally runs the function getSound() if its entity exists. timer starts when entity "spawns".
+    /**
+     * Continuously plays the idle-sounds of every living entity in the model.
+     * @param model a reference to the model the sounds are associated with.
+     * @param interval how long between each play of the idle sounds.
+     */
+    public void playIdleSoundsWithInterval(final Model model, long interval) {
         for (final Entity entity : model.getEntities()) {
             Runnable toRun = new Runnable() {
-                    public void run() {
-                        while (model.getEntities().contains(entity)){
-                            float distance = (float) Math.hypot(entity.getX()-model.getPlayer().getX(), entity.getY()-model.getPlayer().getY());
-                            distance = 100/distance;
-                            getSound().play(distance);
-                            try {
-                                Thread.sleep(2000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                public void run() {
+                    while (model.getEntities().contains(entity)){
+                        float distance = (float) Math.hypot(entity.getX()-model.getPlayer().getX(), entity.getY()-model.getPlayer().getY());
+                        distance = 300/(distance*entity.getWidth());
+                        getIdleSound(entity).play(distance);
+                        try {
+                            Thread.sleep(interval);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }
-                };
-                new Thread(toRun).start();
-            }
+                }
+            };
+            new Thread(toRun).start();
+
         }
+    }
 
 }

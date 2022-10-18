@@ -106,10 +106,6 @@ public abstract class Entity implements IEntity{
         this.direction = direction;
     }
 
-    public World<IEntity> getWorld() {
-        return world;
-    }
-
     /**
      * Adds a reference to the world that the player is in and
      * registers itself as a collisionbox

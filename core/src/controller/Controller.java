@@ -30,5 +30,8 @@ public class Controller {
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.move(Direction.DOWN, player.getSpeed());
         }
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            player.attack();
+        }
     }
 }

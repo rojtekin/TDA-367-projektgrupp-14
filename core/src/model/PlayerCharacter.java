@@ -4,6 +4,7 @@ import com.dongbat.jbump.World;
 
 public class PlayerCharacter extends PlayerCharacterAdapter implements IControllable, IPlayerCharacter {
 
+    private IWeapon weapon = new Dagger(getWorld());
     /**
      * Default constructor for a default sized player of the player faction
      * @param spawnX spawn location along x axis
@@ -21,5 +22,9 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
      */
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
+    }
+
+    public void attack() {
+        weapon.attack(getX(), getY(), getDamage(), getFaction(), getDirection());
     }
 }

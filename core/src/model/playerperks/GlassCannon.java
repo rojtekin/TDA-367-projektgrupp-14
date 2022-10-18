@@ -154,4 +154,9 @@ public class GlassCannon implements IPlayerCharacter {
     public float getWidth() {
         return playerCharacter.getWidth();
     }
+
+    @Override
+    public void attack() {
+        playerCharacter.attack();
+    }
 }

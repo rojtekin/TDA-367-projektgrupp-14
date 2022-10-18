@@ -153,4 +153,9 @@ public class Tank implements IPlayerCharacter {
     public float getWidth() {
         return playerCharacter.getWidth();
     }
+
+    @Override
+    public void attack() {
+        playerCharacter.attack();
+    }
 }

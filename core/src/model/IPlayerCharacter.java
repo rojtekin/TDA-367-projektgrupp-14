@@ -43,4 +43,6 @@ public interface IPlayerCharacter {
     void setMoving(boolean moving);
 
     void pushBack(IntPoint normal);
+
+    void attack();
 }

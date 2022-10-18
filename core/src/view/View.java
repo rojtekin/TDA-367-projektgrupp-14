@@ -94,7 +94,7 @@ public class View {
     }
 
     private void drawEnemies() {
-        for (Monster monster : model.getEnemyList()) {
+        for (Monster monster : model.getMonsters()) {
             batch.draw(imageHandler.getEntityImage(monster.getClass(), monster.getDirection(), 0),
                     monster.getX(), monster.getY());
         }

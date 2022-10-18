@@ -13,18 +13,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class Model implements MovementListener {
-    private final IEnvironmentCache mapLoader;
+    private final IEnvironmentCache mapCache;
     private IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<Entity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
-    private static final int MAX_ENEMIES = 8;
+    private static final int MAX_MONSTERS = 8;
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
     private final World<IEntity> world = new World<>();
 
-    public Model(IEnvironmentCache mapLoader, PlayerCharacter player, List<Point> spawnPoints) {
-        this.mapLoader = Objects.requireNonNull(mapLoader);
+    public Model(IEnvironmentCache mapCache, PlayerCharacter player, List<Point> spawnPoints) {
+        this.mapCache = Objects.requireNonNull(mapCache);
         this.player = Objects.requireNonNull(player);
         this.spawnPoints = Objects.requireNonNull(spawnPoints);
     }
@@ -34,8 +34,8 @@ public class Model implements MovementListener {
     }
 
     public void update() {
-        spawnEnemies();
-        moveEnemies();
+        spawnMonsters();
+        moveMonsters();
         if (rewardSystem.levelUpChecker(player)){
         player = rewardSystem.applyReward(player, Reward.SPEED_DEVIL);
         }
@@ -47,15 +47,15 @@ public class Model implements MovementListener {
      * O(n)
      */
     public void despawnDeadNPCs() {
-        for (int i = 0; i < getEnemyList().size(); i++) {
-            if (getEnemyList().get(i).getCurrentHealth() <= 0) {
-                despawn(getEnemyList().get(i));
+        for (int i = 0; i < getMonsters().size(); i++) {
+            if (getMonsters().get(i).getCurrentHealth() <= 0) {
+                despawn(getMonsters().get(i));
             }
         }
     }
 
     public Map getMap() {
-        return mapLoader.getMap();
+        return mapCache.getMap();
     }
 
     public Direction getPlayerDirection() {
@@ -74,43 +74,50 @@ public class Model implements MovementListener {
         return new ArrayList<>(entityList);
     }
 
-    private void addEnemy(Monster monster) {
+    /**
+     * Allows manually adding of a monster to the model
+     * @param monster the monster to be added
+     */
+    public void addMonster(Monster monster) {
+        if (monster.getWorld() != world) {
+            monster.setWorld(world);
+        }
         monsters.add(monster);
         entityList.add(monster);
         monster.addMovementListener(this);
     }
 
-    public List<Monster> getEnemyList() {
+    public List<Monster> getMonsters() {
         return new ArrayList<>(monsters);
     }
 
-    private void moveEnemies() {
+    private void moveMonsters() {
         for (Monster monster : monsters) {
             monster.moveTowardPlayer(player.getX(), player.getY());
         }
     }
 
     /**
-     * Adds enemies at different spawn points until the maximum number of enemies is reached.
+     * Adds monsters at different spawn points until the maximum number of monsters is reached.
      */
-    private void spawnEnemies() {
-        while (enemyList.size() < MAX_ENEMIES) {
-            spawnRandomEnemy(spawnPoints.get(spawnPointsIndex));
+    private void spawnMonsters() {
+        while (monsters.size() < MAX_MONSTERS) {
+            spawnRandomMonster(spawnPoints.get(spawnPointsIndex));
             if (spawnPointsIndex < spawnPoints.size() - 1) { spawnPointsIndex++; }
             else { spawnPointsIndex = 0; }
         }
     }
 
     /**
-     * Adds a random enemy at the specified spawn point.
-     * @param spawnPoint the spawn point where a random enemy should spawn
+     * Adds a random monster at the specified spawn point.
+     * @param spawnPoint the spawn point where a random monster should spawn
      */
-    private void spawnRandomEnemy(Point spawnPoint) {
+    private void spawnRandomMonster(Point spawnPoint) {
         if (Math.random() < 0.75) {
-            addEnemy(new Cyclops(spawnPoint.x, spawnPoint.y,1,1,1, getWorld()));
+            addMonster(new Cyclops(spawnPoint.x, spawnPoint.y,1,1,1, getWorld()));
         }
         else {
-            addEnemy(new Mouse(spawnPoint.x, spawnPoint.y,2,1,1, getWorld()));
+            addMonster(new Mouse(spawnPoint.x, spawnPoint.y,2,1,1, getWorld()));
         }
     }
 
@@ -127,7 +134,7 @@ public class Model implements MovementListener {
     private boolean collisionWithPlayer(Collision collision) { return collision.other.userData.equals(player); }
 
     public World<IEntity> getWorld() {
-        return mapLoader.getWorld();
+        return mapCache.getWorld();
     }
 
     public void initialize() {

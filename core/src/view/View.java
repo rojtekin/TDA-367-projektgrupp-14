@@ -40,7 +40,7 @@ public class View {
 
     public void initialize() {
         imageHandler.loadEntityImages();
-        soundHandler.initialize();
+        soundHandler.playGameMusic();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -55,7 +55,7 @@ public class View {
     public void update() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // TODO functional decomposition
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
@@ -63,22 +63,26 @@ public class View {
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        batch.begin(); // TODO functional decomposition
         updatePlayerWalkFrame();
         drawEntities();
         batch.end();
 
-        hud.update();
+        hud.update(); // TODO functional decomposition
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         //hud.getStage().act(delta);
         hud.getStage().draw();
 
         // do something when a entity spawns
+        playIdleSounds();
+    }
+
+    private void playIdleSounds() {
         ArrayList<Entity> entities = model.getEntities();
         Set<Entity> seen = new HashSet<>();
         for (Entity entity : entities){
             if (!isKnown.contains((entity))){
-                soundHandler.playSounds(model);
+                soundHandler.playIdleSoundsWithInterval(model, 2000);
             }
             seen.add(entity);
         }

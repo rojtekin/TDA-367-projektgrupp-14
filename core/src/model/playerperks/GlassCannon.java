@@ -3,7 +3,6 @@ package model.playerperks;
 import com.dongbat.jbump.IntPoint;
 import model.Direction;
 import model.IPlayerCharacter;
-import model.PlayerCharacter;
 
 public class GlassCannon implements IPlayerCharacter {
     IPlayerCharacter playerCharacter;

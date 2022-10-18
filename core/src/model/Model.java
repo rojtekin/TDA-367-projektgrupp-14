@@ -38,7 +38,7 @@ public class Model implements MovementListener {
         spawnMonsters();
         moveMonsters();
         if (rewardSystem.levelUpChecker(player)){
-        player = rewardSystem.applyReward(player, Reward.SPEED_DEVIL);
+        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
         }
         despawnDeadNPCs();
     }
@@ -65,10 +65,6 @@ public class Model implements MovementListener {
 
     public boolean playerIsMoving() {
         return player.isMoving();
-    }
-
-    public void setPlayerMoving(boolean moving) {
-        player.setMoving(moving);
     }
 
     public ArrayList<Entity> getEntities(){
@@ -142,7 +138,6 @@ public class Model implements MovementListener {
 
     public void initialize() {
         rewardSystem.initialize(world);
-        player.gainExperience(100);
     }
 
     /**

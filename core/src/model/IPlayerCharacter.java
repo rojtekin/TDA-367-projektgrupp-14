@@ -24,6 +24,7 @@ public interface IPlayerCharacter {
     void decreaseAbilityPower();
     void gainExperience(int experience);
     void reduceExperience();
+    void increaseCurrentHealth(float amount);
 
 
     float getAbilityCoolDownMultiplier();

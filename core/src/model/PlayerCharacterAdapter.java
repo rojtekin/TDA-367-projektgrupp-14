@@ -19,8 +19,22 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     }
 
     @Override
+    public float getMaxHealth() {
+        return super.getMaxHealth();
+    }
+
+    @Override
     public float getSpeed(){
         return super.getSpeed();
+    }
+
+    @Override
+    public void increaseCurrentHealth(float amount){
+        if (getCurrentHealth()+amount < getMaxHealth()){
+        setCurrentHealth(getCurrentHealth()+amount);}
+        else {
+            setCurrentHealth(getMaxHealth());
+        }
     }
 
     public int getExperience() {

@@ -48,12 +48,12 @@ public class HUD {
     private final NinePatch experienceYellowNinePatch = new NinePatch(experienceYellow, 0, 0, 0, 0);
     private final Image fullExperienceBar = new Image(experienceYellowNinePatch);
 
-    private Label healthBarLabel;
 
     private final Table table1 = new Table();
     private final Table table2 = new Table();
     private final Table table3 = new Table();
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
+    private Label healthBarLabel =  new Label("HP", whiteTextColorAndFont);
     private Label scoreLabel = new Label("Score: " + 0, whiteTextColorAndFont);
 
     public HUD(SpriteBatch spriteBatch, Model model) {
@@ -106,7 +106,7 @@ public class HUD {
         pickExperienceBarSize();
         table3.add(fullExperienceBar).size(experienceBarSize, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
-        healthBarLabel = new Label("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth(), whiteTextColorAndFont);
+        healthBarLabel.setText("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth());
     }
 
     private void pickHealthBarColor(){

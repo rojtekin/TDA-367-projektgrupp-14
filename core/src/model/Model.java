@@ -18,7 +18,7 @@ public class Model implements MovementListener {
     private final List<Monster> monsters = new ArrayList<>();
     private final List<Entity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
-    private static final int MAX_MONSTERS = 8;
+    private static final int MAX_MONSTERS = 50;
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
     private World<IEntity> world;

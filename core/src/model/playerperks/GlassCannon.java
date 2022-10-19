@@ -1,15 +1,15 @@
 package model.playerperks;
 
 import com.dongbat.jbump.IntPoint;
-import model.Direction;
-import model.IPlayerCharacter;
+import com.dongbat.jbump.World;
+import model.*;
 
-public class GlassCannon implements IPlayerCharacter {
+public class GlassCannon extends PlayerCharacter implements IPlayerCharacter {
     IPlayerCharacter playerCharacter;
-    public GlassCannon(IPlayerCharacter playerCharacter) {
+    public GlassCannon(IPlayerCharacter playerCharacter, World<IEntity> world) {
+        super(playerCharacter.getX(),playerCharacter.getY(), world);
         this.playerCharacter = playerCharacter;
     }
-
     @Override
     public float getDamage(){
         return playerCharacter.getSpeed()* (float)1.5;

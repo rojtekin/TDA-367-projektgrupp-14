@@ -3,6 +3,7 @@ package controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import model.*;
+import view.View;
 
 import java.util.Objects;
 
@@ -29,6 +30,32 @@ public class Controller {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.move(Direction.DOWN, player.getSpeed());
+        }
+
+        model.getPlayer().setSwinging(false);
+        // sword attack
+
+        //Left
+        if(Gdx.input.isKeyJustPressed(Input.Keys.L)){
+            player.weaponAttack(315,45,0);
+            model.getPlayer().setSwinging(true);
+
+        }
+        //Up
+        if(Gdx.input.isKeyJustPressed(Input.Keys.K)){
+            player.weaponAttack(225,315,0);
+            model.getPlayer().setSwinging(true);
+
+        }
+        //right
+        if(Gdx.input.isKeyJustPressed(Input.Keys.J)){
+            player.weaponAttack(135,225,0);
+            model.getPlayer().setSwinging(true);
+        }
+        //Down
+        if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
+            player.weaponAttack(45,135,0);
+            model.getPlayer().setSwinging(true);
         }
     }
 }

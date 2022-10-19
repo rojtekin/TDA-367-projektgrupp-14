@@ -1,12 +1,13 @@
 package model.playerperks;
 
 import com.dongbat.jbump.IntPoint;
-import model.Direction;
-import model.IPlayerCharacter;
+import com.dongbat.jbump.World;
+import model.*;
 
-public class Tank implements IPlayerCharacter {
+public class Tank extends PlayerCharacter implements IPlayerCharacter {
     IPlayerCharacter playerCharacter;
-    public Tank(IPlayerCharacter playerCharacter) {
+    public Tank(IPlayerCharacter playerCharacter, World<IEntity> world) {
+        super(playerCharacter.getX(),playerCharacter.getY(), world);
         this.playerCharacter = playerCharacter;
     }
 

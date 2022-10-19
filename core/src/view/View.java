@@ -1,5 +1,6 @@
 package view;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import model.*;
 import model.monsters.Monster;
 import com.badlogic.gdx.Gdx;
@@ -31,6 +32,8 @@ public class View {
     private TiledMapRenderer tiledMapRenderer;
     private ImageHandler imageHandler = new ImageHandler();
     private Sound soundHandler = new Sound();
+
+    private Sprite swordSprite = new Sprite(imageHandler.getSwordThing());
 
     private Set<Entity> isKnown = new HashSet<>();
     private Set<Entity> seen = new HashSet<>();
@@ -67,11 +70,15 @@ public class View {
         batch.begin(); // TODO functional decomposition
         updatePlayerWalkFrame();
         drawEntities();
+
+        if (model.getPlayer().isSwinging()){
+            onWeaponSwing();
+        }
+
         batch.end();
 
         hud.update(); // TODO functional decomposition
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
-        //hud.getStage().act(delta);
         hud.getStage().draw();
 
         playIdleSounds();
@@ -131,5 +138,9 @@ public class View {
             currentPlayerWalkFrame = 0;
             timeSincePlayerWalkFrameChanged = 0f;
         }
+    }
+
+    public void onWeaponSwing() {
+        batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
     }
 }

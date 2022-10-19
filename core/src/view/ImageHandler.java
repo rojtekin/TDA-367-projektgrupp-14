@@ -1,5 +1,6 @@
 package view;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import model.Direction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,6 +31,10 @@ public class ImageHandler {
                 spriteSheet.getHeight() / nRowsPlayerWalkSheet);
     }
 
+    protected Texture getSwordThing(){
+        Texture swordSwing = new Texture("Weapons/pixil-frame-0.png");
+        return swordSwing;
+    }
     /**
      * Loads the entity images and puts them in the HashMap allEntityImages.
      */

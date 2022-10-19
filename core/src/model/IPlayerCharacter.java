@@ -44,4 +44,12 @@ public interface IPlayerCharacter {
     void setMoving(boolean moving);
 
     void pushBack(IntPoint normal);
+
+    void weaponAttack(int i, int i1, int i2);
+
+    void setSwinging(boolean b);
+
+    boolean isSwinging();
+
+    PlayerWeapon getWeapon();
 }

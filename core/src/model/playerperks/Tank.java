@@ -1,8 +1,6 @@
 package model.playerperks;
 
-import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.World;
-import model.Direction;
 import model.IEntity;
 import model.IPlayerCharacter;
 import model.PlayerCharacter;

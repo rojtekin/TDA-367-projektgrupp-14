@@ -117,12 +117,12 @@ public class HUD {
             Image lowhp = new Image(lowHp);
             setHealthColor(lowhp);
         }
-        if(currentHealth <= maxHealth * 0.66) {
+        else if(currentHealth <= maxHealth * 0.66) {
             NinePatch midHp = new NinePatch(yellow, 0, 0, 0, 0);
             Image midhp = new Image(midHp);
             setHealthColor(midhp);
         }
-        if(currentHealth <= maxHealth * 1) {
+        else if(currentHealth <= maxHealth * 1) {
             NinePatch fullHp = new NinePatch(green, 0, 0, 0, 0);
             Image fullhp = new Image(fullHp);
             setHealthColor(fullhp);

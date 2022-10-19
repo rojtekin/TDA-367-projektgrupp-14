@@ -36,6 +36,7 @@ public class View {
     private Sprite swordSprite = new Sprite(imageHandler.getSwordThing());
 
     private Set<Entity> isKnown = new HashSet<>();
+    private Set<Entity> seen = new HashSet<>();
 
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
@@ -80,13 +81,11 @@ public class View {
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
 
-        // do something when a entity spawns
         playIdleSounds();
     }
 
     private void playIdleSounds() {
         ArrayList<Entity> entities = model.getEntities();
-        Set<Entity> seen = new HashSet<>();
         for (Entity entity : entities){
             if (!isKnown.contains((entity))){
                 soundHandler.playIdleSoundsWithInterval(model, 2000);

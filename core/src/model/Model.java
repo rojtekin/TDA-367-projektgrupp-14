@@ -22,6 +22,7 @@ public class Model implements MovementListener {
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
     private World<IEntity> world;
+    private int currentScore = 0;
 
     public Model(IEnvironmentCache mapCache, PlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
@@ -44,12 +45,14 @@ public class Model implements MovementListener {
     }
 
     /**
-     * Goes through the list of enemies checks if they need to be removed
+     * Goes through the list of enemies checks if they need to be removed and adds experience & score
      * O(n)
      */
     public void despawnDeadNPCs() {
         for (int i = 0; i < getMonsters().size(); i++) {
             if (getMonsters().get(i).getCurrentHealth() <= 0) {
+                getPlayer().gainExperience(getMonsters().get(i).getExperience());
+                setCurrentScore(getCurrentScore()+getMonsters().get(i).getScore());
                 despawn(getMonsters().get(i));
             }
         }
@@ -111,10 +114,10 @@ public class Model implements MovementListener {
      */
     private void spawnRandomMonster(Point spawnPoint) {
         if (Math.random() < 0.75) {
-            addMonster(new Cyclops(spawnPoint.x, spawnPoint.y,1,1,1, getWorld()));
+            addMonster(new Cyclops(spawnPoint.x, spawnPoint.y, getWorld()));
         }
         else {
-            addMonster(new Mouse(spawnPoint.x, spawnPoint.y,2,1,1, getWorld()));
+            addMonster(new Mouse(spawnPoint.x, spawnPoint.y, getWorld()));
         }
     }
 
@@ -148,5 +151,16 @@ public class Model implements MovementListener {
     public void despawn(Monster monster) {
         monsters.remove(monster);
         monster.removeCollision();
+    }
+
+    /**
+     * @return returns the score the player has acquired
+     */
+    public int getCurrentScore() {
+        return currentScore;
+    }
+
+    public void setCurrentScore(int currentScore) {
+        this.currentScore = currentScore;
     }
 }

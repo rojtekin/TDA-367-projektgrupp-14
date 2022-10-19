@@ -12,11 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import model.Model;
 
 public class HUD {
+    private final Model model;
     private Stage stage;
     private FitViewport stageViewport;
-    private int score = 10; //temporary, it should take it from model
     private IPlayerCharacter player;
     private double currentHealth;
     private double maxHealth;
@@ -52,12 +53,13 @@ public class HUD {
     private final Table table2 = new Table();
     private final Table table3 = new Table();
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
-    private Label scoreLabel = new Label("Score: " + score, whiteTextColorAndFont);
+    private Label scoreLabel = new Label("Score: " + 0, whiteTextColorAndFont);
 
-    public HUD(SpriteBatch spriteBatch, IPlayerCharacter player) {
+    public HUD(SpriteBatch spriteBatch, Model model) {
         stageViewport = new FitViewport(800, 480);
         stage = new Stage(stageViewport, spriteBatch);
-        this.player = player;
+        this.model = model;
+        this.player = model.getPlayer();
     }
 
     public void update() {
@@ -96,8 +98,8 @@ public class HUD {
         table3.setFillParent(true);
 
         table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
+        scoreLabel.setText("Score: "+model.getCurrentScore());
         table3.add(scoreLabel).right().top().pad(10);
-
         table3.row();
 
         table3.add(fullExperienceBar).size(300, 10).bottom().pad(10).expandY().colspan(2);

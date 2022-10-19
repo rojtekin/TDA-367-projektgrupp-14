@@ -13,8 +13,8 @@ public class Mouse extends Monster {
     /**
      * Uses the default constructor of its superclass with default values
      */
-    public Mouse(float x, float y, float speed, float health, float damage, World<IEntity> world) {
-        super(x, y, 16, 16, speed, health, damage, Faction.MONSTER, world);
+    public Mouse(float x, float y, World<IEntity> world) {
+        super(x, y, 16, 16, 2,1,1, Faction.MONSTER, world,1,1);
     }
 
     /**
@@ -22,7 +22,7 @@ public class Mouse extends Monster {
      * @param faction custom faction tag
      */
     public Mouse(float x, float y, float speed, float health, float damage, Faction faction, World<IEntity> world) {
-        super(x, y, 16, 16, speed, health, damage, faction, world);
+        super(x, y, 16, 16, speed, health, damage, faction, world,1,1);
     }
 
     /**

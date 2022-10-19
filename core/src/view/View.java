@@ -50,7 +50,7 @@ public class View {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
-        hud = new HUD(batch, model.getPlayer());
+        hud = new HUD(batch, model);
     }
 
     public void update() {

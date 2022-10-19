@@ -23,6 +23,7 @@ public class HUD {
     private double maxHealth;
 
     private int healthBarSize;
+    private int experienceBarSize;
 
     private Image healthColor;
 
@@ -102,7 +103,8 @@ public class HUD {
         table3.add(scoreLabel).right().top().pad(10);
         table3.row();
 
-        table3.add(fullExperienceBar).size(300, 10).bottom().pad(10).expandY().colspan(2);
+        pickExperienceBarSize();
+        table3.add(fullExperienceBar).size(experienceBarSize, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
         healthBarLabel = new Label("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth(), whiteTextColorAndFont);
     }
@@ -131,7 +133,18 @@ public class HUD {
         currentHealth = player.getCurrentHealth();
         maxHealth = player.getMaxHealth();
         float hpsize = (float)(currentHealth / maxHealth);
-        setHpSize((int)(200*hpsize));
+        setHealthBarSize((int)(200*hpsize));
+    }
+
+    private void pickExperienceBarSize(){
+        float currentExperience = player.getExperience();
+        float maxExperience = 100;
+        float experienceBarSize = (currentExperience / maxExperience);
+        setExperienceBarSize((int)(400*experienceBarSize));
+    }
+
+    private void setExperienceBarSize(int barSize){
+        this.experienceBarSize = barSize;
     }
 
     private void setHealthColor(Image healthColor) {
@@ -141,8 +154,8 @@ public class HUD {
         return healthColor;
     }
 
-    private void setHpSize(int hpsize) {
-        this.healthBarSize = hpsize;
+    private void setHealthBarSize(int barSize) {
+        this.healthBarSize = barSize;
     }
 
     public Stage getStage() { return stage; }

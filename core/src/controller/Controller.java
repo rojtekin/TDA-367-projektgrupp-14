@@ -32,20 +32,20 @@ public class Controller {
 
         // sword attack
         //Left
-        if(Gdx.input.isKeyPressed(Input.Keys.J)){
-            player.weaponAttack(180,0,0);
+        if(Gdx.input.isKeyPressed(Input.Keys.L)){
+            player.weaponAttack(315,45,0);
         }
         //Up
         if(Gdx.input.isKeyPressed(Input.Keys.I)){
-            player.weaponAttack(270,90,0);
+            player.weaponAttack(45,135,0);
         }
         //right
-        if(Gdx.input.isKeyPressed(Input.Keys.L)){
-            player.weaponAttack(0,180,0);
+        if(Gdx.input.isKeyPressed(Input.Keys.J)){
+            player.weaponAttack(135,225,0);
         }
         //Down
         if(Gdx.input.isKeyPressed(Input.Keys.K)){
-            player.weaponAttack(180,0,0);
+            player.weaponAttack(225,315,0);
         }
     }
 }

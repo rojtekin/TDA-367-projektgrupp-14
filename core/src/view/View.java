@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class View {
+public class View implements WeaponSwingListener{
     private HUD hud;
     private Model model;
     private float timeSincePlayerWalkFrameChanged = 0f;
@@ -126,5 +126,10 @@ public class View {
             currentPlayerWalkFrame = 0;
             timeSincePlayerWalkFrameChanged = 0f;
         }
+    }
+
+    @Override
+    public void onWeaponSwing(double weaponAngle) {
+        System.out.println("hejjjj");
     }
 }

@@ -1,11 +1,11 @@
 package model;
 
 import com.dongbat.jbump.*;
+import view.WeaponSwingListener;
 
 import java.util.*;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
+import static java.lang.Math.*;
 
 public abstract class PlayerWeapon {
 
@@ -13,11 +13,12 @@ public abstract class PlayerWeapon {
     private float weaponDamage;
     private float weaponRange;
     private float weaponWidth;
-    private float weaponAngle;
+    private double weaponAngle;
     private int weaponRotations;
     private World<Entity> world;
     private CollisionFilter filter;
     private Set<Entity> isKnown = new HashSet<Entity>();
+    private List<WeaponSwingListener> weaponSwingListeners = new ArrayList<>();
 
     public PlayerWeapon(World<Entity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
@@ -33,20 +34,19 @@ public abstract class PlayerWeapon {
     //TODO
     //in playercharachter the swords position shall update with the move command like player does
     public void weaponSwing(int rotationStart, int rotationFinish, int animationpart, PlayerCharacter player){
-        int degreedistance = Math.abs(rotationStart - rotationFinish);
-        int degreerotation = degreedistance/weaponRotations;
+        int degreeDistance = Math.abs(rotationStart - rotationFinish);
+        double degreeRotation = degreeDistance/weaponRotations;
         while (animationpart <= weaponRotations) {
-            setWeaponAngle(rotationStart*(degreerotation*animationpart)); //there will be a listener who prints out the sword when the angle changes
+            setWeaponAngle(toRadians(rotationStart + degreeRotation*animationpart/3)); //there will be a listener who prints out the sword when the angle changes
             float point1 = getWeaponRange();
-            float rotatedpoint1x = (float) (point1 * cos(getWeaponAngle()));
-            float rotatedpoint1y = (float) (point1 * sin(getWeaponAngle()));
-            rotatedpoint1x = rotatedpoint1x + player.getWidth()/2 + player.getX();
-            rotatedpoint1y = rotatedpoint1y + player.getHeight()/2 + player.getY();
+            float rotatedPoint1x = (float) (point1 * cos(getWeaponAngle()));
+            float rotatedPoint1y = (float) (point1 * sin(getWeaponAngle()));
+            rotatedPoint1x = rotatedPoint1x + player.getWidth()/2 + player.getX();
+            rotatedPoint1y = rotatedPoint1y + player.getHeight()/2 + player.getY();
 
             //world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null); //filter är cross, fixa i jbump.
-            //todo borde inte vara arraylist utan list eller collection
             ArrayList<ItemInfo> items = new ArrayList<>();
-            world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, items);
+            world.querySegmentWithCoords(player.getX(), player.getY(), rotatedPoint1x, rotatedPoint1y, filter, items);
             List<Entity> entities = new LinkedList<>();
             for (ItemInfo i : items) {
                 entities.add((Entity) i.item.userData);
@@ -65,17 +65,14 @@ public abstract class PlayerWeapon {
                 entities.clear();
             }
 
-            //lista entities? add if not already there world.querySegment(x1, y1, x2, y2, filter, items);
-            //lista skada alla i listan
-            //lista knuffa alla i listan
             animationpart += 1;
         }
     }
-    public float getWeaponAngle() {
+    public double getWeaponAngle() {
         return weaponAngle;
     }
 
-    private void setWeaponAngle(float weaponAngle) {
+    private void setWeaponAngle(double weaponAngle) {
         this.weaponAngle = weaponAngle;
     }
 

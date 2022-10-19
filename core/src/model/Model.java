@@ -110,7 +110,7 @@ public class Model implements MovementListener {
      */
     private void spawnRandomMonster(Point spawnPoint) {
         if (Math.random() < 0.75) {
-            addMonster(new Cyclops(spawnPoint.x, spawnPoint.y,1,1,1, getWorld()));
+            addMonster(new Cyclops(spawnPoint.x, spawnPoint.y,1,1, getWorld()));
         }
         else {
             addMonster(new Mouse(spawnPoint.x, spawnPoint.y,1,1, getWorld()));

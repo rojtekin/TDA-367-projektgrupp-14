@@ -14,14 +14,14 @@ public abstract class PlayerWeapon {
     private float weaponWidth;
     private double weaponAngle;
     private int weaponRotations;
-    private World<Entity> world;
+    private World<IEntity> world;
     private CollisionFilter filter;
     private Set<Entity> isKnown = new HashSet<Entity>();
     private ArrayList<ItemInfo> items = new ArrayList<>();
     private List<Entity> entities = new LinkedList<>();
     private Set<Entity> seen = new HashSet<Entity>();
 
-    public PlayerWeapon(World<Entity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
+    public PlayerWeapon(World<IEntity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
         this.weaponRange = weaponRange;
         this.weaponWidth = weaponWidth;
@@ -55,7 +55,7 @@ public abstract class PlayerWeapon {
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
                         //gör skada;
-                        entity.beAttacked((weaponDamage),"player");
+                        entity.beAttacked((weaponDamage),Faction.PLAYER);
                     }
                     seen.add(entity);
                 }

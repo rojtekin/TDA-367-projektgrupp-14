@@ -70,11 +70,11 @@ public class RewardSystem {
             perkApplied = true;
         }
         else if (reward == Reward.GLASS_CANNON){
-            playerCharacter = new GlassCannon(playerCharacter);
+            playerCharacter = new GlassCannon(playerCharacter, world);
             perkApplied = true;
         }
         else if (reward == Reward.TANK){
-            playerCharacter = new Tank(playerCharacter);
+            playerCharacter = new Tank(playerCharacter, world);
             perkApplied = true;
         }
         return playerCharacter;

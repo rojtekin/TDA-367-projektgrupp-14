@@ -1,14 +1,10 @@
 package model.monsters;
 
-import model.Direction;
-import model.Entity;
-import com.badlogic.gdx.Gdx;
+import model.*;
 import com.dongbat.jbump.World;
-import model.Faction;
-import model.IEntity;
 
 public class Mouse extends Monster {
-    private float timeSinceDirectionChanged = 0;
+    private float timeWhenDirectionChanged = 0;
 
     /**
      * Uses the default constructor of its superclass with default values
@@ -36,9 +32,9 @@ public class Mouse extends Monster {
     public void moveTowardPlayer(float playerX, float playerY) {
         float xDistance = playerX - this.getX();
         float yDistance = playerY - this.getY();
-        timeSinceDirectionChanged += Gdx.graphics.getDeltaTime();
+        float timeSinceDirectionChanged = Time.getInstance().getTicks() - timeWhenDirectionChanged;
 
-        if (timeSinceDirectionChanged > 0.6) {
+        if (timeSinceDirectionChanged > 36) {
             if (Math.random() < 0.5) {
                 if ((xDistance > 0)) {
                     this.move(Direction.RIGHT, getSpeed());
@@ -53,7 +49,7 @@ public class Mouse extends Monster {
                     this.move(Direction.DOWN, getSpeed());
                 }
             }
-            timeSinceDirectionChanged = 0;
+            timeWhenDirectionChanged = Time.getInstance().getTicks();
         }
         else {
             this.moveForward(getSpeed());

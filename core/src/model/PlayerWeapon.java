@@ -61,6 +61,7 @@ public abstract class PlayerWeapon {
                     isKnown = seen;
                 }
                 entities.clear();
+                seen.clear();
             }
 
             currentWeaponRotation += 1;

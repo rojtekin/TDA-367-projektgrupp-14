@@ -2,20 +2,14 @@ package model;
 
 import com.dongbat.jbump.World;
 
-import java.util.List;
+public class PlayerCharacter extends PlayerCharacterAdapter implements IControllable, IPlayerCharacter {
 
-public class PlayerCharacter extends LivingEntity implements IControllable {
-
+    private boolean swinging;
     public Sword getWeapon() {
         return weapon;
     }
 
     private Sword weapon;
-    //TODO add a weapon in constructor
-    private static final String DEFAULTFACTION = "player";
-
-    private boolean swinging;
-
     public boolean isSwinging() {
         return swinging;
     }
@@ -32,8 +26,8 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
      * @param spawnY spawn location along y axis
      * @param world world that the character moves in
      */
-    public PlayerCharacter(float spawnX, float spawnY, World<Entity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, DEFAULTFACTION, world);
+    public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
+        super(spawnX, spawnY, 32, 32, 5, 10, 0, Faction.PLAYER, world);
         weapon = new Sword(world);
     }
 
@@ -54,7 +48,8 @@ public class PlayerCharacter extends LivingEntity implements IControllable {
      * Potential use in multiplayer
      * @param faction that the player belongs to
      */
-    public PlayerCharacter(float spawnX, float spawnY, String faction, World<Entity> world) {
+    public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
+        weapon = new Sword(world);
     }
 }

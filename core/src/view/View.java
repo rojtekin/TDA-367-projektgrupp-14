@@ -14,10 +14,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 
-public class View{
+public class View {
     private HUD hud;
     private Model model;
     private float timeSincePlayerWalkFrameChanged = 0f;
@@ -30,19 +31,19 @@ public class View{
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
     private ImageHandler imageHandler = new ImageHandler();
-    private Sound soundLoader = new Sound();
+    private Sound soundHandler = new Sound();
 
     private Sprite swordSprite = new Sprite(imageHandler.getSwordThing());
 
-    private Set<Entity> isKnown = new HashSet<Entity>();
-
+    private Set<Entity> isKnown = new HashSet<>();
 
     public View(Model model) {
-        this.model = model;
+        this.model = Objects.requireNonNull(model);
     }
 
     public void initialize() {
         imageHandler.loadEntityImages();
+        soundHandler.playGameMusic();
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -57,7 +58,7 @@ public class View{
     public void update() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // TODO functional decomposition
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
@@ -65,7 +66,7 @@ public class View{
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        batch.begin();
+        batch.begin(); // TODO functional decomposition
         updatePlayerWalkFrame();
         drawEntities();
 
@@ -75,16 +76,20 @@ public class View{
 
         batch.end();
 
-        hud.update();
+        hud.update(); // TODO functional decomposition
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
 
         // do something when a entity spawns
+        playIdleSounds();
+    }
+
+    private void playIdleSounds() {
         ArrayList<Entity> entities = model.getEntities();
-        Set<Entity> seen = new HashSet<Entity>();
+        Set<Entity> seen = new HashSet<>();
         for (Entity entity : entities){
             if (!isKnown.contains((entity))){
-                soundLoader.playSounds(model);
+                soundHandler.playIdleSoundsWithInterval(model, 2000);
             }
             seen.add(entity);
         }
@@ -100,7 +105,7 @@ public class View{
     }
 
     private void drawEnemies() {
-        for (Monster monster : model.getEnemyList()) {
+        for (Monster monster : model.getMonsters()) {
             batch.draw(imageHandler.getEntityImage(monster.getClass(), monster.getDirection(), 0),
                     monster.getX(), monster.getY());
         }

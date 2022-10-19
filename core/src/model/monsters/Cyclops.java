@@ -1,7 +1,9 @@
 package model.monsters;
 
-import model.Entity;
+import model.Direction;
 import com.dongbat.jbump.World;
+import model.Faction;
+import model.IEntity;
 
 public class Cyclops extends Monster {
     private boolean stuckInXDirection = false;
@@ -10,15 +12,15 @@ public class Cyclops extends Monster {
     /**
      * Uses the default constructor of its superclass with default values
      */
-    public Cyclops(int x, int y, int speed, float health, float damage, World<Entity> world) {
-        super(x, y, 32, 32, speed, health, damage, DEFAULTFACTION, world);
+    public Cyclops(float x, float y, float speed, float health, float damage, World<IEntity> world) {
+        super(x, y, 32, 32, speed, health, damage, Faction.MONSTER, world);
     }
 
     /**
      * Constructor with custom faction tag
      * @param faction custom faction tag
      */
-    public Cyclops(int x, int y, int speed, float health, float damage, String faction, World<Entity> world) {
+    public Cyclops(int x, int y, int speed, float health, float damage, Faction faction, World<IEntity> world) {
         super(x, y, 32, 32, speed, health, damage, faction, world);
     }
 
@@ -37,28 +39,28 @@ public class Cyclops extends Monster {
 
         if ((Math.abs(xDistance) > 16) && !stuckInYDirection) {
             if (xDistance > 0) {
-                this.moveRight();
+                this.move(Direction.RIGHT, getSpeed());
             }
             else {
-                this.moveLeft();
+                this.move(Direction.LEFT, getSpeed());
             }
             stuckInXDirection = false;
             if (this.getX() == initialX) {
                 stuckInXDirection = true;
-                this.moveUp();
+                this.move(Direction.UP, getSpeed());
             }
         }
         else if(!stuckInXDirection){
             if (yDistance > 0) {
-                this.moveUp();
+                this.move(Direction.UP, getSpeed());
             }
             else {
-                this.moveDown();
+                this.move(Direction.DOWN, getSpeed());
             }
             stuckInYDirection = false;
             if (this.getY() == initialY) {
                 stuckInYDirection = true;
-                this.moveRight();
+                this.move(Direction.RIGHT, getSpeed());
             }
         }
     }

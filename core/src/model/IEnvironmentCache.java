@@ -3,6 +3,9 @@ package model;
 import com.badlogic.gdx.maps.Map;
 import com.dongbat.jbump.World;
 
+import java.awt.*;
+import java.util.List;
+
 /**
  * An interface that should allow for different implementations of maps, not just TiledMaps
  * but also potentially things like spreadsheets or just image files. For 2D games, tiles are
@@ -11,13 +14,12 @@ import com.dongbat.jbump.World;
 public interface IEnvironmentCache {
 
     /**
-     * Holds the JBump "world" which is used for moving entities and registering collisions
-     * @return
+     * Gets the JBump "world" which is used for moving entities and registering collisions
+     * @return the JBump world
      */
-    World<Entity> getWorld();
+    World<IEntity> getWorld();
 
     /**
-     * Used to make sure the map used by the view is the same as the model
      * @return the map used in the model
      */
     Map getMap();
@@ -39,5 +41,12 @@ public interface IEnvironmentCache {
      * @return the height of the map
      */
     int getMapUnitHeight();
+
+    /**
+     * Allows the game to fetch spawn locations directly from the map
+     * @return a List<Point> each Point consists of an x value and
+     *         y value for a spawn point
+     */
+    List<Point> getSpawnPoints();
 
 }

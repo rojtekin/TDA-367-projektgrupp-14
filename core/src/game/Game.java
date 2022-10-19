@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package game;
 
 import controller.Controller;
 import model.*;
@@ -11,9 +11,7 @@ public class Game extends ApplicationAdapter {
 	private Controller controller;
 	@Override
 	public void create () {
-		IEnvironmentCache arena = new TiledEnvironmentCache();
-		arena.loadEnvironment("TestMap");
-		model = ModelFactory.makeModel(arena);
+		model = ModelFactory.makeModel("Flowerfield");
 		view = new View(model);
 		view.initialize();
 		controller = new Controller(model);
@@ -21,7 +19,7 @@ public class Game extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		controller.update();
+		controller.update(model.getPlayer());
 		view.update();
 		model.update();
 	}

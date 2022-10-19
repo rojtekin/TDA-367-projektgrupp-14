@@ -9,6 +9,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * Responsible for loading tile based maps and holding information relevant for logic
@@ -25,6 +30,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
     private final String TILEUNITWIDTH = "tilewidth";
     private final String TILEUNITHEIGHT = "tileheight";
     private final String COLLISIONLAYER = "collision";
+    private final String SPAWNLAYER = "spawn";
 
     private TiledMap map;
     private MapProperties prop;
@@ -34,9 +40,11 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
     private int tileUnitHeight;
     private int mapUnitWidth;
     private int mapUnitHeight;
-    private MapObjects objects;
+    private List<Point> spawnPoints;
+    private MapObjects collisionObjects;
+    private MapObjects spawnObjects;
 
-    private World<Entity> world;
+    private World<IEntity> world;
 
     /**
      * World is a JBump object that keeps track of all collisionboxes
@@ -46,7 +54,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
      * to detect collisions.
      * @return reference to JBump world object
      */
-    public World<Entity> getWorld() {
+    public World<IEntity> getWorld() {
         return world;
     }
 
@@ -62,6 +70,10 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
         return mapUnitWidth;
     }
 
+    public List<Point> getSpawnPoints() {
+        return spawnPoints;
+    }
+
     /**
      * Creates an empty environment that can be loaded in the model
      * Useful for testing without a map
@@ -70,6 +82,20 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
         mapUnitHeight = 0;
         mapUnitWidth = 0;
         world = new World<>();
+        defaultSpawnPoints();
+    }
+
+    private List<Point> defaultSpawnPoints() {
+        int xLeft = 100;
+        int xCenter = getMapUnitWidth() / 2;
+        int xRight = getMapUnitWidth() - 100;
+        int yBottom = 100;
+        int yCenter = getMapUnitHeight() / 2;
+        int yTop = getMapUnitHeight() - 100;
+        return spawnPoints = Arrays.asList(new Point(xLeft, yTop), new Point(xCenter, yTop), new Point(xRight, yTop),
+                new Point(xLeft, yCenter), new Point(xRight, yCenter),
+                new Point(xLeft, yBottom), new Point(xCenter, yBottom), new Point(xRight, yBottom));
+
     }
 
     /**
@@ -81,6 +107,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
         this.world = new World<>();
         readMapSize();
         importCollisionLayer();
+        importSpawnPoints();
     }
 
     /**
@@ -106,11 +133,24 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
      */
     private void importCollisionLayer() {
         if (map.getLayers().get(COLLISIONLAYER) != null) {
-            objects = map.getLayers().get(COLLISIONLAYER).getObjects();
-            for (RectangleMapObject o : objects.getByType(RectangleMapObject.class)) {
+            collisionObjects = map.getLayers().get(COLLISIONLAYER).getObjects();
+            for (RectangleMapObject o : collisionObjects.getByType(RectangleMapObject.class)) {
                 Rectangle r = o.getRectangle();
-                PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
+                PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, 0, world);
                 world.add(new Item<>(st), r.x, r.y, r.width, r.height);
+            }
+        }
+    }
+
+    private void importSpawnPoints() {
+        if (map.getLayers().get(SPAWNLAYER) != null) {
+            spawnObjects = map.getLayers().get(SPAWNLAYER).getObjects();
+            spawnPoints = new ArrayList<>();
+            for (RectangleMapObject o : spawnObjects.getByType(RectangleMapObject.class)) {
+                Rectangle r = o.getRectangle();
+                int rX = (int) Math.abs(r.getWidth() - r.getX()) / 2;
+                int rY = (int) Math.abs(r.getHeight() - r.getY()) / 2;
+                spawnPoints.add(new Point(rX, rY));
             }
         }
     }

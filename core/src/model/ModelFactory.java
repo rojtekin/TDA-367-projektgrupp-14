@@ -1,15 +1,17 @@
 package model;
 
-import model.monsters.*;
+import java.awt.*;
+import java.util.List;
 
 public class ModelFactory {
-    public static Model makeModel(IEnvironmentCache mapLoader) {
-        Model model = new Model();
-        model.initialize(mapLoader);
-        model.addEnemy(new Cyclops(100, 100, 1, 10, 10, model.getWorld()));
-        model.addEnemy(new Cyclops(100, 200, 1, 10, 10, model.getWorld()));
-        model.addEnemy(new Cyclops(200, 100, 1, 10, 10, model.getWorld()));
-        model.addEnemy(new Mouse(200, 200,2, 10, 5, model.getWorld()));
+    public static Model makeModel(String mapName) {
+        TiledEnvironmentCache mapData = new TiledEnvironmentCache();
+        mapData.loadEnvironment(mapName);
+        PlayerCharacter player = new PlayerCharacter(mapData.getMapUnitWidth() / 2, mapData.getMapUnitHeight() / 2, mapData.getWorld());
+
+        List<Point> spawnPoints = mapData.getSpawnPoints();
+        Model model = new Model(mapData, player, spawnPoints);
+        model.initialize();
         return model;
     }
 }

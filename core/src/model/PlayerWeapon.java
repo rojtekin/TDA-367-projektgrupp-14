@@ -1,7 +1,6 @@
 package model;
 
 import com.dongbat.jbump.*;
-import view.WeaponSwingListener;
 
 import java.util.*;
 
@@ -18,7 +17,9 @@ public abstract class PlayerWeapon {
     private World<Entity> world;
     private CollisionFilter filter;
     private Set<Entity> isKnown = new HashSet<Entity>();
-    private List<WeaponSwingListener> weaponSwingListeners = new ArrayList<>();
+    private ArrayList<ItemInfo> items = new ArrayList<>();
+    private List<Entity> entities = new LinkedList<>();
+    private Set<Entity> seen = new HashSet<Entity>();
 
     public PlayerWeapon(World<Entity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
@@ -31,7 +32,6 @@ public abstract class PlayerWeapon {
         filter = getFilter();
     }
 
-    //TODO
     //in playercharachter the swords position shall update with the move command like player does
     public void weaponSwing(int rotationStart, int rotationFinish, int animationpart, PlayerCharacter player){
         int degreeDistance = Math.abs(rotationStart - rotationFinish);
@@ -45,15 +45,13 @@ public abstract class PlayerWeapon {
             rotatedPoint1y = rotatedPoint1y + player.getHeight()/2 + player.getY();
 
             //world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null); //filter är cross, fixa i jbump.
-            ArrayList<ItemInfo> items = new ArrayList<>();
-            world.querySegmentWithCoords(player.getX(), player.getY(), rotatedPoint1x, rotatedPoint1y, filter, items);
-            List<Entity> entities = new LinkedList<>();
+            world.querySegmentWithCoords((player.getX()+player.getWidth()/2), (player.getY()+player.getHeight()/2), rotatedPoint1x, rotatedPoint1y, filter, items);
+
             for (ItemInfo i : items) {
                 entities.add((Entity) i.item.userData);
             }
             items.clear();
             if (entities.size() > 0) {
-                Set<Entity> seen = new HashSet<Entity>();
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
                         //gör skada;
@@ -67,6 +65,7 @@ public abstract class PlayerWeapon {
 
             animationpart += 1;
         }
+        setWeaponAngle(((rotationStart-45)%360));
     }
     public double getWeaponAngle() {
         return weaponAngle;

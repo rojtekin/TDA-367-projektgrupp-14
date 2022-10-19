@@ -6,9 +6,25 @@ import java.util.List;
 
 public class PlayerCharacter extends LivingEntity implements IControllable {
 
+    public Sword getWeapon() {
+        return weapon;
+    }
+
     private Sword weapon;
     //TODO add a weapon in constructor
     private static final String DEFAULTFACTION = "player";
+
+    private boolean swinging;
+
+    public boolean isSwinging() {
+        return swinging;
+    }
+
+    public void setSwinging(boolean swinging) {
+        this.swinging = swinging;
+    }
+
+
 
     /**
      * Default constructor for a default sized player of the player faction

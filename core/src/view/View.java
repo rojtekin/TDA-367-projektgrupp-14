@@ -1,5 +1,6 @@
 package view;
 
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import model.*;
 import model.monsters.Monster;
 import com.badlogic.gdx.Gdx;
@@ -16,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-public class View implements WeaponSwingListener{
+public class View{
     private HUD hud;
     private Model model;
     private float timeSincePlayerWalkFrameChanged = 0f;
@@ -31,7 +32,10 @@ public class View implements WeaponSwingListener{
     private ImageHandler imageHandler = new ImageHandler();
     private Sound soundLoader = new Sound();
 
+    private Sprite swordSprite = new Sprite(imageHandler.getSwordThing());
+
     private Set<Entity> isKnown = new HashSet<Entity>();
+
 
     public View(Model model) {
         this.model = model;
@@ -64,11 +68,15 @@ public class View implements WeaponSwingListener{
         batch.begin();
         updatePlayerWalkFrame();
         drawEntities();
+
+        if (model.getPlayer().isSwinging()){
+            onWeaponSwing();
+        }
+
         batch.end();
 
         hud.update();
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
-        //hud.getStage().act(delta);
         hud.getStage().draw();
 
         // do something when a entity spawns
@@ -128,8 +136,7 @@ public class View implements WeaponSwingListener{
         }
     }
 
-    @Override
-    public void onWeaponSwing(double weaponAngle) {
-        System.out.println("hejjjj");
+    public void onWeaponSwing() {
+        batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
     }
 }

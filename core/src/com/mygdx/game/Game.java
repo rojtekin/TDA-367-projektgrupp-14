@@ -12,7 +12,7 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void create () {
 		IEnvironmentCache arena = new TiledEnvironmentCache();
-		arena.loadEnvironment("Plains");
+		arena.loadEnvironment("TestMap");
 		model = ModelFactory.makeModel(arena);
 		view = new View(model);
 		view.initialize();

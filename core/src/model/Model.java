@@ -6,7 +6,6 @@ import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
-import model.rewards.Reward;
 import model.rewards.RewardSystem;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +113,7 @@ public class Model implements MovementListener {
             addMonster(new Cyclops(spawnPoint.x, spawnPoint.y,1,1,1, getWorld()));
         }
         else {
-            addMonster(new Mouse(spawnPoint.x, spawnPoint.y,2,1,1, getWorld()));
+            addMonster(new Mouse(spawnPoint.x, spawnPoint.y,1,1, getWorld()));
         }
     }
 

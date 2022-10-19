@@ -58,8 +58,8 @@ public abstract class PlayerWeapon {
                         entity.beAttacked((weaponDamage),Faction.PLAYER);
                     }
                     seen.add(entity);
+                    isKnown = seen;
                 }
-                isKnown = seen;
                 entities.clear();
             }
 

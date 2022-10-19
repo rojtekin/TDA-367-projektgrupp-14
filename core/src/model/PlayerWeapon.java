@@ -33,11 +33,11 @@ public abstract class PlayerWeapon {
     }
 
     //in playercharachter the swords position shall update with the move command like player does
-    public void weaponSwing(int rotationStart, int rotationFinish, int animationpart, PlayerCharacter player){
+    public void weaponSwing(int rotationStart, int rotationFinish, int currentWeaponRotation, PlayerCharacter player){
         int degreeDistance = Math.abs(rotationStart - rotationFinish);
         double degreeRotation = degreeDistance/weaponRotations;
-        while (animationpart <= weaponRotations) {
-            setWeaponAngle(toRadians(rotationStart + degreeRotation*animationpart/3)); //there will be a listener who prints out the sword when the angle changes
+        while (currentWeaponRotation <= weaponRotations) {
+            setWeaponAngle(toRadians(rotationStart + degreeRotation*currentWeaponRotation/3)); //there will be a listener who prints out the sword when the angle changes
             float point1 = getWeaponRange();
             float rotatedPoint1x = (float) (point1 * cos(getWeaponAngle()));
             float rotatedPoint1y = (float) (point1 * sin(getWeaponAngle()));
@@ -63,7 +63,7 @@ public abstract class PlayerWeapon {
                 entities.clear();
             }
 
-            animationpart += 1;
+            currentWeaponRotation += 1;
         }
         setWeaponAngle(((rotationStart-45)%360));
     }

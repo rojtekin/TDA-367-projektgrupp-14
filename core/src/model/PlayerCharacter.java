@@ -39,9 +39,6 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
         weapon.weaponSwing(rotationStart,rotationFinish,animationpart, this);
     }
 
-    public void locateHit(){
-
-            }
 
     /**
      * Alternative constructor that allows a player to be of another faction.

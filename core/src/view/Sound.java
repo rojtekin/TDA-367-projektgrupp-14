@@ -61,10 +61,11 @@ public class Sound{
         for (final Entity entity : model.getEntities()) {
             Runnable toRun = new Runnable() {
                 public void run() {
+                    com.badlogic.gdx.audio.Sound sound = getIdleSound(entity);
                     while (model.getEntities().contains(entity)){
                         float distance = (float) Math.hypot(entity.getX()-model.getPlayer().getX(), entity.getY()-model.getPlayer().getY());
                         distance = 300/(distance*entity.getWidth());
-                        getIdleSound(entity).play(distance);
+                        sound.play(distance);
                         try {
                             Thread.sleep(interval);
                         } catch (InterruptedException e) {

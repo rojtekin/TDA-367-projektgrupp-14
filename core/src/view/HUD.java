@@ -1,7 +1,6 @@
 package view;
 
 import model.IPlayerCharacter;
-import model.PlayerCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,37 +18,41 @@ public class HUD {
     private FitViewport stageViewport;
     private int score = 10; //temporary, it should take it from model
     private IPlayerCharacter player;
-    private double currenthp;
-    private double maxhp;
+    private double currentHealth;
+    private double maxHealth;
 
-    private int hpsize;
+    private int healthBarSize;
 
-    private Image HpColor;
+    private Image healthColor;
 
     //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values needed
     //for a square (and also make it an actor so I can send it back and not draw directly).
 
-    private Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
-    private Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
-    private Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
+    private final Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
+    private final Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
+    private final Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
 
-    private Texture black = new Texture(Gdx.files.internal("HudColors/Black.png"));
-    private NinePatch blackHp = new NinePatch(black, 0, 0, 0, 0);
-    private Image blackHpBar = new Image(blackHp);
-    private Image blackXpBar = new Image(blackHp);
+    private final Texture black = new Texture(Gdx.files.internal("HudColors/Black.png"));
+    private final NinePatch blackHealth = new NinePatch(black, 0, 0, 0, 0);
+    private final Image blackHealthBar = new Image(blackHealth);
+    private final Image blackExperienceBar = new Image(blackHealth);
 
     // lyfta ut konfigurationsdatan till en enum. Singleton. Turtorial java enum turtorial. Enums kan ha konstant state
-    private Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
-    private NinePatch emptyxp = new NinePatch(aqua, 0, 0, 0, 0);
-    private Image xpbar = new Image(emptyxp);
+    private final Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
+    private final NinePatch emptyExperienceBar = new NinePatch(aqua, 0, 0, 0, 0);
+    private final Image experienceBar = new Image(emptyExperienceBar);
 
-    private Texture xpyellow = new Texture(Gdx.files.internal("HudColors/Xpyellowc8a72b.png"));
-    private NinePatch xpyellow2 = new NinePatch(xpyellow, 0, 0, 0, 0);
-    private Image fullxpbar = new Image(xpyellow2);
+    private final Texture experienceYellow = new Texture(Gdx.files.internal("HudColors/Xpyellowc8a72b.png"));
+    private final NinePatch experienceYellowNinePatch = new NinePatch(experienceYellow, 0, 0, 0, 0);
+    private final Image fullExperienceBar = new Image(experienceYellowNinePatch);
 
-    private Label hpLabel;
-    private Label scoreLabel = new Label("Score: " + score, new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private Label healthBarLabel;
 
+    private final Table table1 = new Table();
+    private final Table table2 = new Table();
+    private final Table table3 = new Table();
+    private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
+    private Label scoreLabel = new Label("Score: " + score, whiteTextColorAndFont);
 
     public HUD(SpriteBatch spriteBatch, IPlayerCharacter player) {
         stageViewport = new FitViewport(800, 480);
@@ -61,83 +64,83 @@ public class HUD {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
         // ugly coded maybe
+        table1.clear();
+        table2.clear();
+        table3.clear();
 
         stage.clear(); //Prevents memory leak where new tables are continuously added to stage
-        Table table1 = new Table();
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
 
-        table1.add(blackHpBar).size(204, 24).left().top().expandX().expandY().pad(8); //black underline hp bar
+        table1.add(blackHealthBar).size(204, 24).left().top().expandX().expandY().pad(8); //black underline hp bar
 
         table1.row(); //new row
 
-        table1.add(blackXpBar).size(404, 14).bottom().pad(8); //Black border experience
+        table1.add(blackExperienceBar).size(404, 14).bottom().pad(8); //Black border experience
 
         stage.addActor(table1); //add the bottom layer to stage
 
-        Table table2 = new Table();
         table2.setFillParent(true);
 
         //den här ska switcha från grön till gull till röd och även minska i size beroende på hp, funktion att göra
         //table2.add(fullhp).size(200,20).left().top().pad(10).expandX().expandY();
-        pickhpcolor();
-        pickhpsize();
-        table2.add(getHpColor()).size(hpsize, 20).left().top().pad(10).expandX().expandY();
+        pickHealthBarColor();
+        pickHealthBarSize();
+        table2.add(getHealthColor()).size(healthBarSize, 20).left().top().pad(10).expandX().expandY();
         //hp size is between 0 and 1
         table2.row();
 
-        table2.add(xpbar).size(400, 10).pad(10);
+        table2.add(experienceBar).size(400, 10).pad(10);
 
         stage.addActor(table2);
 
-        Table table3 = new Table();
         table3.setFillParent(true);
 
-        table3.add(hpLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
+        table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
         table3.add(scoreLabel).right().top().pad(10);
 
         table3.row();
 
-        table3.add(fullxpbar).size(300, 10).bottom().pad(10).expandY().colspan(2);
+        table3.add(fullExperienceBar).size(300, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
-        hpLabel = new Label("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth(), new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+        healthBarLabel = new Label("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth(), whiteTextColorAndFont);
     }
 
-    private void pickhpcolor(){
-        currenthp = player.getCurrentHealth();
-        maxhp = player.getMaxHealth();
-        if(currenthp <= maxhp * 0.33) {
+    private void pickHealthBarColor(){
+        currentHealth = player.getCurrentHealth();
+        maxHealth = player.getMaxHealth();
+        if(currentHealth <= maxHealth * 0.33) {
             NinePatch lowHp = new NinePatch(red, 0, 0, 0, 0);
             Image lowhp = new Image(lowHp);
-            setHpColor(lowhp);
+            setHealthColor(lowhp);
         }
-        if(currenthp <= maxhp * 0.66) {
+        if(currentHealth <= maxHealth * 0.66) {
             NinePatch midHp = new NinePatch(yellow, 0, 0, 0, 0);
             Image midhp = new Image(midHp);
-            setHpColor(midhp);
+            setHealthColor(midhp);
         }
-        if(currenthp <= maxhp * 1) {
+        if(currentHealth <= maxHealth * 1) {
             NinePatch fullHp = new NinePatch(green, 0, 0, 0, 0);
             Image fullhp = new Image(fullHp);
-            setHpColor(fullhp);
+            setHealthColor(fullhp);
         }
     }
 
-    private void pickhpsize(){
-        currenthp = player.getCurrentHealth();
-        maxhp = player.getMaxHealth();
-        float hpsize = (float)(currenthp/maxhp);
+    private void pickHealthBarSize(){
+        currentHealth = player.getCurrentHealth();
+        maxHealth = player.getMaxHealth();
+        float hpsize = (float)(currentHealth / maxHealth);
         setHpSize((int)(200*hpsize));
     }
 
-    private void setHpColor(Image hpColor) {
-        HpColor = hpColor;
+    private void setHealthColor(Image healthColor) {
+        this.healthColor = healthColor;
     }
-    private Image getHpColor() {
-        return HpColor;
+    private Image getHealthColor() {
+        return healthColor;
     }
 
     private void setHpSize(int hpsize) {
-        this.hpsize = hpsize;
+        this.healthBarSize = hpsize;
     }
 
     public Stage getStage() { return stage; }
@@ -145,11 +148,11 @@ public class HUD {
     public void dispose(){
         stage.dispose();
         red.dispose(); //alla textures måste disposas
-        xpyellow.dispose();
+        experienceYellow.dispose();
         yellow.dispose();
         green.dispose();
         red.dispose();
         aqua.dispose();
         black.dispose();
     }
-    }
+}

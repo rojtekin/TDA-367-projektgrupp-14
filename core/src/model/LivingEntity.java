@@ -13,7 +13,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
     private boolean inMotion = false;
     private float maxHealth;
     private float currentHealth;
-    private List<MovementListener> movementListeners = new ArrayList<>();
+    private final List<MovementListener> movementListeners = new ArrayList<>();
     private Faction faction;
     private Direction direction;
 

@@ -22,6 +22,7 @@ public class Game extends ApplicationAdapter {
 		controller.update(model.getPlayer());
 		view.update();
 		model.update();
+		Time.getInstance().tick();
 	}
 
 	@Override

@@ -12,16 +12,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import model.Model;
 
 public class HUD {
+    private final Model model;
     private Stage stage;
     private FitViewport stageViewport;
-    private int score = 10; //temporary, it should take it from model
     private IPlayerCharacter player;
     private double currentHealth;
     private double maxHealth;
 
     private int healthBarSize;
+    private int experienceBarSize;
 
     private Image healthColor;
 
@@ -46,18 +48,19 @@ public class HUD {
     private final NinePatch experienceYellowNinePatch = new NinePatch(experienceYellow, 0, 0, 0, 0);
     private final Image fullExperienceBar = new Image(experienceYellowNinePatch);
 
-    private Label healthBarLabel;
 
     private final Table table1 = new Table();
     private final Table table2 = new Table();
     private final Table table3 = new Table();
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
-    private Label scoreLabel = new Label("Score: " + score, whiteTextColorAndFont);
+    private Label healthBarLabel =  new Label("HP", whiteTextColorAndFont);
+    private Label scoreLabel = new Label("Score: " + 0, whiteTextColorAndFont);
 
-    public HUD(SpriteBatch spriteBatch, IPlayerCharacter player) {
+    public HUD(SpriteBatch spriteBatch, Model model) {
         stageViewport = new FitViewport(800, 480);
         stage = new Stage(stageViewport, spriteBatch);
-        this.player = player;
+        this.model = model;
+        this.player = model.getPlayer();
     }
 
     public void update() {
@@ -96,13 +99,14 @@ public class HUD {
         table3.setFillParent(true);
 
         table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
+        scoreLabel.setText("Score: "+model.getCurrentScore());
         table3.add(scoreLabel).right().top().pad(10);
-
         table3.row();
 
-        table3.add(fullExperienceBar).size(300, 10).bottom().pad(10).expandY().colspan(2);
+        pickExperienceBarSize();
+        table3.add(fullExperienceBar).size(experienceBarSize, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
-        healthBarLabel = new Label("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth(), whiteTextColorAndFont);
+        healthBarLabel.setText("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth());
     }
 
     private void pickHealthBarColor(){
@@ -129,7 +133,18 @@ public class HUD {
         currentHealth = player.getCurrentHealth();
         maxHealth = player.getMaxHealth();
         float hpsize = (float)(currentHealth / maxHealth);
-        setHpSize((int)(200*hpsize));
+        setHealthBarSize((int)(200*hpsize));
+    }
+
+    private void pickExperienceBarSize(){
+        float currentExperience = player.getExperience();
+        float maxExperience = 100;
+        float experienceBarSize = (currentExperience / maxExperience);
+        setExperienceBarSize((int)(400*experienceBarSize));
+    }
+
+    private void setExperienceBarSize(int barSize){
+        this.experienceBarSize = barSize;
     }
 
     private void setHealthColor(Image healthColor) {
@@ -139,8 +154,8 @@ public class HUD {
         return healthColor;
     }
 
-    private void setHpSize(int hpsize) {
-        this.healthBarSize = hpsize;
+    private void setHealthBarSize(int barSize) {
+        this.healthBarSize = barSize;
     }
 
     public Stage getStage() { return stage; }

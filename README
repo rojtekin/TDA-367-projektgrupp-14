@@ -1,3 +1,27 @@
+
+## Filestructure
+Path                                    | Comment
+--------------------------------------- | -------------
+`/desktop/src/com/mygdx/game/`          | File to run the game
+`/core/src/`                            | The main code folder 
+`/core/test/java/`                      | JUnit tests folder
+`/core/assets`                          | Location for all assets in the game
+
+
+
+## Creators
+
+Github name   | Real name
+------------- | -------------
+pkasinski     | Pawel Kasinski
+rojtekin      | Roj Mert Tekin
+augnor        | August Nordlinder
+Suedie        | Elias Haqiqt
+AbdullahDab01 | Abdullah Faez Daboul
+
+
+## How to run the program
+
 Run these commands in ur terminal of choice while located in the same folder as this text-file to run the game.
 
 1. gradlew build

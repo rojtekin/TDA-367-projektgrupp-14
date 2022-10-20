@@ -18,6 +18,9 @@ import java.util.Objects;
 import java.util.Set;
 
 
+/**
+ * A class responsible for presenting a part of the model to the user.
+ */
 public class View {
     private HUD hud;
     private Model model;

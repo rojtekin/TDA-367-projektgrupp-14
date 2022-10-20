@@ -6,7 +6,6 @@ import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
-import model.rewards.Reward;
 import model.rewards.RewardSystem;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class Model implements MovementListener {
     private final List<Monster> monsters = new ArrayList<>();
     private final List<Entity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
-    private static final int MAX_MONSTERS = 8;
+    private static final int MAX_MONSTERS = 50;
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
     private World<IEntity> world;

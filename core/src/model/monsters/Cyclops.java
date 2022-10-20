@@ -12,16 +12,16 @@ public class Cyclops extends Monster {
     /**
      * Initializes a Cyclops object.
      */
-    public Cyclops(float x, float y, float health, float damage, World<IEntity> world) {
-        this(x, y, health, damage, Faction.MONSTER, world);
+    public Cyclops(float x, float y, World<IEntity> world) {
+        this(x, y, Faction.MONSTER, world);
     }
 
     /**
      * Constructor with custom faction tag
      * @param faction custom faction tag
      */
-    public Cyclops(float x, float y, float health, float damage, Faction faction, World<IEntity> world) {
-        super(x, y, 32, 32, 1, health, damage, faction, world);
+    public Cyclops(float x, float y, Faction faction, World<IEntity> world) {
+        super(x, y, 32, 32, 1, 10, 5, faction, world, 1, 5);
     }
 
     /**

@@ -9,16 +9,16 @@ public class Mouse extends Monster {
     /**
      * Initializes a Mouse object.
      */
-    public Mouse(float x, float y, float health, float damage, World<IEntity> world) {
-        this(x, y, health, damage, Faction.MONSTER, world);
+    public Mouse(float x, float y, World<IEntity> world) {
+        this(x, y, Faction.MONSTER, world);
     }
 
     /**
      * Constructor with custom faction tag
      * @param faction custom faction tag
      */
-    public Mouse(float x, float y, float health, float damage, Faction faction, World<IEntity> world) {
-        super(x, y, 16, 16, 2, health, damage, faction, world);
+    public Mouse(float x, float y, Faction faction, World<IEntity> world) {
+        super(x, y, 16, 16, 2, 1, 1, faction, world, 1, 1);
     }
 
     /**

@@ -10,7 +10,7 @@ public class MouseTest {
     private Mouse mouse;
 
     @BeforeEach
-    public void setUp() { mouse = new Mouse(100, 100,1,1, new World<>()); }
+    public void setUp() { mouse = new Mouse(100, 100, new World<>()); }
 
     @Test
     public void moveTowardsPlayer_DecreasesTheDistanceBetweenMouseAndPlayer() {

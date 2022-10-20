@@ -10,7 +10,7 @@ public class CyclopsTest {
     private Cyclops cyclops;
 
     @BeforeEach
-    public void setUp() { cyclops = new Cyclops(100, 100,1,1,new World<>()); }
+    public void setUp() { cyclops = new Cyclops(100, 100, new World<>()); }
 
     @Test
     public void moveTowardsPlayer_DecreasesTheDistanceBetweenCyclopsAndPlayer() {

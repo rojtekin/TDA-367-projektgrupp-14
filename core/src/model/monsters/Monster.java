@@ -8,6 +8,9 @@ import com.dongbat.jbump.World;
 
 public abstract class Monster extends LivingEntity {
 
+    private final int experience;
+    private final int score;
+
     /**
      * Default constructor for all monsters
      * @param x x spawn coordinate
@@ -22,8 +25,10 @@ public abstract class Monster extends LivingEntity {
      *                towards
      * @param world The world that the monster will move and collide in
      */
-    public Monster(float x, float y, float height, float width, float speed, float health, float damage, Faction faction, World<IEntity> world) {
+    public Monster(float x, float y, float height, float width, float speed, float health, float damage, Faction faction, World<IEntity> world, int score, int experience) {
         super(x, y, height, width, speed, health, damage, faction, world);
+        this.score = score;
+        this.experience = experience;
     }
 
     /**
@@ -32,4 +37,18 @@ public abstract class Monster extends LivingEntity {
      * @param playerY the y-coordinate of the player character.
      */
     abstract public void moveTowardPlayer(float playerX, float playerY);
+
+    /**
+     * @return returns the experience amount for killing the monster
+     */
+    public int getExperience() {
+        return experience;
+    }
+
+    /**
+     * @return returns the score amount for killing the monster
+     */
+    public int getScore() {
+        return score;
+    }
 }

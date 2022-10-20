@@ -55,6 +55,7 @@ public class RewardSystem {
         }
         else if (reward == Reward.HEALTH_INCREASE){
             playerCharacter.increaseMaxHealth();
+            playerCharacter.increaseCurrentHealth(1);
         }
         else if (reward == Reward.SPEED_INCREASE){
             playerCharacter.increaseSpeed();
@@ -67,14 +68,17 @@ public class RewardSystem {
         }
         else if (reward == Reward.SPEED_DEVIL){
             playerCharacter = new SpeedDevil(playerCharacter, world);
+            playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());
             perkApplied = true;
         }
         else if (reward == Reward.GLASS_CANNON){
-            playerCharacter = new GlassCannon(playerCharacter);
+            playerCharacter = new GlassCannon(playerCharacter, world);
+            playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());
             perkApplied = true;
         }
         else if (reward == Reward.TANK){
-            playerCharacter = new Tank(playerCharacter);
+            playerCharacter = new Tank(playerCharacter, world);
+            playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());
             perkApplied = true;
         }
         return playerCharacter;

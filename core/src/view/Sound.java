@@ -12,15 +12,15 @@ public class Sound{
     private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
     private static final com.badlogic.gdx.audio.Sound PLAYER_DEATH = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
-    private List<Class> entityClass = new ArrayList<>();
+    private final List<Class> entityClass = new ArrayList<>();
 
     /**
-     * Plays the background music of the game, constantly looping.
+     * Plays the background music of the game, continuously looping.
      */
     public void playGameMusic(){
         BACKGROUND_MUSIC.setLooping(true);
         BACKGROUND_MUSIC.play();
-        BACKGROUND_MUSIC.setVolume(0.0f);
+        BACKGROUND_MUSIC.setVolume(0.05f);
     }
 
     /**
@@ -57,7 +57,7 @@ public class Sound{
     }
 
     /**
-     * Continuously plays the idle-sounds of every living entity in the model.
+     * Continuously plays the idle-sound of every enemy type that exists in the model.
      * @param model a reference to the model the sounds are associated with.
      * @param interval how long between each play of the idle sounds.
      */
@@ -65,7 +65,6 @@ public class Sound{
         for (final Entity entity : model.getEntities()) {
             if (!entityClass.contains(entity.getClass())) {
                 entityClass.add(entity.getClass());
-                System.out.println(entityClass);
                 Runnable toRun = new Runnable() {
                     public void run() {
                         com.badlogic.gdx.audio.Sound sound = getIdleSound(entity);

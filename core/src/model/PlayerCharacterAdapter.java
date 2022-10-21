@@ -2,6 +2,7 @@ package model;
 
 import com.dongbat.jbump.World;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PlayerCharacterAdapter extends LivingEntity implements IPlayerCharacter {
@@ -11,7 +12,7 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     private float AbilityCoolDownMultiplier;
     private float AbilityPower;
     private static final int EXPERIENCE_THRESHOLD = 100;
-    private List<String> perkList;
+    private List<String> perkList = new ArrayList<String>();
 
     public PlayerCharacterAdapter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
         super(x, y, height, width, speed, maxHealth, damage, faction, world);

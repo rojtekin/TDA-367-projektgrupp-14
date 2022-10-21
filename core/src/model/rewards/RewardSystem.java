@@ -50,13 +50,13 @@ public class RewardSystem {
         }
         else if (reward == Reward.SPEED_INCREASE){
             playerCharacter.increaseSpeed();
-        }
+        }/*
         else if (reward == Reward.ABILITY_POWER_INCREASE){
             playerCharacter.increaseAbilityPower();
         }
         else if (reward == Reward.COOL_DOWN_DECREASE && playerCharacter.getAbilityCoolDownMultiplier() != 0){
             playerCharacter.decreasedAbilityCoolDownMultiplier();
-        }
+        }*/// TODO: Enable when abilities are implemented
         else if (reward == Reward.SPEED_DEVIL){
             playerCharacter = new SpeedDevil(playerCharacter, world);
             playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());

@@ -24,7 +24,7 @@ import java.util.Set;
 public class View {
     private HUD hud;
     private Model model;
-    private float timeSincePlayerWalkFrameChanged = 0f;
+    private float timeWhenPlayerWalkFrameChanged = 0f;
     private int currentPlayerWalkFrame = 0;
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -130,16 +130,16 @@ public class View {
      */
     public void updatePlayerWalkFrame() {
         if (model.playerIsMoving()) {
-            timeSincePlayerWalkFrameChanged += Gdx.graphics.getDeltaTime();
-            if (timeSincePlayerWalkFrameChanged > 0.2) {
+            float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;
+            if (timeSincePlayerWalkFrameChanged > 12) {
                 currentPlayerWalkFrame++;
                 if (currentPlayerWalkFrame > 3) { currentPlayerWalkFrame = 0; }
-                timeSincePlayerWalkFrameChanged = 0f;
+                timeWhenPlayerWalkFrameChanged = Time.getInstance().getTicks();
             }
         }
         else {
             currentPlayerWalkFrame = 0;
-            timeSincePlayerWalkFrameChanged = 0f;
+            timeWhenPlayerWalkFrameChanged = Time.getInstance().getTicks();
         }
     }
 

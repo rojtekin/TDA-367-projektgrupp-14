@@ -85,6 +85,7 @@ public class HUD {
         table1.clear();
         table2.clear();
         table3.clear();
+        table4.clear();
 
         stage.clear(); //Prevents memory leak where new tables are continuously added to stage
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens

@@ -2,21 +2,22 @@ package model;
 
 import com.dongbat.jbump.World;
 
+import java.util.List;
+
 public abstract class PlayerCharacterAdapter extends LivingEntity implements IPlayerCharacter {
 
     private int experience;
     private int level;
     private float AbilityCoolDownMultiplier;
     private float AbilityPower;
-    private Direction direction;
     private static final int EXPERIENCE_THRESHOLD = 100;
+    private List<String> perkList;
 
     public PlayerCharacterAdapter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
         super(x, y, height, width, speed, maxHealth, damage, faction, world);
         this.experience = 0;
         this.level = 0;
         this.AbilityCoolDownMultiplier = 1;
-        this.direction = Direction.DOWN;
     }
 
     @Override
@@ -114,4 +115,12 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     public boolean levelUpCheck(){
         return experience >= EXPERIENCE_THRESHOLD;
     }
+
+    /**
+     * @return returns a list of perks applied to the player
+     */
+    public List<String> getPerkList() {
+        return perkList;
+    }
+
 }

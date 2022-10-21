@@ -2,6 +2,8 @@ package model;
 
 import com.dongbat.jbump.IntPoint;
 
+import java.util.List;
+
 public interface IPlayerCharacter {
 
     boolean isMoving();
@@ -27,6 +29,11 @@ public interface IPlayerCharacter {
     void increaseCurrentHealth(float amount);
     void increaseLevel();
     void decreaseLevel();
+
+    /**
+     * @return a list of all perk names currently applied to the character
+     */
+    List<String> getPerkList();
 
     /**
      * checks if the playerCharacter has enough experience to level up

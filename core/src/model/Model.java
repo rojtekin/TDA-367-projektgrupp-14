@@ -31,6 +31,9 @@ public class Model implements MovementListener {
         this.spawnPoints = Objects.requireNonNull(spawnPoints);
     }
 
+    /**
+     * @return playerCharacter connected to Model
+     */
     public IPlayerCharacter getPlayer(){
         return player;
     }
@@ -149,7 +152,7 @@ public class Model implements MovementListener {
     }
 
     public void initialize() {
-        rewardSystem.initialize(world);
+        rewardSystem.initialize(this);
     }
 
     /**

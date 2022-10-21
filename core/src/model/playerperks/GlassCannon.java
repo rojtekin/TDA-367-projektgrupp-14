@@ -10,6 +10,7 @@ public class GlassCannon extends PlayerCharacter implements IPlayerCharacter {
     public GlassCannon(IPlayerCharacter playerCharacter, World<IEntity> world) {
         super(playerCharacter.getX(),playerCharacter.getY(), world);
         this.playerCharacter = playerCharacter;
+        getPerkList().add(this.getClass().getSimpleName());
     }
     @Override
     public float getDamage(){

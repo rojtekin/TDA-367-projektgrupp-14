@@ -27,6 +27,6 @@ public class Tank extends PlayerCharacter implements IPlayerCharacter {
 
     @Override
     public float getMaxHealth(){
-        return playerCharacter.getMaxHealth()*0.75f;
+        return playerCharacter.getMaxHealth()*1.5f;
     }
 }

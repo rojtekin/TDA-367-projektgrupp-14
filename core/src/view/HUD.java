@@ -19,8 +19,6 @@ public class HUD {
     private Stage stage;
     private FitViewport stageViewport;
     private IPlayerCharacter player;
-    private double currentHealth;
-    private double maxHealth;
 
     private int outlineSize = 4;
 
@@ -61,10 +59,13 @@ public class HUD {
     private final Table table1 = new Table();
     private final Table table2 = new Table();
     private final Table table3 = new Table();
+    private final Table table4 = new Table();
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
-    private Label healthBarLabel =  new Label("HP", whiteTextColorAndFont);
+    private Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
     private Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
-    private Label perkLabel = new Label("Perk", whiteTextColorAndFont);
+    private Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
+    private Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
+    private Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
 
     /**
      * Creates an instance of HUD
@@ -75,7 +76,6 @@ public class HUD {
         stageViewport = new FitViewport(800, 480);
         stage = new Stage(stageViewport, spriteBatch);
         this.model = model;
-        this.player = model.getPlayer();
     }
 
     public void update() {
@@ -110,21 +110,37 @@ public class HUD {
         stage.addActor(table2);
 
         table3.setFillParent(true);
-
+        healthBarLabel.setText("HP " + (int)model.getPlayer().getCurrentHealth() + "/" + (int)model.getPlayer().getMaxHealth());
         table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
+        if (!model.getPlayer().getPerkList().isEmpty()) {
+            perkLabel.setText("Perk: " + model.getPlayer().getPerkList().get(0));
+            table3.add(perkLabel).top().padTop(10);
+        }
         scoreLabel.setText("Score: "+model.getCurrentScore());
         table3.add(scoreLabel).right().top().pad(10);
         table3.row();
 
         pickCurrentExperienceBarWidth();
-        table3.add(fullExperienceBar).size(currentExperienceBarWidth, experienceBarHeight).bottom().pad(10).expandY().colspan(2);
+        table3.add(fullExperienceBar).size(currentExperienceBarWidth, experienceBarHeight).bottom().pad(10).expandY().colspan(3);
         stage.addActor(table3);
-        healthBarLabel.setText("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth());
+
+        table4.setFillParent(true);
+
+        levelLabel.setText("Level: " + model.getPlayer().getLevel());
+        table4.add(levelLabel).padLeft(10).padTop(40).left();
+
+        table4.row();
+        experienceLabel.setText("Experience: "+ model.getPlayer().getExperience() + " / " + model.getPlayer().getExperienceThreshold());
+        table4.add(experienceLabel).expandX().expandY().bottom().padBottom(25);
+        stage.addActor(table4);
+
+
+
     }
 
     private void pickHealthBarColor(){
-        currentHealth = player.getCurrentHealth();
-        maxHealth = player.getMaxHealth();
+        float currentHealth = model.getPlayer().getCurrentHealth();
+        float maxHealth = model.getPlayer().getMaxHealth();
         if(currentHealth <= maxHealth * 0.33) {
             NinePatch lowHp = new NinePatch(red, 0, 0, 0, 0);
             Image lowhp = new Image(lowHp);
@@ -143,14 +159,14 @@ public class HUD {
     }
 
     private void pickCurrentHealthBarWidth(){
-        currentHealth = player.getCurrentHealth();
-        maxHealth = player.getMaxHealth();
-        float percentageHealthBarFilled = (float)(currentHealth / maxHealth);
+        float currentHealth = model.getPlayer().getCurrentHealth();
+        float maxHealth = model.getPlayer().getMaxHealth();
+        float percentageHealthBarFilled = (currentHealth / maxHealth);
         setCurrentHealthBarWidth((int)(healthBarWidth*percentageHealthBarFilled));
     }
 
     private void pickCurrentExperienceBarWidth(){
-        float currentExperience = player.getExperience();
+        float currentExperience = model.getPlayer().getExperience();
         float maxExperience = 100;
         float percentageExperienceBarFilled = (currentExperience / maxExperience);
         setCurrentExperienceBarWidth((int)(experienceBarWidth*percentageExperienceBarFilled));

@@ -40,6 +40,7 @@ public interface IPlayerCharacter {
      */
     boolean levelUpCheck();
 
+    int getExperienceThreshold();
 
     float getAbilityCoolDownMultiplier();
 

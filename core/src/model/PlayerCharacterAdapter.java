@@ -123,4 +123,8 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
         return perkList;
     }
 
+    public int getExperienceThreshold(){
+        return EXPERIENCE_THRESHOLD;
+    }
+
 }

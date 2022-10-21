@@ -64,6 +64,7 @@ public class HUD {
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
     private Label healthBarLabel =  new Label("HP", whiteTextColorAndFont);
     private Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
+    private Label perkLabel = new Label("Perk", whiteTextColorAndFont);
 
     /**
      * Creates an instance of HUD

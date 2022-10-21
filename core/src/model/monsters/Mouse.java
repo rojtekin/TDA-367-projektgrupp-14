@@ -8,7 +8,7 @@ public class Mouse extends Monster {
     private float timeWhenDirectionChanged = 0;
 
     /**
-     * Initializes a Mouse object.
+     * Creates a Mouse object.
      */
     public Mouse(float x, float y, World<IEntity> world) {
         this(x, y, Faction.MONSTER, world);

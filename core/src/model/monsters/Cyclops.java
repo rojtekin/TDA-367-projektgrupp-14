@@ -10,7 +10,7 @@ public class Cyclops extends Monster {
     private boolean stuckInYDirection = false;
 
     /**
-     * Initializes a Cyclops object.
+     * Creates a Cyclops object.
      */
     public Cyclops(float x, float y, World<IEntity> world) {
         this(x, y, Faction.MONSTER, world);

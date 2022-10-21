@@ -71,7 +71,13 @@ public class Sound{
                         while (model.getEntities().contains(entity)) {
                             float distance = (float) Math.hypot(entity.getX() - model.getPlayer().getX(), entity.getY() - model.getPlayer().getY());
                             distance = 300 / (distance * entity.getWidth());
-                            sound.play(distance);
+                            float remove_distance = distance * 0;
+                            if (!model.isPaused()) {
+                                sound.play(distance);
+                            }
+                            else  {
+                                sound.play(remove_distance);
+                            }
                             try {
                                 Thread.sleep(interval);
                             } catch (InterruptedException e) {

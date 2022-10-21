@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setTitle("tda367");
 		config.setWindowedMode(800, 480);
+		config.setWindowIcon("entities/BlueSamurai-Idle-down.png");
 		config.useVsync(true);
 		config.setForegroundFPS(60);
 		new Lwjgl3Application(new Game(), config);

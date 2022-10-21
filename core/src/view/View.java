@@ -63,6 +63,7 @@ public class View {
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
+
         centerCameraOnPlayer(); //makes the camera follow PlayerCharacter (keeps the player in the center of the screen)
 
         camera.update();
@@ -80,7 +81,7 @@ public class View {
         hud.update(); // TODO functional decomposition
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
-
+        showPauseScreen();
         playIdleSounds();
     }
 
@@ -125,6 +126,19 @@ public class View {
      * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
      * Otherwise, the frame is set to the first frame of the walk animation.
      */
+
+    public void showPauseScreen() {
+        if (model.isPaused()){
+            hud.pause();
+            soundHandler.stopGameMusic();
+        }
+        else{
+            hud.resume();
+            soundHandler.playGameMusic();
+        }
+
+    }
+
     public void updatePlayerWalkFrame() {
         if (model.playerIsMoving()) {
             timeSincePlayerWalkFrameChanged += Gdx.graphics.getDeltaTime();

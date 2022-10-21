@@ -56,6 +56,10 @@ public class HUD {
     private Label healthBarLabel =  new Label("HP", whiteTextColorAndFont);
     private Label scoreLabel = new Label("Score: " + 0, whiteTextColorAndFont);
 
+    private final Label pauseLabel = new Label("" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+
+    private final Label pauseInfoLabel = new Label("" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+
     public HUD(SpriteBatch spriteBatch, Model model) {
         stageViewport = new FitViewport(800, 480);
         stage = new Stage(stageViewport, spriteBatch);
@@ -107,7 +111,42 @@ public class HUD {
         table3.add(fullExperienceBar).size(experienceBarSize, 10).bottom().pad(10).expandY().colspan(2);
         stage.addActor(table3);
         healthBarLabel.setText("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth());
+
+
+        Table gamePausedTable = createPauseTable();
+        stage.addActor(gamePausedTable);
     }
+
+    public void pause() {
+        pauseLabel.setText("THE GAME IS PAUSED");
+        pauseInfoLabel.setText("To Resume, Please Press ESC");
+
+
+    }
+
+    public void resume() {
+        pauseLabel.setText("");
+        pauseInfoLabel.setText("");
+
+    }
+
+    private Table createPauseTable() {
+        Table gamePausedTable = new Table();
+        gamePausedTable.center();
+        gamePausedTable.setFillParent(true);
+
+        pauseLabel.setFontScale(5f);
+        pauseInfoLabel.setFontScale(2f);
+
+        gamePausedTable.add(pauseLabel).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(pauseInfoLabel).expandX();
+        gamePausedTable.row();
+
+        return gamePausedTable;
+
+    }
+
 
     private void pickHealthBarColor(){
         currentHealth = player.getCurrentHealth();

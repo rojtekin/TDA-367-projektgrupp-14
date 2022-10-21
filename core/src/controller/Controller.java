@@ -18,6 +18,17 @@ public class Controller {
 
     public void update(IPlayerCharacter player) {
         model.getPlayer().setMoving(false);
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+
+            if (model.isPaused()) {
+                model.resumeGame();
+            } else {
+                model.pauseGame();
+
+            }
+        }
+        if (!model.isPaused()) {
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.move(Direction.LEFT, player.getSpeed());
@@ -30,7 +41,7 @@ public class Controller {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
             player.move(Direction.DOWN, player.getSpeed());
-        }
+        }}
 
         model.getPlayer().setSwinging(false);
         // sword attack

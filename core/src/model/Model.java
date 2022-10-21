@@ -24,6 +24,8 @@ public class Model implements MovementListener {
     private World<IEntity> world;
     private int currentScore = 0;
 
+    private boolean pause = false;
+
     public Model(IEnvironmentCache mapCache, PlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
@@ -37,7 +39,9 @@ public class Model implements MovementListener {
 
     public void update() {
         spawnMonsters();
-        moveMonsters();
+        if(!pause) {
+            moveMonsters();
+        }
         if (rewardSystem.levelUpChecker(player)){
         player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
         }
@@ -162,5 +166,18 @@ public class Model implements MovementListener {
 
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
+    }
+
+
+    public boolean isPaused() {
+        return pause;
+    }
+
+    public void resumeGame() {
+        pause = false;
+    }
+
+    public void pauseGame() {
+        pause = true;
     }
 }

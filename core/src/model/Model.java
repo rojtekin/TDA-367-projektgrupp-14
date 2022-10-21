@@ -6,25 +6,24 @@ import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
-import model.rewards.Reward;
 import model.rewards.RewardSystem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Model implements MovementListener {
-    private IEnvironmentCache mapCache;
-    private IPlayerCharacter player;
+    private final IEnvironmentCache mapCache;
+    private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<Entity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
     private static final int MAX_MONSTERS = 50;
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
-    private World<IEntity> world;
+    private final World<IEntity> world;
     private int currentScore = 0;
 
-    public Model(IEnvironmentCache mapCache, PlayerCharacter player, List<Point> spawnPoints) {
+    public Model(IEnvironmentCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);
@@ -43,8 +42,6 @@ public class Model implements MovementListener {
         moveMonsters();
         levelUpCheckAndApply();
         despawnDeadNPCs();
-        System.out.println(getPlayer().getExperience());
-        System.out.println(getPlayer().getPerkList());
     }
 
     /**
@@ -53,7 +50,7 @@ public class Model implements MovementListener {
     private void levelUpCheckAndApply() {
         if (player.levelUpCheck()){
             player.reduceExperience();
-            player = rewardSystem.applyReward(getPlayer(), Reward.SPEED_DEVIL);
+            rewardSystem.applyReward(player, rewardSystem.getRandomReward());
             player.increaseLevel();
         }
     }
@@ -159,7 +156,7 @@ public class Model implements MovementListener {
 
     /**
      * Removes a monster from the game and removes
-     * its collisionbox from the world
+     * its collisionBox from the world
      * @param monster Enemy to be removed
      */
     public void despawn(Monster monster) {

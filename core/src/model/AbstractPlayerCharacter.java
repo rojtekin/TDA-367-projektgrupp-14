@@ -1,20 +1,21 @@
 package model;
 
 import com.dongbat.jbump.World;
+import model.rewards.Reward;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PlayerCharacterAdapter extends LivingEntity implements IPlayerCharacter {
+public abstract class AbstractPlayerCharacter extends LivingEntity implements IPlayerCharacter {
 
     private int experience;
     private int level;
     private float abilityCoolDownMultiplier;
     private float abilityPower;
     private static final int EXPERIENCE_THRESHOLD = 100;
-    private List<String> perkList = new ArrayList<String>();
+    private List<Reward> perkList = new ArrayList<>();
 
-    public PlayerCharacterAdapter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
+    public AbstractPlayerCharacter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
         super(x, y, height, width, speed, maxHealth, damage, faction, world);
         this.experience = 0;
         this.level = 0;
@@ -23,22 +24,8 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     }
 
     @Override
-    public float getMaxHealth() {
-        return super.getMaxHealth();
-    }
-
-    @Override
-    public float getSpeed(){
-        return super.getSpeed();
-    }
-
-    @Override
     public void increaseCurrentHealth(float amount){
-        if (getCurrentHealth()+amount < getMaxHealth()){
-        setCurrentHealth(getCurrentHealth()+amount);}
-        else {
-            setCurrentHealth(getMaxHealth());
-        }
+        setCurrentHealth(Math.min(getCurrentHealth() + amount, getMaxHealth()));
     }
 
     public int getExperience() {
@@ -120,7 +107,7 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     /**
      * @return returns a list of perks applied to the player
      */
-    public List<String> getPerkList() {
+    public List<Reward> getPerkList() {
         return perkList;
     }
 

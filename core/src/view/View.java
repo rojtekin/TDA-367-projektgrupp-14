@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class View {
     private HUD hud;
-    private Model model;
+    private final Model model;
     private float timeSincePlayerWalkFrameChanged = 0f;
     private int currentPlayerWalkFrame = 0;
     private OrthographicCamera camera;
@@ -30,10 +30,10 @@ public class View {
 
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
-    private ImageHandler imageHandler = new ImageHandler();
-    private Sound soundHandler = new Sound();
+    private final ImageHandler imageHandler = new ImageHandler();
+    private final Sound soundHandler = new Sound();
 
-    private Sprite swordSprite = new Sprite(imageHandler.getSwordThing());
+    private final Sprite swordSprite = new Sprite(imageHandler.getSwordThing());
 
     private Set<Entity> isKnown = new HashSet<>();
     private Set<Entity> seen = new HashSet<>();
@@ -53,10 +53,10 @@ public class View {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
-        hud = new HUD(batch, model);
     }
 
     public void update() {
+        hud = new HUD(batch, model);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // TODO functional decomposition

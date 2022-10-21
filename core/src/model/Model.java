@@ -31,6 +31,9 @@ public class Model implements MovementListener {
         this.spawnPoints = Objects.requireNonNull(spawnPoints);
     }
 
+    /**
+     * @return playerCharacter connected to Model
+     */
     public IPlayerCharacter getPlayer(){
         return player;
     }
@@ -38,10 +41,19 @@ public class Model implements MovementListener {
     public void update() {
         spawnMonsters();
         moveMonsters();
-        if (rewardSystem.levelUpChecker(player)){
-        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
-        }
+        levelUpCheckAndApply();
         despawnDeadNPCs();
+    }
+
+    /**
+     * Checks if player has reached the threshold to level up and applies a reward accordingly if so.
+     */
+    private void levelUpCheckAndApply() {
+        if (player.levelUpCheck()){
+        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
+        getPlayer().reduceExperience();
+        getPlayer().increaseLevel();
+        }
     }
 
     /**
@@ -140,7 +152,7 @@ public class Model implements MovementListener {
     }
 
     public void initialize() {
-        rewardSystem.initialize(world);
+        rewardSystem.initialize(this);
     }
 
     /**

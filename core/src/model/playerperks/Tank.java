@@ -11,6 +11,7 @@ public class Tank extends PlayerCharacter implements IPlayerCharacter {
     public Tank(IPlayerCharacter playerCharacter, World<IEntity> world) {
         super(playerCharacter.getX(), playerCharacter.getY(), world);
         this.playerCharacter = playerCharacter;
+        getPerkList().add(this.getClass().getSimpleName());
     }
 
     @Override

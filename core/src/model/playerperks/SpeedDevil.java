@@ -13,6 +13,7 @@ public class SpeedDevil extends PlayerCharacter implements IPlayerCharacter{
     public SpeedDevil(IPlayerCharacter playerCharacter, World<IEntity> world) {
         super(playerCharacter.getX(),playerCharacter.getY(), world);
         this.playerCharacter = playerCharacter;
+        getPerkList().add(this.getClass().getSimpleName());
     }
 
     @Override

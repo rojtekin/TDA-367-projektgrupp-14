@@ -1,4 +1,5 @@
 import com.dongbat.jbump.World;
+import model.Faction;
 import model.monsters.Cyclops;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,7 +11,7 @@ public class CyclopsTest {
     private Cyclops cyclops;
 
     @BeforeEach
-    public void setUp() { cyclops = new Cyclops(100, 100,1,1,1,new World<>()); }
+    public void setUp() { cyclops = new Cyclops(100, 100,1,1,1, Faction.MONSTER, new World<>()); }
 
     @Test
     public void moveTowardsPlayer_DecreasesTheDistanceBetweenCyclopsAndPlayer() {

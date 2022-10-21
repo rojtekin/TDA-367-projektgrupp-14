@@ -19,7 +19,7 @@ public class DamageTest {
     public void setUp() {
         environment = new TiledEnvironmentCache();
         model = new Model(environment, new PlayerCharacter(0, 0, environment.getWorld()), new ArrayList<>());
-        monster = new Cyclops(100, 100, 10, 1, 10, model.getWorld());
+        monster = new Cyclops(100, 100, 10, 1, 10, Faction.MONSTER, model.getWorld());
         model.addMonster(monster);
     }
 
@@ -69,7 +69,7 @@ public class DamageTest {
     @Test
     public void playerTakesCollisionDamage() {
         float initHP = model.getPlayer().getCurrentHealth();
-        Cyclops cyclops = new Cyclops(model.getPlayer().getWidth()+1, model.getPlayer().getY(), 2, 1, 1, model.getWorld());
+        Cyclops cyclops = new Cyclops(model.getPlayer().getWidth()+1, model.getPlayer().getY(), model.getWorld());
         cyclops.move(Direction.LEFT, cyclops.getSpeed());
         float finalHP = model.getPlayer().getCurrentHealth();
         assertTrue(initHP > finalHP);

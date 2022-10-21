@@ -8,7 +8,6 @@ import model.playerperks.SpeedDevil;
 import model.playerperks.Tank;
 
 public class RewardSystem {
-    private static final int EXPERIENCE_THRESHOLD = 100;
     private boolean perkApplied;
     private World<IEntity> world;
 
@@ -19,15 +18,6 @@ public class RewardSystem {
     public void initialize(World<IEntity> world) {
         perkApplied = false;
         this.world = world;
-    }
-
-    /**
-     * checks if the playerCharacter has enough experience to level up
-     * @param playerCharacter the playerCharacter that holds experience
-     * @return true if experience is higher than or equals EXPERIENCE_THRESHOLD otherwise false
-     */
-    public boolean levelUpChecker(IPlayerCharacter playerCharacter){
-        return playerCharacter.getExperience() >= EXPERIENCE_THRESHOLD;
     }
 
     /**
@@ -49,7 +39,6 @@ public class RewardSystem {
      * @return the resulting PlayerCharacter with the reward applied
      */
     public IPlayerCharacter applyReward(IPlayerCharacter playerCharacter, Reward reward){
-        playerCharacter.reduceExperience();
         if (reward == Reward.DAMAGE_INCREASE){
             playerCharacter.increaseDamage();
         }

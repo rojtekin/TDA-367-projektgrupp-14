@@ -38,10 +38,19 @@ public class Model implements MovementListener {
     public void update() {
         spawnMonsters();
         moveMonsters();
-        if (rewardSystem.levelUpChecker(player)){
-        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
-        }
+        levelUpCheckAndApply();
         despawnDeadNPCs();
+    }
+
+    /**
+     * Checks if player has reached the threshold to level up and applies a reward accordingly if so.
+     */
+    private void levelUpCheckAndApply() {
+        if (player.levelUpCheck()){
+        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
+        getPlayer().reduceExperience();
+        getPlayer().increaseLevel();
+        }
     }
 
     /**

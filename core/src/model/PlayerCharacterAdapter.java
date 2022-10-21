@@ -6,9 +6,10 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
 
     private int experience;
     private int level;
-    private float AbilityCoolDownMultiplier; // for abilities later 1 -> full cool down, 0--> everything has 0sec cool down
+    private float AbilityCoolDownMultiplier;
     private float AbilityPower;
     private Direction direction;
+    private static final int EXPERIENCE_THRESHOLD = 100;
 
     public PlayerCharacterAdapter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
         super(x, y, height, width, speed, maxHealth, damage, faction, world);
@@ -109,5 +110,8 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     }
     private void setAbilityCoolDownMultiplier(float abilityCoolDownMultiplier) {
         AbilityCoolDownMultiplier = abilityCoolDownMultiplier;
+    }
+    public boolean levelUpCheck(){
+        return experience >= EXPERIENCE_THRESHOLD;
     }
 }

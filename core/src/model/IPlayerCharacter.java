@@ -25,6 +25,14 @@ public interface IPlayerCharacter {
     void gainExperience(int experience);
     void reduceExperience();
     void increaseCurrentHealth(float amount);
+    void increaseLevel();
+    void decreaseLevel();
+
+    /**
+     * checks if the playerCharacter has enough experience to level up
+     * @return true if experience is higher than or equals the experience threshold otherwise false
+     */
+    boolean levelUpCheck();
 
 
     float getAbilityCoolDownMultiplier();

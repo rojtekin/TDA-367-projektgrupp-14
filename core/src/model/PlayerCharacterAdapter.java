@@ -9,8 +9,8 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
 
     private int experience;
     private int level;
-    private float AbilityCoolDownMultiplier;
-    private float AbilityPower;
+    private float abilityCoolDownMultiplier;
+    private float abilityPower;
     private static final int EXPERIENCE_THRESHOLD = 100;
     private List<String> perkList = new ArrayList<String>();
 
@@ -18,7 +18,8 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
         super(x, y, height, width, speed, maxHealth, damage, faction, world);
         this.experience = 0;
         this.level = 0;
-        this.AbilityCoolDownMultiplier = 1;
+        this.abilityCoolDownMultiplier = 1;
+        this.abilityPower = 1;
     }
 
     @Override
@@ -43,14 +44,14 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     public int getExperience() {
         return experience;
     }
-    private void setExperience(int experience) {
+    protected void setExperience(int experience) {
         this.experience = experience;
     }
 
     public int getLevel() {
         return level;
     }
-    private void setLevel(int level) {
+    protected void setLevel(int level) {
         this.level = level;
     }
 
@@ -99,18 +100,18 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     public void gainExperience(int experience) {
         setExperience(getExperience() + experience);
     }
-    public void reduceExperience() { setExperience(getExperience()-100); }
+    public void reduceExperience() { setExperience( (getExperience() - 100) ); }
 
-    public float getAbilityPower() { return AbilityPower; }
-    private void setAbilityPower(float abilityPower) {
-        AbilityPower = abilityPower;
+    public float getAbilityPower() { return abilityPower; }
+    protected void setAbilityPower(float abilityPower) {
+        this.abilityPower = abilityPower;
     }
 
     public float getAbilityCoolDownMultiplier() {
-        return AbilityCoolDownMultiplier;
+        return abilityCoolDownMultiplier;
     }
     private void setAbilityCoolDownMultiplier(float abilityCoolDownMultiplier) {
-        AbilityCoolDownMultiplier = abilityCoolDownMultiplier;
+        this.abilityCoolDownMultiplier = abilityCoolDownMultiplier;
     }
     public boolean levelUpCheck(){
         return experience >= EXPERIENCE_THRESHOLD;

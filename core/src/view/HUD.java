@@ -137,7 +137,7 @@ public class HUD {
     }
 
     private void pickExperienceBarSize(){
-        float currentExperience = player.getExperience();
+        float currentExperience = model.getPlayer().getExperience();
         float maxExperience = 100;
         float experienceBarSize = (currentExperience / maxExperience);
         setExperienceBarSize((int)(400*experienceBarSize));

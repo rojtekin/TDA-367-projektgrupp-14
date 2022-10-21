@@ -17,7 +17,6 @@ public class GlassCannon extends PlayerCharacter implements IPlayerCharacter {
         return playerCharacter.getSpeed()* (float)1.5;
     }
 
-
     @Override
     public float getMaxHealth(){
         return playerCharacter.getMaxHealth()*0.75f;

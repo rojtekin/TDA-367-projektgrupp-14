@@ -1,19 +1,20 @@
 package model.playerperks;
 
-import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.World;
-import model.Direction;
 import model.IEntity;
 import model.IPlayerCharacter;
 import model.PlayerCharacter;
 
 
 public class SpeedDevil extends PlayerCharacter implements IPlayerCharacter{
-    private IPlayerCharacter playerCharacter;
+    private final IPlayerCharacter playerCharacter;
     public SpeedDevil(IPlayerCharacter playerCharacter, World<IEntity> world) {
         super(playerCharacter.getX(),playerCharacter.getY(), world);
         this.playerCharacter = playerCharacter;
         getPerkList().add(this.getClass().getSimpleName());
+        setExperience(playerCharacter.getExperience());
+        setLevel(playerCharacter.getLevel());
+        setAbilityPower(playerCharacter.getAbilityPower());
     }
 
     @Override

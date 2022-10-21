@@ -27,8 +27,8 @@ public class RewardSystem {
      */
     public Reward getRandomReward(){
         Reward reward = Reward.randomReward();
-        boolean perkApplied = (model.getPlayer().getPerkList().size()>0);
-        if ((reward == Reward.TANK && perkApplied )||(reward == Reward.GLASS_CANNON && perkApplied) || (reward == Reward.SPEED_DEVIL && perkApplied)){
+        boolean perkApplied = (model.getPlayer().getPerkList().size()>0); //TODO: remove first two conditions in if-statement when abilities are implemented
+        if ((reward == Reward.COOL_DOWN_DECREASE)||(reward == Reward.ABILITY_POWER_INCREASE)||(reward == Reward.TANK && perkApplied )||(reward == Reward.GLASS_CANNON && perkApplied) || (reward == Reward.SPEED_DEVIL && perkApplied)){
             reward = getRandomReward();
         }
         return reward;
@@ -41,6 +41,7 @@ public class RewardSystem {
      * @return the resulting PlayerCharacter with the reward applied
      */
     public IPlayerCharacter applyReward(IPlayerCharacter playerCharacter, Reward reward){
+        System.out.println(reward);
         if (reward == Reward.DAMAGE_INCREASE){
             playerCharacter.increaseDamage();
         }
@@ -50,13 +51,13 @@ public class RewardSystem {
         }
         else if (reward == Reward.SPEED_INCREASE){
             playerCharacter.increaseSpeed();
-        }/*
+        }
         else if (reward == Reward.ABILITY_POWER_INCREASE){
             playerCharacter.increaseAbilityPower();
         }
         else if (reward == Reward.COOL_DOWN_DECREASE && playerCharacter.getAbilityCoolDownMultiplier() != 0){
             playerCharacter.decreasedAbilityCoolDownMultiplier();
-        }*/// TODO: Enable when abilities are implemented
+        }
         else if (reward == Reward.SPEED_DEVIL){
             playerCharacter = new SpeedDevil(playerCharacter, world);
             playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());

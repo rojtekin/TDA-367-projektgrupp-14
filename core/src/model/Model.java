@@ -43,6 +43,8 @@ public class Model implements MovementListener {
         moveMonsters();
         levelUpCheckAndApply();
         despawnDeadNPCs();
+        System.out.println(getPlayer().getExperience());
+        System.out.println(getPlayer().getPerkList());
     }
 
     /**
@@ -50,9 +52,9 @@ public class Model implements MovementListener {
      */
     private void levelUpCheckAndApply() {
         if (player.levelUpCheck()){
-        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
-        getPlayer().reduceExperience();
-        getPlayer().increaseLevel();
+            player.reduceExperience();
+            player = rewardSystem.applyReward(getPlayer(), Reward.SPEED_DEVIL);
+            player.increaseLevel();
         }
     }
 

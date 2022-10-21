@@ -2,6 +2,7 @@ package game;
 
 import controller.Controller;
 import model.*;
+import utility.Time;
 import view.View;
 import com.badlogic.gdx.ApplicationAdapter;
 

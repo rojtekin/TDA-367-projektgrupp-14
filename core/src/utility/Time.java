@@ -1,4 +1,4 @@
-package model;
+package utility;
 
 /**
  * A class responsible for keeping track of time. The time is measured in ticks.

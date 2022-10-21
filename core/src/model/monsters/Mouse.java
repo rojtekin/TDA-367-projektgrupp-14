@@ -2,6 +2,7 @@ package model.monsters;
 
 import model.*;
 import com.dongbat.jbump.World;
+import utility.Time;
 
 public class Mouse extends Monster {
     private float timeWhenDirectionChanged = 0;

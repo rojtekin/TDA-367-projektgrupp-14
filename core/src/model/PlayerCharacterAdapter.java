@@ -54,7 +54,6 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     }
 
     public void increaseLevel(){ setLevel(getLevel()+1); }
-    public void decreaseLevel(){ setLevel(getLevel()-1); }
 
     public void increaseMaxHealth() {
         setMaxHealth(getMaxHealth() + 1);

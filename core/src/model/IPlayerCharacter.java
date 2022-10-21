@@ -28,7 +28,6 @@ public interface IPlayerCharacter {
     void reduceExperience();
     void increaseCurrentHealth(float amount);
     void increaseLevel();
-    void decreaseLevel();
 
     /**
      * @return a list of all perk names currently applied to the character

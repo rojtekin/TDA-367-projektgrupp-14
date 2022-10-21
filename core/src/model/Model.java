@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A class responsible for managing the logic of the game.
+ */
 public class Model implements MovementListener {
     private final IEnvironmentCache mapCache;
     private final IPlayerCharacter player;

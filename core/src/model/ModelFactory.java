@@ -3,6 +3,9 @@ package model;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * A class responsible for creating a Model object.
+ */
 public class ModelFactory {
     public static Model makeModel(String mapName) {
         TiledEnvironmentCache mapData = new TiledEnvironmentCache();

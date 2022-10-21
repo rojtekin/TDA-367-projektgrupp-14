@@ -3,10 +3,12 @@ package controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import model.*;
-import view.View;
 
 import java.util.Objects;
 
+/**
+ * A class responsible for updating the model in response to user input.
+ */
 public class Controller {
     private Model model;
     private IPlayerCharacter player;

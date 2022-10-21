@@ -12,6 +12,7 @@ public class Sound{
     private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
     private static final com.badlogic.gdx.audio.Sound PLAYER_DEATH = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
+    private List<Class> entityClass = new ArrayList<>();
 
     /**
      * Plays the background music of the game, constantly looping.
@@ -19,7 +20,7 @@ public class Sound{
     public void playGameMusic(){
         BACKGROUND_MUSIC.setLooping(true);
         BACKGROUND_MUSIC.play();
-        BACKGROUND_MUSIC.setVolume(0.1f);
+        BACKGROUND_MUSIC.setVolume(0.0f);
     }
 
     /**
@@ -61,16 +62,22 @@ public class Sound{
      * @param interval how long between each play of the idle sounds.
      */
     public void playIdleSoundsWithInterval(final Model model, long interval) {
-        List<Class> entityClass = new ArrayList<>();
         for (final Entity entity : model.getEntities()) {
             if (!entityClass.contains(entity.getClass())) {
                 entityClass.add(entity.getClass());
+                System.out.println(entityClass);
                 Runnable toRun = new Runnable() {
                     public void run() {
                         com.badlogic.gdx.audio.Sound sound = getIdleSound(entity);
-                        while (model.getEntities().contains(entity)) {
-                            float distance = (float) Math.hypot(entity.getX() - model.getPlayer().getX(), entity.getY() - model.getPlayer().getY());
-                            distance = 300 / (distance * entity.getWidth());
+                        while (entityClass.contains(entity.getClass())) {
+                            float distance = 1000000;
+                            for (Entity entity: model.getEntities()){
+                                float checked_distance = (float) Math.hypot(entity.getX() - model.getPlayer().getX(), entity.getY() - model.getPlayer().getY());
+                                if (checked_distance < distance){
+                                    distance = checked_distance;
+                                }
+                            }
+                            distance = 10/distance;
                             sound.play(distance);
                             try {
                                 Thread.sleep(interval);

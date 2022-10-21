@@ -1,28 +1,25 @@
 package model.monsters;
 
-import model.Direction;
-import model.Entity;
-import com.badlogic.gdx.Gdx;
+import model.*;
 import com.dongbat.jbump.World;
-import model.Faction;
-import model.IEntity;
+import utility.Time;
 
 public class Mouse extends Monster {
-    private float timeSinceDirectionChanged = 0;
+    private float timeWhenDirectionChanged = 0;
 
     /**
-     * Uses the default constructor of its superclass with default values
+     * Creates a Mouse object.
      */
     public Mouse(float x, float y, World<IEntity> world) {
-        super(x, y, 16, 16, 2,1,1, Faction.MONSTER, world,1,1);
+        this(x, y, Faction.MONSTER, world);
     }
 
     /**
      * Constructor with custom faction tag
      * @param faction custom faction tag
      */
-    public Mouse(float x, float y, float speed, float health, float damage, Faction faction, World<IEntity> world) {
-        super(x, y, 16, 16, speed, health, damage, faction, world,1,1);
+    public Mouse(float x, float y, Faction faction, World<IEntity> world) {
+        super(x, y, 16, 16, 2, 1, 1, faction, world, 1, 1);
     }
 
     /**
@@ -36,9 +33,9 @@ public class Mouse extends Monster {
     public void moveTowardPlayer(float playerX, float playerY) {
         float xDistance = playerX - this.getX();
         float yDistance = playerY - this.getY();
-        timeSinceDirectionChanged += Gdx.graphics.getDeltaTime();
+        float timeSinceDirectionChanged = Time.getInstance().getTicks() - timeWhenDirectionChanged;
 
-        if (timeSinceDirectionChanged > 0.6) {
+        if (timeSinceDirectionChanged > 36) {
             if (Math.random() < 0.5) {
                 if ((xDistance > 0)) {
                     this.move(Direction.RIGHT, getSpeed());
@@ -53,7 +50,7 @@ public class Mouse extends Monster {
                     this.move(Direction.DOWN, getSpeed());
                 }
             }
-            timeSinceDirectionChanged = 0;
+            timeWhenDirectionChanged = Time.getInstance().getTicks();
         }
         else {
             this.moveForward(getSpeed());

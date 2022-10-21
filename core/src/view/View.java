@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import utility.Time;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,10 +19,13 @@ import java.util.Objects;
 import java.util.Set;
 
 
+/**
+ * A class responsible for presenting a part of the model to the user.
+ */
 public class View {
     private HUD hud;
     private Model model;
-    private float timeSincePlayerWalkFrameChanged = 0f;
+    private float timeWhenPlayerWalkFrameChanged = 0f;
     private int currentPlayerWalkFrame = 0;
     private OrthographicCamera camera;
     private SpriteBatch batch;
@@ -127,16 +131,16 @@ public class View {
      */
     public void updatePlayerWalkFrame() {
         if (model.playerIsMoving()) {
-            timeSincePlayerWalkFrameChanged += Gdx.graphics.getDeltaTime();
-            if (timeSincePlayerWalkFrameChanged > 0.2) {
+            float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;
+            if (timeSincePlayerWalkFrameChanged > 12) {
                 currentPlayerWalkFrame++;
                 if (currentPlayerWalkFrame > 3) { currentPlayerWalkFrame = 0; }
-                timeSincePlayerWalkFrameChanged = 0f;
+                timeWhenPlayerWalkFrameChanged = Time.getInstance().getTicks();
             }
         }
         else {
             currentPlayerWalkFrame = 0;
-            timeSincePlayerWalkFrameChanged = 0f;
+            timeWhenPlayerWalkFrameChanged = Time.getInstance().getTicks();
         }
     }
 

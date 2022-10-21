@@ -2,6 +2,7 @@ package game;
 
 import controller.Controller;
 import model.*;
+import utility.Time;
 import view.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
@@ -22,6 +23,7 @@ public class Game extends ApplicationAdapter {
 		controller.update(model.getPlayer());
 		view.update();
 		model.update();
+		Time.getInstance().tick();
 	}
 
 	@Override

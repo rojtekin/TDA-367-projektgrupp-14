@@ -6,12 +6,14 @@ import com.dongbat.jbump.World;
 import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
-import model.rewards.Reward;
 import model.rewards.RewardSystem;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * A class responsible for managing the logic of the game.
+ */
 public class Model implements MovementListener {
     private IEnvironmentCache mapCache;
     private IPlayerCharacter player;

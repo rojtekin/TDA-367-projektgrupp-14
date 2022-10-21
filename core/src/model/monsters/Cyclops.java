@@ -10,18 +10,18 @@ public class Cyclops extends Monster {
     private boolean stuckInYDirection = false;
 
     /**
-     * Uses the default constructor of its superclass with default values
+     * Creates a Cyclops object.
      */
     public Cyclops(float x, float y, World<IEntity> world) {
-        super(x, y, 32, 32, 1, 10, 5, Faction.MONSTER, world,1,5);
+        this(x, y, Faction.MONSTER, world);
     }
 
     /**
      * Constructor with custom faction tag
      * @param faction custom faction tag
      */
-    public Cyclops(int x, int y, int speed, float health, float damage, Faction faction, World<IEntity> world) {
-        super(x, y, 32, 32, speed, health, damage, faction, world,1,5);
+    public Cyclops(float x, float y, Faction faction, World<IEntity> world) {
+        super(x, y, 32, 32, 1, 10, 5, faction, world, 1, 5);
     }
 
     /**

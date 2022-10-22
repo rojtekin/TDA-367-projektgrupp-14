@@ -18,14 +18,14 @@ public class HUD {
     private final Stage stage;
     private final FitViewport stageViewport;
 
-    private final int outlineSize = 4;
+    private final static int OUTLINE_SIZE = 4;
 
-    private final int HEALTH_BAR_WIDTH = 200;
-    private final int HEALTH_BAR_HEIGHT = 20;
+    private final static int HEALTH_BAR_WIDTH = 200;
+    private final static int HEALTH_BAR_HEIGHT = 20;
     private int currentHealthBarWidth;
 
-    private final int EXPERIENCE_BAR_WIDTH = 400;
-    private final int EXPERIENCE_BAR_HEIGHT = 10;
+    private final static int EXPERIENCE_BAR_WIDTH = 400;
+    private final static int EXPERIENCE_BAR_HEIGHT = 10;
     private int currentExperienceBarWidth;
 
     private Image healthColor;
@@ -88,11 +88,11 @@ public class HUD {
         stage.clear(); //Prevents memory leak where new tables are continuously added to stage
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
 
-        table1.add(blackHealthBar).size(HEALTH_BAR_WIDTH + outlineSize, HEALTH_BAR_HEIGHT + outlineSize).left().top().expandX().expandY().pad(8); //black underline hp bar
+        table1.add(blackHealthBar).size(HEALTH_BAR_WIDTH + OUTLINE_SIZE, HEALTH_BAR_HEIGHT + OUTLINE_SIZE).left().top().expandX().expandY().pad(8); //black underline hp bar
 
         table1.row(); //new row
 
-        table1.add(blackExperienceBar).size(EXPERIENCE_BAR_WIDTH +outlineSize, EXPERIENCE_BAR_HEIGHT +outlineSize).bottom().pad(8); //Black border experience
+        table1.add(blackExperienceBar).size(EXPERIENCE_BAR_WIDTH + OUTLINE_SIZE, EXPERIENCE_BAR_HEIGHT + OUTLINE_SIZE).bottom().pad(8); //Black border experience
 
         stage.addActor(table1); //add the bottom layer to stage
 

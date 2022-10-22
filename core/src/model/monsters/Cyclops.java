@@ -35,11 +35,12 @@ public class Cyclops extends Monster {
     public Collisions moveTowardTarget(float targetX, float targetY) {
         float xDistance = targetX - getX();
         float yDistance = targetY - getY();
+        boolean targetNearby = (Math.hypot(xDistance, yDistance) < 48);
         float initialX = getX();
         float initialY = getY();
         Collisions collisions;
 
-        if ((Math.abs(xDistance) > 16) && !stuckInYDirection) {
+        if ((Math.abs(xDistance) > 16) && !stuckInYDirection && !targetNearby) {
             if (xDistance > 0) {
                 collisions = move(Direction.RIGHT, getSpeed());
             }
@@ -51,7 +52,7 @@ public class Cyclops extends Monster {
                 collisions = move(Direction.UP, getSpeed());
             }
         }
-        else if(!stuckInXDirection){
+        else if (!stuckInXDirection && !targetNearby) {
             if (yDistance > 0) {
                 collisions = move(Direction.UP, getSpeed());
             }

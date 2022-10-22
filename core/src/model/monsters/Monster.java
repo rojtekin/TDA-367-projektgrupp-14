@@ -32,12 +32,12 @@ public abstract class Monster extends LivingEntity {
     }
 
     /**
-     * Moves the enemy toward the player character.
-     * @param playerX the x-coordinate of the player character
-     * @param playerY the y-coordinate of the player character
+     * Moves the enemy toward the target.
+     * @param targetX the x-coordinate of the target
+     * @param targetY the y-coordinate of the target
      * @return the collisions that occurred when moving
      */
-    abstract public Collisions moveTowardPlayer(float playerX, float playerY);
+    abstract public Collisions moveTowardTarget(float targetX, float targetY);
 
     /**
      * @return returns the experience amount for killing the monster

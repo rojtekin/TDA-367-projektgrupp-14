@@ -26,15 +26,15 @@ public class Cyclops extends Monster {
     }
 
     /**
-     * Moves the cyclops toward the player character in the x-direction or in the y-direction.
+     * Moves the cyclops toward the target in the x-direction or in the y-direction.
      * If the cyclops gets stuck in the x-direction, it is moved up until it is no longer stuck.
      * If it gets stuck in the y-direction, it is moved right until it is no longer stuck.
-     * @param playerX the x-coordinate of the player character.
-     * @param playerY the y-coordinate of the player character.
+     * @param targetX the x-coordinate of the target
+     * @param targetY the y-coordinate of the target
      */
-    public Collisions moveTowardPlayer(float playerX, float playerY) {
-        float xDistance = playerX - getX();
-        float yDistance = playerY - getY();
+    public Collisions moveTowardTarget(float targetX, float targetY) {
+        float xDistance = targetX - getX();
+        float yDistance = targetY - getY();
         float initialX = getX();
         float initialY = getY();
         Collisions collisions;
@@ -46,7 +46,7 @@ public class Cyclops extends Monster {
             else {
                 collisions = move(Direction.LEFT, getSpeed());
             }
-            stuckInXDirection = getX() == initialX;
+            stuckInXDirection = (getX() == initialX);
             if (stuckInXDirection) {
                 collisions = move(Direction.UP, getSpeed());
             }

@@ -106,7 +106,7 @@ public class Model {
 
     private void moveMonsters() {
         for (Monster monster : monsters) {
-            Collisions collisions = monster.moveTowardPlayer(player.getX(), player.getY());
+            Collisions collisions = monster.moveTowardTarget(player.getX(), player.getY());
             for (int i = 0; i < collisions.size(); i++) {
                 Collision collision = collisions.get(i);
                 if (collisionWithPlayer(collision)) {

@@ -25,16 +25,16 @@ public class Mouse extends Monster {
 
     /**
      * Moves the mouse in the direction it is facing. After a certain amount of time since changing the direction has
-     * passed, the direction of the mouse is randomly changed, so it moves toward the player character
+     * passed, the direction of the mouse is randomly changed, so it moves toward the target
      * in the x-direction or y-direction.
-     * @param playerX the x-coordinate of the player character
-     * @param playerY the y-coordinate of the player character
+     * @param targetX the x-coordinate of the target
+     * @param targetY the y-coordinate of the target
      * @return the collisions that occurred when moving
      */
     @Override
-    public Collisions moveTowardPlayer(float playerX, float playerY) {
-        float xDistance = playerX - this.getX();
-        float yDistance = playerY - this.getY();
+    public Collisions moveTowardTarget(float targetX, float targetY) {
+        float xDistance = targetX - getX();
+        float yDistance = targetY - getY();
         float timeSinceDirectionChanged = Time.getInstance().getTicks() - timeWhenDirectionChanged;
 
         if (timeSinceDirectionChanged > 36) {

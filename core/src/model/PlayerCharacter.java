@@ -14,20 +14,6 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
 
     private PlayerWeapon weapon;
 
-    public PlayerWeapon getWeapon() {
-        return weapon;
-    }
-
-    public boolean isSwinging() {
-        return swinging;
-    }
-
-    public void setSwinging(boolean swinging) {
-        this.swinging = swinging;
-    }
-
-
-
     /**
      * Default constructor for a default sized player of the player faction
      * @param spawnX spawn location along x axis
@@ -100,5 +86,17 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
         for (Tweak t : this.tweaks.get(LivingTrait.DAMAGE)) {
             damage = t.apply(damage);}
         return damage;
+    }
+
+    public PlayerWeapon getWeapon() {
+        return weapon;
+    }
+
+    public boolean isSwinging() {
+        return swinging;
+    }
+
+    public void setSwinging(boolean swinging) {
+        this.swinging = swinging;
     }
 }

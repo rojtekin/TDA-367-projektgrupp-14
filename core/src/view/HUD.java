@@ -1,6 +1,5 @@
 package view;
 
-import model.IPlayerCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,18 +15,17 @@ import model.Model;
 
 public class HUD {
     private final Model model;
-    private Stage stage;
-    private FitViewport stageViewport;
-    private IPlayerCharacter player;
+    private final Stage stage;
+    private final FitViewport stageViewport;
 
-    private int outlineSize = 4;
+    private final int outlineSize = 4;
 
-    private int healthBarWidth = 200;
-    private int healthBarHeight = 20;
+    private final int healthBarWidth = 200;
+    private final int healthBarHeight = 20;
     private int currentHealthBarWidth;
 
-    private int experienceBarWidth = 400;
-    private int experienceBarHeight = 10;
+    private final int experienceBarWidth = 400;
+    private final int experienceBarHeight = 10;
     private int currentExperienceBarWidth;
 
     private Image healthColor;
@@ -61,11 +59,11 @@ public class HUD {
     private final Table table3 = new Table();
     private final Table table4 = new Table();
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
-    private Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
-    private Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
-    private Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
-    private Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
-    private Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
+    private final Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
+    private final Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
+    private final Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
+    private final Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
+    private final Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
 
     /**
      * Creates an instance of HUD
@@ -113,6 +111,7 @@ public class HUD {
         table3.setFillParent(true);
         healthBarLabel.setText("HP " + (int)model.getPlayer().getCurrentHealth() + "/" + (int)model.getPlayer().getMaxHealth());
         table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
+
         if (!model.getPlayer().getPerkList().isEmpty()) {
             perkLabel.setText("Perk: " + model.getPlayer().getPerkList().get(0));
             table3.add(perkLabel).top().padTop(10);

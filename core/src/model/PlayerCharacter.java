@@ -10,7 +10,6 @@ import java.util.*;
 /**
  * A representation of a player that additionally to its superclasses can have/swing a sword and have perks
  */
-public class PlayerCharacter extends LivingEntity implements IControllable, IPlayerCharacter {
 
 public class PlayerCharacter extends LivingEntity implements IControllable, IPlayerCharacter {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
@@ -75,13 +74,6 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
         this.level = 1;
         for (LivingTrait trait : LivingTrait.values()) {
             tweaks.put(trait, new ArrayList<>());
-        }
-    }
-
-    @Override
-    public void addTweak(Set<Tweak> tweaks) {
-        for (final Tweak t : tweaks) {
-            this.tweaks.get(t.getTrait()).add(t);
         }
     }
 

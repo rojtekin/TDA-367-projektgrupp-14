@@ -110,5 +110,11 @@ public abstract class Entity implements IEntity{
         setY(world.getRect(boundingbox).y);
     }
 
+    /**
+     * The concrete logic for what should happen when attacked
+     * depends on the specific class of the receiver
+     * @param damage The amount of damage inflicted
+     * @param faction The faction of the attacker
+     */
     public abstract void beAttacked(float damage, Faction faction);
 }

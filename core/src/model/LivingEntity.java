@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Parent class for all entities that have movement and health
+ * Abstract parent class for all entities that have movement and health
  */
 public abstract class LivingEntity extends Entity implements ILivingEntity {
     private float speed;
@@ -99,6 +99,9 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
 
     /**
      * Decreases current health with a specified amount
+     * Used to decrease am entity's health directly such as
+     * when using a status effect, for combat use beAttacked
+     * instead.
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {
@@ -126,7 +129,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
     }
 
     /**
-     * Damages every touched hostile entity
+     * Attacks every touched entity
      */
     private void damageTouched(Collisions projectedCollisions) {
         for (int i = 0; i < projectedCollisions.size(); i++) {
@@ -135,6 +138,13 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
         }
     }
 
+    /**
+     * When a living entity is attacked by someone of a different faction
+     * it will take damage. If it is attacked by a "friendl" entity of the same
+     * faction then nothing will happen.
+     * @param damage The amount of damage inflicted
+     * @param faction The faction of the attacker
+     */
     @Override
     public void beAttacked(float damage, Faction faction) {
         if (this.faction != faction) {

@@ -82,7 +82,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * Moves the entity in the direction it is facing.
      * @return the collisions that occurred when moving
      */
-    public Collisions moveForward(float speed) {
+    public Collisions moveForward() {
         setMoving(true);
         return changePosition((getDirection().x * speed), (getDirection().y * speed));
     }
@@ -111,9 +111,9 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * @param direction the direction that the entity should move in
      * @return the collisions that occurred when moving
      */
-    public Collisions move(Direction direction, float speed) {
+    public Collisions move(Direction direction) {
         setDirection(direction);
-        return moveForward(speed);
+        return moveForward();
     }
 
     /**

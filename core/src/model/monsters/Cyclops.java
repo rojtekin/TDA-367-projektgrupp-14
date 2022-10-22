@@ -42,30 +42,30 @@ public class Cyclops extends Monster {
 
         if ((Math.abs(xDistance) > 16) && !stuckInYDirection && !targetNearby) {
             if (xDistance > 0) {
-                collisions = move(Direction.RIGHT, getSpeed());
+                collisions = move(Direction.RIGHT);
             }
             else {
-                collisions = move(Direction.LEFT, getSpeed());
+                collisions = move(Direction.LEFT);
             }
             stuckInXDirection = (getX() == initialX);
             if (stuckInXDirection) {
-                collisions = move(Direction.UP, getSpeed());
+                collisions = move(Direction.UP);
             }
         }
         else if (!stuckInXDirection && !targetNearby) {
             if (yDistance > 0) {
-                collisions = move(Direction.UP, getSpeed());
+                collisions = move(Direction.UP);
             }
             else {
-                collisions = move(Direction.DOWN, getSpeed());
+                collisions = move(Direction.DOWN);
             }
             stuckInYDirection = (getY() == initialY);
             if (stuckInYDirection) {
-                collisions = move(Direction.RIGHT, getSpeed());
+                collisions = move(Direction.RIGHT);
             }
         }
         else {
-            collisions = moveForward(getSpeed());
+            collisions = moveForward();
         }
         return collisions;
     }

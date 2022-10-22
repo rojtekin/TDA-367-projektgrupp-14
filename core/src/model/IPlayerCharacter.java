@@ -62,7 +62,7 @@ public interface IPlayerCharacter {
 
     float getY();
 
-    Collisions move(Direction direction, float speed);
+    Collisions move(Direction direction);
 
     float getHeight();
 

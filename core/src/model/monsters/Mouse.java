@@ -41,21 +41,21 @@ public class Mouse extends Monster {
             timeWhenDirectionChanged = Time.getInstance().getTicks();
             if (Math.random() < 0.5) {
                 if ((xDistance > 0)) {
-                    return move(Direction.RIGHT, getSpeed());
+                    return move(Direction.RIGHT);
                 } else {
-                    return move(Direction.LEFT, getSpeed());
+                    return move(Direction.LEFT);
                 }
             }
             else {
                 if ((yDistance > 0)) {
-                    return move(Direction.UP, getSpeed());
+                    return move(Direction.UP);
                 } else {
-                    return move(Direction.DOWN, getSpeed());
+                    return move(Direction.DOWN);
                 }
             }
         }
         else {
-            return moveForward(getSpeed());
+            return moveForward();
         }
     }
 }

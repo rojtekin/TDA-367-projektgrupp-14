@@ -22,16 +22,16 @@ public class Controller {
         model.getPlayer().setMoving(false);
         // User input
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.move(Direction.LEFT, player.getSpeed());
+            player.move(Direction.LEFT);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.move(Direction.RIGHT, player.getSpeed());
+            player.move(Direction.RIGHT);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.move(Direction.UP, player.getSpeed());
+            player.move(Direction.UP);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.move(Direction.DOWN, player.getSpeed());
+            player.move(Direction.DOWN);
         }
 
         model.getPlayer().setSwinging(false);

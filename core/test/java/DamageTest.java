@@ -69,7 +69,7 @@ public class DamageTest {
     public void playerTakesCollisionDamage() {
         float initHP = model.getPlayer().getCurrentHealth();
         Cyclops cyclops = new Cyclops(model.getPlayer().getWidth(), model.getPlayer().getY(), model.getWorld());
-        cyclops.move(Direction.LEFT, cyclops.getSpeed());
+        cyclops.move(Direction.LEFT);
         float finalHP = model.getPlayer().getCurrentHealth();
         assertTrue(initHP > finalHP);
     }

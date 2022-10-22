@@ -86,9 +86,7 @@ public class View {
         updatePlayerWalkFrame();
         drawEntities();
 
-        if (model.getPlayer().isSwinging()){
-            drawWeaponSwing();
-        }
+        checkWeaponSwing();
 
         batch.end();
 
@@ -130,6 +128,9 @@ public class View {
         drawEnemies();
     }
 
+    /**
+     * automatically disposes hud, batch and tiledMap when screen gets closed
+     */
     public void dispose () {
         hud.dispose();
         batch.dispose();
@@ -155,7 +156,18 @@ public class View {
         }
     }
 
+    /**
+     * checks if sword has been swung and if swung calls for it to be drawn
+     */
+    public void checkWeaponSwing() {
+        if (model.getPlayer().isSwinging()) {
+            drawWeaponSwing();
+        }
+    }
+    /**
+     * draws the weaponSwing
+     */
     public void drawWeaponSwing() {
-        batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
+        batch.draw(swordSprite, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getHeight() / 2, model.getPlayer().getWidth() / 2, 64, 64, 1, 1, (float) model.getPlayer().getWeapon().getWeaponAngle());
     }
 }

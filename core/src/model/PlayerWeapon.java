@@ -26,7 +26,7 @@ public abstract class PlayerWeapon {
 
     /**
      * Constructor that subclasses of PlayerWeapon use.
-     * @param world
+     * @param world the world weapon exists in
      * @param weaponDamage Is the damage the weapon deals per hit
      * @param weaponRange Is the range the sword has
      * @param weaponWidth Is the swords width

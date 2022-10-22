@@ -15,24 +15,27 @@ import java.util.Objects;
  * A class responsible for managing the logic of the game.
  */
 public class Model implements MovementListener {
-    private IEnvironmentCache mapCache;
-    private IPlayerCharacter player;
+    private final IEnvironmentCache mapCache;
+    private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<Entity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
     private static final int MAX_MONSTERS = 50;
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
-    private World<IEntity> world;
+    private final World<IEntity> world;
     private int currentScore = 0;
 
-    public Model(IEnvironmentCache mapCache, PlayerCharacter player, List<Point> spawnPoints) {
+    public Model(IEnvironmentCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);
         this.spawnPoints = Objects.requireNonNull(spawnPoints);
     }
 
+    /**
+     * @return playerCharacter connected to Model
+     */
     public IPlayerCharacter getPlayer(){
         return player;
     }
@@ -40,10 +43,19 @@ public class Model implements MovementListener {
     public void update() {
         spawnMonsters();
         moveMonsters();
-        if (rewardSystem.levelUpChecker(player)){
-        player = rewardSystem.applyReward(getPlayer(), rewardSystem.getRandomReward());
-        }
+        levelUpCheckAndApply();
         despawnDeadNPCs();
+    }
+
+    /**
+     * Checks if player has reached the threshold to level up and applies a reward accordingly if so.
+     */
+    private void levelUpCheckAndApply() {
+        if (player.levelUpCheck()){
+            player.reduceExperience();
+            rewardSystem.applyReward(player, rewardSystem.getRandomReward());
+            player.increaseLevel();
+        }
     }
 
     /**
@@ -142,12 +154,12 @@ public class Model implements MovementListener {
     }
 
     public void initialize() {
-        rewardSystem.initialize(world);
+        rewardSystem.initialize(this);
     }
 
     /**
      * Removes a monster from the game and removes
-     * its collisionbox from the world
+     * its collisionBox from the world
      * @param monster Enemy to be removed
      */
     public void despawn(Monster monster) {

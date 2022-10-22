@@ -130,7 +130,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      */
     private void damageTouched(Collisions projectedCollisions) {
         for (int i = 0; i < projectedCollisions.size(); i++) {
-            Item<Entity> touched = projectedCollisions.get(i).other;
+            Item<IEntity> touched = projectedCollisions.get(i).other;
             touched.userData.beAttacked(getDamage()/10, faction);
         }
     }

@@ -3,22 +3,18 @@ package model.rewards;
 import com.dongbat.jbump.World;
 import model.IEntity;
 import model.IPlayerCharacter;
-import model.playerperks.GlassCannon;
-import model.playerperks.SpeedDevil;
-import model.playerperks.Tank;
+import model.Model;
 
 public class RewardSystem {
     private static final int EXPERIENCE_THRESHOLD = 100;
-    private boolean perkApplied;
-    private World<IEntity> world;
+    private Model model;
 
     /**
      * Initializes the RewardSystem class so that a perk can be applied
-     * @param world the world it initializes on.
+     * @param model the Model it initializes on.
      */
-    public void initialize(World<IEntity> world) {
-        perkApplied = false;
-        this.world = world;
+    public void initialize(Model model) {
+        this.model = model;
     }
 
     /**
@@ -31,56 +27,26 @@ public class RewardSystem {
     }
 
     /**
-     * Generates a random level up reward, if a perk is already applied then the reward can't be a perk
+     * Generates a random level up reward, if a perk has already been applied then the reward can't be a perk
      * @return a randomised reward
      */
     public Reward getRandomReward(){
         Reward reward = Reward.randomReward();
-        if ((reward == Reward.TANK && perkApplied )||(reward == Reward.GLASS_CANNON && perkApplied) || (reward == Reward.SPEED_DEVIL && perkApplied)){
+        if ((reward == Reward.TANK && !model.getPlayer().getPerkList().isEmpty())||(reward == Reward.GLASS_CANNON && !model.getPlayer().getPerkList().isEmpty()) || (reward == Reward.SPEED_DEVIL && !model.getPlayer().getPerkList().isEmpty())){
             reward = getRandomReward();
         }
         return reward;
     }
 
     /**
-     * Applies a reward on a PlayerCharacter
+     * Applies a reward on a PlayerCharacter, if its a perk it gets added to perkList in player
      * @param playerCharacter the playerCharacter it gets applied to
      * @param reward the reward that gets applied
-     * @return the resulting PlayerCharacter with the reward applied
      */
-    public IPlayerCharacter applyReward(IPlayerCharacter playerCharacter, Reward reward){
-        playerCharacter.reduceExperience();
-        if (reward == Reward.DAMAGE_INCREASE){
-            playerCharacter.increaseDamage();
-        }
-        else if (reward == Reward.HEALTH_INCREASE){
-            playerCharacter.increaseMaxHealth();
-            playerCharacter.increaseCurrentHealth(1);
-        }
-        else if (reward == Reward.SPEED_INCREASE){
-            playerCharacter.increaseSpeed();
-        }
-        else if (reward == Reward.ABILITY_POWER_INCREASE){
-            playerCharacter.increaseAbilityPower();
-        }
-        else if (reward == Reward.COOL_DOWN_DECREASE && playerCharacter.getAbilityCoolDownMultiplier() != 0){
-            playerCharacter.decreasedAbilityCoolDownMultiplier();
-        }
-        else if (reward == Reward.SPEED_DEVIL){
-            playerCharacter = new SpeedDevil(playerCharacter, world);
-            playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());
-            perkApplied = true;
-        }
-        else if (reward == Reward.GLASS_CANNON){
-            playerCharacter = new GlassCannon(playerCharacter, world);
-            playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());
-            perkApplied = true;
-        }
-        else if (reward == Reward.TANK){
-            playerCharacter = new Tank(playerCharacter, world);
-            playerCharacter.increaseCurrentHealth(playerCharacter.getMaxHealth());
-            perkApplied = true;
-        }
-        return playerCharacter;
+    public void applyReward(IPlayerCharacter playerCharacter, Reward reward){
+        if (reward == Reward.TANK || reward == Reward.GLASS_CANNON || reward == Reward.SPEED_DEVIL){
+            playerCharacter.getPerkList().add(reward);}
+        playerCharacter.addTweak(reward.getTweak());
+
     }
 }

@@ -22,10 +22,4 @@ public class MapTest {
         assertTrue(tmc.getMapUnitHeight() == 0 && tmc.getMapUnitWidth() == 0 &&
                 tmc.getSpawnPoints().size() == 8);
     }
-
-    //@Test
-    //public void loadEnvironment_LoadsMap() {
-    //    tmc.loadEnvironment("Flowerfield");
-    //    assertTrue(tmc.getMap() != null);
-    //}
 }

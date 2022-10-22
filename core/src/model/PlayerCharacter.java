@@ -55,6 +55,12 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
     }
 
     @Override
+    public Map<LivingTrait, ArrayList<Tweak>> getTweaks() {
+        Map<LivingTrait, ArrayList<Tweak>> tweakCopy = tweaks;
+        return tweakCopy;
+    }
+
+    @Override
     public void weaponAttack(int rotationStart, int rotationFinish){
         weapon.weaponSwing(rotationStart,rotationFinish,0, this);
     }

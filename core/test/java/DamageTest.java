@@ -78,7 +78,7 @@ public class DamageTest {
     public void weaponAttack_DamagesMonster() {
         Cyclops cyclops = new Cyclops(model.getPlayer().getWidth(), model.getPlayer().getY(), model.getWorld());
         float initHP = cyclops.getCurrentHealth();
-        model.getPlayer().weaponAttack(315,45,0);
+        model.getPlayer().weaponAttack(315,45);
         float finalHP = cyclops.getCurrentHealth();
         assertTrue(initHP > finalHP);
     }

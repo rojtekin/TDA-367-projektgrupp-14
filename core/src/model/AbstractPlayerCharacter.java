@@ -1,56 +1,44 @@
 package model;
 
 import com.dongbat.jbump.World;
+import model.rewards.Reward;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PlayerCharacterAdapter extends LivingEntity implements IPlayerCharacter {
+public abstract class AbstractPlayerCharacter extends LivingEntity implements IPlayerCharacter {
 
     private int experience;
     private int level;
-    private float AbilityCoolDownMultiplier;
-    private float AbilityPower;
+    private float abilityCoolDownMultiplier;
+    private float abilityPower;
     private static final int EXPERIENCE_THRESHOLD = 100;
-    private List<String> perkList = new ArrayList<String>();
+    private List<Reward> perkList = new ArrayList<>();
 
-    public PlayerCharacterAdapter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
+    public AbstractPlayerCharacter(float x, float y, float height, float width, float speed, float maxHealth , float damage, Faction faction, World<IEntity> world) {
         super(x, y, height, width, speed, maxHealth, damage, faction, world);
         this.experience = 0;
         this.level = 0;
-        this.AbilityCoolDownMultiplier = 1;
-    }
-
-    @Override
-    public float getMaxHealth() {
-        return super.getMaxHealth();
-    }
-
-    @Override
-    public float getSpeed(){
-        return super.getSpeed();
+        this.abilityCoolDownMultiplier = 1;
+        this.abilityPower = 1;
     }
 
     @Override
     public void increaseCurrentHealth(float amount){
-        if (getCurrentHealth()+amount < getMaxHealth()){
-        setCurrentHealth(getCurrentHealth()+amount);}
-        else {
-            setCurrentHealth(getMaxHealth());
-        }
+        setCurrentHealth(Math.min(getCurrentHealth() + amount, getMaxHealth()));
     }
 
     public int getExperience() {
         return experience;
     }
-    private void setExperience(int experience) {
+    protected void setExperience(int experience) {
         this.experience = experience;
     }
 
     public int getLevel() {
         return level;
     }
-    private void setLevel(int level) {
+    protected void setLevel(int level) {
         this.level = level;
     }
 
@@ -99,18 +87,18 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     public void gainExperience(int experience) {
         setExperience(getExperience() + experience);
     }
-    public void reduceExperience() { setExperience(getExperience()-100); }
+    public void reduceExperience() { setExperience( (getExperience() - 100) ); }
 
-    public float getAbilityPower() { return AbilityPower; }
-    private void setAbilityPower(float abilityPower) {
-        AbilityPower = abilityPower;
+    public float getAbilityPower() { return abilityPower; }
+    protected void setAbilityPower(float abilityPower) {
+        this.abilityPower = abilityPower;
     }
 
     public float getAbilityCoolDownMultiplier() {
-        return AbilityCoolDownMultiplier;
+        return abilityCoolDownMultiplier;
     }
     private void setAbilityCoolDownMultiplier(float abilityCoolDownMultiplier) {
-        AbilityCoolDownMultiplier = abilityCoolDownMultiplier;
+        this.abilityCoolDownMultiplier = abilityCoolDownMultiplier;
     }
     public boolean levelUpCheck(){
         return experience >= EXPERIENCE_THRESHOLD;
@@ -119,7 +107,7 @@ public abstract class PlayerCharacterAdapter extends LivingEntity implements IPl
     /**
      * @return returns a list of perks applied to the player
      */
-    public List<String> getPerkList() {
+    public List<Reward> getPerkList() {
         return perkList;
     }
 

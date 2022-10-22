@@ -1,8 +1,14 @@
 package model;
 
 import com.dongbat.jbump.World;
+import model.rewards.LivingTrait;
+import model.rewards.Tweak;
 
-public class PlayerCharacter extends PlayerCharacterAdapter implements IControllable, IPlayerCharacter {
+import java.util.*;
+
+
+public class PlayerCharacter extends AbstractPlayerCharacter implements IControllable, IPlayerCharacter {
+    private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
 
     private boolean swinging;
     public Sword getWeapon() {
@@ -29,6 +35,15 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
     public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, Faction.PLAYER, world);
         weapon = new Sword(world);
+        for (LivingTrait trait : LivingTrait.values()) {
+            tweaks.put(trait, new ArrayList<>());
+        }
+    }
+
+    public void addTweak(Set<Tweak> tweaks) {
+        for (final Tweak t : tweaks) {
+            this.tweaks.get(t.getTrait()).add(t);
+        }
     }
 
     //weaponswing unsure if i should split since i might combine animation and movement
@@ -48,5 +63,40 @@ public class PlayerCharacter extends PlayerCharacterAdapter implements IControll
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
         weapon = new Sword(world);
+    }
+
+    @Override
+    public float getSpeed() {
+        float speed = super.getSpeed();
+        for (Tweak t : this.tweaks.get(LivingTrait.SPEED)) {
+            speed = t.apply(speed);}
+
+        return speed;
+    }
+
+    @Override
+    public float getMaxHealth(){
+        float maxHealth = super.getMaxHealth();
+        for (Tweak t : this.tweaks.get(LivingTrait.HEALTH)) {
+            maxHealth = t.apply(maxHealth);}
+
+        return maxHealth;
+    }
+
+    @Override
+    public float getCurrentHealth(){
+        float currentHealth = super.getCurrentHealth();
+        for (Tweak t : this.tweaks.get(LivingTrait.HEALTH)) {
+            currentHealth = t.apply(currentHealth);}
+        if (currentHealth<0){ currentHealth = 0f;}
+        return currentHealth;
+    }
+
+    @Override
+    public float getDamage(){
+        float damage = super.getDamage();
+        for (Tweak t : this.tweaks.get(LivingTrait.DAMAGE)) {
+            damage = t.apply(damage);}
+        return damage;
     }
 }

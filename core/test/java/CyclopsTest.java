@@ -10,7 +10,7 @@ public class CyclopsTest {
     private Cyclops cyclops;
 
     @BeforeEach
-    public void setUp() { cyclops = new Cyclops(100, 100,1,1,1,new World<>()); }
+    public void setUp() { cyclops = new Cyclops(100, 100, new World<>()); }
 
     @Test
     public void moveTowardsPlayer_DecreasesTheDistanceBetweenCyclopsAndPlayer() {
@@ -18,12 +18,12 @@ public class CyclopsTest {
         float playerY = 400;
         float initialXDistance = Math.abs(playerX - cyclops.getX());
         float initialYDistance = Math.abs(playerY - cyclops.getY());
-        double initialDistance = Math.sqrt(Math.pow(initialXDistance, 2) + Math.pow(initialYDistance, 2));
+        double initialDistance = Math.hypot(initialXDistance, initialYDistance);
 
         cyclops.moveTowardPlayer(playerX, playerY);
         float finalXDistance = Math.abs(playerX - cyclops.getX());
         float finalYDistance = Math.abs(playerY - cyclops.getY());
-        double finalDistance = Math.sqrt(Math.pow(finalXDistance, 2) + Math.pow(finalYDistance, 2));
+        double finalDistance = Math.hypot(finalXDistance, finalYDistance);
         assertTrue(finalDistance < initialDistance);
     }
 }

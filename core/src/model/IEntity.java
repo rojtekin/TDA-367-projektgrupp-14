@@ -1,6 +1,6 @@
 package model;
 
-import com.dongbat.jbump.IntPoint;
+import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
 public interface IEntity {
@@ -16,4 +16,6 @@ public interface IEntity {
     float getDamage();
 
     World<IEntity> getWorld();
+
+    void beAttacked(float damage, Faction faction);
 }

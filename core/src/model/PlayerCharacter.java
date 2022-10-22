@@ -11,11 +11,13 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
 
     private boolean swinging;
-    public Sword getWeapon() {
+
+    private PlayerWeapon weapon;
+
+    public PlayerWeapon getWeapon() {
         return weapon;
     }
 
-    private Sword weapon;
     public boolean isSwinging() {
         return swinging;
     }

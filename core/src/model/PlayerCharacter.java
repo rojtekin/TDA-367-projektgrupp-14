@@ -7,7 +7,7 @@ import model.rewards.Tweak;
 import java.util.*;
 
 /**
- * A representation of a player that can additionally to its superclasses can swing a sword and have perks
+ * A representation of a player that additionally to its superclasses can have/swing a sword and have perks
  */
 public class PlayerCharacter extends AbstractPlayerCharacter implements IControllable, IPlayerCharacter {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
@@ -42,6 +42,10 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
         }
     }
 
+    /**
+     * ads a perk to the player
+     * @param tweaks adds a tweak to the playerCharacter used by rewardSystem
+     */
     public void addTweak(Set<Tweak> tweaks) {
         for (final Tweak t : tweaks) {
             this.tweaks.get(t.getTrait()).add(t);
@@ -52,6 +56,13 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
     //animationspart is used since i want a recursive animation. Example every time i call
     //the function animationpart is reduced by one, use this to determine the swords current rotation
     //and next time it will rotate a bit more
+
+    /**
+     * Calls upon its weapon to do a weaponSwing
+     * @param rotationStart startangle of the swing
+     * @param rotationFinish endangle of the swing
+     * @param animationpart used to start a swing midway, if it exceeds the weapons weaponRotations it will not swing at all
+     */
     public void weaponAttack(int rotationStart, int rotationFinish, int animationpart){
         weapon.weaponSwing(rotationStart,rotationFinish,animationpart, this);
     }

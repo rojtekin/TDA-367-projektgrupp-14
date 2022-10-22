@@ -27,6 +27,15 @@ public abstract class Entity implements IEntity{
         this.collisionResponse = collisionResponse;
     }
 
+    /**
+     * Abstract constructor
+     * @param x entity x coordinate position
+     * @param y entity y coordinate position
+     * @param height entity height
+     * @param width entity width
+     * @param damage entity damage
+     * @param world the world entity resides in
+     */
      public Entity(float x, float y, float height, float width, float damage, World<IEntity> world) {
         this.x = x;
         this.y = y;

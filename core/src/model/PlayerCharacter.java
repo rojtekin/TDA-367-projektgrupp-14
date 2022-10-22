@@ -6,7 +6,9 @@ import model.rewards.Tweak;
 
 import java.util.*;
 
-
+/**
+ * A representation of a player that can additionally to its superclasses can swing a sword and have perks
+ */
 public class PlayerCharacter extends AbstractPlayerCharacter implements IControllable, IPlayerCharacter {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
 

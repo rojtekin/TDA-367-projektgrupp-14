@@ -14,15 +14,15 @@ public abstract class PlayerWeapon {
     private float weaponSpeed;
     private float weaponDamage;
     private float weaponRange;
-    private float weaponWidth;
+    private final float weaponWidth;
     private double weaponAngle;
-    private int weaponRotations;
-    private World<IEntity> world;
-    private CollisionFilter filter;
+    private final int weaponRotations;
+    private final World<IEntity> world;
+    private final CollisionFilter filter;
     private Set<Entity> isKnown = new HashSet<Entity>();
-    private ArrayList<ItemInfo> items = new ArrayList<>();
-    private List<Entity> entities = new LinkedList<>();
-    private Set<Entity> seen = new HashSet<Entity>();
+    private final ArrayList<ItemInfo> items = new ArrayList<>();
+    private final List<Entity> entities = new LinkedList<>();
+    private final Set<Entity> seen = new HashSet<Entity>();
 
     /**
      * Constructor that subclasses of PlayerWeapon use.

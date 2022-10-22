@@ -13,20 +13,8 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
 
     private boolean swinging;
-    public Sword getWeapon() {
-        return weapon;
-    }
 
-    private Sword weapon;
-    public boolean isSwinging() {
-        return swinging;
-    }
-
-    public void setSwinging(boolean swinging) {
-        this.swinging = swinging;
-    }
-
-
+    private PlayerWeapon weapon;
 
     /**
      * Default constructor for a default sized player of the player faction
@@ -111,5 +99,17 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
         for (Tweak t : this.tweaks.get(LivingTrait.DAMAGE)) {
             damage = t.apply(damage);}
         return damage;
+    }
+
+    public PlayerWeapon getWeapon() {
+        return weapon;
+    }
+
+    public boolean isSwinging() {
+        return swinging;
+    }
+
+    public void setSwinging(boolean swinging) {
+        this.swinging = swinging;
     }
 }

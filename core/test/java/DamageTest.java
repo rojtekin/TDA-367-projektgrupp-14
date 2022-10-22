@@ -23,7 +23,7 @@ public class DamageTest {
     }
 
     @Test
-    public void playerTakesDamage() {
+    public void takeDamage_InflictsDamageToPlayer() {
         float playerInitialHealth = model.getPlayer().getCurrentHealth();
         PlayerCharacter player = (PlayerCharacter) model.getPlayer();
         player.takeDamage(1);
@@ -32,7 +32,7 @@ public class DamageTest {
     }
 
     @Test
-    public void enemyTakesDamage() {
+    public void takeDamage_InflictsDamageToMonster() {
         float enemyInitialHealth = monster.getCurrentHealth();
         monster.takeDamage(1);
         float enemyFinalHealth = monster.getCurrentHealth();
@@ -40,33 +40,33 @@ public class DamageTest {
     }
 
     @Test
-    public void enemyDespawns() {
+    public void despawn_RemovesMonster() {
         model.despawn(monster);
         assertFalse(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void healthyEnemyDoesNotDespawn() {
+    public void despawnDeadNPCs_DoesNotDespawnMonsterAtFullHealth() {
         model.despawnDeadNPCs();
         assertTrue(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void partiallyDamagedEnemyDoesNotDespawn() {
+    public void despawnDeadNPCs_DoesNotDespawnMonstersAtPartialHealth() {
         monster.takeDamage(1);
         model.despawnDeadNPCs();
         assertTrue(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void enemyDespawnsAtZeroHealth() {
+    public void despawnDeadNPCs_DespawnsMonstersAtZeroHealth() {
         monster.takeDamage(10);
         model.despawnDeadNPCs();
         assertFalse(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void playerTakesCollisionDamage() {
+    public void move_DamagesTouchedPlayer() {
         float initHP = model.getPlayer().getCurrentHealth();
         Cyclops cyclops = new Cyclops(model.getPlayer().getWidth(), model.getPlayer().getY(), model.getWorld());
         cyclops.move(Direction.LEFT, cyclops.getSpeed());

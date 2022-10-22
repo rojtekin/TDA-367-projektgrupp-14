@@ -55,19 +55,5 @@ public class PlayerCharacterTest {
         assertTrue(playerExperience == 0 && gainedExperience == 100);
     }
 
-    @Test
-    public void increaseMaxHealth_IncreasesMaxHealth() {
-        float initMaxHealth = player.getMaxHealth();
-        player.increaseMaxHealth();
-        float finalMaxHealth = player.getMaxHealth();
-        assertTrue(finalMaxHealth > initMaxHealth);
-    }
 
-    @Test
-    public void decreaseMaxHealth_decreasesMaxHealth() {
-        float initMaxHealth = player.getMaxHealth();
-        player.decreaseMaxHealth();
-        float finalMaxHealth = player.getMaxHealth();
-        assertTrue(finalMaxHealth < initMaxHealth);
-    }
 }

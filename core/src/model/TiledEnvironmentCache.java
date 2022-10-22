@@ -86,12 +86,12 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
     }
 
     private List<Point> defaultSpawnPoints() {
-        int xLeft = 100;
+        int xLeft = 300;
         int xCenter = getMapUnitWidth() / 2;
-        int xRight = getMapUnitWidth() - 100;
-        int yBottom = 100;
+        int xRight = getMapUnitWidth() - 200;
+        int yBottom = 300;
         int yCenter = getMapUnitHeight() / 2;
-        int yTop = getMapUnitHeight() - 100;
+        int yTop = getMapUnitHeight() - 200;
         return spawnPoints = Arrays.asList(new Point(xLeft, yTop), new Point(xCenter, yTop), new Point(xRight, yTop),
                 new Point(xLeft, yCenter), new Point(xRight, yCenter),
                 new Point(xLeft, yBottom), new Point(xCenter, yBottom), new Point(xRight, yBottom));
@@ -148,8 +148,8 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
             spawnPoints = new ArrayList<>();
             for (RectangleMapObject o : spawnObjects.getByType(RectangleMapObject.class)) {
                 Rectangle r = o.getRectangle();
-                int rX = (int) Math.abs(r.getWidth() - r.getX()) / 2;
-                int rY = (int) Math.abs(r.getHeight() - r.getY()) / 2;
+                int rX = (int) r.getX() + ( (int) Math.abs(r.getWidth()) - (int) Math.abs(r.getX()) / 2);
+                int rY = (int) r.getY() + ( (int) Math.abs(r.getHeight() - (int) Math.abs(r.getY())) / 2);
                 spawnPoints.add(new Point(rX, rY));
             }
         }

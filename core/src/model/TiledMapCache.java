@@ -20,7 +20,7 @@ import java.util.List;
  * such as map proportions for spawn locations and for importing map objects for collision
  * Also holds the "world" object which handles collisionboxes
  */
-public class TiledEnvironmentCache implements IEnvironmentCache {
+public class TiledMapCache implements IMapCache {
     //Constants for layer names in map. We can't control how the layers are named
     //since Tiled allows you to name and number layers however you want. Therefore
     //the mapmaker must comply with these constants or else the program won't be able
@@ -78,7 +78,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
      * Creates an empty environment that can be loaded in the model
      * Useful for testing without a map
      */
-    public TiledEnvironmentCache() {
+    public TiledMapCache() {
         mapUnitHeight = 0;
         mapUnitWidth = 0;
         world = new World<>();

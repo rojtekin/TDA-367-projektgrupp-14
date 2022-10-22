@@ -15,7 +15,7 @@ import java.util.Objects;
  * A class responsible for managing the logic of the game.
  */
 public class Model implements MovementListener {
-    private final IEnvironmentCache mapCache;
+    private final IMapCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<Entity> entityList = new ArrayList<>();
@@ -26,7 +26,7 @@ public class Model implements MovementListener {
     private final World<IEntity> world;
     private int currentScore = 0;
 
-    public Model(IEnvironmentCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
+    public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);

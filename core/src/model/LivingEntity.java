@@ -93,6 +93,10 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
         setMoving(true);
     }
 
+    /**
+     * adds a specific movementListener
+     * @param movementListener movementListener that will be added
+     */
     public void addMovementListener(MovementListener movementListener) {
         movementListeners.add(movementListener);
     }

@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * A representation of a player that additionally to its superclasses can have/swing a sword and have perks
  */
-public class PlayerCharacter extends AbstractPlayerCharacter implements IControllable, IPlayerCharacter {
+public class PlayerCharacter extends AbstractPlayerCharacter implements IPlayerCharacter {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
 
     private boolean swinging;

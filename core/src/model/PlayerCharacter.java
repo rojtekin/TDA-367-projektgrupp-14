@@ -40,7 +40,6 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
         super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
         weapon = new Sword(world);
-        weapon = new Sword(world);
         this.experience = 0;
         this.level = 1;
         for (LivingTrait trait : LivingTrait.values()) {

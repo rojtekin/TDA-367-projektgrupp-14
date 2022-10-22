@@ -111,4 +111,8 @@ public abstract class AbstractPlayerCharacter extends LivingEntity implements IP
         return perkList;
     }
 
+    public int getExperienceThreshold(){
+        return EXPERIENCE_THRESHOLD;
+    }
+
 }

@@ -19,11 +19,16 @@ public class HUD {
     private Stage stage;
     private FitViewport stageViewport;
     private IPlayerCharacter player;
-    private double currentHealth;
-    private double maxHealth;
 
-    private int healthBarSize;
-    private int experienceBarSize;
+    private int outlineSize = 4;
+
+    private int healthBarWidth = 200;
+    private int healthBarHeight = 20;
+    private int currentHealthBarWidth;
+
+    private int experienceBarWidth = 400;
+    private int experienceBarHeight = 10;
+    private int currentExperienceBarWidth;
 
     private Image healthColor;
 
@@ -36,6 +41,8 @@ public class HUD {
 
     private final Texture black = new Texture(Gdx.files.internal("HudColors/Black.png"));
     private final NinePatch blackHealth = new NinePatch(black, 0, 0, 0, 0);
+
+    // Couldnt use the same image twice.
     private final Image blackHealthBar = new Image(blackHealth);
     private final Image blackExperienceBar = new Image(blackHealth);
 
@@ -52,15 +59,23 @@ public class HUD {
     private final Table table1 = new Table();
     private final Table table2 = new Table();
     private final Table table3 = new Table();
+    private final Table table4 = new Table();
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
-    private Label healthBarLabel =  new Label("HP", whiteTextColorAndFont);
-    private Label scoreLabel = new Label("Score: " + 0, whiteTextColorAndFont);
+    private Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
+    private Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
+    private Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
+    private Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
+    private Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
 
+    /**
+     * Creates an instance of HUD
+     * @param spriteBatch Libgdx class used for allowing things to be drawn or not.
+     * @param model model is needed to health, score and experience.
+     */
     public HUD(SpriteBatch spriteBatch, Model model) {
         stageViewport = new FitViewport(800, 480);
         stage = new Stage(stageViewport, spriteBatch);
         this.model = model;
-        this.player = model.getPlayer();
     }
 
     public void update() {
@@ -70,48 +85,63 @@ public class HUD {
         table1.clear();
         table2.clear();
         table3.clear();
+        table4.clear();
 
         stage.clear(); //Prevents memory leak where new tables are continuously added to stage
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
 
-        table1.add(blackHealthBar).size(204, 24).left().top().expandX().expandY().pad(8); //black underline hp bar
+        table1.add(blackHealthBar).size(healthBarWidth+ outlineSize, healthBarHeight + outlineSize).left().top().expandX().expandY().pad(8); //black underline hp bar
 
         table1.row(); //new row
 
-        table1.add(blackExperienceBar).size(404, 14).bottom().pad(8); //Black border experience
+        table1.add(blackExperienceBar).size(experienceBarWidth +outlineSize, experienceBarHeight+outlineSize).bottom().pad(8); //Black border experience
 
         stage.addActor(table1); //add the bottom layer to stage
 
         table2.setFillParent(true);
 
-        //den här ska switcha från grön till gull till röd och även minska i size beroende på hp, funktion att göra
-        //table2.add(fullhp).size(200,20).left().top().pad(10).expandX().expandY();
         pickHealthBarColor();
-        pickHealthBarSize();
-        table2.add(getHealthColor()).size(healthBarSize, 20).left().top().pad(10).expandX().expandY();
+        pickCurrentHealthBarWidth();
+        table2.add(getHealthColor()).size(currentHealthBarWidth, healthBarHeight).left().top().pad(10).expandX().expandY();
         //hp size is between 0 and 1
         table2.row();
 
-        table2.add(experienceBar).size(400, 10).pad(10);
+        table2.add(experienceBar).size(experienceBarWidth, experienceBarHeight).pad(10);
 
         stage.addActor(table2);
 
         table3.setFillParent(true);
-
+        healthBarLabel.setText("HP " + (int)model.getPlayer().getCurrentHealth() + "/" + (int)model.getPlayer().getMaxHealth());
         table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
+        if (!model.getPlayer().getPerkList().isEmpty()) {
+            perkLabel.setText("Perk: " + model.getPlayer().getPerkList().get(0));
+            table3.add(perkLabel).top().padTop(10);
+        }
         scoreLabel.setText("Score: "+model.getCurrentScore());
         table3.add(scoreLabel).right().top().pad(10);
         table3.row();
 
-        pickExperienceBarSize();
-        table3.add(fullExperienceBar).size(experienceBarSize, 10).bottom().pad(10).expandY().colspan(2);
+        pickCurrentExperienceBarWidth();
+        table3.add(fullExperienceBar).size(currentExperienceBarWidth, experienceBarHeight).bottom().pad(10).expandY().colspan(3);
         stage.addActor(table3);
-        healthBarLabel.setText("HP " + (int)player.getCurrentHealth() + "/" + (int)player.getMaxHealth());
+
+        table4.setFillParent(true);
+
+        levelLabel.setText("Level: " + model.getPlayer().getLevel());
+        table4.add(levelLabel).padLeft(10).padTop(40).left();
+
+        table4.row();
+        experienceLabel.setText("Experience: "+ model.getPlayer().getExperience() + " / " + model.getPlayer().getExperienceThreshold());
+        table4.add(experienceLabel).expandX().expandY().bottom().padBottom(25);
+        stage.addActor(table4);
+
+
+
     }
 
     private void pickHealthBarColor(){
-        currentHealth = player.getCurrentHealth();
-        maxHealth = player.getMaxHealth();
+        float currentHealth = model.getPlayer().getCurrentHealth();
+        float maxHealth = model.getPlayer().getMaxHealth();
         if(currentHealth <= maxHealth * 0.33) {
             NinePatch lowHp = new NinePatch(red, 0, 0, 0, 0);
             Image lowhp = new Image(lowHp);
@@ -129,22 +159,22 @@ public class HUD {
         }
     }
 
-    private void pickHealthBarSize(){
-        currentHealth = player.getCurrentHealth();
-        maxHealth = player.getMaxHealth();
-        float hpsize = (float)(currentHealth / maxHealth);
-        setHealthBarSize((int)(200*hpsize));
+    private void pickCurrentHealthBarWidth(){
+        float currentHealth = model.getPlayer().getCurrentHealth();
+        float maxHealth = model.getPlayer().getMaxHealth();
+        float percentageHealthBarFilled = (currentHealth / maxHealth);
+        setCurrentHealthBarWidth((int)(healthBarWidth*percentageHealthBarFilled));
     }
 
-    private void pickExperienceBarSize(){
+    private void pickCurrentExperienceBarWidth(){
         float currentExperience = model.getPlayer().getExperience();
         float maxExperience = 100;
-        float experienceBarSize = (currentExperience / maxExperience);
-        setExperienceBarSize((int)(400*experienceBarSize));
+        float percentageExperienceBarFilled = (currentExperience / maxExperience);
+        setCurrentExperienceBarWidth((int)(experienceBarWidth*percentageExperienceBarFilled));
     }
 
-    private void setExperienceBarSize(int barSize){
-        this.experienceBarSize = barSize;
+    private void setCurrentExperienceBarWidth(int barSize){
+        this.currentExperienceBarWidth = barSize;
     }
 
     private void setHealthColor(Image healthColor) {
@@ -154,8 +184,8 @@ public class HUD {
         return healthColor;
     }
 
-    private void setHealthBarSize(int barSize) {
-        this.healthBarSize = barSize;
+    private void setCurrentHealthBarWidth(int barSize) {
+        this.currentHealthBarWidth = barSize;
     }
 
     public Stage getStage() { return stage; }

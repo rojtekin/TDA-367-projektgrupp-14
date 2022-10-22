@@ -51,6 +51,8 @@ public interface IPlayerCharacter {
 
     void increaseCurrentHealth(float amount);
 
+    int getExperienceThreshold();
+
     float getAbilityCoolDownMultiplier();
 
     float getMaxHealth();

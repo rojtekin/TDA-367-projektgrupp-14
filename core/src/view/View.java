@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import utility.Time;
+import application.Time;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,7 +37,7 @@ public class View {
     private final ImageHandler imageHandler = new ImageHandler();
     private final Sound soundHandler = new Sound();
 
-    private final Sprite swordSprite = new Sprite(imageHandler.getSwordThing());
+    private final Sprite swordSprite = new Sprite(imageHandler.getSwordSwingImage());
 
     private Set<Entity> isKnown = new HashSet<>();
     private Set<Entity> seen = new HashSet<>();
@@ -76,7 +76,7 @@ public class View {
         drawEntities();
 
         if (model.getPlayer().isSwinging()){
-            onWeaponSwing();
+            drawWeaponSwing();
         }
 
         batch.end();
@@ -144,7 +144,7 @@ public class View {
         }
     }
 
-    public void onWeaponSwing() {
+    public void drawWeaponSwing() {
         batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
     }
 }

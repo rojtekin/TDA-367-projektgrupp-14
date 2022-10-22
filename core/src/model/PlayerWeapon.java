@@ -11,11 +11,11 @@ public abstract class PlayerWeapon {
     private float weaponSpeed;
     private float weaponDamage;
     private float weaponRange;
-    private float weaponWidth;
+    private final float weaponWidth;
     private double weaponAngle;
-    private int weaponRotations;
-    private World<IEntity> world;
-    private CollisionFilter filter;
+    private final int weaponRotations;
+    private final World<IEntity> world;
+    private final CollisionFilter filter;
 
     public PlayerWeapon(World<IEntity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
@@ -45,7 +45,6 @@ public abstract class PlayerWeapon {
             List<Entity> entities = new LinkedList<>();
             //world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null); //filter är cross, fixa i jbump.
             world.querySegmentWithCoords((player.getX()+player.getWidth()/2), (player.getY()+player.getHeight()/2), rotatedPoint1x, rotatedPoint1y, filter, items);
-
 
             for (ItemInfo i : items) {
                 entities.add((Entity) i.item.userData);

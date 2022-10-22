@@ -1,4 +1,4 @@
-package utility;
+package controller.utility;
 
 public interface IEvent {
 }

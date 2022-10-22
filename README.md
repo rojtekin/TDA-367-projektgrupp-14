@@ -1,16 +1,16 @@
 ## Description
-A top-down 2D survival game in which you defend yourself against attacking monsters.
+A top-down 2D survival application in which you defend yourself against attacking monsters.
 
 ## File Structure
 Path                                    | Comment
 --------------------------------------- | -------------
-`/desktop/src/com/mygdx/game/`          | File to run the game
+`/desktop/src/com/mygdx/game/`          | File to run the application
 `/core/src/`                            | The main code folder 
 `/core/test/java/`                      | JUnit tests folder
-`/core/assets`                          | Location for all assets in the game
+`/core/assets`                          | Location for all assets in the application
 
 ## How to Run the Program
-Run these commands in your terminal of choice while located in the same folder as this text-file to run the game:
+Run these commands in your terminal of choice while located in the same folder as this text-file to run the application:
 1. gradlew build
 2. gradlew run
 

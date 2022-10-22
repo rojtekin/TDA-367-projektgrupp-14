@@ -1,6 +1,5 @@
 package view;
 
-import model.IPlayerCharacter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,18 +15,17 @@ import model.Model;
 
 public class HUD {
     private final Model model;
-    private Stage stage;
-    private FitViewport stageViewport;
-    private IPlayerCharacter player;
+    private final Stage stage;
+    private final FitViewport stageViewport;
 
-    private int outlineSize = 4;
+    private final static int OUTLINE_SIZE = 4;
 
-    private int healthBarWidth = 200;
-    private int healthBarHeight = 20;
+    private final static int HEALTH_BAR_WIDTH = 200;
+    private final static int HEALTH_BAR_HEIGHT = 20;
     private int currentHealthBarWidth;
 
-    private int experienceBarWidth = 400;
-    private int experienceBarHeight = 10;
+    private final static int EXPERIENCE_BAR_WIDTH = 400;
+    private final static int EXPERIENCE_BAR_HEIGHT = 10;
     private int currentExperienceBarWidth;
 
     private Image healthColor;
@@ -40,16 +38,16 @@ public class HUD {
     private final Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
 
     private final Texture black = new Texture(Gdx.files.internal("HudColors/Black.png"));
-    private final NinePatch blackHealth = new NinePatch(black, 0, 0, 0, 0);
+    private final NinePatch blackHealthNinePatch = new NinePatch(black, 0, 0, 0, 0);
 
     // Couldnt use the same image twice.
-    private final Image blackHealthBar = new Image(blackHealth);
-    private final Image blackExperienceBar = new Image(blackHealth);
+    private final Image blackHealthBar = new Image(blackHealthNinePatch);
+    private final Image blackExperienceBar = new Image(blackHealthNinePatch);
 
     // lyfta ut konfigurationsdatan till en enum. Singleton. Turtorial java enum turtorial. Enums kan ha konstant state
     private final Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
-    private final NinePatch emptyExperienceBar = new NinePatch(aqua, 0, 0, 0, 0);
-    private final Image experienceBar = new Image(emptyExperienceBar);
+    private final NinePatch emptyExperienceBarNinePatch = new NinePatch(aqua, 0, 0, 0, 0);
+    private final Image experienceBar = new Image(emptyExperienceBarNinePatch);
 
     private final Texture experienceYellow = new Texture(Gdx.files.internal("HudColors/Xpyellowc8a72b.png"));
     private final NinePatch experienceYellowNinePatch = new NinePatch(experienceYellow, 0, 0, 0, 0);
@@ -61,11 +59,11 @@ public class HUD {
     private final Table table3 = new Table();
     private final Table table4 = new Table();
     private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
-    private Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
-    private Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
-    private Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
-    private Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
-    private Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
+    private final Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
+    private final Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
+    private final Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
+    private final Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
+    private final Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
 
     /**
      * Creates an instance of HUD
@@ -90,11 +88,11 @@ public class HUD {
         stage.clear(); //Prevents memory leak where new tables are continuously added to stage
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
 
-        table1.add(blackHealthBar).size(healthBarWidth+ outlineSize, healthBarHeight + outlineSize).left().top().expandX().expandY().pad(8); //black underline hp bar
+        table1.add(blackHealthBar).size(HEALTH_BAR_WIDTH + OUTLINE_SIZE, HEALTH_BAR_HEIGHT + OUTLINE_SIZE).left().top().expandX().expandY().pad(8); //black underline hp bar
 
         table1.row(); //new row
 
-        table1.add(blackExperienceBar).size(experienceBarWidth +outlineSize, experienceBarHeight+outlineSize).bottom().pad(8); //Black border experience
+        table1.add(blackExperienceBar).size(EXPERIENCE_BAR_WIDTH + OUTLINE_SIZE, EXPERIENCE_BAR_HEIGHT + OUTLINE_SIZE).bottom().pad(8); //Black border experience
 
         stage.addActor(table1); //add the bottom layer to stage
 
@@ -102,17 +100,18 @@ public class HUD {
 
         pickHealthBarColor();
         pickCurrentHealthBarWidth();
-        table2.add(getHealthColor()).size(currentHealthBarWidth, healthBarHeight).left().top().pad(10).expandX().expandY();
+        table2.add(getHealthColor()).size(currentHealthBarWidth, HEALTH_BAR_HEIGHT).left().top().pad(10).expandX().expandY();
         //hp size is between 0 and 1
         table2.row();
 
-        table2.add(experienceBar).size(experienceBarWidth, experienceBarHeight).pad(10);
+        table2.add(experienceBar).size(EXPERIENCE_BAR_WIDTH, EXPERIENCE_BAR_HEIGHT).pad(10);
 
         stage.addActor(table2);
 
         table3.setFillParent(true);
         healthBarLabel.setText("HP " + (int)model.getPlayer().getCurrentHealth() + "/" + (int)model.getPlayer().getMaxHealth());
         table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
+
         if (!model.getPlayer().getPerkList().isEmpty()) {
             perkLabel.setText("Perk: " + model.getPlayer().getPerkList().get(0));
             table3.add(perkLabel).top().padTop(10);
@@ -122,7 +121,7 @@ public class HUD {
         table3.row();
 
         pickCurrentExperienceBarWidth();
-        table3.add(fullExperienceBar).size(currentExperienceBarWidth, experienceBarHeight).bottom().pad(10).expandY().colspan(3);
+        table3.add(fullExperienceBar).size(currentExperienceBarWidth, EXPERIENCE_BAR_HEIGHT).bottom().pad(10).expandY().colspan(3);
         stage.addActor(table3);
 
         table4.setFillParent(true);
@@ -163,14 +162,14 @@ public class HUD {
         float currentHealth = model.getPlayer().getCurrentHealth();
         float maxHealth = model.getPlayer().getMaxHealth();
         float percentageHealthBarFilled = (currentHealth / maxHealth);
-        setCurrentHealthBarWidth((int)(healthBarWidth*percentageHealthBarFilled));
+        setCurrentHealthBarWidth((int)(HEALTH_BAR_WIDTH *percentageHealthBarFilled));
     }
 
     private void pickCurrentExperienceBarWidth(){
         float currentExperience = model.getPlayer().getExperience();
         float maxExperience = 100;
         float percentageExperienceBarFilled = (currentExperience / maxExperience);
-        setCurrentExperienceBarWidth((int)(experienceBarWidth*percentageExperienceBarFilled));
+        setCurrentExperienceBarWidth((int)(EXPERIENCE_BAR_WIDTH *percentageExperienceBarFilled));
     }
 
     private void setCurrentExperienceBarWidth(int barSize){

@@ -23,28 +23,6 @@ public interface IPlayerCharacter {
 
     float getDamage();
 
-    float getAbilityPower();
-
-    void increaseMaxHealth();
-
-    void decreaseMaxHealth();
-
-    void increaseSpeed();
-
-    void decreaseSpeed();
-
-    void increaseDamage();
-
-    void decreaseDamage();
-
-    void increasedAbilityCoolDownMultiplier();
-
-    void decreasedAbilityCoolDownMultiplier();
-
-    void increaseAbilityPower();
-
-    void decreaseAbilityPower();
-
     void gainExperience(int experience);
 
     void reduceExperience();
@@ -52,8 +30,6 @@ public interface IPlayerCharacter {
     void increaseCurrentHealth(float amount);
 
     int getExperienceThreshold();
-
-    float getAbilityCoolDownMultiplier();
 
     float getMaxHealth();
 
@@ -76,7 +52,7 @@ public interface IPlayerCharacter {
      */
     void addTweak(Set<Tweak> tweaks);
 
-    void weaponAttack(int i, int i1, int i2);
+    void weaponAttack(int rotationStart, int rotationFinish);
 
     void setSwinging(boolean b);
 

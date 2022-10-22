@@ -136,7 +136,7 @@ public class TiledMapCache implements IMapCache {
             collisionObjects = map.getLayers().get(COLLISIONLAYER).getObjects();
             for (RectangleMapObject o : collisionObjects.getByType(RectangleMapObject.class)) {
                 Rectangle r = o.getRectangle();
-                PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, 0, world);
+                PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
                 world.add(new Item<>(st), r.x, r.y, r.width, r.height);
             }
         }

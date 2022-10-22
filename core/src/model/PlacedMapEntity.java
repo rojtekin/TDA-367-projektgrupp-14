@@ -8,8 +8,8 @@ import com.dongbat.jbump.World;
  * world that the player cannot directly interact with, such as walls.
  */
 public class PlacedMapEntity extends Entity {
-    public PlacedMapEntity(float x, float y, float height, float width, float damage, World<IEntity> world) {
-        super(x, y, height, width, damage, world);
+    public PlacedMapEntity(float x, float y, float height, float width, World<IEntity> world) {
+        super(x, y, height, width, 0, world);
     }
 
     /**

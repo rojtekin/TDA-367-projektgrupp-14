@@ -42,10 +42,17 @@ public class View {
     private Set<Entity> isKnown = new HashSet<>();
     private Set<Entity> seen = new HashSet<>();
 
+    /**
+     * Creates an instance of view
+     * @param model game model
+     */
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
     }
 
+    /**
+     * initializes images, tiledMap, sound, camera and SpriteBatch (drawing board)
+     */
     public void initialize() {
         imageHandler.loadEntityImages();
         soundHandler.playGameMusic();
@@ -59,6 +66,10 @@ public class View {
         batch = new SpriteBatch();
     }
 
+    /**
+     * updates View
+     * draws underlayer, tiledMap,
+     */
     public void update() {
         hud = new HUD(batch, model);
         Gdx.gl.glClearColor(0, 0, 0, 1);

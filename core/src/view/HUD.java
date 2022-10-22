@@ -78,6 +78,9 @@ public class HUD {
         this.model = model;
     }
 
+    /**
+     * update updates the HUD.
+     */
     public void update() {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
@@ -134,11 +137,11 @@ public class HUD {
         experienceLabel.setText("Experience: "+ model.getPlayer().getExperience() + " / " + model.getPlayer().getExperienceThreshold());
         table4.add(experienceLabel).expandX().expandY().bottom().padBottom(25);
         stage.addActor(table4);
-
-
-
     }
 
+    /**
+     * When called it checks the players hp and sets HealthColor to the new color depending on current hp
+     */
     private void pickHealthBarColor(){
         float currentHealth = model.getPlayer().getCurrentHealth();
         float maxHealth = model.getPlayer().getMaxHealth();
@@ -159,6 +162,9 @@ public class HUD {
         }
     }
 
+    /**
+     * When called sets the currentHealthBarWidth based on current hp
+     */
     private void pickCurrentHealthBarWidth(){
         float currentHealth = model.getPlayer().getCurrentHealth();
         float maxHealth = model.getPlayer().getMaxHealth();
@@ -166,6 +172,9 @@ public class HUD {
         setCurrentHealthBarWidth((int)(healthBarWidth*percentageHealthBarFilled));
     }
 
+    /**
+     * When called sets the currentExperienceBarWidth based on current experience
+     */
     private void pickCurrentExperienceBarWidth(){
         float currentExperience = model.getPlayer().getExperience();
         float maxExperience = 100;
@@ -190,6 +199,9 @@ public class HUD {
 
     public Stage getStage() { return stage; }
 
+    /**
+     * disposes stage and colors automatically when screen is closed
+     */
     public void dispose(){
         stage.dispose();
         red.dispose(); //alla textures måste disposas

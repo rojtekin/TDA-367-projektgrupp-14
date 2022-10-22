@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 import java.util.Set;
 
+import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.IntPoint;
 import model.rewards.Reward;
 import model.rewards.Tweak;
@@ -61,7 +62,7 @@ public interface IPlayerCharacter {
 
     float getY();
 
-    void move(Direction direction, float speed);
+    Collisions move(Direction direction, float speed);
 
     float getHeight();
 

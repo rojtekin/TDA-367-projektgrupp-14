@@ -1,5 +1,6 @@
 package model.monsters;
 
+import com.dongbat.jbump.Collisions;
 import model.Direction;
 import com.dongbat.jbump.World;
 import model.Faction;
@@ -31,37 +32,40 @@ public class Cyclops extends Monster {
      * @param playerX the x-coordinate of the player character.
      * @param playerY the y-coordinate of the player character.
      */
-    public void moveTowardPlayer(float playerX, float playerY) {
-        float xDistance = playerX - this.getX();
-        float yDistance = playerY - this.getY();
-        float initialX = this.getX();
-        float initialY = this.getY();
+    public Collisions moveTowardPlayer(float playerX, float playerY) {
+        float xDistance = playerX - getX();
+        float yDistance = playerY - getY();
+        float initialX = getX();
+        float initialY = getY();
+        Collisions collisions;
 
         if ((Math.abs(xDistance) > 16) && !stuckInYDirection) {
             if (xDistance > 0) {
-                this.move(Direction.RIGHT, getSpeed());
+                collisions = move(Direction.RIGHT, getSpeed());
             }
             else {
-                this.move(Direction.LEFT, getSpeed());
+                collisions = move(Direction.LEFT, getSpeed());
             }
-            stuckInXDirection = false;
-            if (this.getX() == initialX) {
-                stuckInXDirection = true;
-                this.move(Direction.UP, getSpeed());
+            stuckInXDirection = getX() == initialX;
+            if (stuckInXDirection) {
+                collisions = move(Direction.UP, getSpeed());
             }
         }
         else if(!stuckInXDirection){
             if (yDistance > 0) {
-                this.move(Direction.UP, getSpeed());
+                collisions = move(Direction.UP, getSpeed());
             }
             else {
-                this.move(Direction.DOWN, getSpeed());
+                collisions = move(Direction.DOWN, getSpeed());
             }
-            stuckInYDirection = false;
-            if (this.getY() == initialY) {
-                stuckInYDirection = true;
-                this.move(Direction.RIGHT, getSpeed());
+            stuckInYDirection = (getY() == initialY);
+            if (stuckInYDirection) {
+                collisions = move(Direction.RIGHT, getSpeed());
             }
         }
+        else {
+            collisions = moveForward(getSpeed());
+        }
+        return collisions;
     }
 }

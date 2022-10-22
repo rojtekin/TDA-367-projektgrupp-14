@@ -14,7 +14,7 @@ import java.util.Objects;
 /**
  * A class responsible for managing the logic of the game.
  */
-public class Model implements MovementListener {
+public class Model {
     private final IEnvironmentCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
@@ -98,7 +98,6 @@ public class Model implements MovementListener {
         }
         monsters.add(monster);
         entityList.add(monster);
-        monster.addMovementListener(this);
     }
 
     public List<Monster> getMonsters() {
@@ -107,7 +106,13 @@ public class Model implements MovementListener {
 
     private void moveMonsters() {
         for (Monster monster : monsters) {
-            monster.moveTowardPlayer(player.getX(), player.getY());
+            Collisions collisions = monster.moveTowardPlayer(player.getX(), player.getY());
+            for (int i = 0; i < collisions.size(); i++) {
+                Collision collision = collisions.get(i);
+                if (collisionWithPlayer(collision)) {
+                    player.pushBack(collision.normal);
+                }
+            }
         }
     }
 
@@ -132,16 +137,6 @@ public class Model implements MovementListener {
         }
         else {
             addMonster(new Mouse(spawnPoint.x, spawnPoint.y, getWorld()));
-        }
-    }
-
-    @Override
-    public void onMovement(Collisions collisions) {
-        for (int i = 0; i < collisions.size(); i++) {
-            Collision collision = collisions.get(i);
-            if (collisionWithPlayer(collision)) {
-                player.pushBack(collision.normal);
-            }
         }
     }
 

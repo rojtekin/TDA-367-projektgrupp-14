@@ -1,8 +1,10 @@
 package model;
 
+import com.dongbat.jbump.Collisions;
+
 public interface IControllable {
 
-    void move(Direction direction, float speed);
+    Collisions move(Direction direction, float speed);
 
     void weaponAttack(int rotationStart, int rotationFinish, int animationpart);
 }

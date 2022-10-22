@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-public class AbstractPlayerTest {
+public class PlayerCharacterTest {
 
     PlayerCharacter player;
     Model model;

@@ -1,5 +1,10 @@
 import com.dongbat.jbump.World;
+import model.Direction;
+import model.Model;
+import model.PlayerCharacter;
+import model.TiledMapCache;
 import model.monsters.Cyclops;
+import model.monsters.Monster;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

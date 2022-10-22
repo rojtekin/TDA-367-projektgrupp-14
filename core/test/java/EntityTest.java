@@ -1,6 +1,8 @@
+import com.dongbat.jbump.CollisionFilter;
 import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.World;
 import model.Direction;
+import model.IEntity;
 import model.LivingEntity;
 import model.PlayerCharacter;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,5 +61,22 @@ public class EntityTest {
         livingEntity.pushBack(new IntPoint(1,0));
         float finalXPosition = livingEntity.getX();
         assertTrue(initialXPosition != finalXPosition);
+    }
+
+    @Test
+    public void setWorld_ChangesWorld() {
+        World<IEntity> initWorld = livingEntity.getWorld();
+        livingEntity.setWorld(new World<IEntity>());
+        World<IEntity> finalWorld = livingEntity.getWorld();
+        assertTrue(initWorld != finalWorld);
+    }
+
+    @Test
+    public void updatePosition_ChangesEntityPositionAfterMovement() {
+        float initX = livingEntity.getX();
+        livingEntity.getWorld().move(livingEntity.getBoundingbox(), 1, livingEntity.getY(), CollisionFilter.defaultFilter);
+        livingEntity.updatePosition();
+        float finalX = livingEntity.getX();
+        assertTrue(finalX == 1 && finalX != initX);
     }
 }

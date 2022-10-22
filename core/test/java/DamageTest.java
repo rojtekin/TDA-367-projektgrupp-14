@@ -12,11 +12,11 @@ public class DamageTest {
 
     Model model;
     Monster monster;
-    TiledEnvironmentCache environment;
+    TiledMapCache environment;
 
     @BeforeEach
     public void setUp() {
-        environment = new TiledEnvironmentCache();
+        environment = new TiledMapCache();
         model = new Model(environment, new PlayerCharacter(0, 0, environment.getWorld()), new ArrayList<>());
         monster = new Cyclops(100, 100, model.getWorld());
         model.addMonster(monster);
@@ -71,6 +71,15 @@ public class DamageTest {
         Cyclops cyclops = new Cyclops(model.getPlayer().getWidth(), model.getPlayer().getY(), model.getWorld());
         cyclops.move(Direction.LEFT, cyclops.getSpeed());
         float finalHP = model.getPlayer().getCurrentHealth();
+        assertTrue(initHP > finalHP);
+    }
+
+    @Test
+    public void weaponAttack_DamagesMonster() {
+        Cyclops cyclops = new Cyclops(model.getPlayer().getWidth(), model.getPlayer().getY(), model.getWorld());
+        float initHP = cyclops.getCurrentHealth();
+        model.getPlayer().weaponAttack(315,45,0);
+        float finalHP = cyclops.getCurrentHealth();
         assertTrue(initHP > finalHP);
     }
 }

@@ -16,10 +16,6 @@ public abstract class PlayerWeapon {
     private int weaponRotations;
     private World<IEntity> world;
     private CollisionFilter filter;
-    private Set<Entity> isKnown = new HashSet<Entity>();
-    private ArrayList<ItemInfo> items = new ArrayList<>();
-    private List<Entity> entities = new LinkedList<>();
-    private Set<Entity> seen = new HashSet<Entity>();
 
     public PlayerWeapon(World<IEntity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
@@ -44,24 +40,24 @@ public abstract class PlayerWeapon {
             rotatedPoint1x = rotatedPoint1x + player.getWidth()/2 + player.getX();
             rotatedPoint1y = rotatedPoint1y + player.getHeight()/2 + player.getY();
 
+            Set<Entity> isKnown = new HashSet<>();
+            ArrayList<ItemInfo> items = new ArrayList<>();
+            List<Entity> entities = new LinkedList<>();
             //world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null); //filter är cross, fixa i jbump.
             world.querySegmentWithCoords((player.getX()+player.getWidth()/2), (player.getY()+player.getHeight()/2), rotatedPoint1x, rotatedPoint1y, filter, items);
+
 
             for (ItemInfo i : items) {
                 entities.add((Entity) i.item.userData);
             }
-            items.clear();
             if (entities.size() > 0) {
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
                         //gör skada;
                         entity.beAttacked((weaponDamage),Faction.PLAYER);
+                        isKnown.add(entity);
                     }
-                    seen.add(entity);
-                    isKnown = seen;
                 }
-                entities.clear();
-                seen.clear();
             }
 
             currentWeaponRotation += 1;

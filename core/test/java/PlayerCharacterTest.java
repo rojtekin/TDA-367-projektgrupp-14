@@ -3,6 +3,7 @@ import model.IEntity;
 import model.Model;
 import model.PlayerCharacter;
 import model.TiledMapCache;
+import model.rewards.Reward;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,5 +56,16 @@ public class PlayerCharacterTest {
         assertTrue(playerExperience == 0 && gainedExperience == 100);
     }
 
+    @Test
+    public void increaseHealth_IncreasesHealth() {
+        player.takeDamage(5);
+        player.increaseCurrentHealth(1);
+        assertTrue(player.getCurrentHealth() == 6);
+    }
 
+    @Test
+    public void increaseHealth_DoesNotIncreaseHealthBeyondMax() {
+        player.increaseCurrentHealth(1);
+        assertTrue(player.getCurrentHealth() == player.getMaxHealth());
+    }
 }

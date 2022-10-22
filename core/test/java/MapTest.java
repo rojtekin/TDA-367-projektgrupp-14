@@ -1,7 +1,4 @@
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import model.Model;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.Gdx.*;
+import application.Game;
 import model.TiledMapCache;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

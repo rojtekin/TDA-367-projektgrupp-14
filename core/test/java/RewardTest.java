@@ -76,4 +76,38 @@ public class RewardTest {
         int finalSize = model.getPlayer().getTweaks().get(LivingTrait.SPEED).size();
         assertTrue(finalSize > initSize);
     }
+
+    @Test
+    public void tweaks_affectPlayerMaxHealth() {
+        float initHealth = model.getPlayer().getMaxHealth();
+        rewardSystem.applyReward(model.getPlayer(), Reward.HEALTH_INCREASE);
+        float finalHealth = model.getPlayer().getMaxHealth();
+        assertTrue(finalHealth > initHealth);
+    }
+
+    @Test
+    public void tweaks_affectPlayerCurrentHealth() {
+        PlayerCharacter player = (PlayerCharacter) model.getPlayer();
+        player.takeDamage(5);
+        float initHealth = model.getPlayer().getCurrentHealth();
+        rewardSystem.applyReward(model.getPlayer(), Reward.HEALTH_INCREASE);
+        float finalHealth = model.getPlayer().getCurrentHealth();
+        assertTrue(finalHealth > initHealth);
+    }
+
+    @Test
+    public void tweaks_affectPlayerSpeed() {
+        float initSpeed = model.getPlayer().getSpeed();
+        rewardSystem.applyReward(model.getPlayer(), Reward.SPEED_INCREASE);
+        float finalSpeed = model.getPlayer().getSpeed();
+        assertTrue(finalSpeed > initSpeed);
+    }
+
+    @Test
+    public void tweaks_affectPlayerDamage() {
+        float initDamage = model.getPlayer().getDamage();
+        rewardSystem.applyReward(model.getPlayer(), Reward.DAMAGE_INCREASE);
+        float finalDamage = model.getPlayer().getDamage();
+        assertTrue(finalDamage > initDamage);
+    }
 }

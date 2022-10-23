@@ -104,14 +104,28 @@ public class Model {
         return new ArrayList<>(monsters);
     }
 
+    /**
+     * Moves every monster.
+     */
     private void moveMonsters() {
         for (Monster monster : monsters) {
             Collisions collisions = monster.moveTowardTarget(player.getX(), player.getY());
-            for (int i = 0; i < collisions.size(); i++) {
-                Collision collision = collisions.get(i);
-                if (collisionWithPlayer(collision)) {
-                    player.pushBack(collision.normal);
-                }
+            checkCollisions(collisions, monster);
+        }
+    }
+
+    /**
+     * Goes through collisions and checks if a collision with the player character has occurred.
+     * If it has, the player character is affected.
+     * @param collisions the collisions which occurred when a living entity moved
+     * @param livingEntity the living entity which moved
+     */
+    private void checkCollisions(Collisions collisions, LivingEntity livingEntity) {
+        for (int i = 0; i < collisions.size(); i++) {
+            Collision collision = collisions.get(i);
+            if (collisionWithPlayer(collision)) {
+                player.beAttacked(livingEntity.getDamage(), livingEntity.getFaction());
+                player.pushBack(collision.normal);
             }
         }
     }

@@ -93,4 +93,6 @@ public interface IPlayerCharacter {
      * @return returns a list of all perks applied to the playerCharacter
      */
     List<Reward> getPerkList();
+
+    void beAttacked(float damage, Faction faction);
 }

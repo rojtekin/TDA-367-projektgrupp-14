@@ -73,7 +73,6 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      */
     private Collisions changePosition(float deltaX, float deltaY) {
         Response.Result result = getWorld().move(getBoundingbox(), getX() + deltaX,getY() + deltaY, CollisionFilter.defaultFilter);
-        damageTouched(result.projectedCollisions);
         updatePosition();
         return result.projectedCollisions;
     }
@@ -114,16 +113,6 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
     public Collisions move(Direction direction) {
         setDirection(direction);
         return moveForward();
-    }
-
-    /**
-     * Damages every touched hostile entity
-     */
-    private void damageTouched(Collisions projectedCollisions) {
-        for (int i = 0; i < projectedCollisions.size(); i++) {
-            Item<IEntity> touched = projectedCollisions.get(i).other;
-            touched.userData.beAttacked(getDamage()/10, faction);
-        }
     }
 
     @Override

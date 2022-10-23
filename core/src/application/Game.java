@@ -14,7 +14,7 @@ public class Game extends ApplicationAdapter {
 		model = ModelFactory.makeModel("Flowerfield");
 		view = new View(model);
 		view.initialize();
-		model.addSubscriber(view);
+		model.addObserver(view);
 		controller = new Controller(model.getPlayer());
 	}
 

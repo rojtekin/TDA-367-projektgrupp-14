@@ -1,6 +1,6 @@
 package view;
 
-public interface ISoundSubscriber {
+public interface ISoundObserver {
 
     void playEnemyHit();
 

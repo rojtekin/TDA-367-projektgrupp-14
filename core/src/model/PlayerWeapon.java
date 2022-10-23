@@ -1,13 +1,13 @@
 package model;
 
 import com.dongbat.jbump.*;
-import view.ISoundSubscriber;
+import view.ISoundObserver;
 
 import java.util.*;
 
 import static java.lang.Math.*;
 
-public abstract class PlayerWeapon implements IWeaponPublisher {
+public abstract class PlayerWeapon implements IWeaponSubject {
 
     private float weaponSpeed;
     private float weaponDamage;
@@ -17,7 +17,7 @@ public abstract class PlayerWeapon implements IWeaponPublisher {
     private final int weaponRotations;
     private final World<IEntity> world;
     private final CollisionFilter filter;
-    private final List<ISoundSubscriber> subscribers = new ArrayList<>();
+    private final List<ISoundObserver> soundObservers = new ArrayList<>();
 
     public PlayerWeapon(World<IEntity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
@@ -93,19 +93,19 @@ public abstract class PlayerWeapon implements IWeaponPublisher {
     }
 
     @Override
-    public void addSubscriber(ISoundSubscriber subscriber) {
-        subscribers.add(subscriber);
+    public void addObserver(ISoundObserver observer) {
+        soundObservers.add(observer);
     }
 
     @Override
-    public void removeSubscriber(ISoundSubscriber subscriber) {
-        subscribers.remove(subscriber);
+    public void removeObserver(ISoundObserver observer) {
+        soundObservers.remove(observer);
     }
 
     @Override
     public void notifyWeaponswing() {
-        for (ISoundSubscriber s : subscribers) {
-            s.playSwordHit();
+        for (ISoundObserver o : soundObservers) {
+            o.playSwordHit();
         }
     }
 }

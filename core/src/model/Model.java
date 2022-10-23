@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
 import model.rewards.RewardSystem;
-import view.ISoundSubscriber;
+import view.ISoundObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Objects;
 /**
  * A class responsible for managing the logic of the game.
  */
-public class Model implements IModelPublisher {
+public class Model implements IModelSubject {
     private final IMapCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
@@ -27,7 +27,7 @@ public class Model implements IModelPublisher {
     private final RewardSystem rewardSystem = new RewardSystem();
     private final World<IEntity> world;
     private int currentScore = 0;
-    private final List<ISoundSubscriber> soundSubscribers = new ArrayList<>();
+    private final List<ISoundObserver> soundObservers = new ArrayList<>();
     private boolean playerIsDead = false;
 
     public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
@@ -206,28 +206,28 @@ public class Model implements IModelPublisher {
     }
 
     @Override
-    public void addSubscriber(ISoundSubscriber subscriber) {
-        player.getWeapon().addSubscriber(subscriber);
-        soundSubscribers.add(subscriber);
+    public void addObserver(ISoundObserver observer) {
+        player.getWeapon().addObserver(observer);
+        soundObservers.add(observer);
     }
 
     @Override
-    public void removeSubscriber(ISoundSubscriber subscriber) {
-        player.getWeapon().removeSubscriber(subscriber);
-        soundSubscribers.remove(subscriber);
+    public void removeObserver(ISoundObserver observer) {
+        player.getWeapon().removeObserver(observer);
+        soundObservers.remove(observer);
     }
 
     @Override
     public void notifyPlayerDeath() {
-        for (ISoundSubscriber s : soundSubscribers) {
-            s.playPlayerDeathSound();
+        for (ISoundObserver o : soundObservers) {
+            o.playPlayerDeathSound();
         }
     }
 
     @Override
     public void notifyMonsterAttack() {
-        for (ISoundSubscriber s : soundSubscribers) {
-            s.playEnemyHit();
+        for (ISoundObserver o : soundObservers) {
+            o.playEnemyHit();
         }
     }
 

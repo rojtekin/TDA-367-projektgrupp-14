@@ -1,13 +1,13 @@
 package view;
 
-import model.Entity;
+import model.IEntity;
 import model.Model;
 import com.badlogic.gdx.Gdx;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sound{
+public class Sound {
     private static final com.badlogic.gdx.audio.Music BACKGROUND_MUSIC = Gdx.audio.newMusic(Gdx.files.internal("Audio/Background music.ogg"));
     private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
@@ -34,24 +34,24 @@ public class Sound{
      * Plays the sound associated with the enemy hitting something/someone.
      */
     public void playEnemyHit(){
-        ENEMY_HIT.play(); // TODO: check if the sounds isnt too loud later
+        ENEMY_HIT.play(0.10f);
     }
 
     /**
      * Plays the sound of the sword swing.
      */
-    public  void playSwordHit(){
-        SWORD_SWOOSH.play(); // TODO: check if the sounds isnt too loud later
+    public  void playSwordSwing(){
+        SWORD_SWOOSH.play(0.10f);
     }
 
     /**
      * Plays the player death sound.
      */
     public void playPlayerDeathSound(){
-        PLAYER_DEATH.play();
+        PLAYER_DEATH.play(0.10f);
     }
 
-    public com.badlogic.gdx.audio.Sound getIdleSound(Entity entity) {
+    public com.badlogic.gdx.audio.Sound getIdleSound(IEntity entity) {
         com.badlogic.gdx.audio.Sound sound = Gdx.audio.newSound(Gdx.files.internal("Audio/"+ entity.getClass().getSimpleName() +"-idle-noise.mp3"));
         return sound;
     }
@@ -62,7 +62,7 @@ public class Sound{
      * @param interval how long between each play of the idle sounds.
      */
     public void playIdleSoundsWithInterval(final Model model, long interval) {
-        for (final Entity entity : model.getEntities()) {
+        for (final IEntity entity : model.getEntities()) {
             if (!entityClass.contains(entity.getClass())) {
                 entityClass.add(entity.getClass());
                 Runnable toRun = new Runnable() {
@@ -70,7 +70,7 @@ public class Sound{
                         com.badlogic.gdx.audio.Sound sound = getIdleSound(entity);
                         while (entityClass.contains(entity.getClass())) {
                             float distance = 1000000;
-                            for (Entity entity1: model.getEntities()){
+                            for (IEntity entity1: model.getEntities()){
                                 if (entity.getClass().equals( entity1.getClass())){
                                 float checked_distance = (float) Math.hypot(entity1.getX() - model.getPlayer().getX(), entity1.getY() - model.getPlayer().getY());
                                 if (checked_distance < distance){

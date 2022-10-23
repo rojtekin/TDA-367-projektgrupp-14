@@ -27,54 +27,34 @@ public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
      * @param world world that the character moves in
      */
     public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, Faction.PLAYER, world);
-        weapon = new Sword(world);
-        this.experience = 0;
-        this.level = 1;
-        for (LivingTrait trait : LivingTrait.values()) {
-            tweaks.put(trait, new ArrayList<>());
-        }
+        this(spawnX, spawnY, Faction.PLAYER, world);
     }
-
-    /**
-     * ads a perk to the player
-     * @param tweaks adds a tweak to the playerCharacter used by rewardSystem
-     */
-    public void addTweak(Set<Tweak> tweaks) {
-        for (final Tweak t : tweaks) {
-            this.tweaks.get(t.getTrait()).add(t);
-        }
-    }
-
-    //weaponswing unsure if i should split since i might combine animation and movement
-    //animationspart is used since i want a recursive animation. Example every time i call
-    //the function animationpart is reduced by one, use this to determine the swords current rotation
-    //and next time it will rotate a bit more
-
-    /**
-     * Calls upon its weapon to do a weaponSwing
-     * @param rotationStart startangle of the swing
-     * @param rotationFinish endangle of the swing
-     * @param animationpart used to start a swing midway, if it exceeds the weapons weaponRotations it will not swing at all
-     */
-    public void weaponAttack(int rotationStart, int rotationFinish, int animationpart){
-        weapon.weaponSwing(rotationStart,rotationFinish,animationpart, this);
-    }
-
-
     /**
      * Alternative constructor that allows a player to be of another faction.
      * Potential use in multiplayer
      * @param faction that the player belongs to
      */
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
+        super(spawnX, spawnY, 32, 32, 5, 100, 0, faction, world);
         weapon = new Sword(world);
         this.experience = 0;
         this.level = 1;
         for (LivingTrait trait : LivingTrait.values()) {
             tweaks.put(trait, new ArrayList<>());
         }
+    }
+
+    @Override
+    public void addTweak(Set<Tweak> tweaks) {
+        for (final Tweak t : tweaks) {
+            this.tweaks.get(t.getTrait()).add(t);
+        }
+    }
+
+    @Override
+    public Map<LivingTrait, ArrayList<Tweak>> getTweaks() {
+        Map<LivingTrait, ArrayList<Tweak>> tweakCopy = tweaks;
+        return tweakCopy;
     }
 
     @Override

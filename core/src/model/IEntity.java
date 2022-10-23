@@ -1,6 +1,5 @@
 package model;
 
-import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 
 /**

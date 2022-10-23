@@ -7,6 +7,8 @@ import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
 import model.rewards.RewardSystem;
+import view.ISoundObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,17 +16,19 @@ import java.util.Objects;
 /**
  * A class responsible for managing the logic of the game.
  */
-public class Model implements MovementListener {
-    private final IEnvironmentCache mapCache;
+public class Model implements IModelSubject {
+    private final IMapCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
-    private final List<Entity> entityList = new ArrayList<>();
+    private final List<IEntity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
     private static final int MAX_MONSTERS = 50;
     private int spawnPointsIndex = 0;
     private final RewardSystem rewardSystem = new RewardSystem();
     private final World<IEntity> world;
     private int currentScore = 0;
+    private final List<ISoundObserver> soundObservers = new ArrayList<>();
+    private boolean playerIsDead = false;
 
     /**
      * Initializes model responsible for the logic of the game
@@ -32,7 +36,7 @@ public class Model implements MovementListener {
      * @param player The playable character
      * @param spawnPoints a list of the enemy spawnPoints
      */
-    public Model(IEnvironmentCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
+    public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);
@@ -55,6 +59,7 @@ public class Model implements MovementListener {
         moveMonsters();
         levelUpCheckAndApply();
         despawnDeadNPCs();
+        playerHealthCheck();
     }
 
     /**
@@ -90,11 +95,11 @@ public class Model implements MovementListener {
         return player.getDirection();
     }
 
-    public boolean playerIsMoving() {
-        return player.isMoving();
+    public boolean playerIsInMotion() {
+        return player.isInMotion();
     }
 
-    public ArrayList<Entity> getEntities(){
+    public ArrayList<IEntity> getEntities(){
         return new ArrayList<>(entityList);
     }
 
@@ -108,7 +113,6 @@ public class Model implements MovementListener {
         }
         monsters.add(monster);
         entityList.add(monster);
-        monster.addMovementListener(this);
     }
 
     public List<Monster> getMonsters() {
@@ -116,11 +120,29 @@ public class Model implements MovementListener {
     }
 
     /**
-     * moves every monster a bit towards the player
+     * Moves every monster towards the player
      */
     private void moveMonsters() {
         for (Monster monster : monsters) {
-            monster.moveTowardPlayer(player.getX(), player.getY());
+            Collisions collisions = monster.moveTowardTarget(player.getX(), player.getY());
+            checkCollisions(collisions, monster);
+        }
+    }
+
+    /**
+     * Goes through collisions and checks if a collision with the player character has occurred.
+     * If it has, the player character is affected.
+     * @param collisions the collisions which occurred when a living entity moved
+     * @param livingEntity the living entity which moved
+     */
+    private void checkCollisions(Collisions collisions, ILivingEntity livingEntity) {
+        for (int i = 0; i < collisions.size(); i++) {
+            Collision collision = collisions.get(i);
+            if (collisionWithPlayer(collision)) {
+                player.beAttacked(livingEntity.getDamage(), livingEntity.getFaction());
+                player.pushBack(collision.normal);
+                notifyMonsterAttack();
+            }
         }
     }
 
@@ -145,16 +167,6 @@ public class Model implements MovementListener {
         }
         else {
             addMonster(new Mouse(spawnPoint.x, spawnPoint.y, getWorld()));
-        }
-    }
-
-    @Override
-    public void onMovement(Collisions collisions) {
-        for (int i = 0; i < collisions.size(); i++) {
-            Collision collision = collisions.get(i);
-            if (collisionWithPlayer(collision)) {
-                player.pushBack(collision.normal);
-            }
         }
     }
 
@@ -198,4 +210,43 @@ public class Model implements MovementListener {
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
     }
+
+    /**
+     * Checks if a player's health is equal to or below zero and if
+     * the method has been triggered previously. If not it plays a sound and
+     * sets a boolean value to prevent the method from being triggered again.
+     */
+    public void playerHealthCheck() {
+        if (!playerIsDead && player.getCurrentHealth() <= 0) {
+            notifyPlayerDeath();
+            playerIsDead = true;
+        }
+    }
+
+    @Override
+    public void addObserver(ISoundObserver observer) {
+        player.getWeapon().addObserver(observer);
+        soundObservers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(ISoundObserver observer) {
+        player.getWeapon().removeObserver(observer);
+        soundObservers.remove(observer);
+    }
+
+    @Override
+    public void notifyPlayerDeath() {
+        for (ISoundObserver o : soundObservers) {
+            o.playPlayerDeathSound();
+        }
+    }
+
+    @Override
+    public void notifyMonsterAttack() {
+        for (ISoundObserver o : soundObservers) {
+            o.playEnemyHit();
+        }
+    }
+
 }

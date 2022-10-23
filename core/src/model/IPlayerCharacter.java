@@ -1,16 +1,19 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.dongbat.jbump.IntPoint;
+import model.rewards.LivingTrait;
 import model.rewards.Reward;
 import model.rewards.Tweak;
 
 /**
- * Represents what i playerCharacter has
+ * Represents a playerCharacter
  */
-public interface IPlayerCharacter {
+public interface IPlayerCharacter extends ILivingEntity {
 
     boolean isMoving();
 
@@ -45,35 +48,17 @@ public interface IPlayerCharacter {
 
     int getExperienceThreshold();
 
-    float getMaxHealth();
-
-    float getX();
-
-    float getY();
-
-    /**
-     * Moves the character in a certain direction
-     * @param direction Enum that decides which direction to go
-     * @param speed float that decides the speed it moves in that direction
-     */
-    void move(Direction direction, float speed);
-
-    float getHeight();
-
-    float getWidth();
-
-    void setMoving(boolean moving);
-
-    /**
-     * Pushes the entity back in a certain direction depending on the collision normal.
-     * @param normal x and y multipliers to normal pushback of 16
-     */
-    void pushBack(IntPoint normal);
-
     /**
      * @param tweaks adds a tweak to the playerCharacter used by rewardSystem
      */
     void addTweak(Set<Tweak> tweaks);
+
+
+    /**
+     * Used to test and see if tweaks are being properly added
+     * @return a copy of the map holding the tweaks
+     */
+    Map<LivingTrait, ArrayList<Tweak>> getTweaks();
 
     /**
      * Swings the weapon

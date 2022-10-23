@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class ModelFactory {
     public static Model makeModel(String mapName) {
-        TiledEnvironmentCache mapData = new TiledEnvironmentCache();
+        TiledMapCache mapData = new TiledMapCache();
         mapData.loadEnvironment(mapName);
         PlayerCharacter player = new PlayerCharacter(mapData.getMapUnitWidth() / 2, mapData.getMapUnitHeight() / 2, mapData.getWorld());
 

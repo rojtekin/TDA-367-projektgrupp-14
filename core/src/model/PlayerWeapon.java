@@ -1,6 +1,7 @@
 package model;
 
 import com.dongbat.jbump.*;
+import view.ISoundObserver;
 
 import java.util.*;
 
@@ -9,7 +10,7 @@ import static java.lang.Math.*;
 /**
  * PlayerWeapon is an abstract class that have the methods required for a weapon
  */
-public abstract class PlayerWeapon {
+public abstract class PlayerWeapon implements IWeaponSubject {
 
     private float weaponSpeed;
     private float weaponDamage;
@@ -19,10 +20,7 @@ public abstract class PlayerWeapon {
     private final int weaponRotations;
     private final World<IEntity> world;
     private final CollisionFilter filter;
-    private Set<Entity> isKnown = new HashSet<Entity>();
-    private final ArrayList<ItemInfo> items = new ArrayList<>();
-    private final List<Entity> entities = new LinkedList<>();
-    private final Set<Entity> seen = new HashSet<Entity>();
+    private final List<ISoundObserver> soundObservers = new ArrayList<>();
 
     /**
      * Constructor that subclasses of PlayerWeapon use.
@@ -63,28 +61,27 @@ public abstract class PlayerWeapon {
             rotatedPoint1x = rotatedPoint1x + player.getWidth()/2 + player.getX();
             rotatedPoint1y = rotatedPoint1y + player.getHeight()/2 + player.getY();
 
+            Set<Entity> isKnown = new HashSet<>();
+            ArrayList<ItemInfo> items = new ArrayList<>();
+            List<Entity> entities = new LinkedList<>();
             //world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null); //filter är cross, fixa i jbump.
             world.querySegmentWithCoords((player.getX()+player.getWidth()/2), (player.getY()+player.getHeight()/2), rotatedPoint1x, rotatedPoint1y, filter, items);
 
             for (ItemInfo i : items) {
                 entities.add((Entity) i.item.userData);
             }
-            items.clear();
             if (entities.size() > 0) {
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
-                        //gör skada;
-                        entity.beAttacked((weaponDamage), Faction.PLAYER);
+                        entity.beAttacked((weaponDamage),Faction.PLAYER);
+                        isKnown.add(entity);
                     }
-                    seen.add(entity);
-                    isKnown = seen;
                 }
-                entities.clear();
-                seen.clear();
             }
 
             currentWeaponRotation += 1;
         }
+        notifyWeaponswing();
         setWeaponAngle(((rotationStart-45)%360));
     }
     public double getWeaponAngle() {
@@ -111,5 +108,22 @@ public abstract class PlayerWeapon {
             }
         };
         return filter;
+    }
+
+    @Override
+    public void addObserver(ISoundObserver observer) {
+        soundObservers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(ISoundObserver observer) {
+        soundObservers.remove(observer);
+    }
+
+    @Override
+    public void notifyWeaponswing() {
+        for (ISoundObserver o : soundObservers) {
+            o.playSwordHit();
+        }
     }
 }

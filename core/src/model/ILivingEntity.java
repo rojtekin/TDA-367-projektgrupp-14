@@ -1,19 +1,20 @@
 package model;
 
+import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.IntPoint;
-
 /**
  * an interface that allows there to be different entities that shares common traits
  */
+public interface ILivingEntity extends IEntity {
+
 public interface ILivingEntity {
 
-    boolean isMoving();
+    boolean isInMotion();
     /**
      * Gives the speed of the livingEntity
      * @return the Speed of this
      */
     float getSpeed();
-
     /**
      * Gives the max health
      * @return the max health of this
@@ -33,10 +34,10 @@ public interface ILivingEntity {
     void setCurrentHealth(float currentHealth);
 
     /**
-     * Sets the boolean moving which
-     * @param moving true means moving, false means still.
+     * Sets the boolean InMotion
+     * @param inMotion true means in motion, false means still.
      */
-    void setMoving(boolean moving);
+    void setInMotion(boolean inMotion);
 
     /**
      * Gets the direction of the entity
@@ -46,7 +47,11 @@ public interface ILivingEntity {
 
     /**
      * Pushes the entity back in a certain direction depending on the collision normal.
-     * @param collisionNormal the collision normal
+     * @param collisionNormal vector that multiplies the pushback in x and y direction
      */
     void pushBack(IntPoint collisionNormal);
+
+    Faction getFaction();
+
+    Collisions move(Direction direction);
 }

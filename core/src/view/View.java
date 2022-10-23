@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * A class responsible for presenting a part of the model to the user.
  */
-public class View {
+public class View implements ISoundObserver {
     private HUD hud;
     private final Model model;
     private float timeWhenPlayerWalkFrameChanged = 0f;
@@ -39,8 +39,8 @@ public class View {
 
     private final Sprite swordSprite = new Sprite(imageHandler.getSwordSwingImage());
 
-    private Set<Entity> isKnown = new HashSet<>();
-    private Set<Entity> seen = new HashSet<>();
+    private Set<IEntity> isKnown = new HashSet<>();
+    private Set<IEntity> seen = new HashSet<>();
 
     /**
      * Creates an instance of view
@@ -54,7 +54,6 @@ public class View {
      * initializes images, tiledMap, sound, camera and SpriteBatch (drawing board)
      */
     public void initialize() {
-        imageHandler.loadEntityImages();
         soundHandler.playGameMusic();
 
         camera = new OrthographicCamera();
@@ -98,8 +97,8 @@ public class View {
     }
 
     private void playIdleSounds() {
-        ArrayList<Entity> entities = model.getEntities();
-        for (Entity entity : entities){
+        ArrayList<IEntity> entities = model.getEntities();
+        for (IEntity entity : entities){
             if (!isKnown.contains((entity))){
                 soundHandler.playIdleSoundsWithInterval(model, 2000);
             }
@@ -142,7 +141,7 @@ public class View {
      * Otherwise, the frame is set to the first frame of the walk animation.
      */
     public void updatePlayerWalkFrame() {
-        if (model.playerIsMoving()) {
+        if (model.playerIsInMotion()) {
             float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;
             if (timeSincePlayerWalkFrameChanged > 12) {
                 currentPlayerWalkFrame++;
@@ -169,5 +168,20 @@ public class View {
      */
     public void drawWeaponSwing() {
         batch.draw(swordSprite, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getHeight() / 2, model.getPlayer().getWidth() / 2, 64, 64, 1, 1, (float) model.getPlayer().getWeapon().getWeaponAngle());
+    }
+
+    @Override
+    public void playEnemyHit() {
+        soundHandler.playEnemyHit();
+    }
+
+    @Override
+    public void playSwordHit() {
+        soundHandler.playSwordSwing();
+    }
+
+    @Override
+    public void playPlayerDeathSound() {
+        soundHandler.playPlayerDeathSound();
     }
 }

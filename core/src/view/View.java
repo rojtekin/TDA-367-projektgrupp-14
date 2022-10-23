@@ -39,8 +39,8 @@ public class View {
 
     private final Sprite swordSprite = new Sprite(imageHandler.getSwordSwingImage());
 
-    private Set<Entity> isKnown = new HashSet<>();
-    private Set<Entity> seen = new HashSet<>();
+    private Set<IEntity> isKnown = new HashSet<>();
+    private Set<IEntity> seen = new HashSet<>();
 
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
@@ -88,8 +88,8 @@ public class View {
     }
 
     private void playIdleSounds() {
-        ArrayList<Entity> entities = model.getEntities();
-        for (Entity entity : entities){
+        ArrayList<IEntity> entities = model.getEntities();
+        for (IEntity entity : entities){
             if (!isKnown.contains((entity))){
                 soundHandler.playIdleSoundsWithInterval(model, 2000);
             }

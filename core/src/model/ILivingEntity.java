@@ -1,8 +1,9 @@
 package model;
 
+import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.IntPoint;
 
-public interface ILivingEntity {
+public interface ILivingEntity extends IEntity {
 
     boolean isInMotion();
 
@@ -19,4 +20,8 @@ public interface ILivingEntity {
     Direction getDirection();
 
     void pushBack(IntPoint collisionNormal);
+
+    Faction getFaction();
+
+    Collisions move(Direction direction);
 }

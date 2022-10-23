@@ -18,7 +18,7 @@ public class Model {
     private final IEnvironmentCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
-    private final List<Entity> entityList = new ArrayList<>();
+    private final List<IEntity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
     private static final int MAX_MONSTERS = 50;
     private int spawnPointsIndex = 0;
@@ -84,7 +84,7 @@ public class Model {
         return player.isInMotion();
     }
 
-    public ArrayList<Entity> getEntities(){
+    public ArrayList<IEntity> getEntities(){
         return new ArrayList<>(entityList);
     }
 
@@ -120,7 +120,7 @@ public class Model {
      * @param collisions the collisions which occurred when a living entity moved
      * @param livingEntity the living entity which moved
      */
-    private void checkCollisions(Collisions collisions, LivingEntity livingEntity) {
+    private void checkCollisions(Collisions collisions, ILivingEntity livingEntity) {
         for (int i = 0; i < collisions.size(); i++) {
             Collision collision = collisions.get(i);
             if (collisionWithPlayer(collision)) {

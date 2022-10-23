@@ -3,26 +3,14 @@ package model;
 import java.util.List;
 import java.util.Set;
 
-import com.dongbat.jbump.Collisions;
-import com.dongbat.jbump.IntPoint;
 import model.rewards.Reward;
 import model.rewards.Tweak;
 
-public interface IPlayerCharacter {
-
-    boolean isInMotion();
-
-    Direction getDirection();
+public interface IPlayerCharacter extends ILivingEntity {
 
     int getExperience();
 
     int getLevel();
-
-    float getCurrentHealth();
-
-    float getSpeed();
-
-    float getDamage();
 
     void gainExperience(int experience);
 
@@ -31,22 +19,6 @@ public interface IPlayerCharacter {
     void increaseCurrentHealth(float amount);
 
     int getExperienceThreshold();
-
-    float getMaxHealth();
-
-    float getX();
-
-    float getY();
-
-    Collisions move(Direction direction);
-
-    float getHeight();
-
-    float getWidth();
-
-    void setInMotion(boolean inMotion);
-
-    void pushBack(IntPoint normal);
 
     /**
      * @param tweaks adds a tweak to the playerCharacter used by rewardSystem
@@ -69,6 +41,4 @@ public interface IPlayerCharacter {
      * @return returns a list of all perks applied to the playerCharacter
      */
     List<Reward> getPerkList();
-
-    void beAttacked(float damage, Faction faction);
 }

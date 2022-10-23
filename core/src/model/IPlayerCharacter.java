@@ -15,8 +15,6 @@ import model.rewards.Tweak;
  */
 public interface IPlayerCharacter extends ILivingEntity {
 
-    boolean isMoving();
-
     Direction getDirection();
 
     int getExperience();

@@ -1,6 +1,5 @@
 package view;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import model.Direction;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +12,7 @@ import model.monsters.Mouse;
 import java.util.HashMap;
 
 public class ImageHandler {
-    private HashMap<Class<? extends Entity>, TextureRegion[][]> allEntityImages = new HashMap<>();
+    private final HashMap<Class<? extends Entity>, TextureRegion[][]> allEntityImages = new HashMap<>();
 
     /**
      * Loads a sprite sheet for the specified entity, splits it into multiple images
@@ -35,6 +34,7 @@ public class ImageHandler {
         Texture swordSwing = new Texture("Weapons/pixil-frame-0.png");
         return swordSwing;
     }
+
     /**
      * Loads the entity images and puts them in the HashMap allEntityImages.
      */
@@ -58,7 +58,6 @@ public class ImageHandler {
             case DOWN -> entityImages[currentFrame][0];
             case LEFT -> entityImages[currentFrame][2];
             case RIGHT -> entityImages[currentFrame][3];
-            default -> throw new AssertionError();
         };
     }
 }

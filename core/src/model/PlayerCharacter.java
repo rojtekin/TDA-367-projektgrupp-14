@@ -11,7 +11,7 @@ import java.util.*;
  * A representation of a player that additionally to its superclasses can have/swing a sword and have perks
  */
 
-public class PlayerCharacter extends LivingEntity implements IControllable, IPlayerCharacter {
+public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
     private int experience;
     private int level;
@@ -138,7 +138,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
     }
 
     @Override
-    public void reduceExperience() { setExperience( (getExperience() - 100) ); }
+    public void reduceExperience() { setExperience( (getExperience() - getExperienceThreshold()) ); }
 
     @Override
     public void increaseCurrentHealth(float amount){

@@ -26,6 +26,12 @@ public class Model implements MovementListener {
     private final World<IEntity> world;
     private int currentScore = 0;
 
+    /**
+     * Initializes model responsible for the logic of the game
+     * @param mapCache The logic from the map that will be used
+     * @param player The playable character
+     * @param spawnPoints a list of the enemy spawnPoints
+     */
     public Model(IEnvironmentCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
@@ -40,6 +46,10 @@ public class Model implements MovementListener {
         return player;
     }
 
+    /**
+     * Spawns monsters if there are too few, moves monsters toward the player, checks for player levelup
+     * and applies bonuses if true and despawns dead monsters adding score for those killed.
+     */
     public void update() {
         spawnMonsters();
         moveMonsters();
@@ -105,6 +115,9 @@ public class Model implements MovementListener {
         return new ArrayList<>(monsters);
     }
 
+    /**
+     * moves every monster a bit towards the player
+     */
     private void moveMonsters() {
         for (Monster monster : monsters) {
             monster.moveTowardPlayer(player.getX(), player.getY());
@@ -145,6 +158,11 @@ public class Model implements MovementListener {
         }
     }
 
+    /**
+     * checks if collision has happened with player
+     * @param collision the collision which has occurred
+     * @return returns true if collision has happened, false if not
+     */
     private boolean collisionWithPlayer(Collision collision) {
         return collision.other.userData.equals(player);
     }
@@ -153,6 +171,9 @@ public class Model implements MovementListener {
         return mapCache.getWorld();
     }
 
+    /**
+     * initializes the reward system so rewards can be applied
+     */
     public void initialize() {
         rewardSystem.initialize(this);
     }

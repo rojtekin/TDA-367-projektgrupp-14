@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * The directions available.
+ * UP, DOWN, RIGHT, LEFT
+ */
 public enum Direction {
     UP(0, 1),
     DOWN(0, -1),

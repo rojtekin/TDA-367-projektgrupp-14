@@ -84,6 +84,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
 
     /**
      * Moves the entity in the direction it is facing.
+     * @param speed the distance you move.
      */
     public void moveForward(float speed) {
         Response.Result result = changePosition((getDirection().x * speed), (getDirection().y * speed));
@@ -113,7 +114,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
 
     /**
      * Pushes the entity back in a certain direction depending on the collision normal.
-     * @param collisionNormal the collision normal
+     * @param collisionNormal x and y multipliers to normal pushback of 16
      */
     public void pushBack(IntPoint collisionNormal) {
         int distancePushed = 16;
@@ -130,7 +131,8 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
     }
 
     /**
-     * Damages every touched hostile entity
+     * Damages every touched hostile enemy
+     * @param projectedCollisions
      */
     private void damageTouched(Collisions projectedCollisions) {
         for (int i = 0; i < projectedCollisions.size(); i++) {

@@ -74,7 +74,7 @@ public abstract class PlayerWeapon {
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
                         //gör skada;
-                        entity.beAttacked((weaponDamage),Faction.PLAYER);
+                        entity.beAttacked((weaponDamage), Faction.PLAYER);
                     }
                     seen.add(entity);
                     isKnown = seen;

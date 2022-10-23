@@ -34,14 +34,14 @@ public class Sound {
      * Plays the sound associated with the enemy hitting something/someone.
      */
     public void playEnemyHit(){
-        ENEMY_HIT.play(0.10f); // TODO: check if the sounds isn't too loud later
+        ENEMY_HIT.play(0.10f);
     }
 
     /**
      * Plays the sound of the sword swing.
      */
     public  void playSwordSwing(){
-        SWORD_SWOOSH.play(0.10f); // TODO: check if the sounds isnt too loud later
+        SWORD_SWOOSH.play(0.10f);
     }
 
     /**

@@ -10,7 +10,7 @@ import model.rewards.Tweak;
 
 public interface IPlayerCharacter {
 
-    boolean isMoving();
+    boolean isInMotion();
 
     Direction getDirection();
 
@@ -68,7 +68,7 @@ public interface IPlayerCharacter {
 
     float getWidth();
 
-    void setMoving(boolean moving);
+    void setInMotion(boolean inMotion);
 
     void pushBack(IntPoint normal);
 

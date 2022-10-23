@@ -13,12 +13,12 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
     private Faction faction;
     private Direction direction;
 
-    public boolean isMoving() {
+    public boolean isInMotion() {
         return inMotion;
     }
 
-    public void setMoving(boolean moving) {
-        this.inMotion = moving;
+    public void setInMotion(boolean inMotion) {
+        this.inMotion = inMotion;
     }
 
     public float getSpeed() {
@@ -82,7 +82,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * @return the collisions that occurred when moving
      */
     public Collisions moveForward() {
-        setMoving(true);
+        setInMotion(true);
         return changePosition((getDirection().x * speed), (getDirection().y * speed));
     }
 

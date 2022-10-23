@@ -80,8 +80,8 @@ public class Model {
         return player.getDirection();
     }
 
-    public boolean playerIsMoving() {
-        return player.isMoving();
+    public boolean playerIsInMotion() {
+        return player.isInMotion();
     }
 
     public ArrayList<Entity> getEntities(){

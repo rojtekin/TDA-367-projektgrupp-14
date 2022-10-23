@@ -129,7 +129,7 @@ public class View {
      * Otherwise, the frame is set to the first frame of the walk animation.
      */
     public void updatePlayerWalkFrame() {
-        if (model.playerIsMoving()) {
+        if (model.playerIsInMotion()) {
             float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;
             if (timeSincePlayerWalkFrameChanged > 12) {
                 currentPlayerWalkFrame++;

@@ -50,7 +50,7 @@ public class EntityTest {
     @Test
     public void isMoving_ReturnsTrue_AfterMoving() {
         livingEntity.move(Direction.RIGHT);
-        assertTrue(livingEntity.isMoving());
+        assertTrue(livingEntity.isInMotion());
     }
 
     @Test

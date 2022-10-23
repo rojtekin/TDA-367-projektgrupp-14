@@ -4,7 +4,7 @@ import com.dongbat.jbump.IntPoint;
 
 public interface ILivingEntity {
 
-    boolean isMoving();
+    boolean isInMotion();
 
     float getSpeed();
 
@@ -14,7 +14,7 @@ public interface ILivingEntity {
 
     void setCurrentHealth(float currentHealth);
 
-    void setMoving(boolean moving);
+    void setInMotion(boolean inMotion);
 
     Direction getDirection();
 

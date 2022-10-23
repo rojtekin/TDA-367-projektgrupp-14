@@ -70,11 +70,12 @@ public class Sound{
                         com.badlogic.gdx.audio.Sound sound = getIdleSound(entity);
                         while (entityClass.contains(entity.getClass())) {
                             float distance = 1000000;
-                            for (Entity entity: model.getEntities()){
-                                float checked_distance = (float) Math.hypot(entity.getX() - model.getPlayer().getX(), entity.getY() - model.getPlayer().getY());
+                            for (Entity entity1: model.getEntities()){
+                                if (entity.getClass().equals( entity1.getClass())){
+                                float checked_distance = (float) Math.hypot(entity1.getX() - model.getPlayer().getX(), entity1.getY() - model.getPlayer().getY());
                                 if (checked_distance < distance){
                                     distance = checked_distance;
-                                }
+                                }}
                             }
                             distance = 10/distance;
                             sound.play(distance);

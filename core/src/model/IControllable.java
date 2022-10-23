@@ -6,5 +6,5 @@ public interface IControllable {
 
     Collisions move(Direction direction);
 
-    void weaponAttack(int rotationStart, int rotationFinish, int animationpart);
+    void weaponAttack(int rotationStart, int rotationFinish);
 }

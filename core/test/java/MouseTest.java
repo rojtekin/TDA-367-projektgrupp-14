@@ -1,5 +1,5 @@
 import com.dongbat.jbump.World;
-import utility.Time;
+import application.Time;
 import model.monsters.Mouse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

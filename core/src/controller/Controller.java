@@ -37,25 +37,25 @@ public class Controller {
 
         //Left
         if(Gdx.input.isKeyJustPressed(Input.Keys.L)){
-            player.weaponAttack(315,45,0);
-            player.setSwinging(true);
+            player.weaponAttack(315,45);
+            model.getPlayer().setSwinging(true);
 
         }
         //Up
         if(Gdx.input.isKeyJustPressed(Input.Keys.K)){
-            player.weaponAttack(225,315,0);
-            player.setSwinging(true);
+            player.weaponAttack(225,315);
+            model.getPlayer().setSwinging(true);
 
         }
         //right
         if(Gdx.input.isKeyJustPressed(Input.Keys.J)){
-            player.weaponAttack(135,225,0);
-            player.setSwinging(true);
+            player.weaponAttack(135,225);
+            model.getPlayer().setSwinging(true);
         }
         //Down
         if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
-            player.weaponAttack(45,135,0);
-            player.setSwinging(true);
+            player.weaponAttack(45,135);
+            model.getPlayer().setSwinging(true);
         }
     }
 }

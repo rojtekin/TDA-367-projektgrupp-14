@@ -3,7 +3,7 @@ package model.monsters;
 import com.dongbat.jbump.Collisions;
 import model.*;
 import com.dongbat.jbump.World;
-import utility.Time;
+import application.Time;
 
 public class Mouse extends Monster {
     private float timeWhenDirectionChanged = 0;

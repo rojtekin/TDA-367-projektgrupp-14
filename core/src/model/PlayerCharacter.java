@@ -24,14 +24,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
      * @param world world that the character moves in
      */
     public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, Faction.PLAYER, world);
-        weapon = new Sword(world);
-        this.experience = 0;
-        this.level = 1;
         this(spawnX, spawnY, Faction.PLAYER, world);
-        for (LivingTrait trait : LivingTrait.values()) {
-            tweaks.put(trait, new ArrayList<>());
-        }
     }
     /**
      * Alternative constructor that allows a player to be of another faction.
@@ -39,7 +32,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
      * @param faction that the player belongs to
      */
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
+        super(spawnX, spawnY, 32, 32, 5, 100, 0, faction, world);
         weapon = new Sword(world);
         this.experience = 0;
         this.level = 1;

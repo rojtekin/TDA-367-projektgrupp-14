@@ -1,9 +1,6 @@
-import com.dongbat.jbump.World;
-import model.IEntity;
 import model.Model;
 import model.PlayerCharacter;
 import model.TiledMapCache;
-import model.rewards.Reward;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

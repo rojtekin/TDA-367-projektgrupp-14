@@ -7,6 +7,8 @@ import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
 import model.rewards.RewardSystem;
+import view.ISoundSubscriber;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +16,7 @@ import java.util.Objects;
 /**
  * A class responsible for managing the logic of the game.
  */
-public class Model implements MovementListener {
+public class Model implements MovementListener, IModelPublisher {
     private final IMapCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
@@ -25,6 +27,7 @@ public class Model implements MovementListener {
     private final RewardSystem rewardSystem = new RewardSystem();
     private final World<IEntity> world;
     private int currentScore = 0;
+    private List<ISoundSubscriber> soundSubscribers = new ArrayList<>();
 
     public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
@@ -176,5 +179,22 @@ public class Model implements MovementListener {
 
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
+    }
+
+    public void addSubscriber(ISoundSubscriber subscriber) {
+        soundSubscribers.add(subscriber);
+    }
+
+    public void removeSubscriber(ISoundSubscriber subscriber) {
+        soundSubscribers.remove(subscriber);
+    }
+
+    @Override
+    public void notifyPlayerDeath() {
+        if (player.getCurrentHealth() <= 0) {
+            for (ISoundSubscriber s : soundSubscribers) {
+                s.playPlayerDeathSound();
+            }
+        }
     }
 }

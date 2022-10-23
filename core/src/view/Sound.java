@@ -7,7 +7,7 @@ import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sound{
+public class Sound implements ISoundSubscriber {
     private static final com.badlogic.gdx.audio.Music BACKGROUND_MUSIC = Gdx.audio.newMusic(Gdx.files.internal("Audio/Background music.ogg"));
     private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
@@ -34,7 +34,7 @@ public class Sound{
      * Plays the sound associated with the enemy hitting something/someone.
      */
     public void playEnemyHit(){
-        ENEMY_HIT.play(); // TODO: check if the sounds isnt too loud later
+        ENEMY_HIT.play(); // TODO: check if the sounds isn't too loud later
     }
 
     /**

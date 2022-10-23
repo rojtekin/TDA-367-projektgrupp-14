@@ -14,11 +14,11 @@ import java.util.Objects;
 /**
  * A class responsible for managing the logic of the game.
  */
-public class Model implements MovementListener {
+public class Model {
     private final IEnvironmentCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
-    private final List<Entity> entityList = new ArrayList<>();
+    private final List<IEntity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
     private static final int MAX_MONSTERS = 50;
     private int spawnPointsIndex = 0;
@@ -80,11 +80,11 @@ public class Model implements MovementListener {
         return player.getDirection();
     }
 
-    public boolean playerIsMoving() {
-        return player.isMoving();
+    public boolean playerIsInMotion() {
+        return player.isInMotion();
     }
 
-    public ArrayList<Entity> getEntities(){
+    public ArrayList<IEntity> getEntities(){
         return new ArrayList<>(entityList);
     }
 
@@ -98,16 +98,35 @@ public class Model implements MovementListener {
         }
         monsters.add(monster);
         entityList.add(monster);
-        monster.addMovementListener(this);
     }
 
     public List<Monster> getMonsters() {
         return new ArrayList<>(monsters);
     }
 
+    /**
+     * Moves every monster.
+     */
     private void moveMonsters() {
         for (Monster monster : monsters) {
-            monster.moveTowardPlayer(player.getX(), player.getY());
+            Collisions collisions = monster.moveTowardTarget(player.getX(), player.getY());
+            checkCollisions(collisions, monster);
+        }
+    }
+
+    /**
+     * Goes through collisions and checks if a collision with the player character has occurred.
+     * If it has, the player character is affected.
+     * @param collisions the collisions which occurred when a living entity moved
+     * @param livingEntity the living entity which moved
+     */
+    private void checkCollisions(Collisions collisions, ILivingEntity livingEntity) {
+        for (int i = 0; i < collisions.size(); i++) {
+            Collision collision = collisions.get(i);
+            if (collisionWithPlayer(collision)) {
+                player.beAttacked(livingEntity.getDamage(), livingEntity.getFaction());
+                player.pushBack(collision.normal);
+            }
         }
     }
 
@@ -132,16 +151,6 @@ public class Model implements MovementListener {
         }
         else {
             addMonster(new Mouse(spawnPoint.x, spawnPoint.y, getWorld()));
-        }
-    }
-
-    @Override
-    public void onMovement(Collisions collisions) {
-        for (int i = 0; i < collisions.size(); i++) {
-            Collision collision = collisions.get(i);
-            if (collisionWithPlayer(collision)) {
-                player.pushBack(collision.normal);
-            }
         }
     }
 

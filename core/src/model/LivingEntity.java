@@ -2,9 +2,6 @@ package model;
 
 import com.dongbat.jbump.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Parent class for all entities that have movement and health
  */
@@ -13,16 +10,15 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
     private boolean inMotion = false;
     private float maxHealth;
     private float currentHealth;
-    private final List<MovementListener> movementListeners = new ArrayList<>();
     private Faction faction;
     private Direction direction;
 
-    public boolean isMoving() {
+    public boolean isInMotion() {
         return inMotion;
     }
 
-    public void setMoving(boolean moving) {
-        this.inMotion = moving;
+    public void setInMotion(boolean inMotion) {
+        this.inMotion = inMotion;
     }
 
     public float getSpeed() {
@@ -73,28 +69,21 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * Moves the collision box, then moves the entity to match it.
      * @param deltaX the distance in the x-direction that the entity should move
      * @param deltaY the distance in the y-direction that the entity should move
-     * @return result
+     * @return the collisions that occurred when moving
      */
-    private Response.Result changePosition(float deltaX, float deltaY) {
+    private Collisions changePosition(float deltaX, float deltaY) {
         Response.Result result = getWorld().move(getBoundingbox(), getX() + deltaX,getY() + deltaY, CollisionFilter.defaultFilter);
-        damageTouched(result.projectedCollisions);
         updatePosition();
-        return result;
+        return result.projectedCollisions;
     }
 
     /**
      * Moves the entity in the direction it is facing.
+     * @return the collisions that occurred when moving
      */
-    public void moveForward(float speed) {
-        Response.Result result = changePosition((getDirection().x * speed), (getDirection().y * speed));
-        for (MovementListener movementListener : movementListeners) {
-            movementListener.onMovement(result.projectedCollisions);
-        }
-        setMoving(true);
-    }
-
-    public void addMovementListener(MovementListener movementListener) {
-        movementListeners.add(movementListener);
+    public Collisions moveForward() {
+        setInMotion(true);
+        return changePosition((getDirection().x * speed), (getDirection().y * speed));
     }
 
     /**
@@ -119,20 +108,11 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
     /**
      * Moves the entity in the specified direction.
      * @param direction the direction that the entity should move in
+     * @return the collisions that occurred when moving
      */
-    public void move(Direction direction, float speed) {
+    public Collisions move(Direction direction) {
         setDirection(direction);
-        moveForward(speed);
-    }
-
-    /**
-     * Damages every touched hostile entity
-     */
-    private void damageTouched(Collisions projectedCollisions) {
-        for (int i = 0; i < projectedCollisions.size(); i++) {
-            Item<IEntity> touched = projectedCollisions.get(i).other;
-            touched.userData.beAttacked(getDamage()/10, faction);
-        }
+        return moveForward();
     }
 
     @Override

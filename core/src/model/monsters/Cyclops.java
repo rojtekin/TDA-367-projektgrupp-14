@@ -1,5 +1,6 @@
 package model.monsters;
 
+import com.dongbat.jbump.Collisions;
 import model.Direction;
 import com.dongbat.jbump.World;
 import model.Faction;
@@ -25,43 +26,47 @@ public class Cyclops extends Monster {
     }
 
     /**
-     * Moves the cyclops toward the player character in the x-direction or in the y-direction.
+     * Moves the cyclops toward the target in the x-direction or in the y-direction.
      * If the cyclops gets stuck in the x-direction, it is moved up until it is no longer stuck.
      * If it gets stuck in the y-direction, it is moved right until it is no longer stuck.
-     * @param playerX the x-coordinate of the player character.
-     * @param playerY the y-coordinate of the player character.
+     * @param targetX the x-coordinate of the target
+     * @param targetY the y-coordinate of the target
      */
-    public void moveTowardPlayer(float playerX, float playerY) {
-        float xDistance = playerX - this.getX();
-        float yDistance = playerY - this.getY();
-        float initialX = this.getX();
-        float initialY = this.getY();
+    public Collisions moveTowardTarget(float targetX, float targetY) {
+        float xDistance = targetX - getX();
+        float yDistance = targetY - getY();
+        boolean targetNearby = (Math.hypot(xDistance, yDistance) < 48);
+        float initialX = getX();
+        float initialY = getY();
+        Collisions collisions;
 
-        if ((Math.abs(xDistance) > 16) && !stuckInYDirection) {
+        if ((Math.abs(xDistance) > 16) && !stuckInYDirection && !targetNearby) {
             if (xDistance > 0) {
-                this.move(Direction.RIGHT, getSpeed());
+                collisions = move(Direction.RIGHT);
             }
             else {
-                this.move(Direction.LEFT, getSpeed());
+                collisions = move(Direction.LEFT);
             }
-            stuckInXDirection = false;
-            if (this.getX() == initialX) {
-                stuckInXDirection = true;
-                this.move(Direction.UP, getSpeed());
+            stuckInXDirection = (getX() == initialX);
+            if (stuckInXDirection) {
+                collisions = move(Direction.UP);
             }
         }
-        else if(!stuckInXDirection){
+        else if (!stuckInXDirection && !targetNearby) {
             if (yDistance > 0) {
-                this.move(Direction.UP, getSpeed());
+                collisions = move(Direction.UP);
             }
             else {
-                this.move(Direction.DOWN, getSpeed());
+                collisions = move(Direction.DOWN);
             }
-            stuckInYDirection = false;
-            if (this.getY() == initialY) {
-                stuckInYDirection = true;
-                this.move(Direction.RIGHT, getSpeed());
+            stuckInYDirection = (getY() == initialY);
+            if (stuckInYDirection) {
+                collisions = move(Direction.RIGHT);
             }
         }
+        else {
+            collisions = moveForward();
+        }
+        return collisions;
     }
 }

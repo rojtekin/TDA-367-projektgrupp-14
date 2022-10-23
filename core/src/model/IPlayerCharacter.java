@@ -3,25 +3,14 @@ package model;
 import java.util.List;
 import java.util.Set;
 
-import com.dongbat.jbump.IntPoint;
 import model.rewards.Reward;
 import model.rewards.Tweak;
 
-public interface IPlayerCharacter {
-
-    boolean isMoving();
-
-    Direction getDirection();
+public interface IPlayerCharacter extends ILivingEntity {
 
     int getExperience();
 
     int getLevel();
-
-    float getCurrentHealth();
-
-    float getSpeed();
-
-    float getDamage();
 
     void gainExperience(int experience);
 
@@ -30,22 +19,6 @@ public interface IPlayerCharacter {
     void increaseCurrentHealth(float amount);
 
     int getExperienceThreshold();
-
-    float getMaxHealth();
-
-    float getX();
-
-    float getY();
-
-    void move(Direction direction, float speed);
-
-    float getHeight();
-
-    float getWidth();
-
-    void setMoving(boolean moving);
-
-    void pushBack(IntPoint normal);
 
     /**
      * @param tweaks adds a tweak to the playerCharacter used by rewardSystem

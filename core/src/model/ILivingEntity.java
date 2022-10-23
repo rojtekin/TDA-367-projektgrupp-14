@@ -1,10 +1,11 @@
 package model;
 
+import com.dongbat.jbump.Collisions;
 import com.dongbat.jbump.IntPoint;
 
-public interface ILivingEntity {
+public interface ILivingEntity extends IEntity {
 
-    boolean isMoving();
+    boolean isInMotion();
 
     float getSpeed();
 
@@ -14,9 +15,13 @@ public interface ILivingEntity {
 
     void setCurrentHealth(float currentHealth);
 
-    void setMoving(boolean moving);
+    void setInMotion(boolean inMotion);
 
     Direction getDirection();
 
     void pushBack(IntPoint collisionNormal);
+
+    Faction getFaction();
+
+    Collisions move(Direction direction);
 }

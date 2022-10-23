@@ -64,13 +64,4 @@ public class DamageTest {
         model.despawnDeadNPCs();
         assertFalse(model.getMonsters().contains(monster));
     }
-
-    @Test
-    public void playerTakesCollisionDamage() {
-        float initHP = model.getPlayer().getCurrentHealth();
-        Cyclops cyclops = new Cyclops(model.getPlayer().getWidth(), model.getPlayer().getY(), model.getWorld());
-        cyclops.move(Direction.LEFT, cyclops.getSpeed());
-        float finalHP = model.getPlayer().getCurrentHealth();
-        assertTrue(initHP > finalHP);
-    }
 }

@@ -39,15 +39,14 @@ public class View {
 
     private final Sprite swordSprite = new Sprite(imageHandler.getSwordSwingImage());
 
-    private Set<Entity> isKnown = new HashSet<>();
-    private Set<Entity> seen = new HashSet<>();
+    private Set<IEntity> isKnown = new HashSet<>();
+    private Set<IEntity> seen = new HashSet<>();
 
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
     }
 
     public void initialize() {
-        imageHandler.loadEntityImages();
         soundHandler.playGameMusic();
 
         camera = new OrthographicCamera();
@@ -89,8 +88,8 @@ public class View {
     }
 
     private void playIdleSounds() {
-        ArrayList<Entity> entities = model.getEntities();
-        for (Entity entity : entities){
+        ArrayList<IEntity> entities = model.getEntities();
+        for (IEntity entity : entities){
             if (!isKnown.contains((entity))){
                 soundHandler.playIdleSoundsWithInterval(model, 2000);
             }
@@ -130,7 +129,7 @@ public class View {
      * Otherwise, the frame is set to the first frame of the walk animation.
      */
     public void updatePlayerWalkFrame() {
-        if (model.playerIsMoving()) {
+        if (model.playerIsInMotion()) {
             float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;
             if (timeSincePlayerWalkFrameChanged > 12) {
                 currentPlayerWalkFrame++;

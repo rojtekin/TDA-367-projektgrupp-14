@@ -8,7 +8,7 @@ import model.rewards.Tweak;
 import java.util.*;
 
 
-public class PlayerCharacter extends LivingEntity implements IControllable, IPlayerCharacter {
+public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
     private int experience;
     private int level;
@@ -24,13 +24,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
      * @param world world that the character moves in
      */
     public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, Faction.PLAYER, world);
-        weapon = new Sword(world);
-        this.experience = 0;
-        this.level = 1;
-        for (LivingTrait trait : LivingTrait.values()) {
-            tweaks.put(trait, new ArrayList<>());
-        }
+        this(spawnX, spawnY, Faction.PLAYER, world);
     }
     /**
      * Alternative constructor that allows a player to be of another faction.
@@ -38,7 +32,7 @@ public class PlayerCharacter extends LivingEntity implements IControllable, IPla
      * @param faction that the player belongs to
      */
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
+        super(spawnX, spawnY, 32, 32, 5, 100, 0, faction, world);
         weapon = new Sword(world);
         this.experience = 0;
         this.level = 1;

@@ -13,7 +13,7 @@ public class MouseTest {
     public void setUp() { mouse = new Mouse(100, 100, new World<>()); }
 
     @Test
-    public void moveTowardsPlayer_DecreasesTheDistanceBetweenMouseAndPlayer() {
+    public void moveTowardTarget_DecreasesTheDistanceBetweenMouseAndTarget() {
         float playerX = 400;
         float playerY = 400;
         float initialXDistance = Math.abs(playerX - mouse.getX());
@@ -21,7 +21,7 @@ public class MouseTest {
         double initialDistance = Math.hypot(initialXDistance, initialYDistance);
 
         for (int i = 0; i < 60; i++) { Time.getInstance().tick(); }
-        mouse.moveTowardPlayer(playerX, playerY);
+        mouse.moveTowardTarget(playerX, playerY);
 
         float finalXDistance = Math.abs(playerX - mouse.getX());
         float finalYDistance = Math.abs(playerY - mouse.getY());

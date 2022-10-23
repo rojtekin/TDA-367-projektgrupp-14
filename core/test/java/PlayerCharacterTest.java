@@ -56,8 +56,10 @@ public class PlayerCharacterTest {
     @Test
     public void increaseHealth_IncreasesHealth() {
         player.takeDamage(5);
+        float initHealth = player.getCurrentHealth();
         player.increaseCurrentHealth(1);
-        assertTrue(player.getCurrentHealth() == 6);
+        float finalHealth = player.getCurrentHealth();
+        assertTrue(finalHealth == initHealth + 1);
     }
 
     @Test

@@ -8,7 +8,7 @@ import model.rewards.Tweak;
 import java.util.*;
 
 
-public class PlayerCharacter extends LivingEntity implements IControllable, IPlayerCharacter {
+public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
     private int experience;
     private int level;

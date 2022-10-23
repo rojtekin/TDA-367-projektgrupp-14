@@ -193,6 +193,11 @@ public class Model implements IModelPublisher {
         this.currentScore = currentScore;
     }
 
+    /**
+     * Checks if a player's health is equal to or below zero and if
+     * the method has been triggered previously. If not it plays a sound and
+     * sets a boolean value to prevent the method from being triggered again.
+     */
     public void playerHealthCheck() {
         if (!playerIsDead && player.getCurrentHealth() <= 0) {
             notifyPlayerDeath();
@@ -202,20 +207,20 @@ public class Model implements IModelPublisher {
 
     @Override
     public void addSubscriber(ISoundSubscriber subscriber) {
+        player.getWeapon().addSubscriber(subscriber);
         soundSubscribers.add(subscriber);
     }
 
     @Override
     public void removeSubscriber(ISoundSubscriber subscriber) {
+        player.getWeapon().removeSubscriber(subscriber);
         soundSubscribers.remove(subscriber);
     }
 
     @Override
     public void notifyPlayerDeath() {
-        if (player.getCurrentHealth() <= 0) {
-            for (ISoundSubscriber s : soundSubscribers) {
-                s.playPlayerDeathSound();
-            }
+        for (ISoundSubscriber s : soundSubscribers) {
+            s.playPlayerDeathSound();
         }
     }
 

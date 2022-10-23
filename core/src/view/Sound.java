@@ -40,7 +40,7 @@ public class Sound {
     /**
      * Plays the sound of the sword swing.
      */
-    public  void playSwordHit(){
+    public  void playSwordSwing(){
         SWORD_SWOOSH.play(); // TODO: check if the sounds isnt too loud later
     }
 

@@ -3,10 +3,9 @@ package model;
 import view.ISoundSubscriber;
 
 /**
- * Allows the model to publish to any subscriber that changes
- * in the model have occured.
+ * Allows the weapon to publish to any subscriber that a swordswing has occurred
  */
-public interface IModelPublisher {
+public interface IWeaponPublisher {
 
     /**
      * Adds a soundSubscriber to a list of subscribers
@@ -21,13 +20,7 @@ public interface IModelPublisher {
     void removeSubscriber(ISoundSubscriber subscriber);
 
     /**
-     * Notify the subscribers that the player has died
+     * Notifies the subscriber that a weaponswing has occured
      */
-    void notifyPlayerDeath();
-
-    /**
-     * Notify the subscribers that a monster has made an
-     * attack
-     */
-    void notifyMonsterAttack();
+    void notifyWeaponswing();
 }

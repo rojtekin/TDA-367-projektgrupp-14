@@ -154,7 +154,7 @@ public class View implements ISoundSubscriber {
 
     @Override
     public void playSwordHit() {
-        soundHandler.playSwordHit();
+        soundHandler.playSwordSwing();
     }
 
     @Override

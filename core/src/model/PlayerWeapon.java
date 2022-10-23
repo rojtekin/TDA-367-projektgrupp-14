@@ -1,12 +1,13 @@
 package model;
 
 import com.dongbat.jbump.*;
+import view.ISoundSubscriber;
 
 import java.util.*;
 
 import static java.lang.Math.*;
 
-public abstract class PlayerWeapon {
+public abstract class PlayerWeapon implements IWeaponPublisher {
 
     private float weaponSpeed;
     private float weaponDamage;
@@ -16,6 +17,7 @@ public abstract class PlayerWeapon {
     private final int weaponRotations;
     private final World<IEntity> world;
     private final CollisionFilter filter;
+    private final List<ISoundSubscriber> subscribers = new ArrayList<>();
 
     public PlayerWeapon(World<IEntity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
@@ -61,6 +63,7 @@ public abstract class PlayerWeapon {
 
             currentWeaponRotation += 1;
         }
+        notifyWeaponswing();
         setWeaponAngle(((rotationStart-45)%360));
     }
     public double getWeaponAngle() {
@@ -87,5 +90,22 @@ public abstract class PlayerWeapon {
             }
         };
         return filter;
+    }
+
+    @Override
+    public void addSubscriber(ISoundSubscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    @Override
+    public void removeSubscriber(ISoundSubscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    @Override
+    public void notifyWeaponswing() {
+        for (ISoundSubscriber s : subscribers) {
+            s.playSwordHit();
+        }
     }
 }

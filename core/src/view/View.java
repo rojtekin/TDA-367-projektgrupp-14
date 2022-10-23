@@ -56,21 +56,21 @@ public class View implements ISoundObserver {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
+        hud = new HUD(batch, model);
     }
 
     public void update() {
-        hud = new HUD(batch, model);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // TODO functional decomposition
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        centerCameraOnPlayer(); //makes the camera follow PlayerCharacter (keeps the player in the center of the screen)
+        centerCameraOnPlayer();
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        batch.begin(); // TODO functional decomposition
+        batch.begin();
         updatePlayerWalkFrame();
         drawEntities();
 
@@ -80,7 +80,7 @@ public class View implements ISoundObserver {
 
         batch.end();
 
-        hud.update(); // TODO functional decomposition
+        hud.update();
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
 
@@ -128,7 +128,7 @@ public class View implements ISoundObserver {
      * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
      * Otherwise, the frame is set to the first frame of the walk animation.
      */
-    public void updatePlayerWalkFrame() {
+    private void updatePlayerWalkFrame() {
         if (model.playerIsInMotion()) {
             float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;
             if (timeSincePlayerWalkFrameChanged > 12) {
@@ -143,7 +143,7 @@ public class View implements ISoundObserver {
         }
     }
 
-    public void drawWeaponSwing() {
+    private void drawWeaponSwing() {
         batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
     }
 

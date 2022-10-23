@@ -35,7 +35,7 @@ public class View implements ISoundObserver {
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
     private final ImageHandler imageHandler = new ImageHandler();
-    private final Sound soundHandler = new Sound();
+    private final SoundHandler soundHandler = new SoundHandler();
 
     private final Sprite swordSprite = new Sprite(imageHandler.getSwordSwingImage());
 

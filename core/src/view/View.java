@@ -47,7 +47,6 @@ public class View {
     }
 
     public void initialize() {
-        imageHandler.loadEntityImages();
         soundHandler.playGameMusic();
 
         camera = new OrthographicCamera();

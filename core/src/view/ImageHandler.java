@@ -5,14 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import model.Entity;
-import model.PlayerCharacter;
-import model.monsters.Cyclops;
-import model.monsters.Mouse;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ImageHandler {
-    private final HashMap<Class<? extends Entity>, TextureRegion[][]> allEntityImages = new HashMap<>();
+    private final Map<Class<? extends Entity>, TextureRegion[][]> allEntityImages = new HashMap<>();
 
     /**
      * Loads a sprite sheet for the specified entity, splits it into multiple images
@@ -22,12 +20,12 @@ public class ImageHandler {
      */
     private TextureRegion[][] getEntityImages(Class<? extends Entity> c) {
         Texture spriteSheet = new Texture(Gdx.files.internal("entities/" + c.getSimpleName() + "SpriteSheet.png"));
-        int nColumnsPlayerWalkSheet = 4;
-        int nRowsPlayerWalkSheet = 4;
+        int nColumnsSpriteSheet = 4;
+        int nRowsSpriteSheet = 4;
         // Splits the sprite sheet into multiple images
         return TextureRegion.split(spriteSheet,
-                spriteSheet.getWidth() / nColumnsPlayerWalkSheet,
-                spriteSheet.getHeight() / nRowsPlayerWalkSheet);
+                spriteSheet.getWidth() / nColumnsSpriteSheet,
+                spriteSheet.getHeight() / nRowsSpriteSheet);
     }
 
     protected Texture getSwordSwingImage(){
@@ -36,22 +34,24 @@ public class ImageHandler {
     }
 
     /**
-     * Loads the entity images and puts them in the HashMap allEntityImages.
+     * Gets images for the specified entity and puts them in the Map allEntityImages.
+     * @param c a class that extends entity
      */
-    protected void loadEntityImages() {
-        allEntityImages.put(PlayerCharacter.class, getEntityImages(PlayerCharacter.class));
-        allEntityImages.put(Mouse.class, getEntityImages(Mouse.class));
-        allEntityImages.put(Cyclops.class, getEntityImages(Cyclops.class));
+    private void loadEntityImages(Class<? extends Entity> c) {
+        allEntityImages.put(c, getEntityImages(c));
     }
 
     /**
-     * Gets the entity image based on the direction of the entity and the current frame in the walk animation.
+     * Returns an entity image based on the direction of the entity and the current frame in the walk animation.
      * @param c a class that extends Entity
      * @param currentFrame the current frame in the entity walk animation
      * @param direction the direction that the entity is facing
      * @return the texture region which matches the state of the entity
      */
     protected TextureRegion getEntityImage(Class<? extends Entity> c, Direction direction, int currentFrame) {
+        if (!allEntityImages.containsKey(c)) {
+            loadEntityImages(c);
+        }
         TextureRegion[][] entityImages = allEntityImages.get(c);
         return switch (direction) {
             case UP -> entityImages[currentFrame][1];

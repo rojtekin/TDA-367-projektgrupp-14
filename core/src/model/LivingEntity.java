@@ -140,7 +140,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
 
     /**
      * When a living entity is attacked by someone of a different faction
-     * it will take damage. If it is attacked by a "friendl" entity of the same
+     * it will take damage. If it is attacked by a "friendly" entity of the same
      * faction then nothing will happen.
      * @param damage The amount of damage inflicted
      * @param faction The faction of the attacker

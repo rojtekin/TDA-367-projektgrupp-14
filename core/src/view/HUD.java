@@ -30,8 +30,8 @@ public class HUD {
 
     private Image healthColor;
 
-    //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values needed
-    //for a square (and also make it an actor so I can send it back and not draw directly).
+    //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values (or I missed it)
+    //for a square (and also make it an actor so I can add it to stage).
 
     private final Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
     private final Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
@@ -44,7 +44,6 @@ public class HUD {
     private final Image blackHealthBar = new Image(blackHealthNinePatch);
     private final Image blackExperienceBar = new Image(blackHealthNinePatch);
 
-    // lyfta ut konfigurationsdatan till en enum. Singleton. Turtorial java enum turtorial. Enums kan ha konstant state
     private final Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
     private final NinePatch emptyExperienceBarNinePatch = new NinePatch(aqua, 0, 0, 0, 0);
     private final Image experienceBar = new Image(emptyExperienceBarNinePatch);
@@ -77,12 +76,12 @@ public class HUD {
     }
 
     /**
-     * update updates the HUD.
+     * update updates everything shown invthe HUD.
      */
     public void update() {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
-        // ugly coded maybe
+
         table1.clear();
         table2.clear();
         table3.clear();

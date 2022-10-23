@@ -5,6 +5,9 @@ import model.*;
 import view.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
+/**
+ * Runs the main loop of the playable game, in other words the ingame loop
+ */
 public class Game extends ApplicationAdapter {
 	private Model model;
 	private View view;
@@ -20,8 +23,8 @@ public class Game extends ApplicationAdapter {
 	@Override
 	public void render () {
 		controller.update(model.getPlayer());
-		view.update();
 		model.update();
+		view.update();
 		Time.getInstance().tick();
 	}
 

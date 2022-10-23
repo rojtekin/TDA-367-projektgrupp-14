@@ -46,7 +46,7 @@ public abstract class PlayerWeapon {
     }
 
     /**
-     *
+     * Makes multiple segments that scan for enemies touching them and afterwards damages those enemies.
      * @param rotationStart The angle (degrees) the swordswing will start at
      * @param rotationFinish The angle (degrees) the swordswing will end at
      * @param currentWeaponRotation What part of the rotation it starts at

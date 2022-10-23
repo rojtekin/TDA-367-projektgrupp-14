@@ -31,6 +31,10 @@ public class ImageHandler {
                 spriteSheet.getHeight() / nRowsPlayerWalkSheet);
     }
 
+    /**
+     * Loads the Texture for swordSwing
+     * @return the texture for swordSing
+     */
     protected Texture getSwordSwingImage(){
         Texture swordSwing = new Texture("Weapons/pixil-frame-0.png");
         return swordSwing;

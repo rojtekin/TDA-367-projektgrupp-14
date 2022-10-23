@@ -1,6 +1,6 @@
 package view;
 
-import model.Entity;
+import model.IEntity;
 import model.Model;
 import com.badlogic.gdx.Gdx;
 
@@ -51,7 +51,7 @@ public class Sound implements ISoundSubscriber {
         PLAYER_DEATH.play();
     }
 
-    public com.badlogic.gdx.audio.Sound getIdleSound(Entity entity) {
+    public com.badlogic.gdx.audio.Sound getIdleSound(IEntity entity) {
         com.badlogic.gdx.audio.Sound sound = Gdx.audio.newSound(Gdx.files.internal("Audio/"+ entity.getClass().getSimpleName() +"-idle-noise.mp3"));
         return sound;
     }
@@ -62,7 +62,7 @@ public class Sound implements ISoundSubscriber {
      * @param interval how long between each play of the idle sounds.
      */
     public void playIdleSoundsWithInterval(final Model model, long interval) {
-        for (final Entity entity : model.getEntities()) {
+        for (final IEntity entity : model.getEntities()) {
             if (!entityClass.contains(entity.getClass())) {
                 entityClass.add(entity.getClass());
                 Runnable toRun = new Runnable() {
@@ -70,7 +70,7 @@ public class Sound implements ISoundSubscriber {
                         com.badlogic.gdx.audio.Sound sound = getIdleSound(entity);
                         while (entityClass.contains(entity.getClass())) {
                             float distance = 1000000;
-                            for (Entity entity1: model.getEntities()){
+                            for (IEntity entity1: model.getEntities()){
                                 if (entity.getClass().equals( entity1.getClass())){
                                 float checked_distance = (float) Math.hypot(entity1.getX() - model.getPlayer().getX(), entity1.getY() - model.getPlayer().getY());
                                 if (checked_distance < distance){

@@ -14,12 +14,12 @@ public class Game extends ApplicationAdapter {
 		model = ModelFactory.makeModel("Flowerfield");
 		view = new View(model);
 		view.initialize();
-		controller = new Controller(model);
+		controller = new Controller(model.getPlayer());
 	}
 
 	@Override
 	public void render () {
-		controller.update(model.getPlayer());
+		controller.update();
 		view.update();
 		model.update();
 		Time.getInstance().tick();

@@ -15,14 +15,14 @@ public class CyclopsTest {
     public void setUp() { cyclops = new Cyclops(100, 100, new World<>()); }
 
     @Test
-    public void moveTowardsPlayer_DecreasesTheDistanceBetweenCyclopsAndPlayer() {
+    public void moveTowardTarget_DecreasesTheDistanceBetweenCyclopsAndTarget() {
         float playerX = 400;
         float playerY = 400;
         float initialXDistance = Math.abs(playerX - cyclops.getX());
         float initialYDistance = Math.abs(playerY - cyclops.getY());
         double initialDistance = Math.hypot(initialXDistance, initialYDistance);
 
-        cyclops.moveTowardPlayer(playerX, playerY);
+        cyclops.moveTowardTarget(playerX, playerY);
         float finalXDistance = Math.abs(playerX - cyclops.getX());
         float finalYDistance = Math.abs(playerY - cyclops.getY());
         double finalDistance = Math.hypot(finalXDistance, finalYDistance);

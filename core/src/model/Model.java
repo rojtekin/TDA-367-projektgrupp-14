@@ -28,6 +28,7 @@ public class Model implements IModelPublisher {
     private final World<IEntity> world;
     private int currentScore = 0;
     private final List<ISoundSubscriber> soundSubscribers = new ArrayList<>();
+    private boolean playerIsDead = false;
 
     public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
@@ -48,6 +49,7 @@ public class Model implements IModelPublisher {
         moveMonsters();
         levelUpCheckAndApply();
         despawnDeadNPCs();
+        playerHealthCheck();
     }
 
     /**
@@ -129,6 +131,7 @@ public class Model implements IModelPublisher {
             if (collisionWithPlayer(collision)) {
                 player.beAttacked(livingEntity.getDamage(), livingEntity.getFaction());
                 player.pushBack(collision.normal);
+                notifyMonsterAttack();
             }
         }
     }
@@ -190,10 +193,19 @@ public class Model implements IModelPublisher {
         this.currentScore = currentScore;
     }
 
+    public void playerHealthCheck() {
+        if (!playerIsDead && player.getCurrentHealth() <= 0) {
+            notifyPlayerDeath();
+            playerIsDead = true;
+        }
+    }
+
+    @Override
     public void addSubscriber(ISoundSubscriber subscriber) {
         soundSubscribers.add(subscriber);
     }
 
+    @Override
     public void removeSubscriber(ISoundSubscriber subscriber) {
         soundSubscribers.remove(subscriber);
     }
@@ -206,4 +218,12 @@ public class Model implements IModelPublisher {
             }
         }
     }
+
+    @Override
+    public void notifyMonsterAttack() {
+        for (ISoundSubscriber s : soundSubscribers) {
+            s.playEnemyHit();
+        }
+    }
+
 }

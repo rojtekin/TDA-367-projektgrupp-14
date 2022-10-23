@@ -5,16 +5,11 @@ import model.Faction;
 import model.IEntity;
 import model.LivingEntity;
 import com.dongbat.jbump.World;
-import view.ISoundSubscriber;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public abstract class Monster extends LivingEntity implements IMonsterSoundPublisher {
+public abstract class Monster extends LivingEntity {
 
     private final int experience;
     private final int score;
-    private final List<ISoundSubscriber> subscribers = new ArrayList<>();
 
     /**
      * Default constructor for all monsters
@@ -56,22 +51,5 @@ public abstract class Monster extends LivingEntity implements IMonsterSoundPubli
      */
     public int getScore() {
         return score;
-    }
-
-    @Override
-    public void addSubscriber(ISoundSubscriber subscriber) {
-        subscribers.add(subscriber);
-    }
-
-    @Override
-    public void removeSubscriber(ISoundSubscriber subscriber) {
-        subscribers.remove(subscriber);
-    }
-
-    @Override
-    public void notifyMonsterAttack() {
-        for (ISoundSubscriber s : subscribers) {
-            s.playEnemyHit();
-        }
     }
 }

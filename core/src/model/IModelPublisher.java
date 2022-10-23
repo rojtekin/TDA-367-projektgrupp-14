@@ -9,4 +9,6 @@ public interface IModelPublisher {
     void removeSubscriber(ISoundSubscriber subscriber);
 
     void notifyPlayerDeath();
+
+    void notifyMonsterAttack();
 }

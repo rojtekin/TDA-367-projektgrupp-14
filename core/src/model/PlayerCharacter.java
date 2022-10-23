@@ -21,8 +21,7 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
      * @param world world that the character moves in
      */
     public PlayerCharacter(float spawnX, float spawnY, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, Faction.PLAYER, world);
-        weapon = new Sword(world);
+        this(spawnX, spawnY, Faction.PLAYER, world);
         for (LivingTrait trait : LivingTrait.values()) {
             tweaks.put(trait, new ArrayList<>());
         }
@@ -49,7 +48,7 @@ public class PlayerCharacter extends AbstractPlayerCharacter implements IControl
      * @param faction that the player belongs to
      */
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 10, 0, faction, world);
+        super(spawnX, spawnY, 32, 32, 5, 100, 0, faction, world);
         weapon = new Sword(world);
     }
 

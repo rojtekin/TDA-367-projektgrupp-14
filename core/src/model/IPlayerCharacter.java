@@ -29,6 +29,10 @@ public interface IPlayerCharacter extends ILivingEntity {
      */
     void addTweak(Set<Tweak> tweaks);
 
+    /**
+     * Used to test and see if tweaks are being properly added
+     * @return a copy of the map holding the tweaks
+     */
     Map<LivingTrait, ArrayList<Tweak>> getTweaks();
 
     void weaponAttack(int rotationStart, int rotationFinish);

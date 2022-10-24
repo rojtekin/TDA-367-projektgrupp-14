@@ -57,11 +57,6 @@ public class ImageHandler {
             loadEntityImages(c);
         }
         TextureRegion[][] entityImages = allEntityImages.get(c);
-        return switch (direction) {
-            case UP -> entityImages[currentFrame][1];
-            case DOWN -> entityImages[currentFrame][0];
-            case LEFT -> entityImages[currentFrame][2];
-            case RIGHT -> entityImages[currentFrame][3];
-        };
+        return entityImages[currentFrame][direction.ordinal()];
     }
 }

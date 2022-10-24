@@ -19,6 +19,11 @@ If you're on a MAC you need to have "./" before each command.
 if these do not work make sure you have the latest JDK installed as well as a installed 
 JAVA_HOME environment and try again.
 
+## How to Run the Tests
+Run "gradlew test" in your terminal of choice while located in the same folder as this text-file to run the tests.
+
+If you're on a MAC you need to run "./gradlew test".
+
 ## Credits
 In this project, assets from the asset packs Ninja Adventure (https://pixel-boy.itch.io/ninja-adventure-asset-pack) and Pixel Art Top Down - Basic (https://cainos.itch.io/pixel-art-top-down-basic) have been used.
 

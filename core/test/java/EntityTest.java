@@ -18,7 +18,7 @@ public class EntityTest {
     public void setUp() { livingEntity = new PlayerCharacter(100, 100, new World<>()); }
 
     @Test
-    public void moveUp_IncreasesEntityY() {
+    void moveUp_IncreasesEntityY() {
         float initialYPosition = livingEntity.getY();
         livingEntity.move(Direction.UP);
         float finalYPosition = livingEntity.getY();
@@ -26,7 +26,7 @@ public class EntityTest {
     }
 
     @Test
-    public void moveDown_DecreasesEntityY() {
+    void moveDown_DecreasesEntityY() {
         float initialYPosition = livingEntity.getY();
         livingEntity.move(Direction.DOWN);
         float finalYPosition = livingEntity.getY();
@@ -34,7 +34,7 @@ public class EntityTest {
     }
 
     @Test
-    public void moveRight_IncreasesEntityX() {
+    void moveRight_IncreasesEntityX() {
         float initialXPosition = livingEntity.getX();
         livingEntity.move(Direction.RIGHT);
         float finalXPosition = livingEntity.getX();
@@ -42,7 +42,7 @@ public class EntityTest {
     }
 
     @Test
-    public void moveLeft_DecreasesEntityX() {
+    void moveLeft_DecreasesEntityX() {
         float initialXPosition = livingEntity.getX();
         livingEntity.move(Direction.LEFT);
         float finalXPosition = livingEntity.getX();
@@ -50,13 +50,13 @@ public class EntityTest {
     }
 
     @Test
-    public void isMoving_ReturnsTrue_AfterMoving() {
+    void isMoving_ReturnsTrue_AfterMoving() {
         livingEntity.move(Direction.RIGHT);
         assertTrue(livingEntity.isInMotion());
     }
 
     @Test
-    public void pushBack_ChangesThePositionOfTheEntity() {
+    void pushBack_ChangesThePositionOfTheEntity() {
         float initialXPosition = livingEntity.getX();
         livingEntity.pushBack(new IntPoint(1,0));
         float finalXPosition = livingEntity.getX();
@@ -64,7 +64,7 @@ public class EntityTest {
     }
 
     @Test
-    public void setWorld_ChangesWorld() {
+    void setWorld_ChangesWorld() {
         World<IEntity> initWorld = livingEntity.getWorld();
         livingEntity.setWorld(new World<IEntity>());
         World<IEntity> finalWorld = livingEntity.getWorld();
@@ -72,7 +72,7 @@ public class EntityTest {
     }
 
     @Test
-    public void updatePosition_ChangesEntityPositionAfterMovement() {
+    void updatePosition_ChangesEntityPositionAfterMovement() {
         float initX = livingEntity.getX();
         livingEntity.getWorld().move(livingEntity.getBoundingbox(), 1, livingEntity.getY(), CollisionFilter.defaultFilter);
         livingEntity.updatePosition();

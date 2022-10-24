@@ -25,16 +25,8 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
         return speed;
     }
 
-    protected void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
     public float getMaxHealth() {
         return maxHealth;
-    }
-
-    public void setMaxHealth(float maxHealth) {
-        this.maxHealth = maxHealth;
     }
 
     public float getCurrentHealth() {return currentHealth;}
@@ -94,15 +86,14 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {
-        if (currentHealth > 0) {
             currentHealth -= damage;
-        }
     }
 
     /**
      * Pushes the entity back in a certain direction depending on the collision normal.
-     * @param collisionNormal the collision normal
+     * @param collisionNormal vector that multiplies the pushbacks x and y pushback
      */
+    @Override
     public void pushBack(IntPoint collisionNormal) {
         int distancePushed = 16;
         changePosition((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));

@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * A class responsible for presenting a part of the model to the user.
  */
-public class View implements ISoundObserver {
+public class View implements IObserver {
     private HUD hud;
     private final Model model;
     private float timeWhenPlayerWalkFrameChanged = 0f;
@@ -35,7 +35,7 @@ public class View implements ISoundObserver {
     private TiledMap tiledMap;
     private TiledMapRenderer tiledMapRenderer;
     private final ImageHandler imageHandler = new ImageHandler();
-    private final Sound soundHandler = new Sound();
+    private final SoundHandler soundHandler = new SoundHandler();
 
     private final Sprite swordSprite = new Sprite(imageHandler.getSwordSwingImage());
 
@@ -44,10 +44,17 @@ public class View implements ISoundObserver {
 
     private boolean playerIsDead = false;
 
+    /**
+     * Constructs a view
+     * @param model game model
+     */
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
     }
 
+    /**
+     * initializes images, tiledMap, sound, camera and SpriteBatch (drawing board)
+     */
     public void initialize() {
 
 
@@ -60,33 +67,34 @@ public class View implements ISoundObserver {
         batch = new SpriteBatch();
     }
 
+    /**
+     * updates View
+     * draws underlayer, tiledMap,
+     */
     public void update(boolean gamePaused) {
-        hud = new HUD(batch, model);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // TODO functional decomposition
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        centerCameraOnPlayer(); //makes the camera follow PlayerCharacter (keeps the player in the center of the screen)
+        centerCameraOnPlayer();
 
         camera.update();
         batch.setProjectionMatrix(camera.combined);
-        batch.begin(); // TODO functional decomposition
+        batch.begin();
         updatePlayerWalkFrame();
         drawEntities();
 
+        checkWeaponSwing();
 
-        if (model.getPlayer().isSwinging()){
-            drawWeaponSwing();
-        }
         batch.end();
 
         if(playerIsDead){
             hud.showGameOverTable();
         }
 
-        if(gamePaused || playerIsDead){
+        else if(gamePaused || playerIsDead){
            soundHandler.stopSound();
         }
         else{
@@ -96,7 +104,6 @@ public class View implements ISoundObserver {
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
         playIdleSounds();
-
     }
 
     private void playIdleSounds() {
@@ -130,21 +137,20 @@ public class View implements ISoundObserver {
         drawEnemies();
     }
 
+    /**
+     * automatically disposes hud, batch and tiledMap when screen gets closed
+     */
     public void dispose () {
         hud.dispose();
         batch.dispose();
         tiledMap.dispose();
     }
 
-
-
-
-
-        /**
-         * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
-         * Otherwise, the frame is set to the first frame of the walk animation.
-         */
-    public void updatePlayerWalkFrame() {
+    /**
+     * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
+     * Otherwise, the frame is set to the first frame of the walk animation.
+     */
+    private void updatePlayerWalkFrame() {
         if (model.playerIsInMotion()) {
             float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;
             if (timeSincePlayerWalkFrameChanged > 12) {
@@ -159,22 +165,33 @@ public class View implements ISoundObserver {
         }
     }
 
-    public void drawWeaponSwing() {
-        batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
+    /**
+     * checks if sword has been swung and if swung calls for it to be drawn
+     */
+    private void checkWeaponSwing() {
+        if (model.getPlayer().isSwinging()) {
+            drawWeaponSwing();
+        }
+    }
+    /**
+     * draws the weaponSwing
+     */
+    private void drawWeaponSwing() {
+        batch.draw(swordSprite, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getHeight() / 2, model.getPlayer().getWidth() / 2, 64, 64, 1, 1, (float) model.getPlayer().getWeapon().getWeaponAngle());
     }
 
     @Override
-    public void playEnemyHit() {
+    public void registerEnemyHit() {
         soundHandler.playEnemyHit();
     }
 
     @Override
-    public void playSwordHit() {
+    public void registerSwordSwing() {
         soundHandler.playSwordSwing();
     }
 
     @Override
-    public void playPlayerDeathSound() {
+    public void registerPlayerDeath() {
         soundHandler.playPlayerDeathSound();
         hud.showGameOverTable();
         playerIsDead = true;

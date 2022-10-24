@@ -2,6 +2,9 @@ package model;
 
 import com.dongbat.jbump.World;
 
+/**
+ * Interface symbolizing an entity
+ */
 public interface IEntity {
 
     float getX();
@@ -16,5 +19,10 @@ public interface IEntity {
 
     World<IEntity> getWorld();
 
+    /**
+     * If not by the same faction take damage
+     * @param damage the amount of damage this should take
+     * @param faction the faction of the attacker. Determines what effect is applied to the target
+     */
     void beAttacked(float damage, Faction faction);
 }

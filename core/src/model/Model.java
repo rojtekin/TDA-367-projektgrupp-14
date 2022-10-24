@@ -7,8 +7,7 @@ import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
 import model.rewards.RewardSystem;
-import view.ISoundObserver;
-
+import view.IObserver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,7 +17,7 @@ import java.util.Objects;
  */
 public class Model implements IModelSubject {
     private final IMapCache mapCache;
-    private final IPlayerCharacter player;
+    private final IPlayerSubject player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<IEntity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
@@ -27,12 +26,16 @@ public class Model implements IModelSubject {
     private final RewardSystem rewardSystem = new RewardSystem();
     private final World<IEntity> world;
     private int currentScore = 0;
-    private final List<ISoundObserver> soundObservers = new ArrayList<>();
+    private final List<IObserver> observers = new ArrayList<>();
     private boolean playerIsDead = false;
 
-
-
-    public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
+    /**
+     * Constructs model responsible for the logic of the game
+     * @param mapCache The logic from the map that will be used
+     * @param player The playable character
+     * @param spawnPoints a list of the enemy spawnPoints
+     */
+    public Model(IMapCache mapCache, IPlayerSubject player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);
@@ -42,13 +45,16 @@ public class Model implements IModelSubject {
     /**
      * @return playerCharacter connected to Model
      */
-    public IPlayerCharacter getPlayer(){
+    public IPlayerSubject getPlayer(){
         return player;
     }
     public boolean isPlayerIsDead(){
         return playerIsDead;
     }
 
+    /**
+     * updates the state of the model
+     */
     public void update() {
         spawnMonsters();
         moveMonsters();
@@ -63,7 +69,7 @@ public class Model implements IModelSubject {
     private void levelUpCheckAndApply() {
         if (player.levelUpCheck()){
             player.reduceExperience();
-            rewardSystem.applyReward(player, rewardSystem.getRandomReward());
+            rewardSystem.applyReward(player, rewardSystem.getRandomReward(player));
             player.increaseLevel();
         }
     }
@@ -115,7 +121,7 @@ public class Model implements IModelSubject {
     }
 
     /**
-     * Moves every monster.
+     * Moves every monster towards the player
      */
     private void moveMonsters() {
         for (Monster monster : monsters) {
@@ -165,16 +171,17 @@ public class Model implements IModelSubject {
         }
     }
 
+    /**
+     * checks if collision has happened with player
+     * @param collision the collision which has occurred
+     * @return returns true if collision has happened, false if not
+     */
     private boolean collisionWithPlayer(Collision collision) {
         return collision.other.userData.equals(player);
     }
 
     public World<IEntity> getWorld() {
         return mapCache.getWorld();
-    }
-
-    public void initialize() {
-        rewardSystem.initialize(this);
     }
 
     /**
@@ -194,11 +201,9 @@ public class Model implements IModelSubject {
         return currentScore;
     }
 
-    public void setCurrentScore(int currentScore) {
+    private void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
     }
-
-
 
     /**
      * Checks if a player's health is equal to or below zero and if
@@ -213,30 +218,27 @@ public class Model implements IModelSubject {
     }
 
     @Override
-    public void addObserver(ISoundObserver observer) {
-        player.getWeapon().addObserver(observer);
-        soundObservers.add(observer);
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
     }
 
     @Override
-    public void removeObserver(ISoundObserver observer) {
-        player.getWeapon().removeObserver(observer);
-        soundObservers.remove(observer);
+    public void removeObserver(IObserver observer) {
+        observers.remove(observer);
     }
 
     @Override
     public void notifyPlayerDeath() {
-        for (ISoundObserver o : soundObservers) {
-            o.playPlayerDeathSound();
+        for (IObserver o : observers) {
+            o.registerPlayerDeath();
         }
     }
 
     @Override
     public void notifyMonsterAttack() {
-        for (ISoundObserver o : soundObservers) {
-            o.playEnemyHit();
+        for (IObserver o : observers) {
+            o.registerEnemyHit();
         }
     }
-
 
 }

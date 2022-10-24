@@ -2,7 +2,9 @@ package view;
 
 import com.badlogic.gdx.Game;
 
-
+/**
+ * Decides which screen will be used.
+ */
 public class ScreenManger  {
     private final BaseScreen menuScreen;
     private final BaseScreen gameScreen;
@@ -11,10 +13,16 @@ public class ScreenManger  {
 
     private final BaseScreen gameOverScreen;
 
-
-
     private final Game game;
 
+    /**
+     * Initializes ScreenManager
+     * @param menuScreen menu screen
+     * @param gameScreen ingame screen
+     * @param settingScreen settings screen
+     * @param gameOverScreen game over screen
+     * @param game The application that runs the playble loop of the game
+     */
     public ScreenManger(BaseScreen menuScreen, BaseScreen gameScreen, BaseScreen settingScreen, BaseScreen gameOverScreen, Game game) {
         this.menuScreen = menuScreen;
         this.gameScreen = gameScreen;

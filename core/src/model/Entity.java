@@ -1,10 +1,14 @@
 package model;
 
 import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 import java.util.Objects;
 
+/**
+ * Abstract class Entity that represents anything with collision and position on the map.
+ */
 public abstract class Entity implements IEntity {
     private float x;
     private float y;
@@ -23,6 +27,15 @@ public abstract class Entity implements IEntity {
         this.collisionResponse = collisionResponse;
     }
 
+    /**
+     * abstract constructor for the Entity class
+     * @param x entity x coordinate position
+     * @param y entity y coordinate position
+     * @param height entity height
+     * @param width entity width
+     * @param damage entity damage
+     * @param world the world entity resides in, world also contain information about collision boxes.
+     */
      public Entity(float x, float y, float height, float width, float damage, World<IEntity> world) {
         this.x = x;
         this.y = y;
@@ -56,9 +69,6 @@ public abstract class Entity implements IEntity {
 
     public float getDamage() {
         return damage;
-    }
-    protected void setDamage(float damage) {
-        this.damage = damage;
     }
 
     public Item<IEntity> getBoundingbox() {
@@ -113,4 +123,10 @@ public abstract class Entity implements IEntity {
      * @param faction The faction of the attacker
      */
     public abstract void beAttacked(float damage, Faction faction);
+
+    /**
+     * Apples a force on the entity in a certain direction depending on the collision normal.
+     * @param collisionNormal the collision normal
+     */
+    public abstract void pushBack(IntPoint collisionNormal);
 }

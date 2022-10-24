@@ -142,6 +142,9 @@ public class TiledMapCache implements IMapCache {
         }
     }
 
+    /**
+     * Fetches a list of spawnpoints from a map if it has a baked in spawnlayer, otherwise uses default spawnpoints
+     */
     private void importSpawnPoints() {
         if (map.getLayers().get(SPAWNLAYER) != null) {
             spawnObjects = map.getLayers().get(SPAWNLAYER).getObjects();

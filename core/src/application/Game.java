@@ -7,6 +7,9 @@ import model.*;
 import view.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
+/**
+ * Application that create and connects model, view and controller
+ */
 public class Game extends ApplicationAdapter {
 	private Model model;
 	private View view;
@@ -18,6 +21,7 @@ public class Game extends ApplicationAdapter {
 		view = new View(model);
 		view.initialize();
 		model.addObserver(view);
+		model.getPlayer().addObserver(view);
 		controller = new Controller(model.getPlayer());
 	}
 

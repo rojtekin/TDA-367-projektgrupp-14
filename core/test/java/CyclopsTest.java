@@ -15,7 +15,7 @@ public class CyclopsTest {
     public void setUp() { cyclops = new Cyclops(100, 100, new World<>()); }
 
     @Test
-    public void moveTowardTarget_DecreasesTheDistanceBetweenCyclopsAndTarget() {
+    void moveTowardTarget_DecreasesTheDistanceBetweenCyclopsAndTarget() {
         float playerX = 400;
         float playerY = 400;
         float initialXDistance = Math.abs(playerX - cyclops.getX());
@@ -30,7 +30,7 @@ public class CyclopsTest {
     }
 
     @Test
-    public void addMonster_ChangesNonMatchingWorld() {
+    void addMonster_ChangesNonMatchingWorld() {
         TiledMapCache tmc = new TiledMapCache();
         PlayerCharacter player = new PlayerCharacter(0,0, tmc.getWorld());
         Model model = new Model(tmc, player, tmc.getSpawnPoints());

@@ -184,7 +184,7 @@ public class Model implements IModelSubject {
         return currentScore;
     }
 
-    public void setCurrentScore(int currentScore) {
+    private void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
     }
 

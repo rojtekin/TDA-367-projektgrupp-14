@@ -61,7 +61,7 @@ public class PlayerCharacter extends LivingEntity implements IPlayerSubject {
 
     @Override
     public void weaponAttack(int rotationStart, int rotationFinish){
-        weapon.weaponSwing(rotationStart,rotationFinish,0, this);
+        weapon.weaponSwing(rotationStart,rotationFinish,0, getX(), getY(), getWidth(), getHeight(), getDamage(), getFaction());
         notifyWeaponswing();
     }
 

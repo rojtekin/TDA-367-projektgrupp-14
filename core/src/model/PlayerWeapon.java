@@ -46,18 +46,23 @@ public abstract class PlayerWeapon {
      * @param rotationStart The angle (degrees) the swordswing will start at
      * @param rotationFinish The angle (degrees) the swordswing will end at
      * @param currentWeaponRotation What part of the rotation it starts at
-     * @param player The player the weapon belongs to, used to get x,y coordinates
+     * @param playerX The x position of the player that the sword swings around
+     * @param playerY The y position of the player that the sword swings around
+     * @param playerWidth The width of the player that the sword swings around
+     * @param playerHeight The height of the player that the sword swings around
+     * @param playerDamage The player's damage
+     * @param faction The faction of the player
      */
-    public void weaponSwing(int rotationStart, int rotationFinish, int currentWeaponRotation, PlayerCharacter player){
+    public void weaponSwing(int rotationStart, int rotationFinish, int currentWeaponRotation, float playerX, float playerY, float playerWidth, float playerHeight, float playerDamage, Faction faction){
         int degreeDistance = Math.abs(rotationStart - rotationFinish);
         double degreeRotation = degreeDistance/weaponRotations;
         while (currentWeaponRotation <= weaponRotations) {
-            setWeaponAngle(toRadians(rotationStart + degreeRotation*currentWeaponRotation/3)); //there will be a listener who prints out the sword when the angle changes
+            setWeaponAngle(toRadians(rotationStart + degreeRotation*currentWeaponRotation/3));
             float point1 = getWeaponRange();
             float rotatedPoint1x = (float) (point1 * cos(getWeaponAngle()));
             float rotatedPoint1y = (float) (point1 * sin(getWeaponAngle()));
-            rotatedPoint1x = rotatedPoint1x + player.getWidth()/2 + player.getX();
-            rotatedPoint1y = rotatedPoint1y + player.getHeight()/2 + player.getY();
+            rotatedPoint1x = rotatedPoint1x + playerWidth/2 + playerX;
+            rotatedPoint1y = rotatedPoint1y + playerHeight/2 + playerY;
 
             IntPoint collisionNormal = new IntPoint();
             collisionNormal.x = (int) Math.round(-1 *  cos(getWeaponAngle()));
@@ -66,8 +71,7 @@ public abstract class PlayerWeapon {
             Set<Entity> isKnown = new HashSet<>();
             ArrayList<ItemInfo> items = new ArrayList<>();
             List<Entity> entities = new LinkedList<>();
-            //world.querySegmentWithCoords(player.getX(), player.getY(), rotatedpoint1x, rotatedpoint1y, filter, null); //filter är cross, fixa i jbump.
-            world.querySegmentWithCoords((player.getX()+player.getWidth()/2), (player.getY()+player.getHeight()/2), rotatedPoint1x, rotatedPoint1y, filter, items);
+            world.querySegmentWithCoords((playerX+playerWidth/2), (playerY+playerHeight/2), rotatedPoint1x, rotatedPoint1y, filter, items);
 
             for (ItemInfo i : items) {
                 entities.add((Entity) i.item.userData);
@@ -75,8 +79,8 @@ public abstract class PlayerWeapon {
             if (entities.size() > 0) {
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
-                        entity.beAttacked((weaponDamage + player.getDamage()),Faction.PLAYER);
-                        if (entity != player) {
+                        entity.beAttacked((weaponDamage + playerDamage), faction);
+                        if (entity.getX() != playerX && entity.getY() != playerY) {
                             entity.pushBack(collisionNormal);
                         }
                         isKnown.add(entity);

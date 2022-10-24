@@ -101,14 +101,14 @@ public class Sound {
 
 
     /**
-     * Resume game sound when the game is no longer paused
+     * Resume game sound when the game is no longer paused.
      */
     public void resumeSound() {
         playGameMusic();
         gamePaused = false;
     }
     /**
-     * Stops game sound when the game is paused
+     * Stops game sound when the game is paused.
      */
     public void stopSound(){
             stopGameMusic();

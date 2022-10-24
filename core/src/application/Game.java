@@ -26,7 +26,7 @@ public class Game extends ApplicationAdapter {
 		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
 			pauseGame();
 		}
-		if (!gamePaused) {
+		if (!gamePaused && !model.isPlayerIsDead()) {
 			controller.update();
 			model.update();
 			Time.getInstance().tick();

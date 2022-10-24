@@ -73,7 +73,8 @@ public class HUD {
      private final Label toMoveLabel = new Label("To move: use arrows or W,A,S,D" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
      private final Label toAttackLabel = new Label("To Attack: use I,J,K,L" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
 
-
+    private final Label gameOverLabel = new Label("" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final Label finalScore = new Label("", new Label.LabelStyle((new BitmapFont()), Color.WHITE));
     /**
      * Creates an instance of HUD
      * @param spriteBatch Libgdx class used for allowing things to be drawn or not.
@@ -127,6 +128,7 @@ public class HUD {
             perkLabel.setText("Perk: " + model.getPlayer().getPerkList().get(0));
             table3.add(perkLabel).top().padTop(10);
         }
+
         scoreLabel.setText("Score: " + model.getCurrentScore());
         table3.add(scoreLabel).right().top().pad(10);
         table3.row();
@@ -173,6 +175,30 @@ public class HUD {
         toAttackLabel.setFontScale(1.7f);
 
         stage.addActor(gamePausedTable);
+
+
+        Table gameOverTable = createGameOverTable();
+        stage.addActor(gameOverTable);
+
+    }
+
+    private Table createGameOverTable() {
+        Table gameOverTable = new Table();
+        gameOverTable.center();
+        gameOverTable.setFillParent(true);
+        gameOverTable.add(gameOverLabel).padBottom(60).expandX();
+        gameOverTable.row();
+        gameOverTable.add(finalScore).padTop(30).expandX();
+        gameOverTable.row();
+        gameOverLabel.setFontScale(4f);
+        finalScore.setFontScale(3f);
+        return gameOverTable;
+    }
+
+    public void showGameOverTable() {
+        finalScore.setText("Your score is: " + model.getCurrentScore());
+        gameOverLabel.setText("Game Over");
+
     }
 
     private void pickHealthBarColor(){

@@ -42,6 +42,8 @@ public class View implements ISoundObserver {
     private Set<IEntity> isKnown = new HashSet<>();
     private Set<IEntity> seen = new HashSet<>();
 
+    private boolean playerIsDead = false;
+
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
     }
@@ -80,7 +82,11 @@ public class View implements ISoundObserver {
         }
         batch.end();
 
-        if(gamePaused){
+        if(playerIsDead){
+            hud.showGameOverTable();
+        }
+
+        if(gamePaused || playerIsDead){
            soundHandler.stopSound();
         }
         else{
@@ -170,5 +176,7 @@ public class View implements ISoundObserver {
     @Override
     public void playPlayerDeathSound() {
         soundHandler.playPlayerDeathSound();
+        hud.showGameOverTable();
+        playerIsDead = true;
     }
 }

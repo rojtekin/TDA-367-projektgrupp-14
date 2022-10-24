@@ -31,6 +31,7 @@ public class Model implements IModelSubject {
     private boolean playerIsDead = false;
 
 
+
     public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
@@ -43,6 +44,9 @@ public class Model implements IModelSubject {
      */
     public IPlayerCharacter getPlayer(){
         return player;
+    }
+    public boolean isPlayerIsDead(){
+        return playerIsDead;
     }
 
     public void update() {

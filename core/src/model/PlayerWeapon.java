@@ -1,12 +1,14 @@
 package model;
 
 import com.dongbat.jbump.*;
-import view.IObserver;
 
 import java.util.*;
 
 import static java.lang.Math.*;
 
+/**
+ * PlayerWeapon is an abstract class that have the methods required for a weapon
+ */
 public abstract class PlayerWeapon {
 
     private float weaponSpeed;
@@ -18,6 +20,16 @@ public abstract class PlayerWeapon {
     private final World<IEntity> world;
     private final CollisionFilter filter;
 
+    /**
+     * Constructor that subclasses of PlayerWeapon use.
+     * @param world the world weapon exists in
+     * @param weaponDamage Is the damage the weapon deals per hit
+     * @param weaponRange Is the range the sword has
+     * @param weaponWidth Is the swords width
+     * @param weaponSpeed Will be how often the sword can be swung
+     * @param weaponAngle The rotation of the sword
+     * @param weaponRotations How many angles the swordswing contains
+     */
     public PlayerWeapon(World<IEntity> world, float weaponDamage, float weaponRange, float weaponWidth, float weaponSpeed, float weaponAngle, int weaponRotations){
         this.weaponDamage = weaponDamage;
         this.weaponRange = weaponRange;
@@ -29,7 +41,13 @@ public abstract class PlayerWeapon {
         filter = getFilter();
     }
 
-    //in playercharachter the swords position shall update with the move command like player does
+    /**
+     * Makes multiple segments that scan for enemies touching them and afterwards damages those enemies.
+     * @param rotationStart The angle (degrees) the swordswing will start at
+     * @param rotationFinish The angle (degrees) the swordswing will end at
+     * @param currentWeaponRotation What part of the rotation it starts at
+     * @param player The player the weapon belongs to, used to get x,y coordinates
+     */
     public void weaponSwing(int rotationStart, int rotationFinish, int currentWeaponRotation, PlayerCharacter player){
         int degreeDistance = Math.abs(rotationStart - rotationFinish);
         double degreeRotation = degreeDistance/weaponRotations;
@@ -57,7 +75,6 @@ public abstract class PlayerWeapon {
             if (entities.size() > 0) {
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
-                        //gör skada;
                         entity.beAttacked((weaponDamage + player.getDamage()),Faction.PLAYER);
                         if (entity != player) {
                             entity.pushBack(collisionNormal);

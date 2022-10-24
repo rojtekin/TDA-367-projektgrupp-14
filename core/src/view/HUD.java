@@ -30,9 +30,6 @@ public class HUD {
 
     private Image healthColor;
 
-    //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values needed
-    //for a square (and also make it an actor so I can send it back and not draw directly).
-
     private final Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
     private final Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
     private final Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
@@ -44,7 +41,6 @@ public class HUD {
     private final Image blackHealthBar = new Image(blackHealthNinePatch);
     private final Image blackExperienceBar = new Image(blackHealthNinePatch);
 
-    // lyfta ut konfigurationsdatan till en enum. Singleton. Turtorial java enum turtorial. Enums kan ha konstant state
     private final Texture aqua = new Texture(Gdx.files.internal("HudColors/Aqua00ffff.png"));
     private final NinePatch emptyExperienceBarNinePatch = new NinePatch(aqua, 0, 0, 0, 0);
     private final Image experienceBar = new Image(emptyExperienceBarNinePatch);
@@ -63,7 +59,7 @@ public class HUD {
     private final Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
     private final Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
     private final Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
-    private final Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
+    private final Label statsLabel = new Label("Level: ", whiteTextColorAndFont);
 
     /**
      * Creates an instance of HUD
@@ -76,10 +72,17 @@ public class HUD {
         this.model = model;
     }
 
+    /**
+     * updates everything shown by the HUD and puts it in Stage.
+     */
     public void update() {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
-        // ugly coded maybe
+
+        pickHealthBarColor();
+        pickCurrentHealthBarWidth();
+        pickCurrentExperienceBarWidth();
+
         table1.clear();
         table2.clear();
         table3.clear();
@@ -98,8 +101,6 @@ public class HUD {
 
         table2.setFillParent(true);
 
-        pickHealthBarColor();
-        pickCurrentHealthBarWidth();
         table2.add(getHealthColor()).size(currentHealthBarWidth, HEALTH_BAR_HEIGHT).left().top().pad(10).expandX().expandY();
         //hp size is between 0 and 1
         table2.row();
@@ -120,24 +121,24 @@ public class HUD {
         table3.add(scoreLabel).right().top().pad(10);
         table3.row();
 
-        pickCurrentExperienceBarWidth();
+
         table3.add(fullExperienceBar).size(currentExperienceBarWidth, EXPERIENCE_BAR_HEIGHT).bottom().pad(10).expandY().colspan(3);
         stage.addActor(table3);
 
         table4.setFillParent(true);
 
-        levelLabel.setText("Level: " + model.getPlayer().getLevel());
-        table4.add(levelLabel).padLeft(10).padTop(40).left();
+        statsLabel.setText("Level: " + model.getPlayer().getLevel()  +'\n' + "Damage: " +  model.getPlayer().getDamage() + '\n' + "Speed: " + model.getPlayer().getSpeed());
+        table4.add(statsLabel).padLeft(10).padTop(40).left();
 
         table4.row();
         experienceLabel.setText("Experience: "+ model.getPlayer().getExperience() + " / " + model.getPlayer().getExperienceThreshold());
         table4.add(experienceLabel).expandX().expandY().bottom().padBottom(25);
         stage.addActor(table4);
-
-
-
     }
 
+    /**
+     * When called it checks the players hp and sets HealthColor to the new color depending on current hp
+     */
     private void pickHealthBarColor(){
         float currentHealth = model.getPlayer().getCurrentHealth();
         float maxHealth = model.getPlayer().getMaxHealth();
@@ -158,6 +159,9 @@ public class HUD {
         }
     }
 
+    /**
+     * When called sets the currentHealthBarWidth based on current hp
+     */
     private void pickCurrentHealthBarWidth(){
         float currentHealth = model.getPlayer().getCurrentHealth();
         float maxHealth = model.getPlayer().getMaxHealth();
@@ -165,6 +169,9 @@ public class HUD {
         setCurrentHealthBarWidth((int)(HEALTH_BAR_WIDTH *percentageHealthBarFilled));
     }
 
+    /**
+     * When called sets the currentExperienceBarWidth based on current experience
+     */
     private void pickCurrentExperienceBarWidth(){
         float currentExperience = model.getPlayer().getExperience();
         float maxExperience = 100;
@@ -189,6 +196,9 @@ public class HUD {
 
     public Stage getStage() { return stage; }
 
+    /**
+     * disposes stage and colors automatically when screen is closed
+     */
     public void dispose(){
         stage.dispose();
         red.dispose(); //alla textures måste disposas

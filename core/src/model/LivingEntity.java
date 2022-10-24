@@ -86,14 +86,12 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {
-        if (currentHealth > 0) {
             currentHealth -= damage;
-        }
     }
 
     /**
      * Pushes the entity back in a certain direction depending on the collision normal.
-     * @param collisionNormal the collision normal
+     * @param collisionNormal vector that multiplies the pushbacks x and y pushback
      */
     @Override
     public void pushBack(IntPoint collisionNormal) {

@@ -8,6 +8,9 @@ import view.IObserver;
 
 import java.util.*;
 
+/**
+ * A representation of a player that additionally to its superclasses can have/swing a sword and have perks
+ */
 
 public class PlayerCharacter extends LivingEntity implements IPlayerSubject {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
@@ -34,7 +37,7 @@ public class PlayerCharacter extends LivingEntity implements IPlayerSubject {
      * @param faction that the player belongs to
      */
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 100, 0, faction, world);
+        super(spawnX, spawnY, 32, 32, 5, 100, 1, faction, world);
         weapon = new Sword(world);
         this.experience = 0;
         this.level = 1;
@@ -118,7 +121,7 @@ public class PlayerCharacter extends LivingEntity implements IPlayerSubject {
     }
 
     @Override
-    public void reduceExperience() { setExperience( (getExperience() - 100) ); }
+    public void reduceExperience() { setExperience( (getExperience() - getExperienceThreshold()) ); }
 
     @Override
     public void increaseCurrentHealth(float amount){

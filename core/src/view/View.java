@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * A class responsible for presenting a part of the model to the user.
  */
-public class View {
+public class View extends AbstractScreen {
     private HUD hud;
     private final Model model;
     private float timeWhenPlayerWalkFrameChanged = 0f;

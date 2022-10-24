@@ -1,45 +1,50 @@
 package view;
 
 import com.badlogic.gdx.Game;
+import application.Application;
+import controller.utility.Eventbus;
+import controller.utility.IEventListener;
+import controller.utility.ViewControllerEvent;
 
 
-public class ScreenManger  {
-    private final BaseScreen menuScreen;
-    private final BaseScreen gameScreen;
-
-    private final BaseScreen settingScreen;
-
-    private final BaseScreen gameOverScreen;
+public class ScreenManger implements IEventListener<ViewControllerEvent> {
+    private final AbstractScreen menuScreen;
+    private final AbstractScreen gameScreen;
 
 
+    private final Application game;
 
-    private final Game game;
+    public ScreenManger(Application game, AbstractScreen menuScreen, AbstractScreen gameScreen, Eventbus eventbus) {
 
-    public ScreenManger(BaseScreen menuScreen, BaseScreen gameScreen, BaseScreen settingScreen, BaseScreen gameOverScreen, Game game) {
+        this.game = game;
         this.menuScreen = menuScreen;
         this.gameScreen = gameScreen;
-        this.settingScreen = settingScreen;
-        this.gameOverScreen = gameOverScreen;
-        this.game = game;
+        eventbus.listenFor(ViewControllerEvent.class, this);
         viewScreen(ScreenEnum.MENU);
     }
 
     private void viewScreen(ScreenEnum screenEnum) {
-        BaseScreen currentScreen = getScreen(screenEnum);
+        AbstractScreen currentScreen = getScreen(screenEnum);
         if (currentScreen != null) {
-            currentScreen.setBackgroundImage();
             game.setScreen(currentScreen);
         }
     }
 
-    private BaseScreen getScreen(ScreenEnum screenEnum) {
+    private AbstractScreen getScreen(ScreenEnum screenEnum) {
         return switch (screenEnum) {
             case MENU -> menuScreen;
             case GAME -> gameScreen;
-            case SETTINGS -> settingScreen;
-            case GAME_OVER -> gameOverScreen;
+
         };
     }
 
+    @Override
+    public void handle(ViewControllerEvent event) {
+        switch (event.getEventType()) {
+            case VIEW_MAIN_SCREEN -> viewScreen(ScreenEnum.MENU);
+            case  VIEW_GAME_SCREEN -> viewScreen(ScreenEnum.GAME);
+        }
+    }
 }
+
 

@@ -1,6 +1,5 @@
 package model.rewards;
 
-import model.IPlayerCharacter;
 import model.IPlayerSubject;
 
 

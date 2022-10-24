@@ -5,6 +5,9 @@ import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 import java.util.Objects;
 
+/**
+ * Abstract class Entity that represents anything with collision and position on the map.
+ */
 public abstract class Entity implements IEntity {
     private float x;
     private float y;
@@ -24,13 +27,13 @@ public abstract class Entity implements IEntity {
     }
 
     /**
-     * Abstract constructor
+     * abstract constructor for the Entity class
      * @param x entity x coordinate position
      * @param y entity y coordinate position
      * @param height entity height
      * @param width entity width
      * @param damage entity damage
-     * @param world the world entity resides in
+     * @param world the world entity resides in, world also contain information about collision boxes.
      */
      public Entity(float x, float y, float height, float width, float damage, World<IEntity> world) {
         this.x = x;

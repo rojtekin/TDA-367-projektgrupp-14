@@ -15,17 +15,9 @@ import model.rewards.Tweak;
  */
 public interface IPlayerCharacter extends ILivingEntity {
 
-    Direction getDirection();
-
     int getExperience();
 
     int getLevel();
-
-    float getCurrentHealth();
-
-    float getSpeed();
-
-    float getDamage();
 
     /**
      * Gains a certain amount of experience

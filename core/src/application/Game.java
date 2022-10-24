@@ -6,7 +6,7 @@ import view.View;
 import com.badlogic.gdx.ApplicationAdapter;
 
 /**
- * Runs the main loop of the playable game, in other words the ingame loop
+ * Application that create and connects model, view and controller
  */
 public class Game extends ApplicationAdapter {
 	private Model model;

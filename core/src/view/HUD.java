@@ -30,9 +30,6 @@ public class HUD {
 
     private Image healthColor;
 
-    //The code under is a way to make a certain color since libgdx somehow doesnt know rgb values (or I missed it)
-    //for a square (and also make it an actor so I can add it to stage).
-
     private final Texture red = new Texture(Gdx.files.internal("HudColors/Red00923f.png"));
     private final Texture yellow = new Texture(Gdx.files.internal("HudColors/Yellowf1c50c.png"));
     private final Texture green = new Texture(Gdx.files.internal("HudColors/Green00933b.png"));
@@ -76,11 +73,15 @@ public class HUD {
     }
 
     /**
-     * update updates everything shown invthe HUD.
+     * updates everything shown by the HUD and puts it in Stage.
      */
     public void update() {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
+
+        pickHealthBarColor();
+        pickCurrentHealthBarWidth();
+        pickCurrentExperienceBarWidth();
 
         table1.clear();
         table2.clear();
@@ -100,8 +101,6 @@ public class HUD {
 
         table2.setFillParent(true);
 
-        pickHealthBarColor();
-        pickCurrentHealthBarWidth();
         table2.add(getHealthColor()).size(currentHealthBarWidth, HEALTH_BAR_HEIGHT).left().top().pad(10).expandX().expandY();
         //hp size is between 0 and 1
         table2.row();
@@ -122,7 +121,7 @@ public class HUD {
         table3.add(scoreLabel).right().top().pad(10);
         table3.row();
 
-        pickCurrentExperienceBarWidth();
+
         table3.add(fullExperienceBar).size(currentExperienceBarWidth, EXPERIENCE_BAR_HEIGHT).bottom().pad(10).expandY().colspan(3);
         stage.addActor(table3);
 

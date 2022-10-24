@@ -51,8 +51,7 @@ public class Model implements IModelSubject {
     }
 
     /**
-     * Spawns monsters if there are too few, moves monsters toward the player, checks for player levelup
-     * and applies bonuses if true and despawns dead monsters adding score for those killed.
+     * updates the state of the model
      */
     public void update() {
         spawnMonsters();

@@ -20,7 +20,7 @@ public interface IEntity {
     World<IEntity> getWorld();
 
     /**
-     * method
+     * If not by the same faction take damage
      * @param damage the amount of damage this should take
      * @param faction the faction of the attacker. Determines what effect is applied to the target
      */

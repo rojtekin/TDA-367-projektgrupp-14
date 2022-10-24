@@ -16,11 +16,10 @@ public class PlayerCharacterTest {
         TiledMapCache tmc = new TiledMapCache();
         player = new PlayerCharacter(0, 0 , tmc.getWorld());
         model = new Model(tmc, player, tmc.getSpawnPoints());
-        model.initialize();
     }
 
     @Test
-    public void gainExperience_IncreasesPlayerExperience() {
+    void gainExperience_IncreasesPlayerExperience() {
         float initExperience = player.getExperience();
         player.gainExperience(1);
         float finalExperience = player.getExperience();
@@ -28,7 +27,7 @@ public class PlayerCharacterTest {
     }
 
     @Test
-    public void increaseLevel_IncreasesPlayerLevel() {
+    void increaseLevel_IncreasesPlayerLevel() {
         float initLevel = player.getLevel();
         player.increaseLevel();
         float finalLevel = player.getLevel();
@@ -36,7 +35,7 @@ public class PlayerCharacterTest {
     }
 
     @Test
-    public void gainExperience_IncreasesPlayerLevel() {
+    void gainExperience_IncreasesPlayerLevel() {
         float initLevel = player.getLevel();
         player.gainExperience(100);
         model.update();
@@ -45,7 +44,7 @@ public class PlayerCharacterTest {
     }
 
     @Test
-    public void levelUpCheckAndApply_ResetsPlayerExperienceWhenLeveledUp() {
+    void levelUpCheckAndApply_ResetsPlayerExperienceWhenLeveledUp() {
         player.gainExperience(100);
         float gainedExperience = player.getExperience();
         model.update();
@@ -54,7 +53,7 @@ public class PlayerCharacterTest {
     }
 
     @Test
-    public void increaseHealth_IncreasesHealth() {
+    void increaseHealth_IncreasesHealth() {
         player.takeDamage(5);
         float initHealth = player.getCurrentHealth();
         player.increaseCurrentHealth(1);
@@ -63,7 +62,7 @@ public class PlayerCharacterTest {
     }
 
     @Test
-    public void increaseHealth_DoesNotIncreaseHealthBeyondMax() {
+    void increaseHealth_DoesNotIncreaseHealthBeyondMax() {
         player.increaseCurrentHealth(1);
         assertTrue(player.getCurrentHealth() == player.getMaxHealth());
     }

@@ -13,7 +13,7 @@ public class MouseTest {
     public void setUp() { mouse = new Mouse(100, 100, new World<>()); }
 
     @Test
-    public void moveTowardTarget_DecreasesTheDistanceBetweenMouseAndTarget() {
+    void moveTowardTarget_DecreasesTheDistanceBetweenMouseAndTarget() {
         float playerX = 400;
         float playerY = 400;
         float initialXDistance = Math.abs(playerX - mouse.getX());

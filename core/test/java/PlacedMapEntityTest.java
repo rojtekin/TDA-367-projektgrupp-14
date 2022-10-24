@@ -17,7 +17,7 @@ public class PlacedMapEntityTest {
     }
 
     @Test
-    public void PlacedMapEntity_HasCollision() {
+    void PlacedMapEntity_HasCollision() {
         float initX = model.getPlayer().getX();
         model.getPlayer().move(Direction.LEFT);
         float finalX = model.getPlayer().getX();

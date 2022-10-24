@@ -14,7 +14,7 @@ public class MapTest {
     }
 
     @Test
-    public void TiledMapCache_LoadsDefaultValues() {
+    void TiledMapCache_LoadsDefaultValues() {
         assertTrue(tmc.getMapUnitHeight() == 0 && tmc.getMapUnitWidth() == 0 &&
                 tmc.getSpawnPoints().size() == 8);
     }

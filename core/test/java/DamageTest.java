@@ -23,7 +23,7 @@ public class DamageTest {
     }
 
     @Test
-    public void takeDamage_InflictsDamageToPlayer() {
+    void takeDamage_InflictsDamageToPlayer() {
         float playerInitialHealth = model.getPlayer().getCurrentHealth();
         PlayerCharacter player = (PlayerCharacter) model.getPlayer();
         player.takeDamage(1);
@@ -32,7 +32,7 @@ public class DamageTest {
     }
 
     @Test
-    public void takeDamage_InflictsDamageToMonster() {
+    void takeDamage_InflictsDamageToMonster() {
         float enemyInitialHealth = monster.getCurrentHealth();
         monster.takeDamage(1);
         float enemyFinalHealth = monster.getCurrentHealth();
@@ -40,33 +40,33 @@ public class DamageTest {
     }
 
     @Test
-    public void despawn_RemovesMonster() {
+    void despawn_RemovesMonster() {
         model.despawn(monster);
         assertFalse(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void despawnDeadNPCs_DoesNotDespawnMonsterAtFullHealth() {
+    void despawnDeadNPCs_DoesNotDespawnMonsterAtFullHealth() {
         model.despawnDeadNPCs();
         assertTrue(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void despawnDeadNPCs_DoesNotDespawnMonstersAtPartialHealth() {
+    void despawnDeadNPCs_DoesNotDespawnMonstersAtPartialHealth() {
         monster.takeDamage(1);
         model.despawnDeadNPCs();
         assertTrue(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void despawnDeadNPCs_DespawnsMonstersAtZeroHealth() {
+    void despawnDeadNPCs_DespawnsMonstersAtZeroHealth() {
         monster.takeDamage(10);
         model.despawnDeadNPCs();
         assertFalse(model.getMonsters().contains(monster));
     }
 
     @Test
-    public void move_DamagesTouchedPlayer() {
+    void move_DamagesTouchedPlayer() {
         float initHP = model.getPlayer().getCurrentHealth();
         Cyclops cyclops = new Cyclops(model.getPlayer().getWidth()+16, model.getPlayer().getY(), model.getWorld());
         model.addMonster(cyclops);
@@ -79,7 +79,7 @@ public class DamageTest {
     }
 
     @Test
-    public void weaponAttack_DamagesMonster() {
+    void weaponAttack_DamagesMonster() {
         Cyclops cyclops = new Cyclops(model.getPlayer().getWidth(), model.getPlayer().getY(), model.getWorld());
         float initHP = cyclops.getCurrentHealth();
         model.getPlayer().weaponAttack(315,45);

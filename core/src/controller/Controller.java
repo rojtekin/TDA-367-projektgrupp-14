@@ -10,9 +10,9 @@ import java.util.Objects;
  * A class responsible for updating the model in response to user input.
  */
 public class Controller {
-    private final IPlayerCharacter player;
+    private final IPlayerSubject player;
 
-    public Controller(IPlayerCharacter player) {
+    public Controller(IPlayerSubject player) {
         this.player = Objects.requireNonNull(player);
     }
 

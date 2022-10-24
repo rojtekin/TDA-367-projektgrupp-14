@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * A class responsible for presenting a part of the model to the user.
  */
-public class View implements ISoundObserver {
+public class View implements IObserver {
     private HUD hud;
     private final Model model;
     private float timeWhenPlayerWalkFrameChanged = 0f;
@@ -171,17 +171,17 @@ public class View implements ISoundObserver {
     }
 
     @Override
-    public void playEnemyHit() {
+    public void registerEnemyHit() {
         soundHandler.playEnemyHit();
     }
 
     @Override
-    public void playSwordHit() {
+    public void registerSwordSwing() {
         soundHandler.playSwordSwing();
     }
 
     @Override
-    public void playPlayerDeathSound() {
+    public void registerPlayerDeath() {
         soundHandler.playPlayerDeathSound();
     }
 }

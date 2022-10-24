@@ -18,6 +18,7 @@ public class Game extends ApplicationAdapter {
 		view = new View(model);
 		view.initialize();
 		model.addObserver(view);
+		model.getPlayer().addObserver(view);
 		controller = new Controller(model.getPlayer());
 	}
 

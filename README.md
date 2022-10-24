@@ -24,4 +24,4 @@ In this project, assets from the asset packs Ninja Adventure (https://pixel-boy.
 
 ## How to Play the Game
 Move with either WASD or arrow-keys and to attack use IJKL to swing in a desired direction (I:Up , J;Left , K:Down, L:Right)
-You can also pasue and resume the game with the ESC-key
+You can also pause and resume the game with the ESC-key

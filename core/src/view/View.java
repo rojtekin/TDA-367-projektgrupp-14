@@ -65,6 +65,7 @@ public class View implements IObserver {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         batch = new SpriteBatch();
+        hud = new HUD(batch, model);
     }
 
     /**
@@ -100,7 +101,7 @@ public class View implements IObserver {
         else{
             soundHandler.resumeSound();
         }
-        hud.update(gamePaused); // TODO functional decomposition
+        hud.update(gamePaused);
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
         playIdleSounds();

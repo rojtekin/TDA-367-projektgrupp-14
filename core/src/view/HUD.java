@@ -56,8 +56,8 @@ public class HUD {
     private final Table table4 = new Table();
     private static final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
     private final Table gamePausedTable = new Table();
+    private final Table gameOverTable = new Table();
 
-    private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
     private final Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
     private final Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
     private final Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
@@ -99,6 +99,7 @@ public class HUD {
         table3.clear();
         table4.clear();
         gamePausedTable.clear();
+        gameOverTable.clear();
 
         stage.clear(); //Prevents memory leak where new tables are continuously added to stage
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
@@ -178,13 +179,12 @@ public class HUD {
         stage.addActor(gamePausedTable);
 
 
-        Table gameOverTable = createGameOverTable();
+        createGameOverTable();
         stage.addActor(gameOverTable);
 
     }
 
     private Table createGameOverTable() {
-        Table gameOverTable = new Table();
         gameOverTable.center();
         gameOverTable.setFillParent(true);
         gameOverTable.add(gameOverLabel).padBottom(60).expandX();

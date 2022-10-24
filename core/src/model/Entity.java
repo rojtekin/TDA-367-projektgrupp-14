@@ -1,6 +1,7 @@
 package model;
 
 import com.dongbat.jbump.CollisionFilter;
+import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.Item;
 import com.dongbat.jbump.World;
 import java.util.Objects;
@@ -110,4 +111,10 @@ public abstract class Entity implements IEntity {
      * @param faction The faction of the attacker
      */
     public abstract void beAttacked(float damage, Faction faction);
+
+    /**
+     * Apples a force on the entity in a certain direction depending on the collision normal.
+     * @param collisionNormal the collision normal
+     */
+    public abstract void pushBack(IntPoint collisionNormal);
 }

@@ -95,6 +95,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * Pushes the entity back in a certain direction depending on the collision normal.
      * @param collisionNormal the collision normal
      */
+    @Override
     public void pushBack(IntPoint collisionNormal) {
         int distancePushed = 16;
         changePosition((-collisionNormal.x * distancePushed), (-collisionNormal.y * distancePushed));

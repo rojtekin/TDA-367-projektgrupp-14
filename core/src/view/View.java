@@ -1,6 +1,5 @@
 package view;
 
-import application.Game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import model.*;
 import model.monsters.Monster;
@@ -48,7 +47,7 @@ public class View implements ISoundObserver {
     }
 
     public void initialize() {
-  
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -59,7 +58,7 @@ public class View implements ISoundObserver {
         batch = new SpriteBatch();
     }
 
-    public void update() {
+    public void update(boolean gamePaused) {
         hud = new HUD(batch, model);
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -75,16 +74,22 @@ public class View implements ISoundObserver {
         updatePlayerWalkFrame();
         drawEntities();
 
+
         if (model.getPlayer().isSwinging()){
             drawWeaponSwing();
         }
-
         batch.end();
 
-        hud.update(); // TODO functional decomposition
+        if(gamePaused){
+           soundHandler.stopSound();
+        }
+        else{
+            soundHandler.resumeSound();
+        }
+        hud.update(gamePaused); // TODO functional decomposition
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
-        showPauseScreen();
+        playIdleSounds();
 
     }
 
@@ -126,18 +131,7 @@ public class View implements ISoundObserver {
     }
 
 
-    public void showPauseScreen() {
-        if (Model.isPaused()){
-            soundHandler.stopGameMusic();
 
-
-        }
-        else{
-            soundHandler.playGameMusic();
-            playIdleSounds();
-        }
-
-    }
 
 
         /**

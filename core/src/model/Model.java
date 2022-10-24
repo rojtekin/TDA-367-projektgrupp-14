@@ -30,7 +30,6 @@ public class Model implements IModelSubject {
     private final List<ISoundObserver> soundObservers = new ArrayList<>();
     private boolean playerIsDead = false;
 
-    private static boolean pause = true;
 
     public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
@@ -48,9 +47,7 @@ public class Model implements IModelSubject {
 
     public void update() {
         spawnMonsters();
-        if(!pause) {
-            moveMonsters();
-        }
+        moveMonsters();
         levelUpCheckAndApply();
         despawnDeadNPCs();
         playerHealthCheck();
@@ -197,9 +194,7 @@ public class Model implements IModelSubject {
         this.currentScore = currentScore;
     }
 
-    public static boolean isPaused() {
-        return pause;
-    }
+
 
     /**
      * Checks if a player's health is equal to or below zero and if
@@ -239,11 +234,5 @@ public class Model implements IModelSubject {
         }
     }
 
-    public static void resumeGame() {
-        pause = false;
-    }
 
-    public static void pauseGame() {
-        pause = true;
-    }
 }

@@ -85,7 +85,7 @@ public class HUD {
         this.model = model;
     }
 
-    public void update() {
+    public void update(boolean gamePaused) {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
         // ugly coded maybe
@@ -146,7 +146,7 @@ public class HUD {
         stage.addActor(table4);
 
 
-        if (!Model.isPaused()) {
+        if (!gamePaused) {
             pauseLabel.setText("");
             pauseInfoLabel.setText("");
             howToPlayLabel.setText("");

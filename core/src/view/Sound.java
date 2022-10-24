@@ -12,8 +12,12 @@ public class Sound {
     private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
     private static final com.badlogic.gdx.audio.Sound PLAYER_DEATH = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
-    private float volume = 1;
+
     private final List<Class> entityClass = new ArrayList<>();
+
+    boolean gamePaused = false;
+
+
 
     /**
      * Plays the background music of the game, continuously looping.
@@ -21,7 +25,7 @@ public class Sound {
     public void playGameMusic(){
         BACKGROUND_MUSIC.setLooping(true);
         BACKGROUND_MUSIC.play();
-        BACKGROUND_MUSIC.setVolume(0.05f*volume);
+        BACKGROUND_MUSIC.setVolume(0.05f);
     }
 
     /**
@@ -35,21 +39,21 @@ public class Sound {
      * Plays the sound associated with the enemy hitting something/someone.
      */
     public void playEnemyHit(){
-        ENEMY_HIT.play(0.10f*volume);
+        ENEMY_HIT.play(0.10f);
     }
 
     /**
      * Plays the sound of the sword swing.
      */
     public  void playSwordSwing(){
-        SWORD_SWOOSH.play(0.10f*volume);
+        SWORD_SWOOSH.play(0.10f);
     }
 
     /**
      * Plays the player death sound.
      */
     public void playPlayerDeathSound(){
-        PLAYER_DEATH.play(0.10f*volume);
+        PLAYER_DEATH.play(0.10f);
     }
 
     public com.badlogic.gdx.audio.Sound getIdleSound(IEntity entity) {
@@ -79,8 +83,9 @@ public class Sound {
                                 }}
                             }
                             distance = 10/distance;
-                            if (!model.isPaused()){
-                            sound.play(distance*volume);}
+                            if(!gamePaused) {
+                                sound.play(distance );
+                            }
                             try {
                                 Thread.sleep(interval);
                             } catch (InterruptedException e) {
@@ -94,16 +99,20 @@ public class Sound {
         }
     }
 
-    /**
-     * sets the master volume of the game 1 for full volume and 0 for no volume
-     * @param v the new volume
-     */
-    public void setVolume(float v){
-        if (v == 0f){
-            this.volume = 0.001f;
-        }
-        else {
-        this.volume = v;}
-    }
 
+    /**
+     * Resume game sound when the game is no longer paused
+     */
+    public void resumeSound() {
+        playGameMusic();
+        gamePaused = false;
+    }
+    /**
+     * Stops game sound when the game is paused
+     */
+    public void stopSound(){
+            stopGameMusic();
+            gamePaused = true;
+    }
 }
+

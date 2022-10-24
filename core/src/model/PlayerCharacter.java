@@ -4,11 +4,12 @@ import com.dongbat.jbump.World;
 import model.rewards.LivingTrait;
 import model.rewards.Reward;
 import model.rewards.Tweak;
+import view.IObserver;
 
 import java.util.*;
 
 
-public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
+public class PlayerCharacter extends LivingEntity implements IPlayerSubject {
     private final Map<LivingTrait, ArrayList<Tweak>> tweaks = new HashMap<>();
     private int experience;
     private int level;
@@ -16,6 +17,7 @@ public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
     private final List<Reward> perkList = new ArrayList<>();
     private boolean swinging;
     private PlayerWeapon weapon;
+    private final List<IObserver> soundObservers = new ArrayList<>();
 
     /**
      * Default constructor for a default sized player of the player faction
@@ -57,6 +59,7 @@ public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
     @Override
     public void weaponAttack(int rotationStart, int rotationFinish){
         weapon.weaponSwing(rotationStart,rotationFinish,0, this);
+        notifyWeaponswing();
     }
 
     @Override
@@ -156,5 +159,22 @@ public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
     @Override
     public void setSwinging(boolean swinging) {
         this.swinging = swinging;
+    }
+
+    @Override
+    public void addObserver(IObserver observer) {
+        soundObservers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(IObserver observer) {
+        soundObservers.remove(observer);
+    }
+
+    @Override
+    public void notifyWeaponswing() {
+        for (IObserver o : soundObservers) {
+            o.registerSwordSwing();
+        }
     }
 }

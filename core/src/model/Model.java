@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
 import model.rewards.RewardSystem;
-import view.ISoundObserver;
+import view.IObserver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class Model implements IModelSubject {
     private final IMapCache mapCache;
-    private final IPlayerCharacter player;
+    private final IPlayerSubject player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<IEntity> entityList = new ArrayList<>();
     private final List<Point> spawnPoints;
@@ -26,10 +26,10 @@ public class Model implements IModelSubject {
     private final RewardSystem rewardSystem = new RewardSystem();
     private final World<IEntity> world;
     private int currentScore = 0;
-    private final List<ISoundObserver> soundObservers = new ArrayList<>();
+    private final List<IObserver> observers = new ArrayList<>();
     private boolean playerIsDead = false;
 
-    public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
+    public Model(IMapCache mapCache, IPlayerSubject player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);
@@ -39,7 +39,7 @@ public class Model implements IModelSubject {
     /**
      * @return playerCharacter connected to Model
      */
-    public IPlayerCharacter getPlayer(){
+    public IPlayerSubject getPlayer(){
         return player;
     }
 
@@ -201,28 +201,26 @@ public class Model implements IModelSubject {
     }
 
     @Override
-    public void addObserver(ISoundObserver observer) {
-        player.getWeapon().addObserver(observer);
-        soundObservers.add(observer);
+    public void addObserver(IObserver observer) {
+        observers.add(observer);
     }
 
     @Override
-    public void removeObserver(ISoundObserver observer) {
-        player.getWeapon().removeObserver(observer);
-        soundObservers.remove(observer);
+    public void removeObserver(IObserver observer) {
+        observers.remove(observer);
     }
 
     @Override
     public void notifyPlayerDeath() {
-        for (ISoundObserver o : soundObservers) {
-            o.playPlayerDeathSound();
+        for (IObserver o : observers) {
+            o.registerPlayerDeath();
         }
     }
 
     @Override
     public void notifyMonsterAttack() {
-        for (ISoundObserver o : soundObservers) {
-            o.playEnemyHit();
+        for (IObserver o : observers) {
+            o.registerEnemyHit();
         }
     }
 

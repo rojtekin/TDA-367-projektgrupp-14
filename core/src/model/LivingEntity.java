@@ -86,9 +86,7 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {
-        if (currentHealth > 0) {
             currentHealth -= damage;
-        }
     }
 
     /**

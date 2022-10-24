@@ -25,16 +25,8 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
         return speed;
     }
 
-    protected void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
     public float getMaxHealth() {
         return maxHealth;
-    }
-
-    public void setMaxHealth(float maxHealth) {
-        this.maxHealth = maxHealth;
     }
 
     public float getCurrentHealth() {return currentHealth;}

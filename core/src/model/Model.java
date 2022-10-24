@@ -8,7 +8,6 @@ import model.monsters.*;
 import java.awt.*;
 import model.rewards.RewardSystem;
 import view.ISoundObserver;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -58,7 +57,7 @@ public class Model implements IModelSubject {
     private void levelUpCheckAndApply() {
         if (player.levelUpCheck()){
             player.reduceExperience();
-            rewardSystem.applyReward(player, rewardSystem.getRandomReward());
+            rewardSystem.applyReward(player, rewardSystem.getRandomReward(player));
             player.increaseLevel();
         }
     }
@@ -168,10 +167,6 @@ public class Model implements IModelSubject {
         return mapCache.getWorld();
     }
 
-    public void initialize() {
-        rewardSystem.initialize(this);
-    }
-
     /**
      * Removes a monster from the game and removes
      * its collisionBox from the world
@@ -189,7 +184,7 @@ public class Model implements IModelSubject {
         return currentScore;
     }
 
-    public void setCurrentScore(int currentScore) {
+    private void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
     }
 

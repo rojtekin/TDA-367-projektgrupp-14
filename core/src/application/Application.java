@@ -31,7 +31,6 @@ public class Application extends Game {
 	@Override
 	public void render () {
 		controller.update(model.getPlayer());
-
 		view.update();
 		model.update();
 		Time.getInstance().tick();

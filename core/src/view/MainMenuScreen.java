@@ -23,7 +23,7 @@ public class MainMenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
-        Image img = new Image(new Texture("e.png"));
+        Image img = new Image(new Texture("main_menu_background_image.png"));
         stage.getActors().insert(0, img);
 
 

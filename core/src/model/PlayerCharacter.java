@@ -35,7 +35,7 @@ public class PlayerCharacter extends LivingEntity implements IPlayerCharacter {
      * @param faction that the player belongs to
      */
     public PlayerCharacter(float spawnX, float spawnY, Faction faction, World<IEntity> world) {
-        super(spawnX, spawnY, 32, 32, 5, 100, 0, faction, world);
+        super(spawnX, spawnY, 32, 32, 5, 100, 1, faction, world);
         weapon = new Sword(world);
         this.experience = 0;
         this.level = 1;

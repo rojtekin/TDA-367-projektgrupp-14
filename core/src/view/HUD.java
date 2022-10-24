@@ -59,7 +59,7 @@ public class HUD {
     private final Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
     private final Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
     private final Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
-    private final Label levelLabel = new Label("Level: ", whiteTextColorAndFont);
+    private final Label statsLabel = new Label("Level: ", whiteTextColorAndFont);
 
     /**
      * Creates an instance of HUD
@@ -127,8 +127,8 @@ public class HUD {
 
         table4.setFillParent(true);
 
-        levelLabel.setText("Level: " + model.getPlayer().getLevel());
-        table4.add(levelLabel).padLeft(10).padTop(40).left();
+        statsLabel.setText("Level: " + model.getPlayer().getLevel()  +'\n' + "Damage: " +  model.getPlayer().getDamage() + '\n' + "Speed: " + model.getPlayer().getSpeed());
+        table4.add(statsLabel).padLeft(10).padTop(40).left();
 
         table4.row();
         experienceLabel.setText("Experience: "+ model.getPlayer().getExperience() + " / " + model.getPlayer().getExperienceThreshold());

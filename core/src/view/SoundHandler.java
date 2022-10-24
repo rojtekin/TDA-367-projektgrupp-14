@@ -12,7 +12,12 @@ public class SoundHandler {
     private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
     private static final com.badlogic.gdx.audio.Sound PLAYER_DEATH = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
+
     private final List<Class> entityClass = new ArrayList<>();
+
+    boolean gamePaused = false;
+
+
 
     /**
      * Plays the background music of the game, continuously looping.
@@ -78,7 +83,9 @@ public class SoundHandler {
                                 }}
                             }
                             distance = 10/distance;
-                            sound.play(distance);
+                            if(!gamePaused) {
+                                sound.play(distance );
+                            }
                             try {
                                 Thread.sleep(interval);
                             } catch (InterruptedException e) {
@@ -92,4 +99,20 @@ public class SoundHandler {
         }
     }
 
+
+    /**
+     * Resume game sound when the game is no longer paused.
+     */
+    public void resumeSound() {
+        playGameMusic();
+        gamePaused = false;
+    }
+    /**
+     * Stops game sound when the game is paused.
+     */
+    public void stopSound(){
+            stopGameMusic();
+            gamePaused = true;
+    }
 }
+

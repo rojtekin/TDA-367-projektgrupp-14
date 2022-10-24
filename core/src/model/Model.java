@@ -48,6 +48,9 @@ public class Model implements IModelSubject {
     public IPlayerSubject getPlayer(){
         return player;
     }
+    public boolean isPlayerIsDead(){
+        return playerIsDead;
+    }
 
     /**
      * updates the state of the model

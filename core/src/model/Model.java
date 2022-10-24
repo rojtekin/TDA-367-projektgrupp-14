@@ -29,6 +29,12 @@ public class Model implements IModelSubject {
     private final List<ISoundObserver> soundObservers = new ArrayList<>();
     private boolean playerIsDead = false;
 
+    /**
+     * Constructs model responsible for the logic of the game
+     * @param mapCache The logic from the map that will be used
+     * @param player The playable character
+     * @param spawnPoints a list of the enemy spawnPoints
+     */
     public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
@@ -43,6 +49,9 @@ public class Model implements IModelSubject {
         return player;
     }
 
+    /**
+     * updates the state of the model
+     */
     public void update() {
         spawnMonsters();
         moveMonsters();
@@ -109,7 +118,7 @@ public class Model implements IModelSubject {
     }
 
     /**
-     * Moves every monster.
+     * Moves every monster towards the player
      */
     private void moveMonsters() {
         for (Monster monster : monsters) {
@@ -159,6 +168,11 @@ public class Model implements IModelSubject {
         }
     }
 
+    /**
+     * checks if collision has happened with player
+     * @param collision the collision which has occurred
+     * @return returns true if collision has happened, false if not
+     */
     private boolean collisionWithPlayer(Collision collision) {
         return collision.other.userData.equals(player);
     }

@@ -42,10 +42,17 @@ public class View implements ISoundObserver {
     private Set<IEntity> isKnown = new HashSet<>();
     private Set<IEntity> seen = new HashSet<>();
 
+    /**
+     * Constructs a view
+     * @param model game model
+     */
     public View(Model model) {
         this.model = Objects.requireNonNull(model);
     }
 
+    /**
+     * initializes images, tiledMap, sound, camera and SpriteBatch (drawing board)
+     */
     public void initialize() {
         soundHandler.playGameMusic();
 
@@ -59,6 +66,10 @@ public class View implements ISoundObserver {
         hud = new HUD(batch, model);
     }
 
+    /**
+     * updates View
+     * draws underlayer, tiledMap,
+     */
     public void update() {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -74,9 +85,7 @@ public class View implements ISoundObserver {
         updatePlayerWalkFrame();
         drawEntities();
 
-        if (model.getPlayer().isSwinging()){
-            drawWeaponSwing();
-        }
+        checkWeaponSwing();
 
         batch.end();
 
@@ -118,6 +127,9 @@ public class View implements ISoundObserver {
         drawEnemies();
     }
 
+    /**
+     * automatically disposes hud, batch and tiledMap when screen gets closed
+     */
     public void dispose () {
         hud.dispose();
         batch.dispose();
@@ -143,8 +155,19 @@ public class View implements ISoundObserver {
         }
     }
 
+    /**
+     * checks if sword has been swung and if swung calls for it to be drawn
+     */
+    private void checkWeaponSwing() {
+        if (model.getPlayer().isSwinging()) {
+            drawWeaponSwing();
+        }
+    }
+    /**
+     * draws the weaponSwing
+     */
     private void drawWeaponSwing() {
-        batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
+        batch.draw(swordSprite, model.getPlayer().getX(), model.getPlayer().getY(), model.getPlayer().getHeight() / 2, model.getPlayer().getWidth() / 2, 64, 64, 1, 1, (float) model.getPlayer().getWeapon().getWeaponAngle());
     }
 
     @Override

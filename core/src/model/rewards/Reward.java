@@ -9,7 +9,7 @@ public enum Reward {
     /*COOL_DOWN_DECREASE,
     ABILITY_POWER_INCREASE,*/ //not implemented yet
     DAMAGE_INCREASE(new Tweak(LivingTrait.DAMAGE, 1, 1)),
-    HEALTH_INCREASE(new Tweak(LivingTrait.HEALTH, 1, 1)),
+    HEALTH_INCREASE(new Tweak(LivingTrait.HEALTH, 1, 10)),
     SPEED_INCREASE(new Tweak(LivingTrait.SPEED, 1, 1)),
     GLASS_CANNON(new Tweak(LivingTrait.HEALTH, 0.75f, 0), new Tweak(LivingTrait.DAMAGE, 1.5f, 0)),
     SPEED_DEVIL(new Tweak(LivingTrait.HEALTH, 0.75f, 0), new Tweak(LivingTrait.SPEED, 1.5f, 0)),

@@ -1,5 +1,6 @@
 package model;
 
+import com.dongbat.jbump.IntPoint;
 import com.dongbat.jbump.World;
 
 /**
@@ -18,5 +19,12 @@ public class PlacedMapEntity extends Entity {
      */
     @Override
     public void beAttacked(float damage, Faction faction) {
+    }
+
+    /**
+     * Placed map entities do not react when collided with
+     */
+    @Override
+    public void pushBack(IntPoint collisionNormal) {
     }
 }

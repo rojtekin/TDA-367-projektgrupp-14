@@ -42,6 +42,10 @@ public abstract class PlayerWeapon implements IWeaponSubject {
             rotatedPoint1x = rotatedPoint1x + player.getWidth()/2 + player.getX();
             rotatedPoint1y = rotatedPoint1y + player.getHeight()/2 + player.getY();
 
+            IntPoint collisionNormal = new IntPoint();
+            collisionNormal.x = (int) Math.round(-1 *  cos(getWeaponAngle()));
+            collisionNormal.y = (int) Math.round(-1 *  sin(getWeaponAngle()));
+
             Set<Entity> isKnown = new HashSet<>();
             ArrayList<ItemInfo> items = new ArrayList<>();
             List<Entity> entities = new LinkedList<>();
@@ -55,7 +59,10 @@ public abstract class PlayerWeapon implements IWeaponSubject {
                 for (Entity entity : entities) {
                     if (!isKnown.contains((entity))) {
                         //gör skada;
-                        entity.beAttacked((weaponDamage),Faction.PLAYER);
+                        entity.beAttacked((weaponDamage + player.getDamage()),Faction.PLAYER);
+                        if (entity != player) {
+                            entity.pushBack(collisionNormal);
+                        }
                         isKnown.add(entity);
                     }
                 }

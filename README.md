@@ -1,5 +1,5 @@
 ## Description
-A top-down 2D survival application in which you defend yourself against attacking monsters.
+A top-down 2D rogue-like survival game in which you defend yourself against attacking monsters.
 
 ## File Structure
 Path                                    | Comment
@@ -24,3 +24,4 @@ In this project, assets from the asset packs Ninja Adventure (https://pixel-boy.
 
 ## How to Play the Game
 Move with either WASD or arrow-keys and to attack use IJKL to swing in a desired direction (I:Up , J;Left , K:Down, L:Right)
+You can also pasue and resume the game with the ESC-key

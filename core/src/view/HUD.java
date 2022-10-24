@@ -64,11 +64,16 @@ public class HUD {
     private final Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
     private final Label statsLabel = new Label("Level: ", whiteTextColorAndFont);
 
-    private final Label pauseLabel = new Label("THE GAME IS PAUSED" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
-    private final Label pauseInfoLabel = new Label("To Resume, Please Press ESC" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
-    private final Label howToPlayLabel = new Label("How to play:" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
-    private final Label toMoveLabel = new Label("To move: use arrows or W,A,S,D" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
-    private final Label toAttackLabel = new Label("To Attack: use I,J,K,L" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final static String PAUSE_LABEL_TEXT = "THE GAME IS PAUSED";
+    private final Label pauseLabel = new Label(PAUSE_LABEL_TEXT, new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final static String PAUSE_INFO_LABEL_TEXT = "To Resume, Please Press ESC";
+    private final Label pauseInfoLabel = new Label(PAUSE_INFO_LABEL_TEXT , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final static String HOW_TO_PLAY_LABEL_TEXT = "How to play:";
+    private final Label howToPlayLabel = new Label(HOW_TO_PLAY_LABEL_TEXT , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final static String TO_MOVE_LABEL_TEXT = "To move: use arrows or W,A,S,D";
+    private final Label toMoveLabel = new Label(TO_MOVE_LABEL_TEXT, new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final static String TO_ATTACK_LABEL_TEXT = "To Attack: use I,J,K,L";
+    private final Label toAttackLabel = new Label(TO_ATTACK_LABEL_TEXT , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
 
     private final Label gameOverLabel = new Label("" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
     private final Label finalScore = new Label("", new Label.LabelStyle((new BitmapFont()), Color.WHITE));
@@ -150,13 +155,8 @@ public class HUD {
         stage.addActor(table4);
 
 
-        if (!gamePaused) {
-            pauseLabel.setText("");
-            pauseInfoLabel.setText("");
-            howToPlayLabel.setText("");
-            toMoveLabel.setText("");
-            toAttackLabel.setText("");
-        }
+        setShowPauseScreen(gamePaused);
+
         gamePausedTable.center();
         gamePausedTable.setFillParent(true);
         gamePausedTable.add(pauseLabel).padBottom(1).expandX();
@@ -182,6 +182,23 @@ public class HUD {
         createGameOverTable();
         stage.addActor(gameOverTable);
 
+    }
+
+    private void setShowPauseScreen(boolean gamePaused) {
+        if (!gamePaused) {
+            pauseLabel.setText("");
+            pauseInfoLabel.setText("");
+            howToPlayLabel.setText("");
+            toMoveLabel.setText("");
+            toAttackLabel.setText("");
+        }
+        else{
+            pauseLabel.setText(PAUSE_LABEL_TEXT);
+            pauseInfoLabel.setText(PAUSE_INFO_LABEL_TEXT);
+            howToPlayLabel.setText(HOW_TO_PLAY_LABEL_TEXT);
+            toMoveLabel.setText(TO_MOVE_LABEL_TEXT);
+            toAttackLabel.setText(TO_ATTACK_LABEL_TEXT);
+        }
     }
 
     private Table createGameOverTable() {

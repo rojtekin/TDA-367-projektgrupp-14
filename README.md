@@ -1,5 +1,5 @@
 ## Description
-A top-down 2D rogue-like survival game in which you defend yourself against attacking monsters.
+A top-down 2D rogue-like survival RPG in which you defend yourself against attacking monsters.
 
 ## File Structure
 Path                                    | Comment

@@ -1,5 +1,6 @@
 package view;
 
+import application.Game;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import model.*;
 import model.monsters.Monster;
@@ -83,8 +84,8 @@ public class View {
         hud.update(); // TODO functional decomposition
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
+        showPauseScreen();
 
-        playIdleSounds();
     }
 
     private void playIdleSounds() {
@@ -124,10 +125,25 @@ public class View {
         tiledMap.dispose();
     }
 
-    /**
-     * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
-     * Otherwise, the frame is set to the first frame of the walk animation.
-     */
+
+    public void showPauseScreen() {
+        if (Model.isPaused()){
+            soundHandler.stopGameMusic();
+
+
+        }
+        else{
+            soundHandler.playGameMusic();
+            playIdleSounds();
+        }
+
+    }
+
+
+        /**
+         * Changes the player walk frame to the next frame in the walk animation after a certain time interval if the player is moving.
+         * Otherwise, the frame is set to the first frame of the walk animation.
+         */
     public void updatePlayerWalkFrame() {
         if (model.playerIsInMotion()) {
             float timeSincePlayerWalkFrameChanged = Time.getInstance().getTicks() - timeWhenPlayerWalkFrameChanged;

@@ -26,6 +26,8 @@ public class Model {
     private final World<IEntity> world;
     private int currentScore = 0;
 
+    private static boolean pause = true;
+
     public Model(IEnvironmentCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
@@ -42,7 +44,9 @@ public class Model {
 
     public void update() {
         spawnMonsters();
-        moveMonsters();
+        if(!pause) {
+            moveMonsters();
+        }
         levelUpCheckAndApply();
         despawnDeadNPCs();
     }
@@ -185,5 +189,17 @@ public class Model {
 
     public void setCurrentScore(int currentScore) {
         this.currentScore = currentScore;
+    }
+
+    public static boolean isPaused() {
+        return pause;
+    }
+
+    public static void resumeGame() {
+        pause = false;
+    }
+
+    public static void pauseGame() {
+        pause = true;
     }
 }

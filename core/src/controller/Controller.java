@@ -19,43 +19,54 @@ public class Controller {
     public void update() {
         player.setInMotion(false);
         // User input
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.move(Direction.LEFT);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.move(Direction.RIGHT);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
-            player.move(Direction.UP);
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
-            player.move(Direction.DOWN);
-        }
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 
-        player.setSwinging(false);
-        // sword attack
+            if (Model.isPaused()) {
+                Model.resumeGame();
+            } else {
+                Model.pauseGame();
 
-        //Left
-        if(Gdx.input.isKeyJustPressed(Input.Keys.L)){
-            player.weaponAttack(315,45);
-            player.setSwinging(true);
+            }
+        }
+        if (!Model.isPaused()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
+                player.move(Direction.LEFT);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
+                player.move(Direction.RIGHT);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
+                player.move(Direction.UP);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
+                player.move(Direction.DOWN);
+            }
 
-        }
-        //Up
-        if(Gdx.input.isKeyJustPressed(Input.Keys.K)){
-            player.weaponAttack(225,315);
-            player.setSwinging(true);
+            player.setSwinging(false);
+            // sword attack
 
-        }
-        //right
-        if(Gdx.input.isKeyJustPressed(Input.Keys.J)){
-            player.weaponAttack(135,225);
-            player.setSwinging(true);
-        }
-        //Down
-        if(Gdx.input.isKeyJustPressed(Input.Keys.I)){
-            player.weaponAttack(45,135);
-            player.setSwinging(true);
+            //Left
+            if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+                player.weaponAttack(315, 45);
+                player.setSwinging(true);
+
+            }
+            //Up
+            if (Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+                player.weaponAttack(225, 315);
+                player.setSwinging(true);
+
+            }
+            //right
+            if (Gdx.input.isKeyJustPressed(Input.Keys.J)) {
+                player.weaponAttack(135, 225);
+                player.setSwinging(true);
+            }
+            //Down
+            if (Gdx.input.isKeyJustPressed(Input.Keys.I)) {
+                player.weaponAttack(45, 135);
+                player.setSwinging(true);
+            }
         }
     }
 }

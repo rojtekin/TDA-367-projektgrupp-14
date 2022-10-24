@@ -22,7 +22,6 @@ public class RewardTest {
         PlayerCharacter player = new PlayerCharacter(0,0, tmc.getWorld());
         model = new Model(tmc, player, tmc.getSpawnPoints());
         rewardSystem = new RewardSystem();
-        rewardSystem.initialize(model);
     }
 
     @Test
@@ -43,22 +42,22 @@ public class RewardTest {
     }
 
     @Test
-    public void getPerklist_EmptyByDefault() {
+    public void getPerkList_EmptyByDefault() {
         assertTrue(model.getPlayer().getPerkList().isEmpty());
     }
 
     @Test
-    public void getRandomReward_ReturnsRewardWhenPlayerPerklistIsEmpty() {
-        Reward reward = rewardSystem.getRandomReward();
+    public void getRandomReward_ReturnsRewardWhenPlayerPerkListIsEmpty() {
+        Reward reward = rewardSystem.getRandomReward(model.getPlayer());
         assertTrue(reward != null);
     }
 
     @Test
-    public void getRandomReward_DoesNotReturnPerkIfPerklistFull() {
+    public void getRandomReward_DoesNotReturnPerkIfPerkListFull() {
         model.getPlayer().getPerkList().add(Reward.GLASS_CANNON);
         model.getPlayer().getPerkList().add(Reward.TANK);
         model.getPlayer().getPerkList().add(Reward.SPEED_DEVIL);
-        Reward reward = rewardSystem.getRandomReward();
+        Reward reward = rewardSystem.getRandomReward(model.getPlayer());
         assertTrue(reward != Reward.TANK && reward != Reward.GLASS_CANNON
         && reward != Reward.SPEED_DEVIL);
     }

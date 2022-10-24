@@ -13,8 +13,6 @@ public class ModelFactory {
         PlayerCharacter player = new PlayerCharacter(mapData.getMapUnitWidth() / 2, mapData.getMapUnitHeight() / 2, mapData.getWorld());
 
         List<Point> spawnPoints = mapData.getSpawnPoints();
-        Model model = new Model(mapData, player, spawnPoints);
-        model.initialize();
-        return model;
+        return new Model(mapData, player, spawnPoints);
     }
 }

@@ -69,9 +69,6 @@ public abstract class Entity implements IEntity {
     public float getDamage() {
         return damage;
     }
-    protected void setDamage(float damage) {
-        this.damage = damage;
-    }
 
     public Item<IEntity> getBoundingbox() {
         return boundingbox;

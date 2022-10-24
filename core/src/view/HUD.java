@@ -54,7 +54,7 @@ public class HUD {
     private final Table table2 = new Table();
     private final Table table3 = new Table();
     private final Table table4 = new Table();
-    private final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
+    private static final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
     private final Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
     private final Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
     private final Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);

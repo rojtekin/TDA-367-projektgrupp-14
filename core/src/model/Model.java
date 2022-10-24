@@ -239,8 +239,6 @@ public class Model implements IModelSubject {
         }
     }
 
-}
-
     public static void resumeGame() {
         pause = false;
     }

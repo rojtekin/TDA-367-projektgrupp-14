@@ -12,6 +12,7 @@ public class Sound {
     private static final com.badlogic.gdx.audio.Sound ENEMY_HIT = Gdx.audio.newSound(Gdx.files.internal("Audio/enemyHit.mp3"));
     private static final com.badlogic.gdx.audio.Sound SWORD_SWOOSH = Gdx.audio.newSound(Gdx.files.internal("Audio/sword-swoosh.mp3"));
     private static final com.badlogic.gdx.audio.Sound PLAYER_DEATH = Gdx.audio.newSound(Gdx.files.internal("Audio/player-death.mp3"));
+    private float volume = 1;
     private final List<Class> entityClass = new ArrayList<>();
 
     /**
@@ -20,7 +21,7 @@ public class Sound {
     public void playGameMusic(){
         BACKGROUND_MUSIC.setLooping(true);
         BACKGROUND_MUSIC.play();
-        BACKGROUND_MUSIC.setVolume(0.05f);
+        BACKGROUND_MUSIC.setVolume(0.05f*volume);
     }
 
     /**
@@ -34,21 +35,21 @@ public class Sound {
      * Plays the sound associated with the enemy hitting something/someone.
      */
     public void playEnemyHit(){
-        ENEMY_HIT.play(0.10f);
+        ENEMY_HIT.play(0.10f*volume);
     }
 
     /**
      * Plays the sound of the sword swing.
      */
     public  void playSwordSwing(){
-        SWORD_SWOOSH.play(0.10f);
+        SWORD_SWOOSH.play(0.10f*volume);
     }
 
     /**
      * Plays the player death sound.
      */
     public void playPlayerDeathSound(){
-        PLAYER_DEATH.play(0.10f);
+        PLAYER_DEATH.play(0.10f*volume);
     }
 
     public com.badlogic.gdx.audio.Sound getIdleSound(IEntity entity) {
@@ -78,7 +79,8 @@ public class Sound {
                                 }}
                             }
                             distance = 10/distance;
-                            sound.play(distance);
+                            if (!model.isPaused()){
+                            sound.play(distance*volume);}
                             try {
                                 Thread.sleep(interval);
                             } catch (InterruptedException e) {
@@ -90,6 +92,18 @@ public class Sound {
                 new Thread(toRun).start();
             }
         }
+    }
+
+    /**
+     * sets the master volume of the game 1 for full volume and 0 for no volume
+     * @param v the new volume
+     */
+    public void setVolume(float v){
+        if (v == 0f){
+            this.volume = 0.001f;
+        }
+        else {
+        this.volume = v;}
     }
 
 }

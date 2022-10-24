@@ -48,7 +48,7 @@ public class View {
     }
 
     public void initialize() {
-        soundHandler.playGameMusic();
+  
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);

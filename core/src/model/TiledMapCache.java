@@ -20,7 +20,7 @@ import java.util.List;
  * such as map proportions for spawn locations and for importing map objects for collision
  * Also holds the "world" object which handles collisionboxes
  */
-public class TiledEnvironmentCache implements IEnvironmentCache {
+public class TiledMapCache implements IMapCache {
     //Constants for layer names in map. We can't control how the layers are named
     //since Tiled allows you to name and number layers however you want. Therefore
     //the mapmaker must comply with these constants or else the program won't be able
@@ -78,7 +78,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
      * Creates an empty environment that can be loaded in the model
      * Useful for testing without a map
      */
-    public TiledEnvironmentCache() {
+    public TiledMapCache() {
         mapUnitHeight = 0;
         mapUnitWidth = 0;
         world = new World<>();
@@ -86,12 +86,12 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
     }
 
     private List<Point> defaultSpawnPoints() {
-        int xLeft = 100;
+        int xLeft = 300;
         int xCenter = getMapUnitWidth() / 2;
-        int xRight = getMapUnitWidth() - 100;
-        int yBottom = 100;
+        int xRight = getMapUnitWidth() - 200;
+        int yBottom = 300;
         int yCenter = getMapUnitHeight() / 2;
-        int yTop = getMapUnitHeight() - 100;
+        int yTop = getMapUnitHeight() - 200;
         return spawnPoints = Arrays.asList(new Point(xLeft, yTop), new Point(xCenter, yTop), new Point(xRight, yTop),
                 new Point(xLeft, yCenter), new Point(xRight, yCenter),
                 new Point(xLeft, yBottom), new Point(xCenter, yBottom), new Point(xRight, yBottom));
@@ -136,7 +136,7 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
             collisionObjects = map.getLayers().get(COLLISIONLAYER).getObjects();
             for (RectangleMapObject o : collisionObjects.getByType(RectangleMapObject.class)) {
                 Rectangle r = o.getRectangle();
-                PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, 0, world);
+                PlacedMapEntity st = new PlacedMapEntity(r.x, r.y, r.height, r.width, world);
                 world.add(new Item<>(st), r.x, r.y, r.width, r.height);
             }
         }
@@ -148,8 +148,8 @@ public class TiledEnvironmentCache implements IEnvironmentCache {
             spawnPoints = new ArrayList<>();
             for (RectangleMapObject o : spawnObjects.getByType(RectangleMapObject.class)) {
                 Rectangle r = o.getRectangle();
-                int rX = (int) Math.abs(r.getWidth() - r.getX()) / 2;
-                int rY = (int) Math.abs(r.getHeight() - r.getY()) / 2;
+                int rX = (int) r.getX() + ( (int) Math.abs(r.getWidth()) - (int) Math.abs(r.getX()) / 2);
+                int rY = (int) r.getY() + ( (int) Math.abs(r.getHeight() - (int) Math.abs(r.getY())) / 2);
                 spawnPoints.add(new Point(rX, rY));
             }
         }

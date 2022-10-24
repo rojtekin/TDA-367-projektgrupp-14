@@ -23,7 +23,7 @@ import java.util.Set;
 /**
  * A class responsible for presenting a part of the model to the user.
  */
-public class View {
+public class View implements ISoundObserver {
     private HUD hud;
     private final Model model;
     private float timeWhenPlayerWalkFrameChanged = 0f;
@@ -161,5 +161,20 @@ public class View {
 
     public void drawWeaponSwing() {
         batch.draw(swordSprite, model.getPlayer().getX(),model.getPlayer().getY(),model.getPlayer().getHeight()/2,model.getPlayer().getWidth()/2,64,64,1,1,(float)model.getPlayer().getWeapon().getWeaponAngle());
+    }
+
+    @Override
+    public void playEnemyHit() {
+        soundHandler.playEnemyHit();
+    }
+
+    @Override
+    public void playSwordHit() {
+        soundHandler.playSwordSwing();
+    }
+
+    @Override
+    public void playPlayerDeathSound() {
+        soundHandler.playPlayerDeathSound();
     }
 }

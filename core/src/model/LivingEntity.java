@@ -3,7 +3,7 @@ package model;
 import com.dongbat.jbump.*;
 
 /**
- * Parent class for all entities that have movement and health
+ * Abstract parent class for all entities that have movement and health
  */
 public abstract class LivingEntity extends Entity implements ILivingEntity {
     private float speed;
@@ -88,6 +88,9 @@ public abstract class LivingEntity extends Entity implements ILivingEntity {
 
     /**
      * Decreases current health with a specified amount
+     * Used to decrease an entity's health directly such as
+     * when using a status effect, for combat use beAttacked
+     * instead.
      * @param damage amount to decrease health with
      */
     public void takeDamage(float damage) {

@@ -7,6 +7,8 @@ import com.badlogic.gdx.maps.Map;
 import model.monsters.*;
 import java.awt.*;
 import model.rewards.RewardSystem;
+import view.ISoundObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -14,8 +16,8 @@ import java.util.Objects;
 /**
  * A class responsible for managing the logic of the game.
  */
-public class Model {
-    private final IEnvironmentCache mapCache;
+public class Model implements IModelSubject {
+    private final IMapCache mapCache;
     private final IPlayerCharacter player;
     private final List<Monster> monsters = new ArrayList<>();
     private final List<IEntity> entityList = new ArrayList<>();
@@ -25,10 +27,12 @@ public class Model {
     private final RewardSystem rewardSystem = new RewardSystem();
     private final World<IEntity> world;
     private int currentScore = 0;
+    private final List<ISoundObserver> soundObservers = new ArrayList<>();
+    private boolean playerIsDead = false;
 
     private static boolean pause = true;
 
-    public Model(IEnvironmentCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
+    public Model(IMapCache mapCache, IPlayerCharacter player, List<Point> spawnPoints) {
         this.mapCache = Objects.requireNonNull(mapCache);
         this.world = mapCache.getWorld();
         this.player = Objects.requireNonNull(player);
@@ -49,6 +53,7 @@ public class Model {
         }
         levelUpCheckAndApply();
         despawnDeadNPCs();
+        playerHealthCheck();
     }
 
     /**
@@ -130,6 +135,7 @@ public class Model {
             if (collisionWithPlayer(collision)) {
                 player.beAttacked(livingEntity.getDamage(), livingEntity.getFaction());
                 player.pushBack(collision.normal);
+                notifyMonsterAttack();
             }
         }
     }
@@ -194,6 +200,46 @@ public class Model {
     public static boolean isPaused() {
         return pause;
     }
+
+    /**
+     * Checks if a player's health is equal to or below zero and if
+     * the method has been triggered previously. If not it plays a sound and
+     * sets a boolean value to prevent the method from being triggered again.
+     */
+    public void playerHealthCheck() {
+        if (!playerIsDead && player.getCurrentHealth() <= 0) {
+            notifyPlayerDeath();
+            playerIsDead = true;
+        }
+    }
+
+    @Override
+    public void addObserver(ISoundObserver observer) {
+        player.getWeapon().addObserver(observer);
+        soundObservers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(ISoundObserver observer) {
+        player.getWeapon().removeObserver(observer);
+        soundObservers.remove(observer);
+    }
+
+    @Override
+    public void notifyPlayerDeath() {
+        for (ISoundObserver o : soundObservers) {
+            o.playPlayerDeathSound();
+        }
+    }
+
+    @Override
+    public void notifyMonsterAttack() {
+        for (ISoundObserver o : soundObservers) {
+            o.playEnemyHit();
+        }
+    }
+
+}
 
     public static void resumeGame() {
         pause = false;

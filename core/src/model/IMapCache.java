@@ -11,7 +11,7 @@ import java.util.List;
  * but also potentially things like spreadsheets or just image files. For 2D games, tiles are
  * at this time ubiquitous and considered the standard but this might change in the future
  */
-public interface IEnvironmentCache {
+public interface IMapCache {
 
     /**
      * Gets the JBump "world" which is used for moving entities and registering collisions

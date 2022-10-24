@@ -55,12 +55,23 @@ public class HUD {
     private final Table table3 = new Table();
     private final Table table4 = new Table();
     private static final Label.LabelStyle whiteTextColorAndFont = new Label.LabelStyle((new BitmapFont()), Color.WHITE);
+    private final Table gamePausedTable = new Table();
+    private final Table gameOverTable = new Table();
+
     private final Label healthBarLabel =  new Label("HP: ", whiteTextColorAndFont);
     private final Label scoreLabel = new Label("Score: ", whiteTextColorAndFont);
     private final Label perkLabel = new Label("Perk: ", whiteTextColorAndFont);
     private final Label experienceLabel = new Label("XP: ", whiteTextColorAndFont);
     private final Label statsLabel = new Label("Level: ", whiteTextColorAndFont);
 
+    private final Label pauseLabel = new Label("THE GAME IS PAUSED" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final Label pauseInfoLabel = new Label("To Resume, Please Press ESC" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final Label howToPlayLabel = new Label("How to play:" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final Label toMoveLabel = new Label("To move: use arrows or W,A,S,D" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final Label toAttackLabel = new Label("To Attack: use I,J,K,L" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+
+    private final Label gameOverLabel = new Label("" , new Label.LabelStyle((new BitmapFont()), Color.WHITE));
+    private final Label finalScore = new Label("", new Label.LabelStyle((new BitmapFont()), Color.WHITE));
     /**
      * Creates an instance of HUD
      * @param spriteBatch Libgdx class used for allowing things to be drawn or not.
@@ -75,7 +86,7 @@ public class HUD {
     /**
      * updates everything shown by the HUD and puts it in Stage.
      */
-    public void update() {
+    public void update(boolean gamePaused) {
         //3 tables. Id like to have one but stack is not working like I think it should. Currently
         // it acts as 3 layers, black under, secondary color, main color, text? as a fourth if I want
 
@@ -87,6 +98,8 @@ public class HUD {
         table2.clear();
         table3.clear();
         table4.clear();
+        gamePausedTable.clear();
+        gameOverTable.clear();
 
         stage.clear(); //Prevents memory leak where new tables are continuously added to stage
         table1.setFillParent(true); //make the table the size of parent which equals screensize code will wor on all screens
@@ -110,14 +123,15 @@ public class HUD {
         stage.addActor(table2);
 
         table3.setFillParent(true);
-        healthBarLabel.setText("HP " + (int)model.getPlayer().getCurrentHealth() + "/" + (int)model.getPlayer().getMaxHealth());
+        healthBarLabel.setText("HP " + (int) model.getPlayer().getCurrentHealth() + "/" + (int) model.getPlayer().getMaxHealth());
         table3.add(healthBarLabel).left().top().expandX().expandY().padLeft(12).padTop(10);
 
         if (!model.getPlayer().getPerkList().isEmpty()) {
             perkLabel.setText("Perk: " + model.getPlayer().getPerkList().get(0));
             table3.add(perkLabel).top().padTop(10);
         }
-        scoreLabel.setText("Score: "+model.getCurrentScore());
+
+        scoreLabel.setText("Score: " + model.getCurrentScore());
         table3.add(scoreLabel).right().top().pad(10);
         table3.row();
 
@@ -134,6 +148,58 @@ public class HUD {
         experienceLabel.setText("Experience: "+ model.getPlayer().getExperience() + " / " + model.getPlayer().getExperienceThreshold());
         table4.add(experienceLabel).expandX().expandY().bottom().padBottom(25);
         stage.addActor(table4);
+
+
+        if (!gamePaused) {
+            pauseLabel.setText("");
+            pauseInfoLabel.setText("");
+            howToPlayLabel.setText("");
+            toMoveLabel.setText("");
+            toAttackLabel.setText("");
+        }
+        gamePausedTable.center();
+        gamePausedTable.setFillParent(true);
+        gamePausedTable.add(pauseLabel).padBottom(1).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(pauseInfoLabel).padBottom(70).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(howToPlayLabel).padTop(10).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(toMoveLabel).padBottom(10).expandX();
+        gamePausedTable.row();
+        gamePausedTable.add(toAttackLabel).padBottom(50).expandX();
+        gamePausedTable.row();
+
+        pauseLabel.setFontScale(5f);
+        pauseInfoLabel.setFontScale(2f);
+        howToPlayLabel.setFontScale(2f);
+        toMoveLabel.setFontScale(1.7f);
+        toAttackLabel.setFontScale(1.7f);
+
+        stage.addActor(gamePausedTable);
+
+
+        createGameOverTable();
+        stage.addActor(gameOverTable);
+
+    }
+
+    private Table createGameOverTable() {
+        gameOverTable.center();
+        gameOverTable.setFillParent(true);
+        gameOverTable.add(gameOverLabel).padBottom(60).expandX();
+        gameOverTable.row();
+        gameOverTable.add(finalScore).padTop(30).expandX();
+        gameOverTable.row();
+        gameOverLabel.setFontScale(4f);
+        finalScore.setFontScale(3f);
+        return gameOverTable;
+    }
+
+    public void showGameOverTable() {
+        finalScore.setText("Your score is: " + model.getCurrentScore());
+        gameOverLabel.setText("Game Over");
+
     }
 
     /**

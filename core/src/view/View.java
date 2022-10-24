@@ -42,6 +42,8 @@ public class View implements IObserver {
     private Set<IEntity> isKnown = new HashSet<>();
     private Set<IEntity> seen = new HashSet<>();
 
+    private boolean playerIsDead = false;
+
     /**
      * Constructs a view
      * @param model game model
@@ -54,7 +56,7 @@ public class View implements IObserver {
      * initializes images, tiledMap, sound, camera and SpriteBatch (drawing board)
      */
     public void initialize() {
-        soundHandler.playGameMusic();
+
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -70,7 +72,7 @@ public class View implements IObserver {
      * updates View
      * draws underlayer, tiledMap,
      */
-    public void update() {
+    public void update(boolean gamePaused) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -89,10 +91,19 @@ public class View implements IObserver {
 
         batch.end();
 
-        hud.update();
+        if(playerIsDead){
+            hud.showGameOverTable();
+        }
+
+        else if(gamePaused || playerIsDead){
+           soundHandler.stopSound();
+        }
+        else{
+            soundHandler.resumeSound();
+        }
+        hud.update(gamePaused);
         batch.setProjectionMatrix(hud.getStage().getCamera().combined);
         hud.getStage().draw();
-
         playIdleSounds();
     }
 
@@ -183,5 +194,7 @@ public class View implements IObserver {
     @Override
     public void registerPlayerDeath() {
         soundHandler.playPlayerDeathSound();
+        hud.showGameOverTable();
+        playerIsDead = true;
     }
 }
